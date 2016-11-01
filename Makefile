@@ -1,34 +1,64 @@
-# Files to compile
-SRC = *.cpp
-SRC_PATH = src/
+SILENT = @
+
 # Compiler
 CC = g++
+LD = $(CC)
 
 # Compiler flags
-# -w =  supress warnings
-COMPILER_FLAGS = -w -std=c++11
+# Wall = all warnings
+# Wextra = extra warnings
+# g = debug symbols
+# std=c++11 = C++11
+INCLUDE_PATHS = -Isrc/
+COMPILER_FLAGS = -Wall -Wextra -g -std=c++11 $(INCLUDE_PATHS)
 
-# LINKER_FLAGS
-# -lsSDL2 for SDL2
-LINKER_FLAGS = -lSDL2 -lSDL2_ttf
+# Linker flags
+# g = debug symbols
+LIBS_PATH =
+LIBS = -lSDL2 -lSDL2_ttf
+LINKER_FLAGS = -g
 
-# Name of the resulting file
-EXEC = build/vidya
+# Files to compile
+SRC_PATH = src/
+SRC_FILES = $(shell find $(SRC_PATH) -name '*.cpp')
+OBJ_FILES = $(SRC_FILES:.cpp=.o)
+
+# Path for the resulting file
+BUILD_PATH = build/
+RES_PATH = res/
+PROGRAM_NAME = vidya
+EXEC = $(BUILD_PATH)$(PROGRAM_NAME)
 
 # Compile stuff
-all : $(SRC_PATH SRC)
-	mkdir -p build
-	@echo "Compiling vidya"
-	$(CC) $(SRC_PATH)$(SRC) $(COMPILER_FLAGS) $(LINKER_FLAGS) -o $(EXEC)
-	@echo "\nMoving resources to bin"
-	cp -r res build
+%.o : %.cpp
+	@echo CC $<
+	$(SILENT) $(CC) -c $< $(COMPILER_FLAGS) -o $@
 
-run : all
+$(EXEC) : $(OBJ_FILES)
+	@echo
+	mkdir -p $(BUILD_PATH)
+	@echo LD $@
+	$(SILENT) $(LD) $(COMPILER_FLAGS) $(OBJ_FILES) $(LINKER_FLAGS) $(LIBS) -o $(EXEC)
+	@echo
+	@echo "Moving resources to build"
+	cp -r $(RES_PATH) $(BUILD_PATH)
+	@echo
+
+all : $(EXEC)
+
+run : $(EXEC)
 	$(EXEC)
 
-# Kind cleaning lady
+libs : $(FMT_TARGET_PATH)
+
+debug: $(EXEC)
+	gdb $(EXEC)
+
+memory_leaks: $(EXEC)
+	valgrind --tool=memcheck --leak-check=full $(EXEC)
+
 .PHONY: clean
 clean:
-	@echo "Hi, I'm here to clean up your project!"
-	rm -rf $(SRC_PATH)*.o
-	rm -rf build/*
+	@echo "Cleaning build"
+	rm -rf $(shell find $(SRC_PATH) -name '*.o')
+	rm -rf $(BUILD_PATH)*
