@@ -5,6 +5,7 @@
 #ifndef MINOR_VIDYA_RAYCASTING_HPP
 #define MINOR_VIDYA_RAYCASTING_HPP
 
+#include <cmath>
 
 namespace Engine {
     class Raycasting {
