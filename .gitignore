@@ -3,6 +3,7 @@
 
 # build folder
 build/
+.idea/
 
 # Compiled Object files
 *.slo
