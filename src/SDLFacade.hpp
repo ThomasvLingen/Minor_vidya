@@ -8,8 +8,8 @@
 #include <string>
 #include <map>
 #include <vector>
-#include "SDL2/SDL.h"
-#include "SDL2/SDL_ttf.h"
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_ttf.h>
 
 #include "Color.hpp"
 
@@ -23,18 +23,18 @@ enum Key {W, A, S, D};
 
 typedef std::vector<Key> PressedKeys;
 
-class SdlFacade {
+class SDLFacade {
 
     private:
         PressedKeys _keys_down;
 
         map<FontType, TTF_Font *> _fonts;
-        map<SDL_Keycode *, Key> _possible_keys;
+        map<SDL_Keycode, Key> _possible_keys;
 
     public:
-        SdlFacade();
+        SDLFacade();
 
-        virtual ~SdlFacade();
+        virtual ~SDLFacade();
 
         void init();
 
