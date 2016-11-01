@@ -8,8 +8,10 @@
 #include <string>
 #include <map>
 #include <vector>
+#include "SDL2/SDL.h"
+#include "SDL2/SDL_ttf.h"
 
-#include "color.hpp"
+#include "Color.hpp"
 
 using std::string;
 using std::map;
@@ -36,7 +38,7 @@ class SdlFacade {
 
         void init();
 
-        void draw_line(double x1, double y1, double x2, double y2, Color color);
+        void draw_line(const double &x1, const double &y1, const double &x2, const double &y2, const Color &color);
 
         void render_buffer() const;
 
