@@ -20,7 +20,7 @@ public:
 
 	void update();
 
-	PointOfView & get_pov();
+	PointOfView& get_pov();
 	TileObject* get_tile(int x, int y);
 
 };
