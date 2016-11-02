@@ -8,9 +8,11 @@ int main()
     SDLFacade sdlFacade = SDLFacade();
     if(sdlFacade.init()){
         std::cout << "Start" << std::endl;
+        Color* color = new Color();
         while(true) {
             sdlFacade.clear_screen();
-            sdlFacade.draw_line(0, 0, 20, 20, Color());
+            sdlFacade.draw_line(0, 0, 200, 500, color);
+            sdlFacade.draw_line(100, 300, 100, 50, color);
             sdlFacade.render_buffer();
             SDL_Delay(1000);
         }
