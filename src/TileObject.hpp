@@ -18,8 +18,8 @@ class TileObject{
 private:
 	bool _wall;
 	Color _color;
-	const static int _width = 1;		// TODO: implement width value
-	const static int _length = 1;		// TODO: implement height value
+	const int _width = 1;		// TODO: implement width value
+	const int _length = 1;		// TODO: implement height value
 	vector<TileObject*> _neighbour_tiles;
 
 public:
