@@ -1,4 +1,3 @@
-#include <iostream>
 #include "SDLFacade.hpp"
 
 using Engine::CoordinateDouble;

@@ -11,6 +11,13 @@ SDLFacade::SDLFacade() {
 
 SDLFacade::~SDLFacade() {
     //todo
+    delete _window;
+    delete _screenSurface;
+    delete _renderer;
+
+    for(auto font : this->_fonts){
+        delete font.second;
+    }
 }
 
 bool SDLFacade::init() {
@@ -37,7 +44,6 @@ bool SDLFacade::init() {
         return false;
     }
 
-    //TODO: init fonts
     if (!this->_init_fonts()) {
         std::cout << "Your fonts could not be initted" << std::endl;
         return false;
@@ -56,6 +62,7 @@ bool SDLFacade::_init_renderer()
         return true;
     } else {
         //std::cout << "Something went wrong while making a renderer! : " + SDL_GetError() << std::endl;
+        delete _renderer;
         return false;
     }
 }
@@ -63,11 +70,12 @@ bool SDLFacade::_init_renderer()
 bool SDLFacade::_init_window() {
     _window = SDL_CreateWindow("Vidya game", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 500,
                               500, SDL_WINDOW_SHOWN);
-    if(_window != NULL) {
+    if(_window != nullptr) {
         _screenSurface = SDL_GetWindowSurface(_window);
         return true;
     } else {
         //std::cout << "Something went wrong while making a window! : " + SDL_GetError() << std::endl;
+        delete _window;
         return false;
     }
 }
@@ -100,18 +108,33 @@ std::vector <Key, std::allocator<Key>> SDLFacade::get_keys() const {
     return std::vector < Key, std::allocator < Key >> ();
 }
 
-void SDLFacade::draw_text(const string &text, const FontType &font, const Color &color, const CoordinateDouble &position) const {
+bool SDLFacade::draw_text(const string &text, const FontType &font, const Color &color, const CoordinateDouble &position) const {
     SDL_Color render_color = { color.r_value, color.g_value, color.b_value, 255 };
-    TTF_Font* render_font = _fonts.at(font);
-    SDL_Surface* text_surface = TTF_RenderText_Solid(render_font, text.c_str(), render_color);
-    SDL_Texture* text_texture = SDL_CreateTextureFromSurface(_renderer, text_surface);
-    SDL_Rect text_rect;
-    text_rect.x = position.x;
-    text_rect.y = position.y;
-    text_rect.w = text_surface->w;
-    text_rect.h = text_surface->h;
+    TTF_Font* render_font = nullptr;
+    SDL_Surface* text_surface = nullptr;
+    SDL_Texture* text_texture = nullptr;
 
-    SDL_RenderCopy(this->_renderer, text_texture, nullptr, &text_rect);
+    try{
+        render_font = _fonts.at(font);
+
+        text_surface = TTF_RenderText_Solid(render_font, text.c_str(), render_color);
+        text_texture = SDL_CreateTextureFromSurface(_renderer, text_surface);
+        SDL_Rect text_rect;
+        text_rect.x = position.x;
+        text_rect.y = position.y;
+        text_rect.w = text_surface->w;
+        text_rect.h = text_surface->h;
+
+        SDL_RenderCopy(this->_renderer, text_texture, nullptr, &text_rect);
+        SDL_FreeSurface(text_surface);
+
+        return true;
+    } catch (int exception){
+        delete render_font;
+        delete text_surface;
+        delete text_texture;
+        return false;
+    }
 }
 
 void SDLFacade::set_height(const int &screen_height, const int &screen_width) {
