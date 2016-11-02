@@ -8,8 +8,7 @@
 using std::vector;
 using Engine::PointOfView;
 
-class WorldObject
-{
+class WorldObject{
 
 private:
 	vector<vector<TileObject*>> _field;
@@ -17,7 +16,7 @@ private:
 
 public:
 	WorldObject(vector<vector<TileObject*>> field);
-	~WorldObject();
+	virtual ~WorldObject();
 
 	void update();
 

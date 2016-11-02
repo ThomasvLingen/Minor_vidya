@@ -8,4 +8,3 @@ struct Color{
 
     Color reduce_intensity();
 };
-
