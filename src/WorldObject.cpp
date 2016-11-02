@@ -16,6 +16,11 @@ void WorldObject::update()
 
 }
 
+PointOfView & WorldObject::get_pov()
+{
+	return this->_point_of_view;
+}
+
 TileObject * WorldObject::get_tile(int x, int y)
 {
 	try {

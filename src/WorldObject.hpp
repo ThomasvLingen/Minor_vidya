@@ -1,11 +1,12 @@
 #ifndef WORLDOBJECT_HPP
 #define WORLDOBJECT_HPP
 
-#include "PointOfView.hpp"
 #include "TileObject.hpp"
+#include "PointOfView.hpp"
 #include <vector>
 
 using std::vector;
+using Engine::PointOfView;
 
 class WorldObject
 {
@@ -19,7 +20,8 @@ public:
 	~WorldObject();
 
 	void update();
-	
+
+	PointOfView & get_pov();
 	TileObject* get_tile(int x, int y);
 
 };

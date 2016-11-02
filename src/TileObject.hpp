@@ -15,7 +15,8 @@ using std::string;
 class TileObject
 {
 private:
-	bool wall;
+	bool _wall;
+	Color _color;
 	const static int _width;
 	const static int _length;
 	vector<TileObject*> _neighbour_tiles;
@@ -36,6 +37,7 @@ public:
 	TileObject* get_tile_right();
 
 	bool get_is_wall();
+	Color get_color();
 	
 };
 

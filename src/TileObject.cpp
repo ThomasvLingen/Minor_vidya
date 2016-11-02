@@ -60,5 +60,10 @@ TileObject * TileObject::get_tile_right()
 
 bool TileObject::get_is_wall()
 {
-	return this->wall;
+	return this->_wall;
+}
+
+Color TileObject::get_color()
+{
+	return this->_color;
 }
