@@ -4,8 +4,17 @@
 
 #include "SDLFacade.hpp"
 
-SDLFacade::SDLFacade() {
+SDLFacade::SDLFacade(const function<void()>& callback_func ) {
     //todo
+
+    // Init _possible_keys
+    _possible_keys.insert(pair<SDL_Keycode, Key>(SDLK_w, W));
+    _possible_keys.insert(pair<SDL_Keycode, Key>(SDLK_a, A));
+    _possible_keys.insert(pair<SDL_Keycode, Key>(SDLK_s, S));
+    _possible_keys.insert(pair<SDL_Keycode, Key>(SDLK_d, D));
+    _possible_keys.insert(pair<SDL_Keycode, Key>(SDLK_ESCAPE, ESC));
+
+    _quit_callback = callback_func;
 }
 
 SDLFacade::~SDLFacade() {
@@ -82,7 +91,23 @@ void SDLFacade::render_buffer() const {
 }
 
 void SDLFacade::handle_sdl_events() {
-    //todo
+    SDL_Event event;
+
+    while(SDL_PollEvent(&event) != 0){
+        switch(event.type){
+            case SDL_KEYDOWN:
+                _handle_key_pressed_event(event.key.keysym.sym);
+                break;
+            case SDL_KEYUP:
+                _handle_key_released_event(event.key.keysym.sym);
+                break;
+            case SDL_QUIT:
+                _quit_callback();
+                break;
+            default:
+                break;
+        }
+    }
 }
 
 std::vector <Key, std::allocator<Key>> SDLFacade::get_keys() const {
@@ -112,10 +137,29 @@ int SDLFacade::get_width() const {
     return 0;
 }
 
-void SDLFacade::_handle_quit_event() {
-    //todo
+void SDLFacade::_handle_key_pressed_event(SDL_Keycode key) {
+    map<SDL_Keycode, Key>::iterator it;
+    it = _possible_keys.find(key);
+
+    // Check if SDL_Keycode needs to be handled
+    if(it != _possible_keys.end()){
+        _keys_down.push_back(it->second);
+    }
 }
 
-void SDLFacade::_handle_key_event() {
-    //todo
+void SDLFacade::_handle_key_released_event(SDL_Keycode key) {
+    map<SDL_Keycode, Key>::iterator it_possible;
+    it_possible = _possible_keys.find(key);
+
+    // Check if SDL_Keycode needs to be handled
+    if(it_possible != _possible_keys.end()){
+        //_keys_down.erase(it_possible->second);
+        vector<Key>::iterator it_down;
+        it_down = find(_keys_down.begin(), _keys_down.end(), it_possible->second);
+
+        // Check if released key is in _keys_down
+        if(it_down != _keys_down.end()){
+            _keys_down.erase(it_down);
+        }
+    }
 }

@@ -8,6 +8,8 @@
 #include <string>
 #include <map>
 #include <vector>
+#include <functional>
+#include <algorithm>
 
 #include "Color.hpp"
 
@@ -17,10 +19,12 @@
 using std::string;
 using std::map;
 using std::vector;
-
+using std::pair;
+using std::function;
+using std::find;
 
 enum FontType {verdana, roman};
-enum Key {W, A, S, D};
+enum Key {W, A, S, D, ESC};
 
 typedef std::vector<Key> PressedKeys;
 
@@ -35,8 +39,10 @@ class SDLFacade {
         SDL_Surface* screenSurface = NULL;
         SDL_Renderer* renderer = NULL;
 
+        function<void()> _quit_callback;
+
     public:
-        SDLFacade();
+        SDLFacade(const function<void()>& callback_func );
 
         virtual ~SDLFacade();
 
@@ -63,11 +69,13 @@ class SDLFacade {
         int get_width() const;
 
     private:
-        void _handle_quit_event();
-        void _handle_key_event();
+        void _handle_key_pressed_event(SDL_Keycode key);
+        void _handle_key_released_event(SDL_Keycode key);
+
         bool init_window();
         bool init_renderer();
 
+        uint32_t convert_color_struct();
 };
 
 #endif //MINOR_VIDYA_SDLFACADE_HPP
