@@ -17,9 +17,10 @@
 using std::string;
 using std::map;
 using std::vector;
+using Engine::CoordinateDouble;
 
 
-enum FontType {verdana, roman};
+enum FontType {verdana, roman, blue_highway_rg};
 enum Key {W, A, S, D};
 
 typedef std::vector<Key> PressedKeys;
@@ -68,6 +69,7 @@ class SDLFacade {
         void _handle_key_event();
         bool _init_window();
         bool _init_renderer();
+        bool _init_fonts();
 
 };
 

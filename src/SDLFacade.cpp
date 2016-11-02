@@ -37,6 +37,12 @@ bool SDLFacade::init() {
         return false;
     }
 
+    //TODO: init fonts
+    if (!this->_init_fonts()) {
+        std::cout << "Your fonts could not be initted" << std::endl;
+        return false;
+    }
+
     //std::cout << "initialization done" << std::endl;
     return true;
 }
@@ -125,4 +131,15 @@ void SDLFacade::_handle_quit_event() {
 
 void SDLFacade::_handle_key_event() {
     //todo
+}
+
+bool SDLFacade::_init_fonts(){
+    TTF_Font* blue_highway_font = TTF_OpenFont("res/blue_highway_rg.ttf", 30);
+
+    if (blue_highway_font == nullptr) {
+        printf("Could not open blue_highway_rg.ttf [%s]\n", TTF_GetError());
+    }
+
+    _fonts[FontType::blue_highway_rg] = blue_highway_font;
+    return true;
 }
