@@ -11,6 +11,13 @@ SDLFacade::SDLFacade() {
 
 SDLFacade::~SDLFacade() {
     //todo
+    delete _window;
+    delete _screenSurface;
+    delete _renderer;
+
+    for(auto font : this->_fonts){
+        delete font.second;
+    }
 }
 
 bool SDLFacade::init() {
@@ -37,6 +44,11 @@ bool SDLFacade::init() {
         return false;
     }
 
+    if (!this->_init_fonts()) {
+        std::cout << "Your fonts could not be initted" << std::endl;
+        return false;
+    }
+
     //std::cout << "initialization done" << std::endl;
     return true;
 }
@@ -50,6 +62,7 @@ bool SDLFacade::_init_renderer()
         return true;
     } else {
         //std::cout << "Something went wrong while making a renderer! : " + SDL_GetError() << std::endl;
+        delete _renderer;
         return false;
     }
 }
@@ -57,11 +70,12 @@ bool SDLFacade::_init_renderer()
 bool SDLFacade::_init_window() {
     _window = SDL_CreateWindow("Vidya game", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 500,
                               500, SDL_WINDOW_SHOWN);
-    if(_window != NULL) {
+    if(_window != nullptr) {
         _screenSurface = SDL_GetWindowSurface(_window);
         return true;
     } else {
         //std::cout << "Something went wrong while making a window! : " + SDL_GetError() << std::endl;
+        delete _window;
         return false;
     }
 }
@@ -71,13 +85,10 @@ void SDLFacade::clear_screen() {
     SDL_FillRect(_screenSurface, NULL, SDL_MapRGB(_screenSurface->format, 0x00, 0x00, 0x00));
 }
 
-void SDLFacade::draw_line(const double &x1, const double &y1, const double &x2, const double &y2, Color* color) {
-    if(_current_color == nullptr || _current_color != color){
-        _current_color = color;
-    }
+void SDLFacade::draw_line(const CoordinateDouble &position1, const CoordinateDouble &position2, const Color &color) {
 
-    SDL_SetRenderDrawColor(_renderer, 150, 0, 150, 255);
-    SDL_RenderDrawLine(_renderer, x1, y1, x2, y2);
+    SDL_SetRenderDrawColor(_renderer, color.r_value, color.g_value, color.b_value, 255);
+    SDL_RenderDrawLine(_renderer, position1.x, position1.y, position2.x, position2.y);
 
 }
 
@@ -97,8 +108,33 @@ std::vector <Key, std::allocator<Key>> SDLFacade::get_keys() const {
     return std::vector < Key, std::allocator < Key >> ();
 }
 
-void SDLFacade::draw_text(string text, FontType font) const {
-    //todo
+bool SDLFacade::draw_text(const string &text, const FontType &font, const Color &color, const CoordinateDouble &position) const {
+    SDL_Color render_color = { color.r_value, color.g_value, color.b_value, 255 };
+    TTF_Font* render_font = nullptr;
+    SDL_Surface* text_surface = nullptr;
+    SDL_Texture* text_texture = nullptr;
+
+    try{
+        render_font = _fonts.at(font);
+
+        text_surface = TTF_RenderText_Solid(render_font, text.c_str(), render_color);
+        text_texture = SDL_CreateTextureFromSurface(_renderer, text_surface);
+        SDL_Rect text_rect;
+        text_rect.x = position.x;
+        text_rect.y = position.y;
+        text_rect.w = text_surface->w;
+        text_rect.h = text_surface->h;
+
+        SDL_RenderCopy(this->_renderer, text_texture, nullptr, &text_rect);
+        SDL_FreeSurface(text_surface);
+
+        return true;
+    } catch (int exception){
+        delete render_font;
+        delete text_surface;
+        delete text_texture;
+        return false;
+    }
 }
 
 void SDLFacade::set_height(const int &screen_height, const int &screen_width) {
@@ -125,4 +161,24 @@ void SDLFacade::_handle_quit_event() {
 
 void SDLFacade::_handle_key_event() {
     //todo
+}
+
+bool SDLFacade::_init_fonts(){
+    if(!_load_font("res/alterebro_pixel.ttf", FontType::alterebro_pixel, 30)){
+        return false;
+    }
+
+    return true;
+}
+
+bool SDLFacade::_load_font(const string &path, const FontType &font_type, uint8_t &size) {
+    TTF_Font* new_font = TTF_OpenFont(path, size);
+
+    if (new_font == nullptr) {
+        printf("Could not open " + path + " [%s]\n", TTF_GetError());
+        return false;
+    } else {
+        _fonts[font_type] = new_font;
+        return true;
+    }
 }

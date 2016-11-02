@@ -10,6 +10,7 @@
 #include <vector>
 
 #include "Color.hpp"
+#include "RayCastingTypes.hpp"
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
@@ -17,9 +18,10 @@
 using std::string;
 using std::map;
 using std::vector;
+using Engine::CoordinateDouble;
 
 
-enum FontType {verdana, roman};
+enum FontType {verdana, roman, alterebro_pixel};
 enum Key {W, A, S, D};
 
 typedef std::vector<Key> PressedKeys;
@@ -34,7 +36,6 @@ class SDLFacade {
         SDL_Window* _window = nullptr;
         SDL_Surface* _screenSurface = nullptr;
         SDL_Renderer* _renderer = nullptr;
-        Color* _current_color = nullptr;
 
     public:
         SDLFacade();
@@ -45,7 +46,7 @@ class SDLFacade {
 
         void clear_screen(); //draws the background
 
-        void draw_line(const double &x1, const double &y1, const double &x2, const double &y2, Color* color);
+        void draw_line(const CoordinateDouble &position1, const CoordinateDouble &position2, const Color &color);
 
         void render_buffer() const;
 
@@ -53,7 +54,7 @@ class SDLFacade {
 
         PressedKeys get_keys() const;
 
-        void draw_text(string text, FontType font) const;
+        bool draw_text(const string &text, const FontType &font, const Color &color, const CoordinateDouble &position) const;
 
         void set_height(const int &screen_height, const int &screen_width);
 
@@ -68,6 +69,8 @@ class SDLFacade {
         void _handle_key_event();
         bool _init_window();
         bool _init_renderer();
+        bool _init_fonts();
+        bool _load_font(const string &path, const FontType &font_type, uint8_t );
 
 };
 
