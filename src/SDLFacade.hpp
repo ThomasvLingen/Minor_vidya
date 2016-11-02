@@ -10,6 +10,7 @@
 #include <vector>
 
 #include "Color.hpp"
+#include "RayCastingTypes.hpp"
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
@@ -35,7 +36,6 @@ class SDLFacade {
         SDL_Window* _window = nullptr;
         SDL_Surface* _screenSurface = nullptr;
         SDL_Renderer* _renderer = nullptr;
-        Color* _current_color = nullptr;
 
     public:
         SDLFacade();
@@ -46,7 +46,7 @@ class SDLFacade {
 
         void clear_screen(); //draws the background
 
-        void draw_line(const double &x1, const double &y1, const double &x2, const double &y2, Color* color);
+        void draw_line(const CoordinateDouble &position1, const CoordinateDouble &position2, const Color &color);
 
         void render_buffer() const;
 

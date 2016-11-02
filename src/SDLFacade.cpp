@@ -77,13 +77,10 @@ void SDLFacade::clear_screen() {
     SDL_FillRect(_screenSurface, NULL, SDL_MapRGB(_screenSurface->format, 0x00, 0x00, 0x00));
 }
 
-void SDLFacade::draw_line(const double &x1, const double &y1, const double &x2, const double &y2, Color* color) {
-    if(_current_color == nullptr || _current_color != color){
-        _current_color = color;
-    }
+void SDLFacade::draw_line(const CoordinateDouble &position1, const CoordinateDouble &position2, const Color &color) {
 
-    SDL_SetRenderDrawColor(_renderer, 150, 0, 150, 255);
-    SDL_RenderDrawLine(_renderer, x1, y1, x2, y2);
+    SDL_SetRenderDrawColor(_renderer, color.r_value, color.g_value, color.b_value, 255);
+    SDL_RenderDrawLine(_renderer, position1.x, position1.y, position2.x, position2.y);
 
 }
 

@@ -1,6 +1,8 @@
 #include <iostream>
 #include "SDLFacade.hpp"
 
+using Engine::CoordinateDouble;
+
 int main()
 {
     std::cout << "Hello world" << std::endl;
