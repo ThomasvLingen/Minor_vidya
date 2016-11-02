@@ -6,7 +6,7 @@
 #define MINOR_VIDYA_VECTOR_HPP
 
 namespace Engine {
-    struct Vector {
+    struct RaycastingVector {
         double x;
         double y;
     };

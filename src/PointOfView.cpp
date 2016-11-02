@@ -6,12 +6,12 @@
 
 namespace Engine {
 
-    PointOfView::PointOfView(DoubleCoordinate position, Vector direction, Vector camera_plane)
+    PointOfView::PointOfView(DoubleCoordinate position, RaycastingVector direction, RaycastingVector camera_plane)
     : _position(position)
     , _direction(direction)
     , _camera_plane(camera_plane)
     {
-        
+
     }
 
     PointOfView::~PointOfView()
@@ -24,12 +24,12 @@ namespace Engine {
         return this->_position;
     }
 
-    Vector &Engine::PointOfView::get_direction()
+    RaycastingVector &Engine::PointOfView::get_direction()
     {
         return this->_direction;
     }
 
-    Vector &Engine::PointOfView::get_camera_plane()
+    RaycastingVector &Engine::PointOfView::get_camera_plane()
     {
         return this->_camera_plane;
     }

@@ -6,23 +6,23 @@
 #define MINOR_VIDYA_POINTOFVIEW_HPP
 
 #include "DoubleCoordinate.hpp"
-#include "Vector.hpp"
+#include "RaycastingVector.hpp"
 
 namespace Engine {
     class PointOfView {
     public:
 
-        PointOfView(DoubleCoordinate position, Vector direction, Vector camera_plane);
+        PointOfView(DoubleCoordinate position, RaycastingVector direction, RaycastingVector camera_plane);
         virtual ~PointOfView();
 
         DoubleCoordinate& get_position();
-        Vector& get_direction();
-        Vector& get_camera_plane();
+        RaycastingVector& get_direction();
+        RaycastingVector& get_camera_plane();
 
     private:
         DoubleCoordinate _position;
-        Vector _direction;
-        Vector _camera_plane;
+        RaycastingVector _direction;
+        RaycastingVector _camera_plane;
     };
 }
 
