@@ -12,8 +12,6 @@
 #include "SDL2/SDL.h"
 #include "SDL2/SDL_ttf.h"
 
-#include "Color.hpp"
-
 using std::string;
 using std::map;
 using std::vector;
@@ -21,6 +19,12 @@ using std::vector;
 
 enum FontType {verdana, roman};
 enum Key {W, A, S, D};
+
+typedef struct Color{
+    uint8_t r_value;
+    uint8_t g_value;
+    uint8_t b_value;
+};
 
 typedef std::vector<Key> PressedKeys;
 
