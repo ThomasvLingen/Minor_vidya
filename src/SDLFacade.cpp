@@ -100,8 +100,18 @@ std::vector <Key, std::allocator<Key>> SDLFacade::get_keys() const {
     return std::vector < Key, std::allocator < Key >> ();
 }
 
-void SDLFacade::draw_text(string text, FontType font) const {
-    //todo
+void SDLFacade::draw_text(const string &text, const FontType &font, const Color &color, const CoordinateDouble &position) const {
+    SDL_Color render_color = { color.r_value, color.g_value, color.b_value, 255 };
+    TTF_Font* render_font = _fonts.at(font);
+    SDL_Surface* text_surface = TTF_RenderText_Solid(render_font, text.c_str(), render_color);
+    SDL_Texture* text_texture = SDL_CreateTextureFromSurface(_renderer, text_surface);
+    SDL_Rect text_rect;
+    text_rect.x = position.x;
+    text_rect.y = position.y;
+    text_rect.w = text_surface->w;
+    text_rect.h = text_surface->h;
+
+    SDL_RenderCopy(this->_renderer, text_texture, nullptr, &text_rect);
 }
 
 void SDLFacade::set_height(const int &screen_height, const int &screen_width) {
