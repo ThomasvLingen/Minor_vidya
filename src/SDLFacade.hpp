@@ -31,9 +31,10 @@ class SDLFacade {
 
         map<FontType, TTF_Font *> _fonts;
         map<SDL_Keycode, Key> _possible_keys;
-        SDL_Window* window = NULL;
-        SDL_Surface* screenSurface = NULL;
-        SDL_Renderer* renderer = NULL;
+        SDL_Window* _window = nullptr;
+        SDL_Surface* _screenSurface = nullptr;
+        SDL_Renderer* _renderer = nullptr;
+        Color* _current_color = nullptr;
 
     public:
         SDLFacade();
@@ -42,9 +43,9 @@ class SDLFacade {
 
         bool init();
 
-        void clear_screen(); //clears the surface
+        void clear_screen(); //draws the background
 
-        void draw_line(const double &x1, const double &y1, const double &x2, const double &y2, const Color &color);
+        void draw_line(const double &x1, const double &y1, const double &x2, const double &y2, Color* color);
 
         void render_buffer() const;
 
@@ -65,8 +66,8 @@ class SDLFacade {
     private:
         void _handle_quit_event();
         void _handle_key_event();
-        bool init_window();
-        bool init_renderer();
+        bool _init_window();
+        bool _init_renderer();
 
 };
 
