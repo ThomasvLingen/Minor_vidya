@@ -18,5 +18,10 @@ void WorldObject::update()
 
 TileObject * WorldObject::get_tile(int x, int y)
 {
-	return this->_field[y][x];
+	try {
+		return this->_field[y][x];
+	}
+	catch (const std::exception&) {
+		return nullptr;
+	}
 }

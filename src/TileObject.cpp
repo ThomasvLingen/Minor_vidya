@@ -57,3 +57,8 @@ TileObject * TileObject::get_tile_right()
 {
 	return this->_neighbour_tiles.at(right);
 }
+
+bool TileObject::get_is_wall()
+{
+	return this->wall;
+}

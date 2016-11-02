@@ -19,6 +19,7 @@ public:
 	~WorldObject();
 
 	void update();
+	
 	TileObject* get_tile(int x, int y);
 
 };
