@@ -21,7 +21,7 @@ using std::vector;
 using Engine::CoordinateDouble;
 
 
-enum FontType {verdana, roman, blue_highway_rg};
+enum FontType {verdana, roman, alterebro_pixel};
 enum Key {W, A, S, D};
 
 typedef std::vector<Key> PressedKeys;
@@ -70,6 +70,7 @@ class SDLFacade {
         bool _init_window();
         bool _init_renderer();
         bool _init_fonts();
+        bool _load_font(const string &path, const FontType &font_type, uint8_t );
 
 };
 

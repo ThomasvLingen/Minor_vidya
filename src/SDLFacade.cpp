@@ -164,12 +164,21 @@ void SDLFacade::_handle_key_event() {
 }
 
 bool SDLFacade::_init_fonts(){
-    TTF_Font* blue_highway_font = TTF_OpenFont("res/blue_highway_rg.ttf", 30);
-
-    if (blue_highway_font == nullptr) {
-        printf("Could not open blue_highway_rg.ttf [%s]\n", TTF_GetError());
+    if(!_load_font("res/alterebro_pixel.ttf", FontType::alterebro_pixel, 30)){
+        return false;
     }
 
-    _fonts[FontType::blue_highway_rg] = blue_highway_font;
     return true;
+}
+
+bool SDLFacade::_load_font(const string &path, const FontType &font_type, uint8_t &size) {
+    TTF_Font* new_font = TTF_OpenFont(path, size);
+
+    if (new_font == nullptr) {
+        printf("Could not open " + path + " [%s]\n", TTF_GetError());
+        return false;
+    } else {
+        _fonts[font_type] = new_font;
+        return true;
+    }
 }
