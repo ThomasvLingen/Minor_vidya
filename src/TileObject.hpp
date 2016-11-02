@@ -2,6 +2,7 @@
 #define TILEOBJECT_HPP
 
 #include <vector>
+#include <map>
 #include "Color.hpp"
 
 // index for neighbour TileObject
@@ -12,8 +13,12 @@
 
 using std::vector;
 using std::string;
+using std::map;
 
 class TileObject{
+
+public:
+	enum Direction { up_tile, down_tile, left_tile, right_tile };	// direction for set_tile
 
 private:
 	bool _wall;
@@ -21,8 +26,10 @@ private:
 	const int _width = 1;		// TODO: implement width value
 	const int _length = 1;		// TODO: implement height value
 	vector<TileObject*> _neighbour_tiles;
+	map<Direction, int> _direction_to_num_map;
 
 public:
+
 	TileObject();
 	virtual ~TileObject();
 	void update();
@@ -30,15 +37,9 @@ public:
 	void set_wall(bool has_wall);
 	void set_color(Color color);
 
-	void set_tile_up(TileObject* up_tile);
-	void set_tile_down(TileObject* down_tile);
-	void set_tile_left(TileObject* left_tile);
-	void set_tile_right(TileObject* right_tile);
-
-	TileObject* get_tile_up();
-	TileObject* get_tile_down();
-	TileObject* get_tile_left();
-	TileObject* get_tile_right();
+	void set_tile_neighbour(TileObject* tile, Direction direction);
+	
+	TileObject* get_tile_neighbour(Direction direction);
 
 	bool is_wall();
 	Color get_color();
