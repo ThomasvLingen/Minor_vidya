@@ -3,11 +3,6 @@
 
 TileObject::TileObject()
 {
-	_direction_to_num_map.insert(std::pair<Direction, int>(up_tile, to_up_neighbour_index));
-	_direction_to_num_map.insert(std::pair<Direction, int>(down_tile, to_down_neighbour_index));
-	_direction_to_num_map.insert(std::pair<Direction, int>(left_tile, to_left_neighbour_index));
-	_direction_to_num_map.insert(std::pair<Direction, int>(right_tile, to_right_neighbour_index));
-
 	for (size_t i = 0; i < 4; i++) {
 		this->_neighbour_tiles.push_back(nullptr);
 	}

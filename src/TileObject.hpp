@@ -26,7 +26,13 @@ private:
 	const int _width = 1;		// TODO: implement width value
 	const int _length = 1;		// TODO: implement height value
 	vector<TileObject*> _neighbour_tiles;
-	map<Direction, int> _direction_to_num_map;
+	map<Direction, int> _direction_to_num_map = {
+		{Direction::up_tile, to_up_neighbour_index},
+		{Direction::down_tile, to_down_neighbour_index},
+		{Direction::left_tile, to_left_neighbour_index},
+		{Direction::right_tile, to_right_neighbour_index},
+
+	};
 
 public:
 
