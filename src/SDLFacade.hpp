@@ -39,6 +39,9 @@ class SDLFacade {
         SDL_Surface* screenSurface = NULL;
         SDL_Renderer* renderer = NULL;
 
+        int _width;
+        int _height;
+
         function<void()> _quit_callback;
 
     public:
@@ -60,17 +63,18 @@ class SDLFacade {
 
         void draw_text(string text, FontType font) const;
 
-        void set_height(const int &screen_height, const int &screen_width);
+        void set_height(const int &screen_height);
 
         int get_height() const;
 
-        void set_width(const int &screen_height, const int &screen_width);
+        void set_width(const int &screen_width);
 
         int get_width() const;
 
     private:
         void _handle_key_pressed_event(SDL_Keycode key);
         void _handle_key_released_event(SDL_Keycode key);
+        void _handle_window_event(SDL_Event* event);
 
         bool init_window();
         bool init_renderer();

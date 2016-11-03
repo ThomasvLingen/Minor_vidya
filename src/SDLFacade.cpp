@@ -104,6 +104,9 @@ void SDLFacade::handle_sdl_events() {
             case SDL_QUIT:
                 _quit_callback();
                 break;
+            case SDL_WINDOWEVENT:
+                _handle_window_event(&event);
+                break;
             default:
                 break;
         }
@@ -119,22 +122,20 @@ void SDLFacade::draw_text(string text, FontType font) const {
     //todo
 }
 
-void SDLFacade::set_height(const int &screen_height, const int &screen_width) {
-    //todo
+void SDLFacade::set_height(const int &screen_height) {
+    _height = screen_height;
 }
 
 int SDLFacade::get_height() const {
-    //todo
-    return 0;
+    return _height;
 }
 
-void SDLFacade::set_width(const int &screen_height, const int &screen_width) {
-    //todo
+void SDLFacade::set_width(const int &screen_width) {
+    _width = screen_width;
 }
 
 int SDLFacade::get_width() const {
-    //todo
-    return 0;
+    return _width;
 }
 
 void SDLFacade::_handle_key_pressed_event(SDL_Keycode key) {
@@ -161,5 +162,16 @@ void SDLFacade::_handle_key_released_event(SDL_Keycode key) {
         if(it_down != _keys_down.end()){
             _keys_down.erase(it_down);
         }
+    }
+}
+
+void SDLFacade::_handle_window_event(SDL_Event* event){
+    switch(event->window.event){
+        case SDL_WINDOWEVENT_RESIZED:
+            _width = event->window.data1;
+            _height = event->window.data2;
+            break;
+        default:
+            break;
     }
 }
