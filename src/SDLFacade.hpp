@@ -34,7 +34,15 @@ class SDLFacade {
         PressedKeys _keys_down;
 
         map<FontType, TTF_Font *> _fonts;
-        map<SDL_Keycode, Key> _possible_keys;
+
+        map<SDL_Keycode, Key> _possible_keys = {
+                {SDLK_w, W},
+                {SDLK_a, A},
+                {SDLK_s, S},
+                {SDLK_d, D},
+                {SDLK_ESCAPE, ESC}
+        };
+
         SDL_Window* window = NULL;
         SDL_Surface* screenSurface = NULL;
         SDL_Renderer* renderer = NULL;

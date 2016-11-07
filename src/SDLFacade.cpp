@@ -7,20 +7,11 @@
 SDLFacade::SDLFacade(const function<void()>& callback_func )
 : _quit_callback(callback_func)
 {
-    _init_possible_keys();
+
 }
 
 SDLFacade::~SDLFacade() {
     //todo
-}
-
-void SDLFacade::_init_possible_keys() {
-    // Init _possible_keys
-    _possible_keys.insert(pair<SDL_Keycode, Key>(SDLK_w, W));
-    _possible_keys.insert(pair<SDL_Keycode, Key>(SDLK_a, A));
-    _possible_keys.insert(pair<SDL_Keycode, Key>(SDLK_s, S));
-    _possible_keys.insert(pair<SDL_Keycode, Key>(SDLK_d, D));
-    _possible_keys.insert(pair<SDL_Keycode, Key>(SDLK_ESCAPE, ESC));
 }
 
 bool SDLFacade::init() {
