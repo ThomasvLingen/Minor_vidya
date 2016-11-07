@@ -6,12 +6,14 @@
 #define MINOR_VIDYA_SDLFACADE_HPP
 
 #include <string>
+#include <iostream>
 #include <map>
 #include <vector>
 #include <functional>
 #include <algorithm>
 
 #include "Color.hpp"
+#include "RayCastingTypes.hpp"
 
 #include "SDL2/SDL.h"
 #include "SDL2/SDL_ttf.h"
@@ -22,8 +24,12 @@ using std::vector;
 using std::pair;
 using std::function;
 using std::find;
+using std::cout;
+using std::endl;
+using Engine::CoordinateDouble;
 
-enum FontType {verdana, roman};
+
+enum FontType {verdana, roman, alterebro_pixel};
 enum Key {W, A, S, D, ESC};
 
 typedef std::vector<Key> PressedKeys;
@@ -43,9 +49,9 @@ class SDLFacade {
                 {SDLK_ESCAPE, ESC}
         };
 
-        SDL_Window* window = NULL;
-        SDL_Surface* screenSurface = NULL;
-        SDL_Renderer* renderer = NULL;
+        SDL_Window* _window = nullptr;
+        SDL_Surface* _screenSurface = nullptr;
+        SDL_Renderer* _renderer = nullptr;
 
         int _width;
         int _height;
@@ -59,9 +65,9 @@ class SDLFacade {
 
         bool init();
 
-        void clear_screen(); //clears the surface
+        void clear_screen(); //draws the background
 
-        void draw_line(const double &x1, const double &y1, const double &x2, const double &y2, const Color &color);
+        void draw_line(const CoordinateDouble &position1, const CoordinateDouble &position2, const Color &color);
 
         void render_buffer() const;
 
@@ -69,7 +75,7 @@ class SDLFacade {
 
         PressedKeys get_keys() const;
 
-        void draw_text(string text, FontType font) const;
+        bool draw_text(const string &text, const FontType &font, const Color &color, const CoordinateDouble &position) const;
 
         void set_height(const int &screen_height);
 
@@ -84,12 +90,12 @@ class SDLFacade {
         void _handle_key_released_event(SDL_Keycode key);
         void _handle_window_event(SDL_Event* event);
 
-        bool init_window();
-        bool init_renderer();
+        bool _init_window();
+        bool _init_renderer();
+        bool _init_fonts();
+		bool _load_font(const string &path, const FontType &font_type, uint8_t size);
+
         void _init_possible_keys();
-
-
-        uint32_t convert_color_struct();
 };
 
 #endif //MINOR_VIDYA_SDLFACADE_HPP

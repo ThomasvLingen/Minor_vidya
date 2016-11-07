@@ -1,6 +1,9 @@
 //
 // Created by wouter on 11/1/16.
 //
+#ifndef MINOR_VIDYA_COLOR_HPP
+#define MINOR_VIDYA_COLOR_HPP
+
 #include <cstdint>
 
 struct Color {
@@ -11,3 +14,4 @@ struct Color {
     Color reduce_intensity();
 };
 
+#endif /* MINOR_VIDYA_COLOR_HPP */

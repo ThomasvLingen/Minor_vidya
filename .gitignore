@@ -1,8 +1,12 @@
 # Clion IDE files
 .idea/
 
+# Doxygen generated docs
+docs/html
+
 # build folder
 build/
+.idea/
 
 # Compiled Object files
 *.slo
