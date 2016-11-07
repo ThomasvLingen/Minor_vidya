@@ -11,6 +11,7 @@ WorldObject::~WorldObject()
 {
 }
 
+/// \brief update all objects of the WorldObject.
 void WorldObject::update()
 {
 	// TODO: Implement this

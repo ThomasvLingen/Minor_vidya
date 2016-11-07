@@ -14,6 +14,9 @@ TileObject::~TileObject()
 
 }
 
+/// \brief update all objects in this particular tile.
+///
+///
 void TileObject::update()
 {
 	// TODO: Implement this
