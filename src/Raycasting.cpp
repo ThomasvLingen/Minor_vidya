@@ -35,7 +35,7 @@ namespace Engine {
     {
 
         for (int ray_index = 0; ray_index < this->_SDL_facade.get_width(); ray_index++) {
-            DoubleCoordinate ray_position = _get_ray_pos();
+            CoordinateDouble ray_position = _get_ray_pos();
             Direction ray_dir = _calculate_ray_direction(ray_index);
             CoordinateInt map_coord = _get_map_coord(ray_position);
 
@@ -98,7 +98,7 @@ namespace Engine {
     /// Converts DoubleCoordinate to CoordinateInt, used to convert ray position to a map coordinate
     /// \param ray_position current ray position
     /// \return ray position in map coordinate
-    CoordinateInt Raycasting::_get_map_coord(DoubleCoordinate ray_position)
+    CoordinateInt Raycasting::_get_map_coord(CoordinateDouble ray_position)
     {
         CoordinateInt map_cord;
 
@@ -117,7 +117,7 @@ namespace Engine {
     /// \param map_coord Current map coordinate
     /// \param delta_dist Delta distance for both x and y
     /// \return RaySteps struct containing the stepsize for x and y
-    RaySteps Raycasting::_calculate_ray_steps(Direction ray_dir, DoubleCoordinate ray_pos, CoordinateInt map_coord,
+    RaySteps Raycasting::_calculate_ray_steps(Direction ray_dir, CoordinateDouble ray_pos, CoordinateInt map_coord,
                                               DeltaDist delta_dist)
     {
         RaySteps ray_steps;
@@ -197,7 +197,7 @@ namespace Engine {
     /// \param ray_direction
     /// \param ray_steps
     /// \return wall height
-    int Raycasting::_get_wall_height(Wall wall, DoubleCoordinate ray_pos, Direction ray_direction, RaySteps ray_steps)
+    int Raycasting::_get_wall_height(Wall wall, CoordinateDouble ray_pos, Direction ray_direction, RaySteps ray_steps)
     {
         double perp_wall_dist;
         int line_height;
@@ -261,7 +261,7 @@ namespace Engine {
         }
     }
 
-    DoubleCoordinate Raycasting::_get_ray_pos()
+    CoordinateDouble Raycasting::_get_ray_pos()
     {
         return this->_world->get_pov().get_position();
     }

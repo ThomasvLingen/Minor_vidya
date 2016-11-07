@@ -6,7 +6,7 @@
 #define MINOR_VIDYA_COORDINATE_HPP
 
 namespace Engine {
-    struct DoubleCoordinate {
+    struct CoordinateDouble {
         double x;
         double y;
     };

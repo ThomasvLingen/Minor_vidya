@@ -3,7 +3,7 @@
 
 WorldObject::WorldObject(vector<vector<TileObject*>> field)
 : _field(field)
-, _point_of_view(Engine::DoubleCoordinate{2 , 10}, Engine::RaycastingVector{-1 , 0}, Engine::RaycastingVector{0 , 0.66})
+, _point_of_view(Engine::CoordinateDouble{2 , 10}, Engine::RaycastingVector{-1 , 0}, Engine::RaycastingVector{0 , 0.66})
 {
 }
 

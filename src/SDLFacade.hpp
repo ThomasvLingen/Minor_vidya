@@ -12,6 +12,7 @@
 
 #include "Color.hpp"
 #include "RayCastingTypes.hpp"
+#include "CoordinateDouble.hpp"
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
