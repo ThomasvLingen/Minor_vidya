@@ -30,6 +30,7 @@ namespace Engine {
         // Call world update
     }
 
+    /// \brief Draws a single frame with raycasting using the world object and SDL facade
     void Raycasting::draw()
     {
 
@@ -57,6 +58,7 @@ namespace Engine {
 
 
     /// \brief Calculates the distance until the next horizontal and vertical axis.
+    ///
     /// Calculates the distance needed to jump from one axis to the next using the current direction
     /// \param ray_dir the direction vector of the "ray"
     /// \return distance for x and y in DeltaDist struct
@@ -70,7 +72,8 @@ namespace Engine {
         return dist;
     }
 
-    /// \brief calculates the ray direction using screen width and current ray index
+    /// \brief Calculates the ray direction using screen width and current ray index
+    ///
     /// \param max_width current screen width
     /// \param current_ray_index current ray index
     /// \return Direction vector of the ray
@@ -89,6 +92,12 @@ namespace Engine {
         return ray_dir;
     }
 
+
+    /// \brief Converts DoubleCoordinate to CoordinateInt
+    ///
+    /// Converts DoubleCoordinate to CoordinateInt, used to convert ray position to a map coordinate
+    /// \param ray_position current ray position
+    /// \return ray position in map coordinate
     CoordinateInt Raycasting::_get_map_coord(DoubleCoordinate ray_position)
     {
         CoordinateInt map_cord;
@@ -99,6 +108,15 @@ namespace Engine {
         return map_cord;
     }
 
+
+    /// \brief Calculates the ray step size for x and y
+    ///
+    /// Calculates the ray step size for x and y by calling _calculate_single_step for each
+    /// \param ray_dir Ray direction
+    /// \param ray_pos Current Ray position
+    /// \param map_coord Current map coordinate
+    /// \param delta_dist Delta distance for both x and y
+    /// \return RaySteps struct containing the stepsize for x and y
     RaySteps Raycasting::_calculate_ray_steps(Direction ray_dir, DoubleCoordinate ray_pos, CoordinateInt map_coord,
                                               DeltaDist delta_dist)
     {
@@ -109,6 +127,14 @@ namespace Engine {
         return ray_steps;
     }
 
+    /// \brief Calculates the ray step size for a single axis
+    ///
+    /// Calculates the ray step size for a single axis
+    /// \param ray_direction
+    /// \param ray_position
+    /// \param map_position
+    /// \param delta_dist
+    /// \return ray step size
     RayStep Raycasting::_calculate_single_step(double &ray_direction, double &ray_position, int &map_position, double &delta_dist)
     {
         RayStep return_step;
@@ -127,6 +153,13 @@ namespace Engine {
         return return_step;
     }
 
+    /// \brief Searches for the next wall using a ray starting from a point
+    ///
+    /// Searches for the next wall using a ray, ray takes steps of stepsize until it finds a tile with a wall \n
+    /// \param step_sizes Ray step size
+    /// \param start_point
+    /// \param delta_dist
+    /// \return Wall struct with location and type of wall (x or y)
     Wall Raycasting::_search_wall(RaySteps step_sizes, CoordinateInt start_point, DeltaDist delta_dist)
     {
         WallSide side;
@@ -158,6 +191,12 @@ namespace Engine {
         return return_wall;
     }
 
+    /// \brief Calculates wall_height using wall / ray position and direction using _calculate_wall_dist
+    /// \param wall Wall position
+    /// \param ray_pos
+    /// \param ray_direction
+    /// \param ray_steps
+    /// \return wall height
     int Raycasting::_get_wall_height(Wall wall, DoubleCoordinate ray_pos, Direction ray_direction, RaySteps ray_steps)
     {
         double perp_wall_dist;
@@ -227,6 +266,10 @@ namespace Engine {
         return this->_world->get_pov().get_position();
     }
 
+    /// \brief Draws the line using the SDL facade
+    /// \param line_cords
+    /// \param color
+    /// \param current_ray_index
     void Raycasting::_draw_line(LineCords &line_cords, Color &color, int current_ray_index)
     {
         this->_SDL_facade.draw_line(current_ray_index, line_cords.draw_start, current_ray_index,
