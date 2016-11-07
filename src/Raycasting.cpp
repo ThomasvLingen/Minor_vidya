@@ -6,7 +6,9 @@
 
 namespace Engine {
 
-    Raycasting::Raycasting()
+    Raycasting::Raycasting(SDLFacade& SDL_facade, WorldPTR world)
+    : _SDL_facade(SDL_facade)
+    , _world(world)
     {
 
     }
@@ -28,35 +30,39 @@ namespace Engine {
         // Call world update
     }
 
+    /// \brief Draws a single frame with raycasting using the world object and SDL facade
     void Raycasting::draw()
     {
-        int width  /* SDL_Facade get screen width  */;
-        int height /* SDL_Facade get screen height */;
 
-        for (int x = 0; x < width; x++) {
-            CoordinateDouble ray_position = _get_ray_pos(); /* [World get PoV position] */
-            Direction ray_dir = _get_ray_direction(width, x);
+        for (int ray_index = 0; ray_index < this->_SDL_facade.get_width(); ray_index++) {
+            DoubleCoordinate ray_position = _get_ray_pos();
+            Direction ray_dir = _calculate_ray_direction(ray_index);
             CoordinateInt map_coord = _get_map_coord(ray_position);
 
-            DeltaDist delta_dist = _get_delta_dist(ray_dir);
+            DeltaDist delta_dist = _calculate_delta_distance(ray_dir);
             RaySteps ray_steps = _calculate_ray_steps(ray_dir, ray_position, map_coord, delta_dist);
 
             Wall wall = _search_wall(ray_steps, map_coord, delta_dist);
-            int line_height = _get_wall_height(wall, ray_position, ray_dir, height, ray_steps);
-            LineCords line_cords = _get_line_measures(height, line_height);
+            int line_height = _get_wall_height(wall, ray_position, ray_dir, ray_steps);
+            LineCords line_cords = _get_line_measures(line_height);
 
-            // Somehow determine color to draw (Do something with world)
-            if (wall.side == WallSide::y_wall) {
-                // Reduce the determined color
-            }
-            // Draw the line: draw_start, draw_end at x=x
+            Color color = this->_world->get_tile(wall.cord.x, wall.cord.y)->get_color();
+
+//            if (wall.side == WallSide::y_wall) {
+//                color = color.reduce_intensity();
+//            }
+
+            this->_draw_line(line_cords, color, ray_index);
         }
-        // Draw the world through raycasting algorithms,
-        // For this we need to get information from the world (Like the tile map
-        // For this we also need the SDL_Facade to draw
     }
 
-    DeltaDist Raycasting::_get_delta_dist(Direction ray_dir)
+
+    /// \brief Calculates the distance until the next horizontal and vertical axis.
+    ///
+    /// Calculates the distance needed to jump from one axis to the next using the current direction
+    /// \param ray_dir the direction vector of the "ray"
+    /// \return distance for x and y in DeltaDist struct
+    DeltaDist Raycasting::_calculate_delta_distance(Direction ray_dir)
     {
         DeltaDist dist;
 
@@ -66,18 +72,33 @@ namespace Engine {
         return dist;
     }
 
-    Direction Raycasting::_get_ray_direction(int max_width, int current_width)
+    /// \brief Calculates the ray direction using screen width and current ray index
+    ///
+    /// \param max_width current screen width
+    /// \param current_ray_index current ray index
+    /// \return Direction vector of the ray
+    Direction Raycasting::_calculate_ray_direction(int current_ray_index)
     {
         Direction ray_dir;
+        int max_width = this->_SDL_facade.get_width();
 
-        double camera_x = 2 * current_width / double(max_width) - 1;
-        ray_dir.x /* [World get PoV direction x] + [plane_x] * camera_x */ ;
-        ray_dir.y /* [World get PoV direction y] + [plane_y] * camera_x */ ;
+        double camera_x = 2 * current_ray_index / double(max_width) - 1;
+        Direction PoV_direction = this->_world->get_pov().get_direction();
+        RaycastingVector PoV_plane = this->_world->get_pov().get_camera_plane();
+
+        ray_dir.x = PoV_direction.x + (PoV_plane.x * camera_x);
+        ray_dir.y = PoV_direction.y + (PoV_plane.y * camera_x);
 
         return ray_dir;
     }
 
-    CoordinateInt Raycasting::_get_map_coord(CoordinateDouble ray_position)
+
+    /// \brief Converts DoubleCoordinate to CoordinateInt
+    ///
+    /// Converts DoubleCoordinate to CoordinateInt, used to convert ray position to a map coordinate
+    /// \param ray_position current ray position
+    /// \return ray position in map coordinate
+    CoordinateInt Raycasting::_get_map_coord(DoubleCoordinate ray_position)
     {
         CoordinateInt map_cord;
 
@@ -87,7 +108,16 @@ namespace Engine {
         return map_cord;
     }
 
-    RaySteps Raycasting::_calculate_ray_steps(Direction ray_dir, CoordinateDouble ray_pos, CoordinateInt map_coord,
+
+    /// \brief Calculates the ray step size for x and y
+    ///
+    /// Calculates the ray step size for x and y by calling _calculate_single_step for each
+    /// \param ray_dir Ray direction
+    /// \param ray_pos Current Ray position
+    /// \param map_coord Current map coordinate
+    /// \param delta_dist Delta distance for both x and y
+    /// \return RaySteps struct containing the stepsize for x and y
+    RaySteps Raycasting::_calculate_ray_steps(Direction ray_dir, DoubleCoordinate ray_pos, CoordinateInt map_coord,
                                               DeltaDist delta_dist)
     {
         RaySteps ray_steps;
@@ -97,6 +127,14 @@ namespace Engine {
         return ray_steps;
     }
 
+    /// \brief Calculates the ray step size for a single axis
+    ///
+    /// Calculates the ray step size for a single axis
+    /// \param ray_direction
+    /// \param ray_position
+    /// \param map_position
+    /// \param delta_dist
+    /// \return ray step size
     RayStep Raycasting::_calculate_single_step(double &ray_direction, double &ray_position, int &map_position, double &delta_dist)
     {
         RayStep return_step;
@@ -115,6 +153,13 @@ namespace Engine {
         return return_step;
     }
 
+    /// \brief Searches for the next wall using a ray starting from a point
+    ///
+    /// Searches for the next wall using a ray, ray takes steps of stepsize until it finds a tile with a wall \n
+    /// \param step_sizes Ray step size
+    /// \param start_point
+    /// \param delta_dist
+    /// \return Wall struct with location and type of wall (x or y)
     Wall Raycasting::_search_wall(RaySteps step_sizes, CoordinateInt start_point, DeltaDist delta_dist)
     {
         WallSide side;
@@ -131,9 +176,9 @@ namespace Engine {
                 side = WallSide::y_wall;
             }
 
-//            if(this->world[start_point.x][start_point.y] > 0){
+            if(this->_world->get_tile(start_point.x, start_point.y)->is_wall()){
                 break;
-//            }
+            }
         }
 
         return_wall.cord = {
@@ -146,11 +191,17 @@ namespace Engine {
         return return_wall;
     }
 
-    int Raycasting::_get_wall_height(Wall wall, CoordinateDouble ray_pos, Direction ray_direction, int height,
-                                     RaySteps ray_steps)
+    /// \brief Calculates wall_height using wall / ray position and direction using _calculate_wall_dist
+    /// \param wall Wall position
+    /// \param ray_pos
+    /// \param ray_direction
+    /// \param ray_steps
+    /// \return wall height
+    int Raycasting::_get_wall_height(Wall wall, DoubleCoordinate ray_pos, Direction ray_direction, RaySteps ray_steps)
     {
         double perp_wall_dist;
         int line_height;
+        int height = this->_SDL_facade.get_height();
 
         if(wall.side == WallSide::x_wall){
             perp_wall_dist = _calculate_wall_dist(wall.cord.x, ray_pos.x, ray_steps.x, ray_direction.x);
@@ -162,30 +213,67 @@ namespace Engine {
         return line_height;
     }
 
+    /// \brief Calculate the distance to the wall for an axis
+    /// \param wall_cord wall position
+    /// \param ray_pos ray position
+    /// \param ray_step ray step size
+    /// \param ray_dir ray direction
+    /// \return distance to wall in a double
     double Raycasting::_calculate_wall_dist(int &wall_cord, double &ray_pos, RayStep ray_step, double ray_dir)
     {
         return (wall_cord - ray_pos + (1 - ray_step.step_size) / 2) / ray_dir;
     }
 
-    LineCords Raycasting::_get_line_measures(int screen_height, int line_height)
+    /// \brief get line measure from line_height
+    /// \param line_height
+    /// \return line measure in LineCords
+    LineCords Raycasting::_get_line_measures(int line_height)
     {
         LineCords line;
+        int screen_height = this->_SDL_facade.get_height();
 
         line.draw_start = -line_height / 2 + screen_height / 2;
-        if (line.draw_start < 0) {
-            line.draw_start = 0;
-        }
         line.draw_end = line_height / 2 + screen_height / 2;
-        if (line.draw_end >= screen_height) {
-            line.draw_end = screen_height - 1;
-        }
+
+        this->_correct_line(line);
 
         return line;
     }
 
-    CoordinateDouble Raycasting::_get_ray_pos()
+    /// \brief Corrects lineCords if out if screen range
+    /// \param LineCords containing the line coordinates
+    void Raycasting::_correct_line(LineCords &line)
     {
-        CoordinateDouble ray_pos;
-        return ray_pos;
+        int screen_height = this->_SDL_facade.get_height();
+
+        if(line.draw_end < 0){
+            line.draw_end = 0;
+        }
+        if(line.draw_end >= screen_height){
+            line.draw_end = screen_height - 1;
+        }
+
+        if(line.draw_start < 0){
+            line.draw_start = 0;
+        }
+        if(line.draw_start >= screen_height){
+            line.draw_start = screen_height - 1;
+        }
+    }
+
+    DoubleCoordinate Raycasting::_get_ray_pos()
+    {
+        return this->_world->get_pov().get_position();
+    }
+
+    /// \brief Draws the line using the SDL facade
+    /// \param line_cords
+    /// \param color
+    /// \param current_ray_index
+    void Raycasting::_draw_line(LineCords &line_cords, Color &color, int current_ray_index)
+    {
+        this->_SDL_facade.draw_line(current_ray_index, line_cords.draw_start, current_ray_index,
+                                    line_cords.draw_end, &color);
+        //todo color is currently a pointer, but will be changed to a reference, if seg fault, look here
     }
 }

@@ -5,6 +5,8 @@
 #ifndef MINOR_VIDYA_RAYCASTINGTYPES_HPP
 #define MINOR_VIDYA_RAYCASTINGTYPES_HPP
 
+#include "RaycastingVector.hpp"
+
 namespace Engine {
     enum WallSide {x_wall, y_wall};
 
@@ -28,15 +30,7 @@ namespace Engine {
         int y;
     };
 
-    struct CoordinateDouble {
-        double x;
-        double y;
-    };
-
-    struct Direction {
-        double x;
-        double y;
-    };
+    typedef RaycastingVector Direction;
 
     struct LineCords {
         int draw_start;
