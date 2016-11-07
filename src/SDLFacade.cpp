@@ -156,7 +156,6 @@ void SDLFacade::_handle_key_released_event(SDL_Keycode key) {
 
     // Check if SDL_Keycode needs to be handled
     if(it_possible != _possible_keys.end()){
-        //_keys_down.erase(it_possible->second);
         vector<Key>::iterator it_down;
         it_down = find(this->_keys_down.begin(), this->_keys_down.end(), it_possible->second);
 
