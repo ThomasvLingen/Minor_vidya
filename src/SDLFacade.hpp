@@ -78,6 +78,8 @@ class SDLFacade {
 
         bool init_window();
         bool init_renderer();
+        void _init_possible_keys();
+
 
         uint32_t convert_color_struct();
 };

@@ -4,21 +4,23 @@
 
 #include "SDLFacade.hpp"
 
-SDLFacade::SDLFacade(const function<void()>& callback_func ) {
-    //todo
+SDLFacade::SDLFacade(const function<void()>& callback_func )
+: _quit_callback(callback_func)
+{
+    _init_possible_keys();
+}
 
+SDLFacade::~SDLFacade() {
+    //todo
+}
+
+void SDLFacade::_init_possible_keys() {
     // Init _possible_keys
     _possible_keys.insert(pair<SDL_Keycode, Key>(SDLK_w, W));
     _possible_keys.insert(pair<SDL_Keycode, Key>(SDLK_a, A));
     _possible_keys.insert(pair<SDL_Keycode, Key>(SDLK_s, S));
     _possible_keys.insert(pair<SDL_Keycode, Key>(SDLK_d, D));
     _possible_keys.insert(pair<SDL_Keycode, Key>(SDLK_ESCAPE, ESC));
-
-    _quit_callback = callback_func;
-}
-
-SDLFacade::~SDLFacade() {
-    //todo
 }
 
 bool SDLFacade::init() {
@@ -123,28 +125,28 @@ void SDLFacade::draw_text(string text, FontType font) const {
 }
 
 void SDLFacade::set_height(const int &screen_height) {
-    _height = screen_height;
+    this->_height = screen_height;
 }
 
 int SDLFacade::get_height() const {
-    return _height;
+    return this->_height;
 }
 
 void SDLFacade::set_width(const int &screen_width) {
-    _width = screen_width;
+    this->_width = screen_width;
 }
 
 int SDLFacade::get_width() const {
-    return _width;
+    return this->_width;
 }
 
 void SDLFacade::_handle_key_pressed_event(SDL_Keycode key) {
     map<SDL_Keycode, Key>::iterator it;
-    it = _possible_keys.find(key);
+    it = this->_possible_keys.find(key);
 
     // Check if SDL_Keycode needs to be handled
-    if(it != _possible_keys.end()){
-        _keys_down.push_back(it->second);
+    if(it != this->_possible_keys.end()){
+        this->_keys_down.push_back(it->second);
     }
 }
 
@@ -156,7 +158,7 @@ void SDLFacade::_handle_key_released_event(SDL_Keycode key) {
     if(it_possible != _possible_keys.end()){
         //_keys_down.erase(it_possible->second);
         vector<Key>::iterator it_down;
-        it_down = find(_keys_down.begin(), _keys_down.end(), it_possible->second);
+        it_down = find(this->_keys_down.begin(), this->_keys_down.end(), it_possible->second);
 
         // Check if released key is in _keys_down
         if(it_down != _keys_down.end()){
@@ -168,8 +170,8 @@ void SDLFacade::_handle_key_released_event(SDL_Keycode key) {
 void SDLFacade::_handle_window_event(SDL_Event* event){
     switch(event->window.event){
         case SDL_WINDOWEVENT_RESIZED:
-            _width = event->window.data1;
-            _height = event->window.data2;
+            this->_width = event->window.data1;
+            this->_height = event->window.data2;
             break;
         default:
             break;
