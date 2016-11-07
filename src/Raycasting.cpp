@@ -272,8 +272,10 @@ namespace Engine {
     /// \param current_ray_index
     void Raycasting::_draw_line(LineCords &line_cords, Color &color, int current_ray_index)
     {
-        this->_SDL_facade.draw_line(current_ray_index, line_cords.draw_start, current_ray_index,
-                                    line_cords.draw_end, &color);
-        //todo color is currently a pointer, but will be changed to a reference, if seg fault, look here
+        this->_SDL_facade.draw_line(
+            CoordinateDouble {(double)current_ray_index, (double)line_cords.draw_start},
+            CoordinateDouble {(double)current_ray_index, (double)line_cords.draw_end},
+            color
+        );
     }
 }
