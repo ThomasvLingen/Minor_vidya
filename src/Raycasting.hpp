@@ -41,6 +41,7 @@ namespace Engine {
         int _get_wall_height(Wall wall, DoubleCoordinate ray_pos, Direction ray_direction, RaySteps ray_steps);
         double _calculate_wall_dist(int& wall_cord, double& ray_pos, RayStep ray_step, double ray_dir);
         LineCords _get_line_measures(int line_height);
+        void _correct_line(LineCords& line);
         void _draw_line(LineCords& line_cords, Color& color, int current_ray_index);
     };
 }

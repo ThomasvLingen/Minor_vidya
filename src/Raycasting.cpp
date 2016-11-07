@@ -174,26 +174,52 @@ namespace Engine {
         return line_height;
     }
 
+    /// \brief Calculate the distance to the wall for an axis
+    /// \param wall_cord wall position
+    /// \param ray_pos ray position
+    /// \param ray_step ray step size
+    /// \param ray_dir ray direction
+    /// \return distance to wall in a double
     double Raycasting::_calculate_wall_dist(int &wall_cord, double &ray_pos, RayStep ray_step, double ray_dir)
     {
         return (wall_cord - ray_pos + (1 - ray_step.step_size) / 2) / ray_dir;
     }
 
+    /// \brief get line measure from line_height
+    /// \param line_height
+    /// \return line measure in LineCords
     LineCords Raycasting::_get_line_measures(int line_height)
     {
         LineCords line;
         int screen_height = this->_SDL_facade.get_height();
 
         line.draw_start = -line_height / 2 + screen_height / 2;
-        if (line.draw_start < 0) {
-            line.draw_start = 0;
-        }
         line.draw_end = line_height / 2 + screen_height / 2;
-        if (line.draw_end >= screen_height) {
+
+        this->_correct_line(line);
+
+        return line;
+    }
+
+    /// \brief Corrects lineCords if out if screen range
+    /// \param LineCords containing the line coordinates
+    void Raycasting::_correct_line(LineCords &line)
+    {
+        int screen_height = this->_SDL_facade.get_height();
+
+        if(line.draw_end < 0){
+            line.draw_end = 0;
+        }
+        if(line.draw_end >= screen_height){
             line.draw_end = screen_height - 1;
         }
 
-        return line;
+        if(line.draw_start < 0){
+            line.draw_start = 0;
+        }
+        if(line.draw_start >= screen_height){
+            line.draw_start = screen_height - 1;
+        }
     }
 
     DoubleCoordinate Raycasting::_get_ray_pos()
