@@ -6,6 +6,7 @@
 #define MINOR_VIDYA_SDLFACADE_HPP
 
 #include <string>
+#include <iostream>
 #include <map>
 #include <vector>
 
@@ -18,6 +19,8 @@
 using std::string;
 using std::map;
 using std::vector;
+using std::cout;
+using std::endl;
 using Engine::CoordinateDouble;
 
 
@@ -70,7 +73,7 @@ class SDLFacade {
         bool _init_window();
         bool _init_renderer();
         bool _init_fonts();
-        bool _load_font(const string &path, const FontType &font_type, uint8_t );
+        bool _load_font(const string &path, const FontType &font_type, uint8_t size);
 
 };
 

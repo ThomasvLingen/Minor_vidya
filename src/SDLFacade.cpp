@@ -3,7 +3,6 @@
 //
 
 #include "SDLFacade.hpp"
-#include <iostream>
 
 SDLFacade::SDLFacade() {
     //todo
@@ -11,12 +10,12 @@ SDLFacade::SDLFacade() {
 
 SDLFacade::~SDLFacade() {
     //todo
-    delete _window;
-    delete _screenSurface;
-    delete _renderer;
+    SDL_DestroyWindow(_window);
+    SDL_FreeSurface(_screenSurface);
+    SDL_DestroyRenderer(_renderer);
 
     for(auto font : this->_fonts){
-        delete font.second;
+        TTF_CloseFont(font.second);
     }
 }
 
@@ -62,7 +61,7 @@ bool SDLFacade::_init_renderer()
         return true;
     } else {
         //std::cout << "Something went wrong while making a renderer! : " + SDL_GetError() << std::endl;
-        delete _renderer;
+        SDL_DestroyRenderer(_renderer);
         return false;
     }
 }
@@ -75,7 +74,7 @@ bool SDLFacade::_init_window() {
         return true;
     } else {
         //std::cout << "Something went wrong while making a window! : " + SDL_GetError() << std::endl;
-        delete _window;
+        SDL_DestroyWindow(_window);
         return false;
     }
 }
@@ -130,9 +129,9 @@ bool SDLFacade::draw_text(const string &text, const FontType &font, const Color 
 
         return true;
     } catch (int exception){
-        delete render_font;
-        delete text_surface;
-        delete text_texture;
+        TTF_CloseFont(render_font);
+        SDL_FreeSurface(text_surface);
+        SDL_DestroyTexture(text_texture);
         return false;
     }
 }
@@ -171,11 +170,11 @@ bool SDLFacade::_init_fonts(){
     return true;
 }
 
-bool SDLFacade::_load_font(const string &path, const FontType &font_type, uint8_t &size) {
-    TTF_Font* new_font = TTF_OpenFont(path, size);
+bool SDLFacade::_load_font(const string &path, const FontType &font_type, uint8_t size) {
+    TTF_Font* new_font = TTF_OpenFont(path.c_str(), size);
 
     if (new_font == nullptr) {
-        printf("Could not open " + path + " [%s]\n", TTF_GetError());
+        cout << "Could not open " << path << " " << TTF_GetError() << endl;
         return false;
     } else {
         _fonts[font_type] = new_font;
