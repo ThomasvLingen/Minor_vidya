@@ -122,7 +122,7 @@ void SDLFacade::handle_sdl_events() {
     }
 }
 
-std::vector <Key, std::allocator<Key>> SDLFacade::get_keys() const {
+PressedKeys SDLFacade::get_keys() const {
     //todo
     return this->_keys_down;
 }

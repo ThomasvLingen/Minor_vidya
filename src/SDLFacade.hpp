@@ -93,7 +93,7 @@ class SDLFacade {
         bool _init_window();
         bool _init_renderer();
         bool _init_fonts();
-		bool _load_font(const string &path, const FontType &font_type, uint8_t size);
+        bool _load_font(const string &path, const FontType &font_type, uint8_t size);
 
         void _init_possible_keys();
 };
