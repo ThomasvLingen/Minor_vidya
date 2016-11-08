@@ -68,7 +68,7 @@ namespace Engine {
 
         void clear_screen(); //draws the background
 
-        void draw_line(const CoordinateDouble& position1, const CoordinateDouble& position2, const Color& color);
+        void draw_line(const CoordinateDouble& line_start, const CoordinateDouble& line_end, const Color& color);
 
         void render_buffer() const;
 

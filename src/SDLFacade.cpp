@@ -90,10 +90,10 @@ namespace Engine {
         SDL_FillRect(_screenSurface, NULL, SDL_MapRGB(_screenSurface->format, 0x00, 0x00, 0x00));
     }
 
-    void SDLFacade::draw_line(const CoordinateDouble& position1, const CoordinateDouble& position2, const Color& color)
+    void SDLFacade::draw_line(const CoordinateDouble& line_start, const CoordinateDouble& line_end, const Color& color)
     {
         SDL_SetRenderDrawColor(this->_renderer, color.r_value, color.g_value, color.b_value, 255);
-        SDL_RenderDrawLine(this->_renderer, position1.x, position1.y, position2.x, position2.y);
+        SDL_RenderDrawLine(this->_renderer, line_start.x, line_start.y, line_end.x, line_end.y);
     }
 
     void SDLFacade::render_buffer() const
@@ -185,11 +185,7 @@ namespace Engine {
 
     bool SDLFacade::_init_fonts()
     {
-        if (!_load_font("res/alterebro_pixel.ttf", FontType::alterebro_pixel, 30)) {
-            return false;
-        }
-
-        return true;
+        return _load_font("res/alterebro_pixel.ttf", FontType::alterebro_pixel, 30);
     }
 
     bool SDLFacade::_load_font(const string& path, const FontType& font_type, uint8_t size)
