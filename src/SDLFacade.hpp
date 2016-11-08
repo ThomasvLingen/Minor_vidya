@@ -9,24 +9,29 @@
 #include <iostream>
 #include <map>
 #include <vector>
+#include <functional>
+#include <algorithm>
 
 #include "Color.hpp"
 #include "RayCastingTypes.hpp"
 #include "CoordinateDouble.hpp"
 
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_ttf.h>
+#include "SDL2/SDL.h"
+#include "SDL2/SDL_ttf.h"
 
 using std::string;
 using std::map;
 using std::vector;
+using std::pair;
+using std::function;
+using std::find;
 using std::cout;
 using std::endl;
 using Engine::CoordinateDouble;
 
 
 enum FontType {verdana, roman, alterebro_pixel};
-enum Key {W, A, S, D};
+enum Key {W, A, S, D, ESC};
 
 typedef std::vector<Key> PressedKeys;
 
@@ -36,13 +41,26 @@ class SDLFacade {
         PressedKeys _keys_down;
 
         map<FontType, TTF_Font *> _fonts;
-        map<SDL_Keycode, Key> _possible_keys;
+
+        map<SDL_Keycode, Key> _possible_keys = {
+                {SDLK_w, W},
+                {SDLK_a, A},
+                {SDLK_s, S},
+                {SDLK_d, D},
+                {SDLK_ESCAPE, ESC}
+        };
+
         SDL_Window* _window = nullptr;
         SDL_Surface* _screenSurface = nullptr;
         SDL_Renderer* _renderer = nullptr;
 
+        int _width;
+        int _height;
+
+        function<void()> _quit_callback;
+
     public:
-        SDLFacade();
+        SDLFacade(const function<void()>& callback_func );
 
         virtual ~SDLFacade();
 
@@ -60,22 +78,25 @@ class SDLFacade {
 
         bool draw_text(const string &text, const FontType &font, const Color &color, const CoordinateDouble &position) const;
 
-        void set_height(const int &screen_height, const int &screen_width);
+        void set_height(const int &screen_height);
 
         int get_height() const;
 
-        void set_width(const int &screen_height, const int &screen_width);
+        void set_width(const int &screen_width);
 
         int get_width() const;
 
     private:
-        void _handle_quit_event();
-        void _handle_key_event();
+        void _handle_key_pressed_event(SDL_Keycode key);
+        void _handle_key_released_event(SDL_Keycode key);
+        void _handle_window_event(SDL_Event* event);
+
         bool _init_window();
         bool _init_renderer();
         bool _init_fonts();
         bool _load_font(const string &path, const FontType &font_type, uint8_t size);
 
+        void _init_possible_keys();
 };
 
 #endif //MINOR_VIDYA_SDLFACADE_HPP

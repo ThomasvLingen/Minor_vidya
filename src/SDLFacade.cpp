@@ -4,8 +4,10 @@
 
 #include "SDLFacade.hpp"
 
-SDLFacade::SDLFacade() {
-    //todo
+SDLFacade::SDLFacade(const function<void()>& callback_func )
+: _quit_callback(callback_func)
+{
+
 }
 
 SDLFacade::~SDLFacade() {
@@ -97,14 +99,32 @@ void SDLFacade::render_buffer() const {
     SDL_UpdateWindowSurface(_window);
 }
 
-
 void SDLFacade::handle_sdl_events() {
-    //todo
+    SDL_Event event;
+
+    while(SDL_PollEvent(&event) != 0){
+        switch(event.type){
+            case SDL_KEYDOWN:
+                _handle_key_pressed_event(event.key.keysym.sym);
+                break;
+            case SDL_KEYUP:
+                _handle_key_released_event(event.key.keysym.sym);
+                break;
+            case SDL_QUIT:
+                _quit_callback();
+                break;
+            case SDL_WINDOWEVENT:
+                _handle_window_event(&event);
+                break;
+            default:
+                break;
+        }
+    }
 }
 
-std::vector <Key, std::allocator<Key>> SDLFacade::get_keys() const {
+PressedKeys SDLFacade::get_keys() const {
     //todo
-    return std::vector < Key, std::allocator < Key >> ();
+    return this->_keys_down;
 }
 
 bool SDLFacade::draw_text(const string &text, const FontType &font, const Color &color, const CoordinateDouble &position) const {
@@ -136,30 +156,20 @@ bool SDLFacade::draw_text(const string &text, const FontType &font, const Color 
     }
 }
 
-void SDLFacade::set_height(const int &screen_height, const int &screen_width) {
-    //todo
+void SDLFacade::set_height(const int &screen_height) {
+    this->_height = screen_height;
 }
 
 int SDLFacade::get_height() const {
-    //todo
-    return 0;
+    return this->_height;
 }
 
-void SDLFacade::set_width(const int &screen_height, const int &screen_width) {
-    //todo
+void SDLFacade::set_width(const int &screen_width) {
+    this->_width = screen_width;
 }
 
 int SDLFacade::get_width() const {
-    //todo
-    return 0;
-}
-
-void SDLFacade::_handle_quit_event() {
-    //todo
-}
-
-void SDLFacade::_handle_key_event() {
-    //todo
+    return this->_width;
 }
 
 bool SDLFacade::_init_fonts(){
@@ -179,5 +189,47 @@ bool SDLFacade::_load_font(const string &path, const FontType &font_type, uint8_
     } else {
         _fonts[font_type] = new_font;
         return true;
+    }
+}
+
+void SDLFacade::_handle_key_pressed_event(SDL_Keycode key) {
+    map<SDL_Keycode, Key>::iterator it;
+    it = this->_possible_keys.find(key);
+
+    // Check if SDL_Keycode needs to be handled
+    if(it != this->_possible_keys.end()){
+        vector<Key>::iterator it_pressed;
+        it_pressed = find(this->_keys_down.begin(), this->_keys_down.end(), it->second);
+
+        if(it_pressed == _keys_down.end()){
+            this->_keys_down.push_back(it->second);
+        }
+    }
+}
+
+void SDLFacade::_handle_key_released_event(SDL_Keycode key) {
+    map<SDL_Keycode, Key>::iterator it_possible;
+    it_possible = _possible_keys.find(key);
+
+    // Check if SDL_Keycode needs to be handled
+    if(it_possible != _possible_keys.end()){
+        vector<Key>::iterator it_down;
+        it_down = find(this->_keys_down.begin(), this->_keys_down.end(), it_possible->second);
+
+        // Check if released key is in _keys_down
+        if(it_down != _keys_down.end()){
+            _keys_down.erase(it_down);
+        }
+    }
+}
+
+void SDLFacade::_handle_window_event(SDL_Event* event){
+    switch(event->window.event){
+        case SDL_WINDOWEVENT_RESIZED:
+            this->_width = event->window.data1;
+            this->_height = event->window.data2;
+            break;
+        default:
+            break;
     }
 }
