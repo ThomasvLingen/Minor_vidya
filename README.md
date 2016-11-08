@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/ThomasvLingen/Minor_vidya.svg?branch=dev)](https://travis-ci.org/ThomasvLingen/Minor_vidya)
+
 ## Compiling
 
 A makefile is included. To compile, run `make`.
