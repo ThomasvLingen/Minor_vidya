@@ -228,7 +228,7 @@ void SDLFacade::_handle_window_event(SDL_Event* event){
         case SDL_WINDOWEVENT_RESIZED:
             this->_width = event->window.data1;
             this->_height = event->window.data2;
-            break;a
+            break;
         default:
             break;
     }
