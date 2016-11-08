@@ -34,7 +34,7 @@ void TileObject::set_color(Color color)
 
 void TileObject::set_tile_neighbour(TileObject * tile, Direction direction)
 {
-	this->_neighbour_tiles[_direction_to_num_map[direction]];
+	this->_neighbour_tiles[_direction_to_num_map[direction]] = tile;
 }
 
 TileObject * TileObject::get_tile_neighbour(Direction direction)
