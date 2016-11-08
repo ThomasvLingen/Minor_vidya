@@ -30,12 +30,12 @@ namespace Engine {
         this->_color = color;
     }
 
-    void TileObject::set_tile_neighbour(TileObject * tile, Direction direction)
+    void TileObject::set_tile_neighbour(TileObject* tile, Direction direction)
     {
         this->_neighbour_tiles[_direction_to_num_map[direction]];
     }
 
-    TileObject * TileObject::get_tile_neighbour(Direction direction)
+    TileObject* TileObject::get_tile_neighbour(Direction direction)
     {
         return this->_neighbour_tiles[_direction_to_num_map[direction]];
     }
