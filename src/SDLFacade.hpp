@@ -37,11 +37,10 @@ namespace Engine {
     typedef std::vector<Key> PressedKeys;
 
     class SDLFacade {
-
     private:
         PressedKeys _keys_down;
 
-        map<FontType, TTF_Font *> _fonts;
+        map<FontType, TTF_Font*> _fonts;
 
         map<SDL_Keycode, Key> _possible_keys = {
             {SDLK_w, W},
@@ -61,7 +60,7 @@ namespace Engine {
         function<void()> _quit_callback;
 
     public:
-        SDLFacade(const function<void()>& callback_func );
+        SDLFacade(const function<void()>& callback_func);
 
         virtual ~SDLFacade();
 
@@ -69,7 +68,7 @@ namespace Engine {
 
         void clear_screen(); //draws the background
 
-        void draw_line(const CoordinateDouble &position1, const CoordinateDouble &position2, const Color &color);
+        void draw_line(const CoordinateDouble& position1, const CoordinateDouble& position2, const Color& color);
 
         void render_buffer() const;
 
@@ -77,13 +76,13 @@ namespace Engine {
 
         PressedKeys get_keys() const;
 
-        bool draw_text(const string &text, const FontType &font, const Color &color, const CoordinateDouble &position) const;
+        bool draw_text(const string& text, const FontType& font, const Color& color, const CoordinateDouble& position) const;
 
-        void set_height(const int &screen_height);
+        void set_height(const int& screen_height);
 
         int get_height() const;
 
-        void set_width(const int &screen_width);
+        void set_width(const int& screen_width);
 
         int get_width() const;
 
@@ -95,9 +94,7 @@ namespace Engine {
         bool _init_window();
         bool _init_renderer();
         bool _init_fonts();
-        bool _load_font(const string &path, const FontType &font_type, uint8_t size);
-
-        void _init_possible_keys();
+        bool _load_font(const string& path, const FontType& font_type, uint8_t size);
     };
 }
 
