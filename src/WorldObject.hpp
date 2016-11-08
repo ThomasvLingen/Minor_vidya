@@ -7,24 +7,24 @@
 
 
 namespace Engine {
-	using std::vector;
+    using std::vector;
 
-	class WorldObject{
+    class WorldObject{
 
-	private:
-		vector<vector<TileObject*>> _field;
-		PointOfView _point_of_view;
+    private:
+        vector<vector<TileObject*>> _field;
+        PointOfView _point_of_view;
 
-	public:
-		WorldObject(vector<vector<TileObject*>> field);
-		virtual ~WorldObject();
+    public:
+        WorldObject(vector<vector<TileObject*>> field);
+        virtual ~WorldObject();
 
-		void update();
+        void update();
 
-		PointOfView& get_pov();
-		TileObject* get_tile(int x, int y);
+        PointOfView& get_pov();
+        TileObject* get_tile(int x, int y);
 
-	};
+    };
 }
 
 #endif // !WORLDOBJECT_HPP
