@@ -9,8 +9,7 @@
 namespace Engine {
     using std::vector;
 
-    class WorldObject{
-
+    class WorldObject {
     private:
         vector<vector<TileObject*>> _field;
         PointOfView _point_of_view;
@@ -23,7 +22,6 @@ namespace Engine {
 
         PointOfView& get_pov();
         TileObject* get_tile(int x, int y);
-
     };
 }
 

@@ -17,7 +17,7 @@ namespace Engine {
     using std::string;
     using std::map;
 
-    class TileObject{
+    class TileObject {
 
     public:
         enum Direction { up_tile, down_tile, left_tile, right_tile };    // direction for set_tile
@@ -32,12 +32,10 @@ namespace Engine {
             {Direction::up_tile, to_up_neighbour_index},
             {Direction::down_tile, to_down_neighbour_index},
             {Direction::left_tile, to_left_neighbour_index},
-            {Direction::right_tile, to_right_neighbour_index},
-
+            {Direction::right_tile, to_right_neighbour_index}
         };
 
     public:
-
         TileObject();
         virtual ~TileObject();
         void update();
@@ -51,7 +49,6 @@ namespace Engine {
 
         bool is_wall();
         Color get_color();
-
     };
 }
 
