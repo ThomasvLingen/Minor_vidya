@@ -5,25 +5,27 @@
 #include "PointOfView.hpp"
 #include <vector>
 
-using std::vector;
-using Engine::PointOfView;
 
-class WorldObject{
+namespace Engine {
+	using std::vector;
 
-private:
-	vector<vector<TileObject*>> _field;
-	PointOfView _point_of_view;
+	class WorldObject{
 
-public:
-	WorldObject(vector<vector<TileObject*>> field);
-	virtual ~WorldObject();
+	private:
+		vector<vector<TileObject*>> _field;
+		PointOfView _point_of_view;
 
-	void update();
+	public:
+		WorldObject(vector<vector<TileObject*>> field);
+		virtual ~WorldObject();
 
-	PointOfView& get_pov();
-	TileObject* get_tile(int x, int y);
+		void update();
 
-};
+		PointOfView& get_pov();
+		TileObject* get_tile(int x, int y);
+
+	};
+}
 
 #endif // !WORLDOBJECT_HPP
 

@@ -19,23 +19,24 @@
 #include "SDL2/SDL.h"
 #include "SDL2/SDL_ttf.h"
 
-using std::string;
-using std::map;
-using std::vector;
-using std::pair;
-using std::function;
-using std::find;
-using std::cout;
-using std::endl;
-using Engine::CoordinateDouble;
+
+namespace Engine {
+    using std::string;
+    using std::map;
+    using std::vector;
+    using std::pair;
+    using std::function;
+    using std::find;
+    using std::cout;
+    using std::endl;
 
 
-enum FontType {verdana, roman, alterebro_pixel};
-enum Key {W, A, S, D, ESC};
+    enum FontType {verdana, roman, alterebro_pixel};
+    enum Key {W, A, S, D, ESC};
 
-typedef std::vector<Key> PressedKeys;
+    typedef std::vector<Key> PressedKeys;
 
-class SDLFacade {
+    class SDLFacade {
 
     private:
         PressedKeys _keys_down;
@@ -43,11 +44,11 @@ class SDLFacade {
         map<FontType, TTF_Font *> _fonts;
 
         map<SDL_Keycode, Key> _possible_keys = {
-                {SDLK_w, W},
-                {SDLK_a, A},
-                {SDLK_s, S},
-                {SDLK_d, D},
-                {SDLK_ESCAPE, ESC}
+            {SDLK_w, W},
+            {SDLK_a, A},
+            {SDLK_s, S},
+            {SDLK_d, D},
+            {SDLK_ESCAPE, ESC}
         };
 
         SDL_Window* _window = nullptr;
@@ -97,6 +98,8 @@ class SDLFacade {
         bool _load_font(const string &path, const FontType &font_type, uint8_t size);
 
         void _init_possible_keys();
-};
+    };
+}
+
 
 #endif //MINOR_VIDYA_SDLFACADE_HPP
