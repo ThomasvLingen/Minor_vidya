@@ -15,6 +15,7 @@ namespace Engine {
 
     }
 
+    /// \brief update all objects in this particular tile.
     void TileObject::update()
     {
         // TODO: Implement this
@@ -32,7 +33,7 @@ namespace Engine {
 
     void TileObject::set_tile_neighbour(TileObject* tile, Direction direction)
     {
-        this->_neighbour_tiles[_direction_to_num_map[direction]];
+        this->_neighbour_tiles[_direction_to_num_map[direction]] = tile;
     }
 
     TileObject* TileObject::get_tile_neighbour(Direction direction)
