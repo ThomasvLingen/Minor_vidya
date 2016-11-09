@@ -20,7 +20,7 @@ using std::vector;
 using std::string;
 using std::map;
 
-class Tile : public TileObject{
+class Tile : public TileObject {
 
 public:
     enum Direction { up_tile, down_tile, left_tile, right_tile };
@@ -48,7 +48,7 @@ public:
     void set_wall(bool has_wall);
     void set_color(Color color);
 
-    void set_tile_neighbour(TileObject* tile, Direction direction);
+    void set_tile_neighbour(TileObject * tile, Direction direction);
 
     TileObject* get_tile_neighbour(Direction direction);
 

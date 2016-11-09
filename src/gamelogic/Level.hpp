@@ -15,7 +15,7 @@ using std::vector;
 using Engine::PointOfView;
 using Engine::CoordinateDouble;
 
-class Level : public WorldObject{
+class Level : public WorldObject {
 
 private:
     vector<vector<TileObject*>> _field;
@@ -36,7 +36,7 @@ public:
     void update();
 
     PointOfView & get_pov();
-    TileObject* get_tile(int x, int y);
+    TileObject * get_tile(int x, int y);
     CoordinateDouble get_spawnpoint();
 
 

@@ -10,9 +10,11 @@
 #include "../CoordinateDouble.hpp"
 #include "../RaycastingVector.hpp"
 
-using namespace Engine;
+using Engine::CoordinateDouble;
+using Engine::RaycastingVector;
+using Engine::PointOfView;
 
-class Player : public PointOfView{
+class Player : public PointOfView {
 
 public:
     Player(CoordinateDouble position);
