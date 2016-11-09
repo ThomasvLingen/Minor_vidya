@@ -12,6 +12,7 @@ namespace Engine {
     {
     }
 
+    /// \brief update all objects in this WorldObject.
     void WorldObject::update()
     {
         // TODO: Implement this
