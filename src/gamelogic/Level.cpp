@@ -9,7 +9,7 @@ using std::vector
 
 Level::Level(vector<vector<TileObject*>> field)
 : WorldObject(field)
-, _point_of_view(Engine::DoubleCoordinate{2 , 10}, Engine::RaycastingVector{-1 , 0}, Engine::RaycastingVector{0 , 0.66})
+, _point_of_view(Engine::CoordinateDouble{2 , 10}, Engine::RaycastingVector{-1 , 0}, Engine::RaycastingVector{0 , 0.66})
 {
 
 }
@@ -38,7 +38,7 @@ TileObject * Level::get_tile(int x, int y)
     }
 }
 
-DoubleCoordinate Level::get_spawnpoint()
+CoordinateDouble Level::get_spawnpoint()
 {
     return this->_spawnpoint;
 }
