@@ -5,7 +5,7 @@
 #include "Level.hpp"
 #include "Tile.hpp"
 
-using std::vector
+using std::vector;
 
 Level::Level(vector<vector<TileObject*>> field)
 : WorldObject(field)
@@ -14,7 +14,8 @@ Level::Level(vector<vector<TileObject*>> field)
 
 }
 
-Level::~Level(){
+Level::~Level()
+{
 
 }
 
