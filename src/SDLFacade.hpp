@@ -87,6 +87,10 @@ namespace Engine {
 
         int get_width() const;
 
+        int get_ticks() const;
+
+        void delay_millis(const int millis) const;
+
     private:
         void _handle_key_pressed_event(SDL_Keycode key);
         void _handle_key_released_event(SDL_Keycode key);

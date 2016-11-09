@@ -246,4 +246,14 @@ namespace Engine {
                 break;
         }
     }
+
+    int SDLFacade::get_ticks() const
+    {
+        return SDL_GetTicks();
+    }
+
+    void SDLFacade::delay_millis(const int millis) const
+    {
+        SDL_Delay((uint32_t)millis);
+    }
 }
