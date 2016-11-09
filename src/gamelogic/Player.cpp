@@ -4,7 +4,7 @@
 
 #include "Player.hpp"
 
-Player::Player(DoubleCoordinate position)
+Player::Player(CoordinateDouble position)
 : PointOfView(position, Engine::RaycastingVector{-1 , 0}, Engine::RaycastingVector{0 , 0.66})
 {
 
@@ -15,7 +15,7 @@ Player::~Player()
 
 }
 
-DoubleCoordinate &Engine::PointOfView::get_position()
+CoordinateDouble &Engine::PointOfView::get_position()
 {
     return this->_position;
 }

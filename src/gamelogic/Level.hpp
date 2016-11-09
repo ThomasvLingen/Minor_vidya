@@ -8,19 +8,19 @@
 #include "../WorldObject.hpp"
 #include "../TileObject.hpp"
 #include "../PointOfView.hpp"
-#include "../DoubleCoordinate.hpp"
+#include "../CoordinateDouble.hpp"
 #include <vector>
 
 using std::vector;
 using Engine::PointOfView;
-using Engine::DoubleCoordinate;
+using Engine::CoordinateDouble;
 
 class Level : public WorldObject{
 
 private:
     vector<vector<TileObject*>> _field;
     PointOfView _point_of_view;
-    DoubleCoordinate _spawnpoint;
+    CoordinateDouble _spawnpoint;
 
     /*
      * WorldParser
@@ -37,7 +37,7 @@ public:
 
     PointOfView & get_pov();
     TileObject* get_tile(int x, int y);
-    DoubleCoordinate get_spawnpoint();
+    CoordinateDouble get_spawnpoint();
 
 
 };

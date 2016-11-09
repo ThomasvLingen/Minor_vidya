@@ -7,7 +7,7 @@
 
 
 #include "../PointOfView.hpp"
-#include "../DoubleCoordinate.hpp"
+#include "../CoordinateDouble.hpp"
 #include "../RaycastingVector.hpp"
 
 using namespace Engine;
@@ -15,15 +15,15 @@ using namespace Engine;
 class Player : public PointOfView{
 
 public:
-    Player(DoubleCoordinate position);
+    Player(CoordinateDouble position);
     virtual ~Player();
 
-    DoubleCoordinate& get_position();
+    CoordinateDouble& get_position();
     RaycastingVector& get_direction();
     RaycastingVector& get_camera_plane();
 
 private:
-    DoubleCoordinate _position;
+    CoordinateDouble _position;
     RaycastingVector _direction;
     RaycastingVector _camera_plane;
 
