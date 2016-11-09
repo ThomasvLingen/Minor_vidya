@@ -18,12 +18,14 @@ namespace Engine {
 
     class Raycasting {
     public:
-        Raycasting(SDLFacade& SDL_facade, WorldPTR world);
+        Raycasting(SDLFacade& SDL_facade);
         virtual ~Raycasting();
 
         void handle_input(/* TODO:  Input data type from SDL facade */);
         void update(int delta_time);
         void draw();
+
+        void set_world(WorldPTR new_world);
 
     private:
         SDLFacade& _SDL_facade;
