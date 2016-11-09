@@ -135,7 +135,8 @@ namespace Engine {
     /// \param map_position
     /// \param delta_dist
     /// \return ray step size
-    RayStep Raycasting::_calculate_single_step(double& ray_direction, double& ray_position, int& map_position, double& delta_dist)
+    RayStep Raycasting::_calculate_single_step(double& ray_direction, double& ray_position, int& map_position,
+                                               double& delta_dist)
     {
         RayStep return_step;
         double delta_length;

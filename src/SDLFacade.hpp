@@ -76,7 +76,8 @@ namespace Engine {
 
         PressedKeys get_keys() const;
 
-        bool draw_text(const string& text, const FontType& font, const Color& color, const CoordinateDouble& position) const;
+        bool draw_text(const string& text, const FontType& font, const Color& color,
+                       const CoordinateDouble& position) const;
 
         void set_height(const int& screen_height);
 

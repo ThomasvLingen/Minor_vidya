@@ -133,7 +133,8 @@ namespace Engine {
         return this->_keys_down;
     }
 
-    bool SDLFacade::draw_text(const string& text, const FontType& font, const Color& color, const CoordinateDouble& position) const
+    bool SDLFacade::draw_text(const string& text, const FontType& font, const Color& color,
+                              const CoordinateDouble& position) const
     {
         SDL_Color render_color = { color.r_value, color.g_value, color.b_value, 255 };
         TTF_Font* render_font = nullptr;
