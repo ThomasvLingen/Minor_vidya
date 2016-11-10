@@ -3,25 +3,27 @@
 
 #include "TileObject.hpp"
 #include "PointOfView.hpp"
+#include "CoordinateDouble.hpp"
 #include <vector>
 
 using std::vector;
 using Engine::PointOfView;
+using Engine::CoordinateDouble;
 
 class WorldObject{
 
 private:
-	vector<vector<TileObject*>> _field;
-	PointOfView _point_of_view;
+	//vector<vector<TileObject*>> _field;
+	//PointOfView _point_of_view;
 
 public:
-	WorldObject(vector<vector<TileObject*>> field);
+	WorldObject();
 	virtual ~WorldObject();
 
 	void update();
 
-	PointOfView& get_pov();
-	TileObject* get_tile(int x, int y);
+	virtual PointOfView& get_pov() = 0;
+	virtual TileObject* get_tile(int x, int y) = 0;
 
 };
 
