@@ -6,15 +6,8 @@
 #define MINOR_VIDYA_TILE_HPP
 
 #include "../TileObject.hpp"
-#include <iostream>
-
-using std::vector;
-using std::string;
-using std::map;
 
 class Tile : public TileObject {
-
-public:
 
 private:
 
@@ -22,8 +15,6 @@ public:
     Tile();
     virtual ~Tile();
     void update() override;
-    void test();
-    TileObject* getTile();
 
 };
 

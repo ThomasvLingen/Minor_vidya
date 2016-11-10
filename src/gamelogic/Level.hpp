@@ -17,9 +17,9 @@ using Engine::CoordinateDouble;
 class Level : public WorldObject {
 
 private:
-    vector<vector<Tile*>> _field;
+    vector<vector<Tile*>> _field; //TODO create a typedef for this
     CoordinateDouble _spawnpoint;
-    Player* _player;
+    Player* _player; //TODO smart pointers?
     /*
      * WorldParser
      *      ->
@@ -32,15 +32,15 @@ public:
 
     virtual ~Level();
 
-    void update();
+    void update() override;
 
     void set_player(Player* player);
 
-    TileObject* get_tile(int x, int y);
+    TileObject* get_tile(int x, int y) override;
 
     CoordinateDouble get_spawnpoint();
 
-    PointOfView& get_pov();
+    PointOfView& get_pov() override;
 
 
 };
