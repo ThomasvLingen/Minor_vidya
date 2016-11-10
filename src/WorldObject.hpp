@@ -13,17 +13,12 @@ using Engine::CoordinateDouble;
 class WorldObject{
 
 private:
-	//vector<vector<TileObject*>> _field;
-	//PointOfView _point_of_view;
 
 public:
-	WorldObject();
-	virtual ~WorldObject();
-
-	void update();
+	virtual void update() = 0;
 
 	virtual PointOfView& get_pov() = 0;
-	virtual TileObject* get_tile(int x, int y) = 0;
+	virtual TileObject* get_tile(int x, int y) = 0; //TODO: int x/y too coordinate double?
 
 };
 

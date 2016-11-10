@@ -28,7 +28,7 @@ CoordinateDouble Level::get_spawnpoint()
 
 TileObject* Level::get_tile(int x, int y)
 {
-    return _field.at(x).at(y);
+    return _field.at(x).at(y); //TODO use at or []?
 }
 
 PointOfView& Level::get_pov()

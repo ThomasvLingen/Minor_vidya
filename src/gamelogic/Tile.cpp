@@ -17,15 +17,5 @@ Tile::~Tile()
 
 void Tile::update()
 {
-    std::cout << "I am here!" << std::endl;
+    //TODO implement
 }
-
-void Tile::test()
-{
-    std::cout << "Test" << std::endl;
-}
-
-TileObject* Tile::getTile()
-{
-    return this;
-};
