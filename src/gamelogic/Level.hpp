@@ -7,21 +7,19 @@
 
 #include "../WorldObject.hpp"
 #include "../TileObject.hpp"
-#include "../PointOfView.hpp"
-#include "../CoordinateDouble.hpp"
+#include "Tile.hpp"
+#include "Player.hpp"
 #include <vector>
 
 using std::vector;
-using Engine::PointOfView;
 using Engine::CoordinateDouble;
 
 class Level : public WorldObject {
 
 private:
-    vector<vector<TileObject*>> _field;
-    PointOfView _point_of_view;
+    vector<vector<Tile*>> _field;
     CoordinateDouble _spawnpoint;
-
+    Player* _player;
     /*
      * WorldParser
      *      ->
@@ -30,14 +28,19 @@ private:
      */
 
 public:
-    Level(vector<vector<TileObject*>> field);
+    Level(vector<vector<Tile*>> field);
+
     virtual ~Level();
 
     void update();
 
-    PointOfView & get_pov();
-    TileObject * get_tile(int x, int y);
+    void set_player(Player* player);
+
+    TileObject* get_tile(int x, int y);
+
     CoordinateDouble get_spawnpoint();
+
+    PointOfView& get_pov();
 
 
 };

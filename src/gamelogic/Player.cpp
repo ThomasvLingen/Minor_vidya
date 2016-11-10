@@ -14,18 +14,3 @@ Player::~Player()
 {
 
 }
-
-CoordinateDouble &Engine::PointOfView::get_position()
-{
-    return this->_position;
-}
-
-RaycastingVector &Engine::PointOfView::get_direction()
-{
-    return this->_direction;
-}
-
-RaycastingVector &Engine::PointOfView::get_camera_plane()
-{
-    return this->_camera_plane;
-}
