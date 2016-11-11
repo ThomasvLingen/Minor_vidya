@@ -13,7 +13,7 @@ set(SOURCE_FILES
 		src/PointOfView.hpp src/PointOfView.cpp
 		src/RaycastingVector.hpp
 		src/TileObject.hpp src/TileObject.cpp
-		src/WorldObject.hpp src/WorldObject.cpp
+		src/WorldObject.hpp
 )
 
 add_executable(Minor_vidya ${SOURCE_FILES})
