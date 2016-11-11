@@ -6,9 +6,9 @@
 
 namespace Engine {
 
-    Raycasting::Raycasting(SDLFacade& SDL_facade, WorldPTR world)
+    Raycasting::Raycasting(SDLFacade& SDL_facade)
     : _SDL_facade(SDL_facade)
-    , _world(world)
+    , _world(nullptr)
     {
 
     }
@@ -20,39 +20,41 @@ namespace Engine {
 
     void Raycasting::handle_input()
     {
-        // Call world handle_input
+        // TODO: Call world handle_input
 
         // If we need to do something on a keystroke, handle input ourselves
     }
 
     void Raycasting::update(int delta_time)
     {
-        // Call world update
+        // TODO: Call world update
     }
 
     /// \brief Draws a single frame with raycasting using the world object and SDL facade
     void Raycasting::draw()
     {
+        if (this->_world != nullptr) {
+            for (int ray_index = 0; ray_index < this->_SDL_facade.get_width(); ray_index++) {
+                CoordinateDouble ray_position = _get_ray_pos();
+                Direction ray_dir = _calculate_ray_direction(ray_index);
+                CoordinateInt map_coord = _get_map_coord(ray_position);
 
-        for (int ray_index = 0; ray_index < this->_SDL_facade.get_width(); ray_index++) {
-            CoordinateDouble ray_position = _get_ray_pos();
-            Direction ray_dir = _calculate_ray_direction(ray_index);
-            CoordinateInt map_coord = _get_map_coord(ray_position);
+                DeltaDist delta_dist = _calculate_delta_distance(ray_dir);
+                RaySteps ray_steps = _calculate_ray_steps(ray_dir, ray_position, map_coord, delta_dist);
 
-            DeltaDist delta_dist = _calculate_delta_distance(ray_dir);
-            RaySteps ray_steps = _calculate_ray_steps(ray_dir, ray_position, map_coord, delta_dist);
+                Wall wall = _search_wall(ray_steps, map_coord, delta_dist);
+                int line_height = _get_wall_height(wall, ray_position, ray_dir, ray_steps);
+                LineCords line_cords = _get_line_measures(line_height);
 
-            Wall wall = _search_wall(ray_steps, map_coord, delta_dist);
-            int line_height = _get_wall_height(wall, ray_position, ray_dir, ray_steps);
-            LineCords line_cords = _get_line_measures(line_height);
+                Color color = this->_world->get_tile(wall.cord.x, wall.cord.y)->get_color();
 
-            Color color = this->_world->get_tile(wall.cord.x, wall.cord.y)->get_color();
+                // TODO: Uncomment this as soon as Color is done
+                // if (wall.side == WallSide::y_wall) {
+                //     color = color.reduce_intensity();
+                // }
 
-//            if (wall.side == WallSide::y_wall) {
-//                color = color.reduce_intensity();
-//            }
-
-            this->_draw_line(line_cords, color, ray_index);
+                this->_draw_line(line_cords, color, ray_index);
+            }
         }
     }
 
@@ -135,12 +137,13 @@ namespace Engine {
     /// \param map_position
     /// \param delta_dist
     /// \return ray step size
-    RayStep Raycasting::_calculate_single_step(double &ray_direction, double &ray_position, int &map_position, double &delta_dist)
+    RayStep Raycasting::_calculate_single_step(double& ray_direction, double& ray_position, int& map_position,
+                                               double& delta_dist)
     {
         RayStep return_step;
         double delta_length;
 
-        if(ray_direction < 0){
+        if (ray_direction < 0) {
             return_step.step_size = -1;
             delta_length = ray_position - map_position;
         } else {
@@ -165,8 +168,8 @@ namespace Engine {
         WallSide side;
         Wall return_wall;
 
-        while(true){
-            if(step_sizes.x.side_distance < step_sizes.y.side_distance){
+        while (true) {
+            if (step_sizes.x.side_distance < step_sizes.y.side_distance) {
                 step_sizes.x.side_distance += delta_dist.x;
                 start_point.x += step_sizes.x.step_size;
                 side = WallSide::x_wall;
@@ -176,7 +179,7 @@ namespace Engine {
                 side = WallSide::y_wall;
             }
 
-            if(this->_world->get_tile(start_point.x, start_point.y)->is_wall()){
+            if (this->_world->get_tile(start_point.x, start_point.y)->is_wall()) {
                 break;
             }
         }
@@ -203,7 +206,7 @@ namespace Engine {
         int line_height;
         int height = this->_SDL_facade.get_height();
 
-        if(wall.side == WallSide::x_wall){
+        if (wall.side == WallSide::x_wall) {
             perp_wall_dist = _calculate_wall_dist(wall.cord.x, ray_pos.x, ray_steps.x, ray_direction.x);
         } else {
             perp_wall_dist = _calculate_wall_dist(wall.cord.y, ray_pos.y, ray_steps.y, ray_direction.y);
@@ -219,7 +222,7 @@ namespace Engine {
     /// \param ray_step ray step size
     /// \param ray_dir ray direction
     /// \return distance to wall in a double
-    double Raycasting::_calculate_wall_dist(int &wall_cord, double &ray_pos, RayStep ray_step, double ray_dir)
+    double Raycasting::_calculate_wall_dist(int& wall_cord, double& ray_pos, RayStep ray_step, double ray_dir)
     {
         return (wall_cord - ray_pos + (1 - ray_step.step_size) / 2) / ray_dir;
     }
@@ -242,21 +245,21 @@ namespace Engine {
 
     /// \brief Corrects lineCords if out if screen range
     /// \param LineCords containing the line coordinates
-    void Raycasting::_correct_line(LineCords &line)
+    void Raycasting::_correct_line(LineCords& line)
     {
         int screen_height = this->_SDL_facade.get_height();
 
-        if(line.draw_end < 0){
+        if (line.draw_end < 0) {
             line.draw_end = 0;
         }
-        if(line.draw_end >= screen_height){
+        if (line.draw_end >= screen_height) {
             line.draw_end = screen_height - 1;
         }
 
-        if(line.draw_start < 0){
+        if (line.draw_start < 0) {
             line.draw_start = 0;
         }
-        if(line.draw_start >= screen_height){
+        if (line.draw_start >= screen_height) {
             line.draw_start = screen_height - 1;
         }
     }
@@ -270,12 +273,17 @@ namespace Engine {
     /// \param line_cords
     /// \param color
     /// \param current_ray_index
-    void Raycasting::_draw_line(LineCords &line_cords, Color &color, int current_ray_index)
+    void Raycasting::_draw_line(LineCords& line_cords, Color& color, int current_ray_index)
     {
         this->_SDL_facade.draw_line(
             CoordinateDouble {(double)current_ray_index, (double)line_cords.draw_start},
             CoordinateDouble {(double)current_ray_index, (double)line_cords.draw_end},
             color
         );
+    }
+
+    void Raycasting::set_world(WorldPTR new_world)
+    {
+        this->_world = new_world;
     }
 }

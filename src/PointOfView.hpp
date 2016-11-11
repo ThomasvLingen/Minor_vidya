@@ -11,7 +11,6 @@
 namespace Engine {
     class PointOfView {
     public:
-
         PointOfView(CoordinateDouble position, RaycastingVector direction, RaycastingVector camera_plane);
         virtual ~PointOfView();
 

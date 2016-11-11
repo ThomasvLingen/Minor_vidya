@@ -13,6 +13,8 @@
 
 using std::vector;
 using Engine::CoordinateDouble;
+using Engine::WorldObject;
+using Engine::TileObject;
 
 class Level : public WorldObject {
 

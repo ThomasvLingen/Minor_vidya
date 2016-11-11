@@ -4,7 +4,8 @@
 
 #include "Tile.hpp"
 
-Tile::Tile() : TileObject()
+Tile::Tile()
+: TileObject()
 {
 
 }

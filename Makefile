@@ -21,6 +21,8 @@ LINKER_FLAGS = -g
 # Files to compile
 SRC_PATH = src/
 SRC_FILES = $(shell find $(SRC_PATH) -name '*.cpp')
+HPP_FILES = $(shell find $(SRC_PATH) -name '*.hpp')
+ALL_FILES = $(SRC_FILES) $(HPP_FILES)
 OBJ_FILES = $(SRC_FILES:.cpp=.o)
 
 # Path for the resulting file
@@ -56,6 +58,12 @@ debug: $(EXEC)
 
 memory_leaks: $(EXEC)
 	valgrind --tool=memcheck --leak-check=full $(EXEC)
+
+search_for_tabs: $(SRC_PATH)
+	grep -r $$'\t' $(SRC_PATH)
+
+tabs_to_spaces: $(ALL_FILES)
+	sed -i $$'s/\t/    /g' $(ALL_FILES)
 
 .PHONY: clean
 clean:
