@@ -1,12 +1,10 @@
 #include "TileObject.hpp"
 
-
 namespace Engine {
     TileObject::TileObject()
     {
-        for (size_t i = 0; i < 4; i++) {
-            this->_neighbour_tiles.push_back(nullptr);
-        }
+        size_t size = this->_direction_to_num_map.size();
+        this->_neighbour_tiles.resize(size);
     }
 
 
@@ -33,12 +31,12 @@ namespace Engine {
 
     void TileObject::set_tile_neighbour(TileObject* tile, Direction direction)
     {
-        this->_neighbour_tiles[_direction_to_num_map[direction]] = tile;
+        this->_neighbour_tiles[this->_direction_to_num_map[direction]] = tile;
     }
 
     TileObject* TileObject::get_tile_neighbour(Direction direction)
     {
-        return this->_neighbour_tiles[_direction_to_num_map[direction]];
+        return this->_neighbour_tiles[this->_direction_to_num_map[direction]];
     }
 
     bool TileObject::is_wall()
