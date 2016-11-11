@@ -6,9 +6,9 @@
 
 namespace Engine {
 
-    Raycasting::Raycasting(SDLFacade& SDL_facade, WorldPTR world)
+    Raycasting::Raycasting(SDLFacade& SDL_facade)
     : _SDL_facade(SDL_facade)
-    , _world(world)
+    , _world(nullptr)
     {
 
     }
@@ -33,26 +33,28 @@ namespace Engine {
     /// \brief Draws a single frame with raycasting using the world object and SDL facade
     void Raycasting::draw()
     {
-        for (int ray_index = 0; ray_index < this->_SDL_facade.get_width(); ray_index++) {
-            CoordinateDouble ray_position = _get_ray_pos();
-            Direction ray_dir = _calculate_ray_direction(ray_index);
-            CoordinateInt map_coord = _get_map_coord(ray_position);
+        if (this->_world != nullptr) {
+            for (int ray_index = 0; ray_index < this->_SDL_facade.get_width(); ray_index++) {
+                CoordinateDouble ray_position = _get_ray_pos();
+                Direction ray_dir = _calculate_ray_direction(ray_index);
+                CoordinateInt map_coord = _get_map_coord(ray_position);
 
-            DeltaDist delta_dist = _calculate_delta_distance(ray_dir);
-            RaySteps ray_steps = _calculate_ray_steps(ray_dir, ray_position, map_coord, delta_dist);
+                DeltaDist delta_dist = _calculate_delta_distance(ray_dir);
+                RaySteps ray_steps = _calculate_ray_steps(ray_dir, ray_position, map_coord, delta_dist);
 
-            Wall wall = _search_wall(ray_steps, map_coord, delta_dist);
-            int line_height = _get_wall_height(wall, ray_position, ray_dir, ray_steps);
-            LineCords line_cords = _get_line_measures(line_height);
+                Wall wall = _search_wall(ray_steps, map_coord, delta_dist);
+                int line_height = _get_wall_height(wall, ray_position, ray_dir, ray_steps);
+                LineCords line_cords = _get_line_measures(line_height);
 
-            Color color = this->_world->get_tile(wall.cord.x, wall.cord.y)->get_color();
+                Color color = this->_world->get_tile(wall.cord.x, wall.cord.y)->get_color();
 
-            // TODO: Uncomment this as soon as Color is done
-            // if (wall.side == WallSide::y_wall) {
-            //     color = color.reduce_intensity();
-            // }
+                // TODO: Uncomment this as soon as Color is done
+                // if (wall.side == WallSide::y_wall) {
+                //     color = color.reduce_intensity();
+                // }
 
-            this->_draw_line(line_cords, color, ray_index);
+                this->_draw_line(line_cords, color, ray_index);
+            }
         }
     }
 
@@ -278,5 +280,10 @@ namespace Engine {
             CoordinateDouble {(double)current_ray_index, (double)line_cords.draw_end},
             color
         );
+    }
+
+    void Raycasting::set_world(WorldPTR new_world)
+    {
+        this->_world = new_world;
     }
 }
