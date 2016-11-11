@@ -18,7 +18,13 @@ Level::~Level()
 
 void Level::update()
 {
-    // TODO: Implement this
+    for (auto vector : this->_field) {
+        for (auto tile : vector) {
+            if (tile != nullptr) {
+                tile->update();
+            }
+        }
+    }
 }
 
 CoordinateDouble Level::get_spawnpoint()
