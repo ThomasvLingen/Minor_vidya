@@ -7,7 +7,7 @@
 
 #include "../TileObject.hpp"
 
-class Tile : public TileObject {
+class Tile : public Engine::TileObject {
 
 private:
 
