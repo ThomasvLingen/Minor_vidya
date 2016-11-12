@@ -8,12 +8,13 @@
 namespace GameLogic {
     Game::Game()
     : _running(true)
-    , _SDL_facade([this](){ //lamba function, captures this (the game class) and sets running to false as quit callback
+    , _SDL_facade([this](){ //lambda function, captures this (the game class) and sets running to false as quit callback
         this->_running = false;
     })
     , _raycasting_engine(this->_SDL_facade)
     {
         this->_SDL_facade.init();
+
     }
 
     void Game::run()
