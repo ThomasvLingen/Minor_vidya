@@ -43,8 +43,6 @@ public:
     CoordinateDouble get_spawnpoint();
 
     PointOfView& get_pov() override;
-
-
 };
 
 #endif //MINOR_VIDYA_LEVEL_HPP
