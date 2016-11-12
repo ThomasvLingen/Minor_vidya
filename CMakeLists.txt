@@ -8,7 +8,7 @@ set(SOURCE_FILES
 		src/SDLFacade.hpp src/SDLFacade.cpp
 		src/Raycasting.cpp src/Raycasting.hpp
 		src/RayCastingTypes.hpp
-		src/Color.hpp
+		src/Color.hpp src/Color.cpp
 		src/CoordinateDouble.hpp
 		src/PointOfView.hpp src/PointOfView.cpp
 		src/RaycastingVector.hpp
