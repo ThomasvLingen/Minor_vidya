@@ -7,8 +7,8 @@
 using std::vector;
 
 Level::Level(vector<vector<Tile*>> field)
+: _field(field)
 {
-    this->_field = field;
 }
 
 Level::~Level()
