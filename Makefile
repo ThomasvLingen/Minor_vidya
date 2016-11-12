@@ -60,10 +60,10 @@ memory_leaks: $(EXEC)
 	valgrind --tool=memcheck --leak-check=full $(EXEC)
 
 search_for_tabs: $(SRC_PATH)
-	grep -r $$'\t' $(SRC_PATH)
+	grep -r "	" $(SRC_PATH)
 
 tabs_to_spaces: $(ALL_FILES)
-	sed -i $$'s/\t/    /g' $(ALL_FILES)
+	sed -i 's/	/    /g' $(ALL_FILES)
 
 .PHONY: clean
 clean:
