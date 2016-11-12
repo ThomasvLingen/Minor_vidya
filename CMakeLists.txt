@@ -14,7 +14,7 @@ set(SOURCE_FILES
 		src/RaycastingVector.hpp
 		src/TileObject.hpp src/TileObject.cpp
 		src/WorldObject.hpp
-		src/Game.cpp src/Game.hpp
+		src/gamelogic/Game.cpp src/gamelogic/Game.hpp
 )
 
 add_executable(Minor_vidya ${SOURCE_FILES})
