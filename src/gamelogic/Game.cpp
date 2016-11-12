@@ -14,7 +14,6 @@ namespace GameLogic {
     , _raycasting_engine(this->_SDL_facade)
     {
         this->_SDL_facade.init();
-
     }
 
     void Game::run()
