@@ -7,16 +7,19 @@
 
 #include "../TileObject.hpp"
 
-class Tile : public Engine::TileObject {
+namespace GameLogic {
 
-private:
+    class Tile : public Engine::TileObject {
 
-public:
-    Tile();
-    virtual ~Tile();
-    void update() override;
+    public:
+        Tile();
 
-};
+        virtual ~Tile();
+
+        void update() override;
+
+    };
+}
 
 
 #endif //MINOR_VIDYA_TILE_HPP

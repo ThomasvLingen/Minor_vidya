@@ -4,45 +4,48 @@
 
 #include "Level.hpp"
 
-using std::vector;
+namespace GameLogic {
 
-Level::Level(vector<vector<Tile*>> field)
-: _field(field)
-{
-}
+    using std::vector;
 
-Level::~Level()
-{
+    Level::Level(vector<vector<Tile*>> field)
+    : _field(field)
+    {
+    }
 
-}
+    Level::~Level()
+    {
 
-void Level::update()
-{
-    for (auto row : this->_field) {
-        for (auto tile : row) {
-            if (tile != nullptr) {
-                tile->update();
+    }
+
+    void Level::update()
+    {
+        for (auto row : this->_field) {
+            for (auto tile : row) {
+                if (tile != nullptr) {
+                    tile->update();
+                }
             }
         }
     }
-}
 
-CoordinateDouble Level::get_spawnpoint()
-{
-    return this->_spawnpoint;
-}
+    CoordinateDouble Level::get_spawnpoint()
+    {
+        return this->_spawnpoint;
+    }
 
-TileObject* Level::get_tile(int x, int y)
-{
-    return _field.at(x).at(y); //TODO use at or []?
-}
+    TileObject* Level::get_tile(int x, int y)
+    {
+        return _field.at(x).at(y); //TODO use at or []?
+    }
 
-PointOfView& Level::get_pov()
-{
-    return *(this->_player);
-}
+    PointOfView& Level::get_pov()
+    {
+        return *(this->_player);
+    }
 
-void Level::set_player(Player* player)
-{
-    this->_player = player;
+    void Level::set_player(Player* player)
+    {
+        this->_player = player;
+    }
 }

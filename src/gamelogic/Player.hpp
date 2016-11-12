@@ -10,27 +10,30 @@
 #include "../CoordinateDouble.hpp"
 #include "../RaycastingVector.hpp"
 
-using Engine::CoordinateDouble;
-using Engine::RaycastingVector;
-using Engine::PointOfView;
+namespace GameLogic {
 
-class Player : public PointOfView {
+    using Engine::CoordinateDouble;
+    using Engine::RaycastingVector;
+    using Engine::PointOfView;
 
-public:
-    Player(CoordinateDouble position);
-    virtual ~Player();
+    class Player : public PointOfView {
 
+    public:
+        Player(CoordinateDouble position);
 
-private:
-    /*
-     * int health
-     * obj Inventory -> vector<items>
-     * GrabItem();
-     * PlaceItem();
-     *
-     */
+        virtual ~Player();
 
-};
+    private:
+        /*
+         * int health
+         * obj Inventory -> vector<items>
+         * GrabItem();
+         * PlaceItem();
+         *
+         */
+
+    };
+}
 
 
 #endif //MINOR_VIDYA_PLAYER_HPP
