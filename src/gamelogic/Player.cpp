@@ -4,13 +4,16 @@
 
 #include "Player.hpp"
 
-Player::Player(CoordinateDouble position)
-: PointOfView(position, Engine::RaycastingVector{-1 , 0}, Engine::RaycastingVector{0 , 0.66})
+namespace GameLogic
 {
+    Player::Player(CoordinateDouble position)
+    : PointOfView(position, Engine::RaycastingVector{-1, 0}, Engine::RaycastingVector{0, 0.66})
+    {
 
-}
+    }
 
-Player::~Player()
-{
+    Player::~Player()
+    {
 
+    }
 }

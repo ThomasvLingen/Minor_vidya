@@ -48,10 +48,9 @@ namespace Engine {
 
                 Color color = this->_world->get_tile(wall.cord.x, wall.cord.y)->get_color();
 
-                // TODO: Uncomment this as soon as Color is done
-                // if (wall.side == WallSide::y_wall) {
-                //     color = color.reduce_intensity();
-                // }
+                if (wall.side == WallSide::y_wall) {
+                    color = color.reduce_intensity();
+                }
 
                 this->_draw_line(line_cords, color, ray_index);
             }

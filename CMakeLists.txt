@@ -5,16 +5,16 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
 set(SOURCE_FILES
     	src/main.cpp
-		src/SDLFacade.hpp src/SDLFacade.cpp
-		src/Raycasting.cpp src/Raycasting.hpp
-		src/RayCastingTypes.hpp
-		src/Color.hpp src/Color.cpp
-		src/CoordinateDouble.hpp
-		src/PointOfView.hpp src/PointOfView.cpp
-		src/RaycastingVector.hpp
-		src/TileObject.hpp src/TileObject.cpp
-		src/WorldObject.hpp
-		src/Game.cpp src/Game.hpp
+		src/engine/SDLFacade.hpp src/engine/SDLFacade.cpp
+		src/engine/raycasting/Raycasting.cpp src/engine/raycasting/Raycasting.hpp
+		src/engine/raycasting/RayCastingTypes.hpp
+		src/engine/domain/Color.hpp src/engine/domain/Color.cpp
+		src/engine/domain/CoordinateDouble.hpp
+		src/engine/domain/PointOfView.hpp src/engine/domain/PointOfView.cpp
+		src/engine/raycasting/RaycastingVector.hpp
+		src/engine/domain/TileObject.hpp src/engine/domain/TileObject.cpp
+		src/engine/domain/WorldObject.hpp
+		src/gamelogic/Game.cpp src/gamelogic/Game.hpp
 )
 
 add_executable(Minor_vidya ${SOURCE_FILES})

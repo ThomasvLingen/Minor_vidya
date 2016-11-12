@@ -6,7 +6,7 @@
 #define MINOR_VIDYA_POINTOFVIEW_HPP
 
 #include "CoordinateDouble.hpp"
-#include "RaycastingVector.hpp"
+#include "../raycasting/RaycastingVector.hpp"
 
 namespace Engine {
     class PointOfView {

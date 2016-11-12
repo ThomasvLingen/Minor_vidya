@@ -1,5 +1,4 @@
 #include <iostream>
-#include "SDLFacade.hpp"
 
 int main()
 {

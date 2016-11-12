@@ -3,19 +3,22 @@
 //
 
 #include "Tile.hpp"
+namespace GameLogic {
 
-Tile::Tile() : TileObject()
-{
+    Tile::Tile()
+        : TileObject()
+    {
 
-}
+    }
 
 
-Tile::~Tile()
-{
+    Tile::~Tile()
+    {
 
-}
+    }
 
-void Tile::update()
-{
-    //TODO implement
+    void Tile::update()
+    {
+        //TODO implement
+    }
 }

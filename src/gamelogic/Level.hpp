@@ -5,44 +5,46 @@
 #ifndef MINOR_VIDYA_LEVEL_HPP
 #define MINOR_VIDYA_LEVEL_HPP
 
-#include "../WorldObject.hpp"
-#include "../TileObject.hpp"
+#include "../engine/domain/WorldObject.hpp"
+#include "../engine/domain/TileObject.hpp"
 #include "Tile.hpp"
 #include "Player.hpp"
 #include <vector>
 
-using std::vector;
-using Engine::CoordinateDouble;
-using Engine::WorldObject;
-using Engine::TileObject;
+namespace GameLogic {
 
-class Level : public WorldObject {
+    using std::vector;
+    using Engine::CoordinateDouble;
+    using Engine::TileObject;
 
-private:
-    vector<vector<Tile*>> _field; //TODO create a typedef for this
-    CoordinateDouble _spawnpoint;
-    Player* _player; //TODO smart pointers?
-    /*
-     * WorldParser
-     *      ->
-     *          field = GetLevel(string levelcode);
-     *          tileset = GetLevelTileSet(string levelcode);
-     */
+    class Level : public Engine::WorldObject {
 
-public:
-    Level(vector<vector<Tile*>> field);
+    private:
+        vector<vector<Tile*>> _field; //TODO create a typedef for this
+        CoordinateDouble _spawnpoint;
+        Player* _player; //TODO smart pointers?
+        /*
+         * WorldParser
+         *      ->
+         *          field = GetLevel(string levelcode);
+         *          tileset = GetLevelTileSet(string levelcode);
+         */
 
-    virtual ~Level();
+    public:
+        Level(vector<vector<Tile*>> field);
 
-    void update() override;
+        virtual ~Level();
 
-    void set_player(Player* player);
+        void update() override;
 
-    TileObject* get_tile(int x, int y) override;
+        void set_player(Player* player);
 
-    CoordinateDouble get_spawnpoint();
+        TileObject* get_tile(int x, int y) override;
 
-    PointOfView& get_pov() override;
-};
+        CoordinateDouble get_spawnpoint();
+
+        PointOfView& get_pov() override;
+    };
+}
 
 #endif //MINOR_VIDYA_LEVEL_HPP
