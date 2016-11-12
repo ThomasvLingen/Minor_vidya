@@ -18,8 +18,8 @@ Level::~Level()
 
 void Level::update()
 {
-    for (auto vector : this->_field) {
-        for (auto tile : vector) {
+    for (auto row : this->_field) {
+        for (auto tile : row) {
             if (tile != nullptr) {
                 tile->update();
             }
