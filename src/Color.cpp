@@ -9,13 +9,11 @@ namespace Engine {
     /// \return This function returns a color object
     Color Color::reduce_intensity()
     {
-        Color return_color = {
+        return  {
                 .r_value = (uint8_t)(this->r_value / 2),
                 .g_value = (uint8_t)(this->g_value / 2),
                 .b_value = (uint8_t)(this->b_value / 2)
         };
-
-        return return_color;
     };
 }
 
