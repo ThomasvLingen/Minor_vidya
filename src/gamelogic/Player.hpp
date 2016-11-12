@@ -6,9 +6,9 @@
 #define MINOR_VIDYA_PLAYER_HPP
 
 
-#include "../PointOfView.hpp"
-#include "../CoordinateDouble.hpp"
-#include "../RaycastingVector.hpp"
+#include "../engine/domain/PointOfView.hpp"
+#include "../engine/domain/CoordinateDouble.hpp"
+#include "../engine/raycasting/RaycastingVector.hpp"
 
 namespace GameLogic {
 

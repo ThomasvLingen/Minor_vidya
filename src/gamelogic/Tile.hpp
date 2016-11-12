@@ -5,7 +5,7 @@
 #ifndef MINOR_VIDYA_TILE_HPP
 #define MINOR_VIDYA_TILE_HPP
 
-#include "../TileObject.hpp"
+#include "../engine/domain/TileObject.hpp"
 
 namespace GameLogic {
 

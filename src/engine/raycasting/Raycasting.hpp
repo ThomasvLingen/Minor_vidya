@@ -8,9 +8,9 @@
 #include <cmath>
 #include <memory>
 #include "RayCastingTypes.hpp"
-#include "SDLFacade.hpp"
-#include "WorldObject.hpp"
-#include "CoordinateDouble.hpp"
+#include "../SDLFacade.hpp"
+#include "../domain/WorldObject.hpp"
+#include "../domain/CoordinateDouble.hpp"
 
 namespace Engine {
     using std::shared_ptr;

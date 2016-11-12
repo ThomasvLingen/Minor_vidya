@@ -12,9 +12,9 @@
 #include <functional>
 #include <algorithm>
 
-#include "Color.hpp"
-#include "RayCastingTypes.hpp"
-#include "CoordinateDouble.hpp"
+#include "domain/Color.hpp"
+#include "raycasting/RayCastingTypes.hpp"
+#include "domain/CoordinateDouble.hpp"
 
 #include "SDL2/SDL.h"
 #include "SDL2/SDL_ttf.h"

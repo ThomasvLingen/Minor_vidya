@@ -5,8 +5,8 @@
 #ifndef MINOR_VIDYA_LEVEL_HPP
 #define MINOR_VIDYA_LEVEL_HPP
 
-#include "../WorldObject.hpp"
-#include "../TileObject.hpp"
+#include "../engine/domain/WorldObject.hpp"
+#include "../engine/domain/TileObject.hpp"
 #include "Tile.hpp"
 #include "Player.hpp"
 #include <vector>

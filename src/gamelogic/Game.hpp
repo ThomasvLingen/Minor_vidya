@@ -7,8 +7,8 @@
 
 #define FRAME_DURATION 1000/60
 
-#include "../SDLFacade.hpp"
-#include "../Raycasting.hpp"
+#include "../engine/SDLFacade.hpp"
+#include "../engine/raycasting/Raycasting.hpp"
 
 namespace GameLogic {
 
