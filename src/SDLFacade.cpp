@@ -14,9 +14,9 @@ namespace Engine {
     SDLFacade::~SDLFacade()
     {
         //todo
-        SDL_DestroyWindow(this->_window);
         SDL_FreeSurface(this->_screenSurface);
         SDL_DestroyRenderer(this->_renderer);
+        SDL_DestroyWindow(this->_window);
 
         for (auto font : this->_fonts) {
             TTF_CloseFont(font.second);
