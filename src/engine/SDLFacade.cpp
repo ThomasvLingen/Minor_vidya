@@ -230,6 +230,7 @@ namespace Engine {
     /// \return This function returns True if all fonts are successfully initialised, ohterwise it returns False
     bool SDLFacade::_init_fonts()
     {
+        //todo Needs to be expanded later on
         return _load_font("res/alterebro_pixel.ttf", FontType::alterebro_pixel, 30);
     }
 
