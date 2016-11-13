@@ -5,15 +5,20 @@
 #include "SDLFacade.hpp"
 
 namespace Engine {
+
+    /// \brief Constructor of the class
+    ///
+    /// The given callback function will be saved. This function will be called on Quit-event
+    /// \param callback_func The function that needs to be called on quit
     SDLFacade::SDLFacade(const function<void()>& callback_func )
     : _quit_callback(callback_func)
     {
 
     }
 
+    /// \brief Destructor of the class
     SDLFacade::~SDLFacade()
     {
-        //todo
         SDL_FreeSurface(this->_screenSurface);
         SDL_DestroyRenderer(this->_renderer);
         SDL_DestroyWindow(this->_window);
@@ -23,6 +28,18 @@ namespace Engine {
         }
     }
 
+    /// \brief Initialiser for all class instance variables
+    ///
+    /// This method will initialize:
+    /// * SDL
+    /// * TTF
+    ///
+    /// This method calls the following functions:
+    /// * _init_window()
+    /// * _init_renderer()
+    /// * _init_fonts()
+    ///
+    /// \return This function returns True if everything was successfully initialized, ohterwise it returns False
     bool SDLFacade::init()
     {
         // Init SDL
@@ -56,6 +73,9 @@ namespace Engine {
         return true;
     }
 
+    /// \brief Initialiser for the _renderer (SDL_Renderer)
+    ///
+    /// \return This function returns True if the _renderer was successfully initialized, ohterwise it returns False
     bool SDLFacade::_init_renderer()
     {
         // Attempt to make a software renderer
@@ -70,6 +90,9 @@ namespace Engine {
         }
     }
 
+    /// \brief Initialiser for the _window (SDL_Window)
+    ///
+    /// \return This function returns True if the _window was successfully initialized, ohterwise it returns False
     bool SDLFacade::_init_window()
     {
         this->_window = SDL_CreateWindow("Vidya game", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 500,
@@ -84,21 +107,29 @@ namespace Engine {
         }
     }
 
+    /// \brief Draws a rectangle on the whole screen
     void SDLFacade::clear_screen()
     {
         // Draw background
         SDL_FillRect(_screenSurface, NULL, SDL_MapRGB(_screenSurface->format, 0x00, 0x00, 0x00));
     }
 
+    /// \brief Draws a line
+    ///
+    /// A line will be drawn between the given coordinates. The color is set first, secondly the line is being drawn.
+    ///
+    /// \param line_start The first coordinate
+    /// \param line_end The second coordinate
+    /// \param color The color of the line. The color class comes from the engine
     void SDLFacade::draw_line(const CoordinateDouble& line_start, const CoordinateDouble& line_end, const Color& color)
     {
         SDL_SetRenderDrawColor(this->_renderer, color.r_value, color.g_value, color.b_value, 255);
         SDL_RenderDrawLine(this->_renderer, line_start.x, line_start.y, line_end.x, line_end.y);
     }
 
+    /// \brief Updates the window
     void SDLFacade::render_buffer() const
     {
-        //todo
         // Update window surface
         SDL_UpdateWindowSurface(this->_window);
     }
@@ -133,6 +164,16 @@ namespace Engine {
         return this->_keys_down;
     }
 
+    /// \brief Draws text
+    ///
+    /// This method will draw the given text in the desired color and font on the given coordinate
+    ///
+    /// \param text The text that needs to be drawn
+    /// \param font The font in which the text needs to be drawn
+    /// \param color The color in which the text needs to be drawn
+    /// \param position The coordinate at which the text will be drawn
+    ///
+    /// \return This function returns True if text is successfully drawn, ohterwise it returns False
     bool SDLFacade::draw_text(const string& text, const FontType& font, const Color& color,
                               const CoordinateDouble& position) const
     {
@@ -184,11 +225,21 @@ namespace Engine {
         return this->_width;
     }
 
+    /// \brief Initialiser for all fonts
+    ///
+    /// \return This function returns True if all fonts are successfully initialised, ohterwise it returns False
     bool SDLFacade::_init_fonts()
     {
         return _load_font("res/alterebro_pixel.ttf", FontType::alterebro_pixel, 30);
     }
 
+    /// \brief Initialiser for one font
+    ///
+    /// \param path The path where the font is located
+    /// \param font_type The enum which will be linked to the loaded font
+    /// \param size The desired fontsize
+    ///
+    /// \return This function returns True if the font is successfully initialized, ohterwise it returns False
     bool SDLFacade::_load_font(const string& path, const FontType& font_type, uint8_t size)
     {
         TTF_Font* new_font = TTF_OpenFont(path.c_str(), size);
