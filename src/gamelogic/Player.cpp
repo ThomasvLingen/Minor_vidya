@@ -20,25 +20,25 @@ namespace GameLogic {
     void Player::handleInput(PressedKeys keys) {
 
 
-        if (input.isDown(SDLK_w) && input.isDown(SDLK_s)) {
-            this->mov_stop();
-        } else if (input.isDown(SDLK_w)) {
-            this->mov_forward();
-        } else if (input.isDown(SDLK_s)) {
-            this->mov_backward();
-        } else {
-            this->mov_stop();
-        }
-
-        if (input.isDown(SDLK_a) && input.isDown(SDLK_d)) {
-            this->rot_stop();
-        } else if (input.isDown(SDLK_a)) {
-            this->rot_left();
-        } else if (input.isDown(SDLK_d)) {
-            this->rot_right();
-        } else {
-            this->rot_stop();
-        }
+//        if (input.isDown(SDLK_w) && input.isDown(SDLK_s)) {
+//            this->mov_stop();
+//        } else if (input.isDown(SDLK_w)) {
+//            this->mov_forward();
+//        } else if (input.isDown(SDLK_s)) {
+//            this->mov_backward();
+//        } else {
+//            this->mov_stop();
+//        }
+//
+//        if (input.isDown(SDLK_a) && input.isDown(SDLK_d)) {
+//            this->rot_stop();
+//        } else if (input.isDown(SDLK_a)) {
+//            this->rot_left();
+//        } else if (input.isDown(SDLK_d)) {
+//            this->rot_right();
+//        } else {
+//            this->rot_stop();
+//        }
     }
 
     void Player::update(int timeSinceLastUpdate) {
