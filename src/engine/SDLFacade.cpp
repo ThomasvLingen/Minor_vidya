@@ -12,6 +12,8 @@ namespace Engine {
     /// \param callback_func The function that needs to be called on quit
     SDLFacade::SDLFacade(const function<void()>& callback_func )
     : _quit_callback(callback_func)
+    , _width(640)  // Better fucking initialise this you big bozo, otherwise we get an uninitialised width and height,
+    , _height(480) // resulting in really terrible behaviour.
     {
 
     }
