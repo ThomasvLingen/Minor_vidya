@@ -88,10 +88,6 @@ namespace GameLogic {
 
             this->_raycasting_engine.draw();
 
-//            this->_SDL_facade.draw_text("Hi there", Engine::FontType::alterebro_pixel, Engine::Color {255, 0,0}, {50,50});
-//            this->_SDL_facade.draw_text("Welcome to gaem", Engine::FontType::alterebro_pixel, Engine::Color {255, 0,0}, {50,80});
-            //TODO: remove once game actually draws something
-
             this->_SDL_facade.render_buffer();
 
             time_spent = this->_SDL_facade.get_ticks() - current_frame_start_time;
