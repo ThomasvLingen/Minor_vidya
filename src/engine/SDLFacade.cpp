@@ -26,6 +26,8 @@ namespace Engine {
         for (auto font : this->_fonts) {
             TTF_CloseFont(font.second);
         }
+
+        SDL_Quit();
     }
 
     /// \brief Initialiser for all class instance variables
@@ -43,7 +45,7 @@ namespace Engine {
     bool SDLFacade::init()
     {
         // Init SDL
-        if (SDL_Init(SDL_INIT_EVERYTHING < 0)) {
+        if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {
             //std::cout <<  "Something went wrong while initting: " + SDL_GetError() << std::endl;
             return false;
         }
@@ -134,6 +136,14 @@ namespace Engine {
         SDL_UpdateWindowSurface(this->_window);
     }
 
+    /// \brief Function that handles all relevant SDL_Event types
+    ///
+    /// Currently the function support the following event types:
+    /// * KeyEvents
+    /// * QuitEvent
+    /// * WindowEvents
+    ///     - Resize
+    /// Each supported event type has its own handler (or callback)
     void SDLFacade::handle_sdl_events()
     {
         SDL_Event event;
@@ -254,6 +264,9 @@ namespace Engine {
         }
     }
 
+    /// \brief Function that handles a SDL_KEYDOWN event
+    ///
+    /// Supported keys will be handled and, if not already present, added to the _keys_down vector.
     void SDLFacade::_handle_key_pressed_event(SDL_Keycode key)
     {
         map<SDL_Keycode, Key>::iterator it;
@@ -270,6 +283,9 @@ namespace Engine {
         }
     }
 
+    /// \brief Function that handles a SDL_KEYUP event
+    ///
+    /// Supported keys will be handled and, if present, removed from the _keys_down vector.
     void SDLFacade::_handle_key_released_event(SDL_Keycode key)
     {
         map<SDL_Keycode, Key>::iterator it_possible;
@@ -287,6 +303,9 @@ namespace Engine {
         }
     }
 
+    /// \brief Function that handles a SDL_WINDOWEVENT event
+    ///
+    /// Currently only handles SDL_WINDOWEVENT_RESIZED, setting the new width and height of the window.
     void SDLFacade::_handle_window_event(SDL_Event* event)
     {
         switch (event->window.event) {
