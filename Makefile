@@ -59,6 +59,9 @@ debug: $(EXEC)
 memory_leaks: $(EXEC)
 	valgrind --tool=memcheck --leak-check=full $(EXEC)
 
+profiler: $(EXEC)
+	valgrind --tool=callgrind $(EXEC)
+
 search_for_tabs: $(SRC_PATH)
 	grep -r "	" $(SRC_PATH)
 
