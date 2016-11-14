@@ -18,6 +18,6 @@ set(SOURCE_FILES
 		src/gamelogic/Game.cpp src/gamelogic/Game.hpp
 		src/gamelogic/Player.cpp src/gamelogic/Player.hpp
 
-)
+        src/engine/KeyStrokes.hpp)
 
 add_executable(Minor_vidya ${SOURCE_FILES})

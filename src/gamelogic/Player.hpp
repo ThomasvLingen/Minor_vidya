@@ -11,6 +11,7 @@
 #include "../engine/raycasting/RaycastingVector.hpp"
 #include "VectorUtil.hpp"
 #include "Level.hpp"
+#include "../engine/KeyStrokes.hpp"
 
 namespace GameLogic {
 
@@ -18,20 +19,23 @@ namespace GameLogic {
     using Engine::RaycastingVector;
     using Engine::PointOfView;
     using Engine::WorldObject;
+    using Engine::PressedKeys;
 
     class Level;
 
     class Player : public PointOfView {
 
     public:
-        Player(CoordinateDouble position, Level &world);
+        Player(CoordinateDouble position, Level& level); //is this retarted? perhaps use smart pointer for world
 
         virtual ~Player();
 
         bool is_at(int x, int y);
 
+        void set_level_ref(Level& level);
+
     private:
-        Level &_world;
+        Level& _level;
 
         double _MOVE_SPEED = 0.005;
         double _ROT_SPEED = 0.002;
@@ -42,15 +46,10 @@ namespace GameLogic {
         double _plane_x = 0;
         double _plane_y = 0.66;
 
-
         double _accel = 0;
         double _rotation = 0;
 
-
-
-
-
-        //virtual void handleInput(Keyboard input); //TODO: What is Keyboard?
+        void handleInput(PressedKeys keys); //TODO: What is Keyboard?
         virtual void update(int timeSinceLastUpdate);
 
         void mov_stop();

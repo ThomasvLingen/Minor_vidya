@@ -8,7 +8,7 @@ namespace GameLogic {
 
     Player::Player(CoordinateDouble position, Level &world)
     : PointOfView(position, Engine::RaycastingVector{-1, 0}, Engine::RaycastingVector{0, 0.66})
-    , _world(world)
+    , _level(world)
     {
     }
 
@@ -17,27 +17,29 @@ namespace GameLogic {
 
     }
 
-//    void Player::handleInput(Keyboard input) {
-//        if (input.isDown(SDLK_w) && input.isDown(SDLK_s)) {
-//            this->mov_stop();
-//        } else if (input.isDown(SDLK_w)) {
-//            this->mov_forward();
-//        } else if (input.isDown(SDLK_s)) {
-//            this->mov_backward();
-//        } else {
-//            this->mov_stop();
-//        }
-//
-//        if (input.isDown(SDLK_a) && input.isDown(SDLK_d)) {
-//            this->rot_stop();
-//        } else if (input.isDown(SDLK_a)) {
-//            this->rot_left();
-//        } else if (input.isDown(SDLK_d)) {
-//            this->rot_right();
-//        } else {
-//            this->rot_stop();
-//        }
-//    }
+    void Player::handleInput(PressedKeys keys) {
+
+
+        if (input.isDown(SDLK_w) && input.isDown(SDLK_s)) {
+            this->mov_stop();
+        } else if (input.isDown(SDLK_w)) {
+            this->mov_forward();
+        } else if (input.isDown(SDLK_s)) {
+            this->mov_backward();
+        } else {
+            this->mov_stop();
+        }
+
+        if (input.isDown(SDLK_a) && input.isDown(SDLK_d)) {
+            this->rot_stop();
+        } else if (input.isDown(SDLK_a)) {
+            this->rot_left();
+        } else if (input.isDown(SDLK_d)) {
+            this->rot_right();
+        } else {
+            this->rot_stop();
+        }
+    }
 
     void Player::update(int timeSinceLastUpdate) {
         double moveSpeed = this->_accel * timeSinceLastUpdate;
@@ -45,10 +47,10 @@ namespace GameLogic {
         double new_y = this->_position_y + this->_dir_y * moveSpeed;
 
 
-        if (!this->_world.get_tile((int) new_x, (int) this->_position_y)->is_wall()) {
+        if (!this->_level.get_tile((int) new_x, (int) this->_position_y)->is_wall()) {
             this->_position_x = new_x;
         }
-        if (!this->_world.get_tile((int) this->_position_x, (int) new_y)->is_wall()) {
+        if (!this->_level.get_tile((int) this->_position_x, (int) new_y)->is_wall()) {
             this->_position_y = new_y;
         }
 
@@ -91,5 +93,10 @@ namespace GameLogic {
 
     void Player::rot_left() {
         this->_rotation = this->_ROT_SPEED;
+    }
+
+    void Player::set_level_ref(Level& level)
+    {
+        this->_level = level;
     }
 }

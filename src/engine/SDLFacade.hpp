@@ -15,6 +15,7 @@
 #include "domain/Color.hpp"
 #include "raycasting/RayCastingTypes.hpp"
 #include "domain/CoordinateDouble.hpp"
+#include "KeyStrokes.hpp"
 
 #include "SDL2/SDL.h"
 #include "SDL2/SDL_ttf.h"
@@ -32,9 +33,7 @@ namespace Engine {
 
 
     enum FontType {verdana, roman, alterebro_pixel};
-    enum Key {W, A, S, D, ESC};
 
-    typedef std::vector<Key> PressedKeys;
 
     class SDLFacade {
     private:
