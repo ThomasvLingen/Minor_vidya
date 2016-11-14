@@ -9,11 +9,15 @@
 
 #include "../engine/SDLFacade.hpp"
 #include "../engine/raycasting/Raycasting.hpp"
+#include "Level.hpp"
+#include "Tile.hpp"
+
 
 namespace GameLogic {
 
     using Engine::Raycasting;
     using Engine::SDLFacade;
+    using Engine::WorldPTR;
 
     class Game {
     public:
@@ -24,6 +28,7 @@ namespace GameLogic {
         bool _running;
         SDLFacade _SDL_facade;
         Raycasting _raycasting_engine;
+        std::shared_ptr<Level> _level; //TODO: perhaps change this to a level pointer
 
     };
 }

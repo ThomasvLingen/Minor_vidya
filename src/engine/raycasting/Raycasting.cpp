@@ -20,14 +20,14 @@ namespace Engine {
 
     void Raycasting::handle_input()
     {
-        // TODO: Call world handle_input
+        this->_world->handle_input(this->_SDL_facade.get_keys());
 
         // If we need to do something on a keystroke, handle input ourselves
     }
 
     void Raycasting::update(int delta_time)
     {
-        // TODO: Call world update
+        this->_world->update(delta_time);
     }
 
     /// \brief Draws a single frame with raycasting using the world object and SDL facade

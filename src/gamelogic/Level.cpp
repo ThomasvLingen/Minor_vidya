@@ -19,15 +19,17 @@ namespace GameLogic {
     }
 
     /// \brief update every tile from this level
-    void Level::update()
+    void Level::update(int delta_time)
     {
         for (auto row : this->_field) {
             for (auto tile : row) {
                 if (tile != nullptr) {
-                    tile->update();
+                    tile->update(delta_time);
                 }
             }
         }
+
+        this->_player->update(delta_time);
     }
 
     CoordinateDouble Level::get_spawnpoint()

@@ -41,7 +41,7 @@ namespace GameLogic {
 
         virtual ~Level();
 
-        void update() override;
+        void update(int delta_time) override;
 
         void set_player(Player* player);
 

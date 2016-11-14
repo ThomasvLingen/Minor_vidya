@@ -16,7 +16,7 @@ namespace Engine {
     }
 
     /// \brief update all objects in this particular tile.
-    void TileObject::update()
+    void TileObject::update(int delta_time)
     {
         // TODO: Implement this
     }

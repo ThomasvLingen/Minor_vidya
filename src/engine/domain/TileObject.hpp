@@ -38,7 +38,7 @@ namespace Engine {
     public:
         TileObject();
         virtual ~TileObject();
-        virtual void update();
+        virtual void update(int delta_time);
 
         void set_wall(bool has_wall);
         void set_color(Color color);
