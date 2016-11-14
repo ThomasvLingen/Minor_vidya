@@ -17,6 +17,7 @@ set(SOURCE_FILES
 		src/engine/domain/WorldObject.hpp
 		src/gamelogic/Game.cpp src/gamelogic/Game.hpp
 		src/gamelogic/Player.cpp src/gamelogic/Player.hpp
+		src/gamelogic/VectorUtil.cpp src/gamelogic/VectorUtil.hpp
         src/engine/KeyStrokes.hpp
 		)
 

@@ -12,7 +12,7 @@ namespace GameLogic {
     class VectorUtil {
 
     public:
-        static void rotate_vector(double* vector_x, double* vector_y, double radians);
+        static void rotate_vector(double &x, double &y, double radians);
     };
 
 }
