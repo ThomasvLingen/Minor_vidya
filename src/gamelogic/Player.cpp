@@ -17,6 +17,9 @@ namespace GameLogic {
 
     }
 
+    /// \brief Handles the keys that were pressed during the last tick
+    ///
+    /// \param keys is a vector of Key enumerables that were pressed
     void Player::handleInput(PressedKeys keys)
     {
         for (auto key : keys) {
@@ -42,6 +45,7 @@ namespace GameLogic {
     void Player::update(int timeSinceLastUpdate)
     {
         Player::_move_player(timeSinceLastUpdate);
+        Player::_rotate_player(timeSinceLastUpdate);
     }
 
     void Player::_move_player(int timeSinceLastUpdate){
@@ -49,15 +53,16 @@ namespace GameLogic {
         double new_x = this->_position.x + this->_direction.x * moveSpeed;
         double new_y = this->_position.y + this->_direction.y * moveSpeed;
 
-
         if (!this->_level.get_tile((int) new_x, (int) this->_position.y)->is_wall()) {
             this->_position.x = new_x;
         }
         if (!this->_level.get_tile((int) this->_position.x, (int) new_y)->is_wall()) {
             this->_position.y = new_y;
         }
+    }
 
-
+    void Player::_rotate_player(int timeSinceLastUpdate)
+    {
         double rotSpeed = this->_rotation * timeSinceLastUpdate;
         VectorUtil::rotate_vector(this->_direction.x, this->_direction.y, rotSpeed);
         VectorUtil::rotate_vector(this->_camera_plane.x, this->_camera_plane.y, rotSpeed);
@@ -70,6 +75,8 @@ namespace GameLogic {
         return (int) this->_position.x == x && (int) this->_position.y == y;
     }
 
+    //TODO: rethink this, it is actually code dupplication, but readability increases by it
+    // Should these functions be declared seperately or do we want one _move function?
     void Player::_mov_forward()
     {
         this->_accel = this->_MOVE_SPEED;

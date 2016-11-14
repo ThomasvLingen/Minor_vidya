@@ -44,6 +44,7 @@ namespace GameLogic {
         double _rotation = 0;
 
         void _move_player(int timeSinceLastUpdate);
+        void _rotate_player(int timeSinceLastUpdate);
         void _mov_forward();
         void _mov_backward();
         void _rot_right();
