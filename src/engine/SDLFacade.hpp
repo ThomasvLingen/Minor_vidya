@@ -91,6 +91,12 @@ namespace Engine {
 
         void delay_millis(const int millis) const;
 
+        bool load_tilemap(const char path[]);
+
+        Color get_color_of_pixel(const SDL_Surface *surface, const CoordinateInt& position);
+
+        unsigned char* readBMP(char* filename);
+
     private:
         void _handle_key_pressed_event(SDL_Keycode key);
         void _handle_key_released_event(SDL_Keycode key);
