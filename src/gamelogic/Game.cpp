@@ -29,12 +29,12 @@ namespace GameLogic {
         };
         std::vector<std::vector<Tile*>> tiles;
 
-        for(int i = 0; i < world.size(); i++){
+        for(size_t i = 0; i < world.size(); i++){
             std::vector<Tile*>* vector = new std::vector<Tile*>;
             tiles.push_back(*vector);
 
 
-            for(int j = 0; j < world.at(i).size(); j++){
+            for(size_t j = 0; j < world.at(i).size(); j++){
                 Tile* temp = new Tile();
 
                 switch (world[i][j]) {
