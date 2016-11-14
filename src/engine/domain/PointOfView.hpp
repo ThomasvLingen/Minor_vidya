@@ -18,10 +18,13 @@ namespace Engine {
         RaycastingVector& get_direction();
         RaycastingVector& get_camera_plane();
 
-    private:
+    protected:
         CoordinateDouble _position;
         RaycastingVector _direction;
         RaycastingVector _camera_plane;
+
+    private:
+
     };
 }
 

@@ -9,13 +9,18 @@
 #include "../engine/domain/TileObject.hpp"
 #include "Tile.hpp"
 #include "Player.hpp"
+#include "../engine/domain/PointOfView.hpp"
 #include <vector>
+
 
 namespace GameLogic {
 
     using std::vector;
     using Engine::CoordinateDouble;
     using Engine::TileObject;
+    using Engine::PointOfView;
+
+    class Player;
 
     class Level : public Engine::WorldObject {
 
@@ -23,6 +28,7 @@ namespace GameLogic {
         vector<vector<Tile*>> _field; //TODO create a typedef for this
         CoordinateDouble _spawnpoint;
         Player* _player; //TODO smart pointers?
+
         /*
          * WorldParser
          *      ->
@@ -44,6 +50,8 @@ namespace GameLogic {
         CoordinateDouble get_spawnpoint();
 
         PointOfView& get_pov() override;
+
+        void handle_input(Engine::PressedKeys keys) override;
     };
 }
 
