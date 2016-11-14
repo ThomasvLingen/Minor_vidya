@@ -4,7 +4,7 @@ project(Minor_vidya)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
 set(SOURCE_FILES
-    	src/main.cpp
+		src/main.cpp
 		src/engine/SDLFacade.hpp src/engine/SDLFacade.cpp
 		src/engine/raycasting/Raycasting.cpp src/engine/raycasting/Raycasting.hpp
 		src/engine/raycasting/RayCastingTypes.hpp
