@@ -17,6 +17,9 @@ namespace GameLogic {
     using Engine::CoordinateDouble;
     using Engine::TileObject;
 
+    //class Player;
+    //class PointOfView;
+
     class Level : public Engine::WorldObject {
 
     private:
