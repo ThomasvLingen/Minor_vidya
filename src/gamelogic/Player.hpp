@@ -32,30 +32,23 @@ namespace GameLogic {
         virtual ~Player();
         bool is_at(int x, int y);
         void set_level_ref(Level& level);
-        void handleInput(PressedKeys keys); //TODO: What is Keyboard?
+        void handleInput(PressedKeys keys);
         virtual void update(int timeSinceLastUpdate);
 
     private:
         Level& _level;
 
-        double _MOVE_SPEED = 0.005;
-        double _ROT_SPEED = 0.002;
-        double _position_x = 2;
-        double _position_y = 10;
-        double _dir_x = -1;
-        double _dir_y = 0;
-        double _plane_x = 0;
-        double _plane_y = 0.66;
+        const double _MOVE_SPEED = 0.005;
+        const double _ROT_SPEED = 0.002;
         double _accel = 0;
         double _rotation = 0;
 
-        void mov_stop();
-        void mov_forward();
-        void mov_backward();
-        void rot_stop();
-        void rot_right();
-        void rot_left();
-
+        void _mov_stop();
+        void _mov_forward();
+        void _mov_backward();
+        void _rot_stop();
+        void _rot_right();
+        void _rot_left();
 
         /*
          * int health
@@ -64,7 +57,6 @@ namespace GameLogic {
          * PlaceItem();
          *
          */
-
 
     };
 }

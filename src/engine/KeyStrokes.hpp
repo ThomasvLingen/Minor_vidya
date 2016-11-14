@@ -12,7 +12,7 @@ namespace Engine {
 
     enum Key {W, A, S, D, ESC};
 
-    typedef std::vector<Key> PressedKeys;
+    typedef vector<Key> PressedKeys;
 }
 
 #endif //MINOR_VIDYA_KEYSTROKES_HPP

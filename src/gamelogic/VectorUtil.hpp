@@ -10,10 +10,8 @@
 namespace GameLogic {
 
     class VectorUtil {
-    public:
-        VectorUtil();
-        virtual ~VectorUtil();
 
+    public:
         static void rotate_vector(double* vector_x, double* vector_y, double radians);
     };
 

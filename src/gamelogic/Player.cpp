@@ -25,19 +25,19 @@ namespace GameLogic {
         for (auto key : keys) {
             switch (key) {
                 case Key::A :
-                    this->rot_left();
+                    this->_rot_left();
                     AD_Pressed = true;
                     break;
                 case Key::S :
-                    this->mov_backward();
+                    this->_mov_backward();
                     WS_Pressed = true;
                     break;
                 case Key::W :
-                    this->mov_forward();
+                    this->_mov_forward();
                     WS_Pressed = true;
                     break;
                 case Key::D :
-                    this->rot_right();
+                    this->_rot_right();
                     AD_Pressed = true;
                     break;
                 default:
@@ -46,71 +46,71 @@ namespace GameLogic {
         }
 
         if (!AD_Pressed) {
-            this->rot_stop();
+            this->_rot_stop();
         }
         if (!WS_Pressed) {
-            this->mov_stop();
+            this->_mov_stop();
         }
     }
 
     void Player::update(int timeSinceLastUpdate)
     {
         double moveSpeed = this->_accel * timeSinceLastUpdate;
-        double new_x = this->_position_x + this->_dir_x * moveSpeed;
-        double new_y = this->_position_y + this->_dir_y * moveSpeed;
+        double new_x = this->_position.x + this->_direction.x * moveSpeed;
+        double new_y = this->_position.y + this->_direction.y * moveSpeed;
 
 
-        if (!this->_level.get_tile((int) new_x, (int) this->_position_y)->is_wall()) {
-            this->_position_x = new_x;
+        if (!this->_level.get_tile((int) new_x, (int) this->_position.y)->is_wall()) {
+            this->_position.x = new_x;
         }
-        if (!this->_level.get_tile((int) this->_position_x, (int) new_y)->is_wall()) {
-            this->_position_y = new_y;
+        if (!this->_level.get_tile((int) this->_position.x, (int) new_y)->is_wall()) {
+            this->_position.y = new_y;
         }
 
 
         double rotSpeed = this->_rotation * timeSinceLastUpdate;
-        VectorUtil::rotate_vector(&this->_dir_x, &this->_dir_y, rotSpeed);
-        VectorUtil::rotate_vector(&this->_plane_x, &this->_plane_y, rotSpeed);
+        VectorUtil::rotate_vector(&this->_direction.x, &this->_direction.y, rotSpeed);
+        VectorUtil::rotate_vector(&this->_camera_plane.x, &this->_camera_plane.y, rotSpeed);
     }
 
 
     bool Player::is_at(int x, int y)
     {
-        return (int) this->_position_x == x && (int) this->_position_y == y;
+        return (int) this->_position.x == x && (int) this->_position.y == y;
     }
 
 
-    void Player::mov_stop()
+    void Player::_mov_stop()
     {
         this->_accel = 0;
     }
 
 
-    void Player::mov_forward()
+    void Player::_mov_forward()
     {
         this->_accel = this->_MOVE_SPEED;
     }
 
 
-    void Player::mov_backward()
+    void Player::_mov_backward()
     {
         this->_accel = -this->_MOVE_SPEED;
     }
 
 
-    void Player::rot_stop()
+    void Player::_rot_stop()
     {
         this->_rotation = 0;
     }
 
 
-    void Player::rot_right()
+    void Player::_rot_right()
     {
         this->_rotation = -this->_ROT_SPEED;
     }
 
 
-    void Player::rot_left()
+    void Player::_rot_left()
     {
         this->_rotation = this->_ROT_SPEED;
     }
