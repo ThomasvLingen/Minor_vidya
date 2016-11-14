@@ -28,6 +28,7 @@ namespace GameLogic {
         vector<vector<Tile*>> _field; //TODO create a typedef for this
         CoordinateDouble _spawnpoint;
         Player* _player; //TODO smart pointers?
+
         /*
          * WorldParser
          *      ->

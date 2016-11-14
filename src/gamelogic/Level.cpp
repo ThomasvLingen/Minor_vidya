@@ -36,7 +36,7 @@ namespace GameLogic {
 
     TileObject* Level::get_tile(int x, int y)
     {
-        return _field.at(x).at(y); //TODO use at or []?
+        return _field.at(x).at(y); //TODO: use at or []?
     }
 
     PointOfView& Level::get_pov()
@@ -51,6 +51,6 @@ namespace GameLogic {
 
     void Level::handle_input(Engine::PressedKeys keys)
     {
-//        this->_player->handle
+        this->_player->handleInput(keys);
     }
 }

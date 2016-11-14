@@ -20,6 +20,7 @@ namespace GameLogic {
     using Engine::PointOfView;
     using Engine::WorldObject;
     using Engine::PressedKeys;
+    using Engine::Key;
 
     class Level;
 
@@ -29,10 +30,10 @@ namespace GameLogic {
         Player(CoordinateDouble position, Level& level); //is this retarted? perhaps use smart pointer for world
 
         virtual ~Player();
-
         bool is_at(int x, int y);
-
         void set_level_ref(Level& level);
+        void handleInput(PressedKeys keys); //TODO: What is Keyboard?
+        virtual void update(int timeSinceLastUpdate);
 
     private:
         Level& _level;
@@ -45,23 +46,14 @@ namespace GameLogic {
         double _dir_y = 0;
         double _plane_x = 0;
         double _plane_y = 0.66;
-
         double _accel = 0;
         double _rotation = 0;
 
-        void handleInput(PressedKeys keys); //TODO: What is Keyboard?
-        virtual void update(int timeSinceLastUpdate);
-
         void mov_stop();
-
         void mov_forward();
-
         void mov_backward();
-
         void rot_stop();
-
         void rot_right();
-
         void rot_left();
 
 

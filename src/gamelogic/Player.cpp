@@ -17,31 +17,44 @@ namespace GameLogic {
 
     }
 
-    void Player::handleInput(PressedKeys keys) {
+    void Player::handleInput(PressedKeys keys)
+    {
+        bool WS_Pressed = false;
+        bool AD_Pressed = false;
 
+        for (auto key : keys) {
+            switch (key) {
+                case Key::A :
+                    this->rot_left();
+                    AD_Pressed = true;
+                    break;
+                case Key::S :
+                    this->mov_backward();
+                    WS_Pressed = true;
+                    break;
+                case Key::W :
+                    this->mov_forward();
+                    WS_Pressed = true;
+                    break;
+                case Key::D :
+                    this->rot_right();
+                    AD_Pressed = true;
+                    break;
+                default:
+                    break;
+            }
+        }
 
-//        if (input.isDown(SDLK_w) && input.isDown(SDLK_s)) {
-//            this->mov_stop();
-//        } else if (input.isDown(SDLK_w)) {
-//            this->mov_forward();
-//        } else if (input.isDown(SDLK_s)) {
-//            this->mov_backward();
-//        } else {
-//            this->mov_stop();
-//        }
-//
-//        if (input.isDown(SDLK_a) && input.isDown(SDLK_d)) {
-//            this->rot_stop();
-//        } else if (input.isDown(SDLK_a)) {
-//            this->rot_left();
-//        } else if (input.isDown(SDLK_d)) {
-//            this->rot_right();
-//        } else {
-//            this->rot_stop();
-//        }
+        if (!AD_Pressed) {
+            this->rot_stop();
+        }
+        if (!WS_Pressed) {
+            this->mov_stop();
+        }
     }
 
-    void Player::update(int timeSinceLastUpdate) {
+    void Player::update(int timeSinceLastUpdate)
+    {
         double moveSpeed = this->_accel * timeSinceLastUpdate;
         double new_x = this->_position_x + this->_dir_x * moveSpeed;
         double new_y = this->_position_y + this->_dir_y * moveSpeed;
@@ -61,37 +74,44 @@ namespace GameLogic {
     }
 
 
-    bool Player::is_at(int x, int y) {
+    bool Player::is_at(int x, int y)
+    {
         return (int) this->_position_x == x && (int) this->_position_y == y;
     }
 
 
-    void Player::mov_stop() {
+    void Player::mov_stop()
+    {
         this->_accel = 0;
     }
 
 
-    void Player::mov_forward() {
+    void Player::mov_forward()
+    {
         this->_accel = this->_MOVE_SPEED;
     }
 
 
-    void Player::mov_backward() {
-        this->_accel = this->_MOVE_SPEED;
+    void Player::mov_backward()
+    {
+        this->_accel = -this->_MOVE_SPEED;
     }
 
 
-    void Player::rot_stop() {
+    void Player::rot_stop()
+    {
         this->_rotation = 0;
     }
 
 
-    void Player::rot_right() {
+    void Player::rot_right()
+    {
         this->_rotation = -this->_ROT_SPEED;
     }
 
 
-    void Player::rot_left() {
+    void Player::rot_left()
+    {
         this->_rotation = this->_ROT_SPEED;
     }
 
