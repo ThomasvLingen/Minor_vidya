@@ -18,6 +18,7 @@ namespace GameLogic {
 
     }
 
+    /// \brief update every tile from this level
     void Level::update()
     {
         for (auto row : this->_field) {
