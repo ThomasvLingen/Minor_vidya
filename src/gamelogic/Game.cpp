@@ -14,10 +14,16 @@ namespace GameLogic {
     , _raycasting_engine(this->_SDL_facade)
     {
         this->_SDL_facade.init();
+
+        // TODO: This is test code of the worst kind, remove when no longer needed (f/e when we have a level editor)
         std::vector<std::vector<int>> world = {
             {1,1,1,1,1},
             {1,0,0,0,1},
-            {1,0,1,0,1},
+            {1,0,2,0,1},
+            {1,0,0,0,1},
+            {1,0,0,0,1},
+            {1,0,0,0,1},
+            {1,0,3,0,1},
             {1,0,0,0,1},
             {1,1,1,1,1}
         };
@@ -30,8 +36,24 @@ namespace GameLogic {
 
             for(int j = 0; j < world.at(i).size(); j++){
                 Tile* temp = new Tile();
-                temp->set_wall((bool)world[i][j]);
-                temp->set_color({50+50*j,0,0});
+
+                switch (world[i][j]) {
+                    case 1:
+                        temp->set_wall(true);
+                        temp->set_color({255,0,0});
+                    break;
+                    case 2:
+                        temp->set_wall(true);
+                        temp->set_color({0,255,0});
+                    break;
+                    case 3:
+                        temp->set_wall(true);
+                        temp->set_color({0,0,255});
+                    break;
+                    default:
+                        temp->set_wall(false);
+                }
+
                 tiles.at(i).push_back(temp);
             }
         }
@@ -39,6 +61,7 @@ namespace GameLogic {
         this->_level = { std::make_shared<Level>(Level(tiles)) };
         this->_raycasting_engine.set_world(this->_level);
 
+        // TODO: This most likely should not be newed here, I think. It has to be cleaned up either way. whose responsibility is this though?
         Player* player = new Player({1.5,1.5}, *(this->_level));
         this->_level->set_player(player);
     }
