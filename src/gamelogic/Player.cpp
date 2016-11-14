@@ -59,14 +59,17 @@ namespace GameLogic {
         if (!this->_level.get_tile((int) this->_position.x, (int) new_y)->is_wall()) {
             this->_position.y = new_y;
         }
+        
         this->_accel = 0;
     }
 
     void Player::_rotate_player(int timeSinceLastUpdate)
     {
         double rotSpeed = this->_rotation * timeSinceLastUpdate;
+        
         VectorUtil::rotate_vector(this->_direction.x, this->_direction.y, rotSpeed);
         VectorUtil::rotate_vector(this->_camera_plane.x, this->_camera_plane.y, rotSpeed);
+        
         this->_rotation = 0;
     }
 
