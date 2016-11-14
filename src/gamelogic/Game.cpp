@@ -16,6 +16,9 @@ namespace GameLogic {
         this->_SDL_facade.init();
     }
 
+    /// \brief The main game loop
+    ///
+    /// first handle input, thereafter update and finally clear and draw the screen.
     void Game::run()
     {
         int time_since_last_frame;
