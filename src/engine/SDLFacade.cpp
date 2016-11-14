@@ -11,9 +11,9 @@ namespace Engine {
     /// The given callback function will be saved. This function will be called on Quit-event
     /// \param callback_func The function that needs to be called on quit
     SDLFacade::SDLFacade(const function<void()>& callback_func )
-    : _quit_callback(callback_func)
-    , _width(640)  // Better fucking initialise this you big bozo, otherwise we get an uninitialised width and height,
-    , _height(480) // resulting in really terrible behaviour.
+    : _width(640)  // Initialise this, otherwise we get an uninitialised width and height,
+    , _height(480) // resulting in wrong raycasting ray index values.
+    , _quit_callback(callback_func)
     {
 
     }
