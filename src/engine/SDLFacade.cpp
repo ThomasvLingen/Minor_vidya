@@ -381,4 +381,78 @@ namespace Engine {
     {
         SDL_Delay((uint32_t)millis);
     }
+
+    bool SDLFacade::load_tilemap(const char path[]) {
+        SDL_Surface* image = SDL_LoadBMP(path);
+        if(image != nullptr){
+            SDL_BlitSurface(image, NULL, this->_screenSurface, NULL);
+
+            unsigned char* data = readBMP("Wall-E.bmp");
+            Color color = {.r_value = data[20000], .g_value = data[200010], .b_value = data[20020]};
+            std::cout << " Colors: " <<std::endl;
+            std::cout << unsigned(color.r_value) <<std::endl;
+            std::cout << unsigned(color.g_value) <<std::endl;
+            std::cout << unsigned(color.b_value) <<std::endl;
+
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    unsigned char* SDLFacade::readBMP(char* filename)
+    {
+        int i;
+        FILE* f = fopen("/home/wouter/Minor_vidya/res/Wall-E.bmp", "rb");
+
+        unsigned char info[54];
+
+        fread(info, sizeof(unsigned char), 54, f); // read the 54-byte header
+
+        // extract image height and width from header
+        int width = *(int*)&info[18];
+        int height = *(int*)&info[22];
+        int size = 3 * width * height;
+        unsigned char* data = new unsigned char[size]; // allocate 3 bytes per pixel
+        fread(data, sizeof(unsigned char), size, f); // read the rest of the data at once
+        fclose(f);
+
+        for(i = 0; i < size; i += 3)
+        {
+            unsigned char tmp = data[i];
+            data[i] = data[i+2];
+            data[i+2] = tmp;
+        }
+
+        return data;
+    }
+
+    Color SDLFacade::get_color_of_pixel(const SDL_Surface *surface, const CoordinateInt& position)
+    {
+        int bpp = surface->format->BytesPerPixel;
+        /* Here p is the address to the pixel we want to retrieve */
+        Uint8 *p = (Uint8 *)surface->pixels + position.y * surface->pitch + position.x * bpp;
+
+        switch(bpp) {
+            case 1:
+            std::cout << "1" << std::endl;
+                return Color();
+
+            case 2:
+                std::cout << "2" << std::endl;
+                return Color();
+
+            case 3:
+                std::cout << "3" << std::endl;
+                return Color{.r_value = p[0], .g_value = p[1], .b_value = p[2]};
+
+            case 4:
+                std::cout << "4" << std::endl;
+                return Color();
+
+            default:
+                std::cout << "default" << std::endl;
+                return Color();       /* shouldn't happen, but avoids warnings */
+        }
+    }
 }
