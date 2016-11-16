@@ -10,7 +10,7 @@
 namespace Engine {
     using std::vector;
 
-    enum Key {W, A, S, D, ESC};
+    enum class Key {W, A, S, D, ESC};
 
     typedef vector<Key> PressedKeys;
 }

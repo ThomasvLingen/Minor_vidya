@@ -20,7 +20,7 @@ namespace Engine {
     class TileObject {
 
     public:
-        enum Direction { up_tile, down_tile, left_tile, right_tile };    // direction for set_tile
+        enum class Direction { up_tile, down_tile, left_tile, right_tile };    // direction for set_tile
 
     private:
         bool _wall;

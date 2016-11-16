@@ -8,7 +8,7 @@
 #include "RaycastingVector.hpp"
 
 namespace Engine {
-    enum WallSide {x_wall, y_wall};
+    enum class WallSide {x_wall, y_wall};
 
     struct RayStep {
         double side_distance;
