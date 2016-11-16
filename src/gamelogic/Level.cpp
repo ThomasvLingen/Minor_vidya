@@ -47,7 +47,7 @@ namespace GameLogic {
         return *(this->_player);
     }
 
-    void Level::set_player(Player* player)
+    void Level::set_player(shared_ptr<Player> player)
     {
         this->_player = player;
     }

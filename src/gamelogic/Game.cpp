@@ -4,7 +4,6 @@
 
 #include "Game.hpp"
 
-
 namespace GameLogic {
     Game::Game()
     : _running(true)
@@ -61,8 +60,9 @@ namespace GameLogic {
         this->_level = { std::make_shared<Level>(Level(tiles)) };
         this->_raycasting_engine.set_world(this->_level);
 
-        // TODO: This most likely should not be newed here, I think. It has to be cleaned up either way. whose responsibility is this though?
-        Player* player = new Player({1.5,1.5}, *(this->_level));
+        CoordinateDouble coord = {1.5,1.5};
+        auto player = std::make_shared<Player>(coord, *(this->_level));
+
         this->_level->set_player(player);
     }
 

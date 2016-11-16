@@ -11,6 +11,7 @@
 #include "Player.hpp"
 #include "../engine/domain/PointOfView.hpp"
 #include <vector>
+#include <memory>
 
 
 namespace GameLogic {
@@ -19,6 +20,7 @@ namespace GameLogic {
     using Engine::CoordinateDouble;
     using Engine::TileObject;
     using Engine::PointOfView;
+    using std::shared_ptr;
 
     class Player;
 
@@ -27,7 +29,7 @@ namespace GameLogic {
     private:
         vector<vector<Tile*>> _field; //TODO create a typedef for this
         CoordinateDouble _spawnpoint;
-        Player* _player; //TODO smart pointers?
+        shared_ptr<Player> _player;
 
         /*
          * WorldParser
@@ -43,7 +45,7 @@ namespace GameLogic {
 
         void update(int delta_time) override;
 
-        void set_player(Player* player);
+        void set_player(shared_ptr<Player> player);
 
         TileObject* get_tile(int x, int y) override;
 
