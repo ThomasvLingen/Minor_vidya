@@ -28,7 +28,7 @@ namespace GameLogic {
         bool _running;
         SDLFacade _SDL_facade;
         Raycasting _raycasting_engine;
-        std::shared_ptr<Level> _level; //TODO: perhaps change this to a level pointer
+        SPTR_Level _level; //TODO: perhaps change this to a level pointer
 
     };
 }

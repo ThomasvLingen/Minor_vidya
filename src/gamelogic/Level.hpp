@@ -54,6 +54,8 @@ namespace GameLogic {
 
         void handle_input(Engine::PressedKeys keys) override;
     };
+
+    typedef std::shared_ptr<Level> SPTR_Level;
 }
 
 #endif //MINOR_VIDYA_LEVEL_HPP

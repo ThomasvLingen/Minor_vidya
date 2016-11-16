@@ -6,7 +6,7 @@
 
 namespace GameLogic {
 
-    Player::Player(CoordinateDouble position, std::shared_ptr<Level> world)
+    Player::Player(CoordinateDouble position, SPTR_Level world)
     : PointOfView(position, Engine::RaycastingVector{-1, 0}, Engine::RaycastingVector{0, 0.66})
     , _level(world)
     {
@@ -97,7 +97,7 @@ namespace GameLogic {
         this->_rotation = this->_ROT_SPEED;
     }
 
-    void Player::set_level(std::shared_ptr<Level> level)
+    void Player::set_level(SPTR_Level level)
     {
         this->_level = level;
     }

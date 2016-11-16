@@ -28,15 +28,15 @@ namespace GameLogic {
     class Player : public PointOfView {
 
     public:
-        Player(CoordinateDouble position, std::shared_ptr<Level> level);
+        Player(CoordinateDouble position, SPTR_Level level);
 
         bool is_at(int x, int y);
-        void set_level(std::shared_ptr<Level> level);
+        void set_level(SPTR_Level level);
         void handleInput(PressedKeys keys);
         virtual void update(int timeSinceLastUpdate);
 
     private:
-        std::shared_ptr<Level> _level;
+        SPTR_Level _level;
 
         const double _MOVE_SPEED = 0.005;
         const double _ROT_SPEED = 0.002;
