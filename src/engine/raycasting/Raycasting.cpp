@@ -18,6 +18,7 @@ namespace Engine {
 
     }
 
+    /// \brief Get pressed keys from SDL_facade and parse it to the worldInterface
     void Raycasting::handle_input()
     {
         this->_world->handle_input(this->_SDL_facade.get_keys());
@@ -25,6 +26,7 @@ namespace Engine {
         // If we need to do something on a keystroke, handle input ourselves
     }
 
+    /// \brief Call the update on the worldinterface
     void Raycasting::update(int delta_time)
     {
         this->_world->update(delta_time);
