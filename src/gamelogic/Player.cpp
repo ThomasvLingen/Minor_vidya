@@ -40,8 +40,8 @@ namespace GameLogic {
     void Player::update(int timeSinceLastUpdate)
     {
         if (this->_level != nullptr) {
-            Player::_move_player(timeSinceLastUpdate);
-            Player::_rotate_player(timeSinceLastUpdate);
+            this->_move_player(timeSinceLastUpdate);
+            this->_rotate_player(timeSinceLastUpdate);
         }
     }
 
