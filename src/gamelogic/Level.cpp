@@ -51,4 +51,12 @@ namespace GameLogic {
     {
         this->_player->handleInput(keys);
     }
+
+    Level::Level(const Level& obj)
+    : WorldObject()
+    , _field(obj._field)
+    , _spawnpoint(obj._spawnpoint)
+    , _player(obj._player)
+    {
+    }
 }

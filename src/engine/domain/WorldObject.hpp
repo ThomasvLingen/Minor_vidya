@@ -10,6 +10,10 @@ namespace Engine {
     class WorldObject {
 
     public:
+        WorldObject() = default;                            // We now have to explicitly declare this since other def constructors are deleted
+        WorldObject(const WorldObject& obj) = delete;            // Copy constructor for a base class has to be deleted (slicing)
+        WorldObject& operator=(const WorldObject& obj) = delete; // Copy assignment for a base class has to be deleted (slicing)
+
         virtual void update(int delta_time) = 0;
 
         virtual PointOfView& get_pov() = 0;

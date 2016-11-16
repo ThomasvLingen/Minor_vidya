@@ -61,7 +61,7 @@ namespace GameLogic {
         this->_raycasting_engine.set_world(this->_level);
 
         CoordinateDouble coord = {1.5,1.5};
-        auto player = std::make_shared<Player>(coord, *(this->_level));
+        auto player = std::make_shared<Player>(coord, this->_level);
 
         this->_level->set_player(player);
     }

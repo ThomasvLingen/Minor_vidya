@@ -40,6 +40,7 @@ namespace GameLogic {
 
     public:
         Level(vector<vector<Tile*>> field);
+        Level(const Level& obj);
 
         void update(int delta_time) override;
 

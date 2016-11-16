@@ -5,6 +5,7 @@
 #ifndef MINOR_VIDYA_PLAYER_HPP
 #define MINOR_VIDYA_PLAYER_HPP
 
+#include <memory>
 #include "../engine/domain/WorldObject.hpp"
 #include "../engine/domain/PointOfView.hpp"
 #include "../engine/domain/CoordinateDouble.hpp"
@@ -27,15 +28,15 @@ namespace GameLogic {
     class Player : public PointOfView {
 
     public:
-        Player(CoordinateDouble position, Level& level); //is this retarted? perhaps use smart pointer for world
+        Player(CoordinateDouble position, std::shared_ptr<Level> level);
 
         bool is_at(int x, int y);
-        void set_level_ref(Level& level);
+        void set_level(std::shared_ptr<Level> level);
         void handleInput(PressedKeys keys);
         virtual void update(int timeSinceLastUpdate);
 
     private:
-        Level& _level;
+        std::shared_ptr<Level> _level;
 
         const double _MOVE_SPEED = 0.005;
         const double _ROT_SPEED = 0.002;
