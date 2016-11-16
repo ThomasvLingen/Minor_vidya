@@ -5,12 +5,6 @@
 #include <map>
 #include "Color.hpp"
 
-// index for neighbour TileObject
-#define to_up_neighbour_index 0
-#define to_down_neighbour_index 1
-#define to_left_neighbour_index 2
-#define to_right_neighbour_index 3
-
 
 namespace Engine {
     using std::vector;
@@ -20,7 +14,14 @@ namespace Engine {
     class TileObject {
 
     public:
-        enum class Direction { up_tile, down_tile, left_tile, right_tile };    // direction for set_tile
+        // direction for set_tile
+        // Maps to a position in the _neighbour_tiles vector
+        enum class Direction {
+            up_tile    = 0,
+            down_tile  = 1,
+            left_tile  = 2,
+            right_tile = 3
+        };
 
     private:
         bool _wall;
@@ -28,12 +29,6 @@ namespace Engine {
         const int _width = 1;        // TODO: implement width value
         const int _length = 1;        // TODO: implement height value
         vector<TileObject*> _neighbour_tiles;
-        map<Direction, int> _direction_to_num_map = {
-            {Direction::up_tile, to_up_neighbour_index},
-            {Direction::down_tile, to_down_neighbour_index},
-            {Direction::left_tile, to_left_neighbour_index},
-            {Direction::right_tile, to_right_neighbour_index}
-        };
 
     public:
         TileObject();
