@@ -8,7 +8,6 @@
 #include "../engine/domain/WorldObject.hpp"
 #include "../engine/domain/TileObject.hpp"
 #include "Tile.hpp"
-#include "Player.hpp"
 #include "../engine/domain/PointOfView.hpp"
 #include <vector>
 #include <memory>

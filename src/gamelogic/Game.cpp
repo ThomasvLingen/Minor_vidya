@@ -3,6 +3,7 @@
 //
 
 #include "Game.hpp"
+#include "Player.hpp"
 
 namespace GameLogic {
     Game::Game()

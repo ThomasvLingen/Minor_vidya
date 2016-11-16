@@ -3,6 +3,7 @@
 //
 
 #include "Level.hpp"
+#include "Player.hpp"
 
 namespace GameLogic {
 
