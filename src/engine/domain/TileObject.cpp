@@ -9,12 +9,6 @@ namespace Engine {
         }
     }
 
-
-    TileObject::~TileObject()
-    {
-
-    }
-
     /// \brief update all objects in this particular tile.
     void TileObject::update(int delta_time)
     {

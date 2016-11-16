@@ -41,8 +41,6 @@ namespace GameLogic {
     public:
         Level(vector<vector<Tile*>> field);
 
-        virtual ~Level();
-
         void update(int delta_time) override;
 
         void set_player(shared_ptr<Player> player);

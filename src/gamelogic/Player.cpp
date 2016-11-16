@@ -12,11 +12,6 @@ namespace GameLogic {
     {
     }
 
-    Player::~Player()
-    {
-
-    }
-
     /// \brief Handles the keys that were pressed during the last tick
     ///
     /// \param keys is a vector of Key enumerables that were pressed

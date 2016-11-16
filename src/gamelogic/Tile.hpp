@@ -14,8 +14,6 @@ namespace GameLogic {
     public:
         Tile();
 
-        virtual ~Tile();
-
         void update(int delta_time) override;
 
     };

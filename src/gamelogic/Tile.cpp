@@ -11,12 +11,6 @@ namespace GameLogic {
 
     }
 
-
-    Tile::~Tile()
-    {
-
-    }
-
     void Tile::update(int delta_time)
     {
         //TODO implement

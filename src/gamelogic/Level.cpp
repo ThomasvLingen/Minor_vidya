@@ -13,11 +13,6 @@ namespace GameLogic {
     {
     }
 
-    Level::~Level()
-    {
-
-    }
-
     /// \brief update every tile from this level
     void Level::update(int delta_time)
     {

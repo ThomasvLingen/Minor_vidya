@@ -13,11 +13,6 @@ namespace Engine {
 
     }
 
-    Raycasting::~Raycasting()
-    {
-
-    }
-
     /// \brief Get pressed keys from SDL_facade and parse it to the worldInterface
     void Raycasting::handle_input()
     {

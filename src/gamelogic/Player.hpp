@@ -29,7 +29,6 @@ namespace GameLogic {
     public:
         Player(CoordinateDouble position, Level& level); //is this retarted? perhaps use smart pointer for world
 
-        virtual ~Player();
         bool is_at(int x, int y);
         void set_level_ref(Level& level);
         void handleInput(PressedKeys keys);
