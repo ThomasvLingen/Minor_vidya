@@ -14,11 +14,6 @@ namespace Engine {
 
     }
 
-    PointOfView::~PointOfView()
-    {
-
-    }
-
     CoordinateDouble &PointOfView::get_position()
     {
         return this->_position;

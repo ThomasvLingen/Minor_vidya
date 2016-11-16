@@ -32,7 +32,7 @@ namespace Engine {
     using std::endl;
 
 
-    enum FontType {verdana, roman, alterebro_pixel};
+    enum class FontType {verdana, roman, alterebro_pixel};
 
 
     class SDLFacade {
@@ -42,11 +42,11 @@ namespace Engine {
         map<FontType, TTF_Font*> _fonts;
 
         map<SDL_Keycode, Key> _possible_keys = {
-            {SDLK_w, W},
-            {SDLK_a, A},
-            {SDLK_s, S},
-            {SDLK_d, D},
-            {SDLK_ESCAPE, ESC}
+            {SDLK_w, Key::W},
+            {SDLK_a, Key::A},
+            {SDLK_s, Key::S},
+            {SDLK_d, Key::D},
+            {SDLK_ESCAPE, Key::ESC}
         };
 
         SDL_Window* _window = nullptr;

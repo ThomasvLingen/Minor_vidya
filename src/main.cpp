@@ -1,9 +1,11 @@
-#include <iostream>
+#include "gamelogic/Game.hpp"
+
+using GameLogic::Game;
 
 int main()
 {
-    std::cout << "Hello world" << std::endl;
-
+    Game game;
+    game.run();
     return 0;
 }
 

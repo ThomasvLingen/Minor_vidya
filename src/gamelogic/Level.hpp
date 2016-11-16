@@ -8,9 +8,9 @@
 #include "../engine/domain/WorldObject.hpp"
 #include "../engine/domain/TileObject.hpp"
 #include "Tile.hpp"
-#include "Player.hpp"
 #include "../engine/domain/PointOfView.hpp"
 #include <vector>
+#include <memory>
 
 
 namespace GameLogic {
@@ -19,6 +19,7 @@ namespace GameLogic {
     using Engine::CoordinateDouble;
     using Engine::TileObject;
     using Engine::PointOfView;
+    using std::shared_ptr;
 
     class Player;
 
@@ -27,7 +28,7 @@ namespace GameLogic {
     private:
         vector<vector<Tile*>> _field; //TODO create a typedef for this
         CoordinateDouble _spawnpoint;
-        Player* _player; //TODO smart pointers?
+        shared_ptr<Player> _player;
 
         /*
          * WorldParser
@@ -38,12 +39,11 @@ namespace GameLogic {
 
     public:
         Level(vector<vector<Tile*>> field);
+        Level(const Level& obj);
 
-        virtual ~Level();
+        void update(int delta_time) override;
 
-        void update() override;
-
-        void set_player(Player* player);
+        void set_player(shared_ptr<Player> player);
 
         TileObject* get_tile(int x, int y) override;
 
@@ -53,6 +53,8 @@ namespace GameLogic {
 
         void handle_input(Engine::PressedKeys keys) override;
     };
+
+    typedef std::shared_ptr<Level> SPTR_Level;
 }
 
 #endif //MINOR_VIDYA_LEVEL_HPP

@@ -9,14 +9,8 @@ namespace Engine {
         }
     }
 
-
-    TileObject::~TileObject()
-    {
-
-    }
-
     /// \brief update all objects in this particular tile.
-    void TileObject::update()
+    void TileObject::update(int delta_time)
     {
         // TODO: Implement this
     }
@@ -33,12 +27,12 @@ namespace Engine {
 
     void TileObject::set_tile_neighbour(TileObject* tile, Direction direction)
     {
-        this->_neighbour_tiles[_direction_to_num_map[direction]] = tile;
+        this->_neighbour_tiles[(size_t)direction] = tile;
     }
 
     TileObject* TileObject::get_tile_neighbour(Direction direction)
     {
-        return this->_neighbour_tiles[_direction_to_num_map[direction]];
+        return this->_neighbour_tiles[(size_t)direction];
     }
 
     bool TileObject::is_wall()

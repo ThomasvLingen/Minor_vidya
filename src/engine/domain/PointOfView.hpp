@@ -12,7 +12,8 @@ namespace Engine {
     class PointOfView {
     public:
         PointOfView(CoordinateDouble position, RaycastingVector direction, RaycastingVector camera_plane);
-        virtual ~PointOfView();
+        PointOfView(const PointOfView& obj) = delete;            // Copy constructor for a base class has to be deleted (slicing)
+        PointOfView& operator=(const PointOfView& obj) = delete; // Copy assignment for a base class has to be deleted (slicing)
 
         CoordinateDouble& get_position();
         RaycastingVector& get_direction();

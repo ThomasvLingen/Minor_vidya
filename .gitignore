@@ -37,3 +37,7 @@ build/
 *.exe
 *.out
 *.app
+
+# Profiler files
+callgraph*
+callgrind*

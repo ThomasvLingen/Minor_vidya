@@ -6,15 +6,10 @@
 
 namespace GameLogic {
 
-    Player::Player(CoordinateDouble position, Level &world)
+    Player::Player(CoordinateDouble position, SPTR_Level world)
     : PointOfView(position, Engine::RaycastingVector{-1, 0}, Engine::RaycastingVector{0, 0.66})
     , _level(world)
     {
-    }
-
-    Player::~Player()
-    {
-
     }
 
     /// \brief Handles the keys that were pressed during the last tick
@@ -44,8 +39,10 @@ namespace GameLogic {
 
     void Player::update(int timeSinceLastUpdate)
     {
-        Player::_move_player(timeSinceLastUpdate);
-        Player::_rotate_player(timeSinceLastUpdate);
+        if (this->_level != nullptr) {
+            this->_move_player(timeSinceLastUpdate);
+            this->_rotate_player(timeSinceLastUpdate);
+        }
     }
 
     void Player::_move_player(int timeSinceLastUpdate){
@@ -53,10 +50,10 @@ namespace GameLogic {
         double new_x = this->_position.x + this->_direction.x * moveSpeed;
         double new_y = this->_position.y + this->_direction.y * moveSpeed;
 
-        if (!this->_level.get_tile((int) new_x, (int) this->_position.y)->is_wall()) {
+        if (!this->_level->get_tile((int) new_x, (int) this->_position.y)->is_wall()) {
             this->_position.x = new_x;
         }
-        if (!this->_level.get_tile((int) this->_position.x, (int) new_y)->is_wall()) {
+        if (!this->_level->get_tile((int) this->_position.x, (int) new_y)->is_wall()) {
             this->_position.y = new_y;
         }
         
@@ -100,7 +97,7 @@ namespace GameLogic {
         this->_rotation = this->_ROT_SPEED;
     }
 
-    void Player::set_level_ref(Level& level)
+    void Player::set_level(SPTR_Level level)
     {
         this->_level = level;
     }

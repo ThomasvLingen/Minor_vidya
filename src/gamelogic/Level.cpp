@@ -3,6 +3,7 @@
 //
 
 #include "Level.hpp"
+#include "Player.hpp"
 
 namespace GameLogic {
 
@@ -13,21 +14,18 @@ namespace GameLogic {
     {
     }
 
-    Level::~Level()
-    {
-
-    }
-
     /// \brief update every tile from this level
-    void Level::update()
+    void Level::update(int delta_time)
     {
         for (auto row : this->_field) {
             for (auto tile : row) {
                 if (tile != nullptr) {
-                    tile->update();
+                    tile->update(delta_time);
                 }
             }
         }
+
+        this->_player->update(delta_time);
     }
 
     CoordinateDouble Level::get_spawnpoint()
@@ -45,7 +43,7 @@ namespace GameLogic {
         return *(this->_player);
     }
 
-    void Level::set_player(Player* player)
+    void Level::set_player(shared_ptr<Player> player)
     {
         this->_player = player;
     }
@@ -53,5 +51,13 @@ namespace GameLogic {
     void Level::handle_input(Engine::PressedKeys keys)
     {
         this->_player->handleInput(keys);
+    }
+
+    Level::Level(const Level& obj)
+    : WorldObject()
+    , _field(obj._field)
+    , _spawnpoint(obj._spawnpoint)
+    , _player(obj._player)
+    {
     }
 }
