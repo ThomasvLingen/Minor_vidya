@@ -67,6 +67,10 @@ namespace GameLogic {
         this->_level->set_player(player);
     }
 
+    Game::~Game() {
+
+    }
+
     /// \brief The main game loop
     ///
     /// first handle input, thereafter update and finally clear and draw the screen.
