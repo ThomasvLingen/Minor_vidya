@@ -21,13 +21,6 @@ namespace GameLogic {
     , _raycasting_engine(this->_SDL_facade)
     {
         this->_SDL_facade.init();
-        this->_pause_state = new State::PauseState();
-        this->_run_state = new State::RunState();
-        this->_load_state = new State::LoadState();
-        this->_credit_state = new State::CreditState();
-        this->_menu_state = new State::MenuState();
-        this->_start_up_state = new State::StartUpState();
-        this->_current_state = _run_state;
 
         // TODO: This is test code of the worst kind, remove when no longer needed (f/e when we have a level editor)
         std::vector<std::vector<int>> world = {
