@@ -12,8 +12,17 @@
 #include "Level.hpp"
 #include "Tile.hpp"
 
+#include "State/IGameState.hpp"
+#include "State/CreditState.hpp"
+#include "State/LoadState.hpp"
+#include "State/MenuState.hpp"
+#include "State/PauseState.hpp"
+#include "State/RunState.hpp"
+#include "State/StartUpState.hpp"
 
 namespace GameLogic {
+
+    using State::IGameState;
 
     using Engine::Raycasting;
     using Engine::SDLFacade;
@@ -22,9 +31,17 @@ namespace GameLogic {
     class Game {
     public:
         Game();
+        ~Game();
         void run();
 
     private:
+        IGameState _credit_state;
+        IGameState _load_state;
+        IGameState _menu_state;
+        IGameState _pause_state;
+        IGameState _run_state;
+        IGameState _start_up_state;
+
         bool _running;
         SDLFacade _SDL_facade;
         Raycasting _raycasting_engine;
