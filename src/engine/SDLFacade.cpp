@@ -99,8 +99,8 @@ namespace Engine {
     /// \return This function returns True if the _window was successfully initialized, ohterwise it returns False
     bool SDLFacade::_init_window()
     {
-        this->_window = SDL_CreateWindow("Vidya game", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 500,
-                                   500, SDL_WINDOW_SHOWN);
+        this->_window = SDL_CreateWindow("Vidya game", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, this->_width,
+                                   this->_height, SDL_WINDOW_SHOWN);
         if (this->_window != nullptr) {
             this->_screenSurface = SDL_GetWindowSurface(this->_window);
             return true;
@@ -129,6 +129,26 @@ namespace Engine {
     {
         SDL_SetRenderDrawColor(this->_renderer, color.r_value, color.g_value, color.b_value, 255);
         SDL_RenderDrawLine(this->_renderer, line_start.x, line_start.y, line_end.x, line_end.y);
+    }
+
+    /// \brief Draws a rectangle
+    ///
+    /// A rect will be drawn from the given coordinate with the given width and height The color is set first, secondly the rect is being drawn.
+    ///
+    /// \param rect_start Coordinate of the start of the rectangle
+    /// \param width Width of the rectangle
+    /// \param height Height of the rectangle
+    /// \param color The color of the rectangle. The color class comes from the engine
+    void SDLFacade::draw_rect(const CoordinateDouble& rect_start, const int width, const int height, const Color& color)
+    {
+        SDL_SetRenderDrawColor(this->_renderer, color.r_value, color.g_value, color.b_value, 255);
+         SDL_Rect r;
+            r.x = rect_start.x;
+            r.y = rect_start.y;
+            r.w = width;
+            r.h = height;
+        SDL_SetRenderDrawColor(this->_renderer, color.r_value, color.g_value, color.b_value, 255);
+        SDL_RenderFillRect(this->_renderer, &r);
     }
 
     /// \brief Updates the window

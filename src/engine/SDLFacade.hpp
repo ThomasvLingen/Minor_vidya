@@ -69,6 +69,8 @@ namespace Engine {
 
         void draw_line(const CoordinateDouble& line_start, const CoordinateDouble& line_end, const Color& color);
 
+        void draw_rect(const CoordinateDouble& rect_start, const int width, const int height, const Color& color);
+
         void render_buffer() const;
 
         void handle_sdl_events();
