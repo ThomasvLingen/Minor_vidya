@@ -1,4 +1,5 @@
 #include "gamelogic/Game.hpp"
+#define SDL_main main
 
 using GameLogic::Game;
 
@@ -8,4 +9,3 @@ int main()
     game.run();
     return 0;
 }
-
