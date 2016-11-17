@@ -89,12 +89,11 @@ namespace GameLogic {
         int time_spent;
 
         while (this->_running) {
-
             current_frame_start_time = this->_SDL_facade.get_ticks();
             time_since_last_frame = current_frame_start_time - last_frame_start_time;
             last_frame_start_time = this->_SDL_facade.get_ticks();
 
-            this->_SDL_facade.handle_sdl_events();
+            this->_SDL_facade.handle_sdl_events(); //TODO: To running state
             this->_raycasting_engine.handle_input();
             this->_raycasting_engine.update(time_since_last_frame);
             this->_SDL_facade.clear_screen();

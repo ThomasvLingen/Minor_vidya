@@ -221,13 +221,16 @@ namespace Engine {
         } else {
             SDL_Rect SrcR;
             SDL_Rect DestR;
+            SDL_Texture* image_texture;
 
             SrcR = {0, 0, image->w, image->h};
             DestR = {(int)coordinates.x, (int)coordinates.y, image->w, image->h};
 
-            SDL_Texture* texture = SDL_CreateTextureFromSurface(this->_renderer, image);
+            image_texture = SDL_CreateTextureFromSurface(this->_renderer, image);
             SDL_FreeSurface(image);
-            SDL_RenderCopy(this->_renderer, texture, &SrcR, &DestR);
+
+            SDL_RenderCopy(this->_renderer, image_texture, &SrcR, &DestR);
+            SDL_DestroyTexture(image_texture);
         }
     }
 
@@ -307,6 +310,7 @@ namespace Engine {
 
             SDL_RenderCopy(this->_renderer, text_texture, nullptr, &text_rect);
             SDL_FreeSurface(text_surface);
+            SDL_DestroyTexture(text_texture);
 
             return true;
         } catch (int exception) {
