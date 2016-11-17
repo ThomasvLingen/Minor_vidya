@@ -13,12 +13,6 @@
 #include "Tile.hpp"
 
 #include "State/IGameState.hpp"
-#include "State/CreditState.hpp"
-#include "State/LoadState.hpp"
-#include "State/MenuState.hpp"
-#include "State/PauseState.hpp"
-#include "State/RunState.hpp"
-#include "State/StartUpState.hpp"
 
 namespace GameLogic {
 
@@ -41,6 +35,7 @@ namespace GameLogic {
         IGameState _pause_state;
         IGameState _run_state;
         IGameState _start_up_state;
+        IGameState _current_state;
 
         bool _running;
         SDLFacade _SDL_facade;
