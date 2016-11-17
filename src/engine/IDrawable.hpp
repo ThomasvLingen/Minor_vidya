@@ -11,7 +11,7 @@ namespace Engine {
     public:
         IDrawable();
 
-        ~IDrawable();
+        virtual ~IDrawable();
 
         virtual void draw() = 0;     // pure virtual func
 
