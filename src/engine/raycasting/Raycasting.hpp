@@ -47,7 +47,6 @@ namespace Engine {
         LineCords _get_line_measures(int line_height);
         void _correct_line(LineCords& line);
         void _draw_line(LineCords& line_cords, Color& color, int current_ray_index);
-        void _draw_rect(int start_x, int start_y, int width, int height, Color& color);
     };
 }
 
