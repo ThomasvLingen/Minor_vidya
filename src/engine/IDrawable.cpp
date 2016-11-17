@@ -9,7 +9,7 @@ namespace Engine {
 
     }
 
-    IDrawable::IDrawable() {
+    IDrawable::~IDrawable() {
 
     }
 }

@@ -151,6 +151,33 @@ namespace Engine {
         SDL_RenderFillRect(this->_renderer, &r);
     }
 
+    /// \brief Draws a image
+    ///
+    /// An image will be drawn on the coordinates (Accepts only bmp files)
+    ///
+    /// \param path Path to image (if in res it is: res/imagename.bmp)
+    /// \param coordinates Coordinates of where the image has to be drawn
+    void SDLFacade::draw_image(const std::string path, const CoordinateDouble& coordinates)
+    {
+        const char* imagePath = path.c_str();
+        SDL_Surface* image = SDL_LoadBMP(imagePath);
+        if (image == NULL) //TODO: exception
+        {
+            cout << "FAILED TO FIND THE IMAGE" << endl;
+            cout << imagePath << endl;
+        } else {
+            SDL_Rect SrcR;
+            SDL_Rect DestR;
+
+            SrcR = {0, 0, image->w, image->h};
+            DestR = {(int)coordinates.x, (int)coordinates.y, image->w, image->h};
+
+            SDL_Texture* texture = SDL_CreateTextureFromSurface(this->_renderer, image);
+            SDL_FreeSurface(image);
+            SDL_RenderCopy(this->_renderer, texture, &SrcR, &DestR);
+        }
+    }
+
     /// \brief Updates the window
     void SDLFacade::render_buffer() const
     {

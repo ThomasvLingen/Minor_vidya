@@ -71,6 +71,8 @@ namespace Engine {
 
         void draw_rect(const CoordinateDouble& rect_start, const int width, const int height, const Color& color);
 
+        void draw_image(const std::string path, const CoordinateDouble& coordinates);
+
         void render_buffer() const;
 
         void handle_sdl_events();
