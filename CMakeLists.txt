@@ -25,7 +25,7 @@ set(SOURCE_FILES
 		src/engine/interface/Updatable.hpp
 		src/gamelogic/State/CreditState.cpp src/gamelogic/State/CreditState
 		src/gamelogic/State/IGameState.cpp src/gamelogic/State/IGameState.hpp
-		src/gamelogic/State/LoadState.cpp src/gamelogic/State/LoadState.hppo
+		src/gamelogic/State/LoadState.cpp src/gamelogic/State/LoadState.hpp
 		src/gamelogic/State/MenuState.cpp src/gamelogic/State/MenuState.hpp
 		src/gamelogic/State/PauseState.cpp src/gamelogic/State/PauseState.hpp
 		src/gamelogic/State/RunState.cpp src/gamelogic/State/RunState.hpp
