@@ -5,15 +5,16 @@
 #ifndef MINOR_VIDYA_IDRAWABLE_HPP
 #define MINOR_VIDYA_IDRAWABLE_HPP
 
-namespace Engine;
+namespace Engine {
+    class IDrawable {
 
-class IDrawable {
-
-        public:
+    public:
         IDrawable();
+
         ~IDrawable();
 
         virtual void draw() = 0;     // pure virtual func
 
-};
+    };
+}
 #endif //MINOR_VIDYA_IDRAWABLE_HPP
