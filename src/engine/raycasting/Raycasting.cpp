@@ -278,22 +278,6 @@ namespace Engine {
         );
     }
 
-    /// \brief Draws a rect using the SDL facade
-    /// \param start_x Start_x of the rect
-    /// \param start_y Start_y of the rect
-    /// \param width Width of the rect
-    /// \param height Height of the rect
-    /// \param color Color of the rect
-    void Raycasting::_draw_rect(int start_x, int start_y, int width, int height, Color& color)
-    {
-        this->_SDL_facade.draw_rect(
-                CoordinateDouble {(double)start_x, (double)start_y},
-                width,
-                height,
-                color
-        );
-    }
-
     void Raycasting::set_world(WorldPTR new_world)
     {
         this->_world = new_world;
