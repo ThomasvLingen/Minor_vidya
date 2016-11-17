@@ -78,6 +78,7 @@ namespace GameLogic {
         int time_spent;
 
         while (this->_running) {
+
             current_frame_start_time = this->_SDL_facade.get_ticks();
             time_since_last_frame = current_frame_start_time - last_frame_start_time;
             last_frame_start_time = this->_SDL_facade.get_ticks();
