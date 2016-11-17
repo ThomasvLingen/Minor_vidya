@@ -46,6 +46,8 @@ namespace Engine {
             {SDLK_a, Key::A},
             {SDLK_s, Key::S},
             {SDLK_d, Key::D},
+            {SDLK_e, Key::E},
+            {SDLK_q, Key::Q},
             {SDLK_ESCAPE, Key::ESC}
         };
 
