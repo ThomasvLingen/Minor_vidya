@@ -23,6 +23,14 @@ set(SOURCE_FILES
 		src/config.hpp
 		src/engine/interface/Drawable.cpp src/engine/interface/Drawable.hpp
 		src/engine/interface/Updatable.hpp
+		src/gamelogic/State/CreditState.cpp src/gamelogic/State/CreditState
+		src/gamelogic/State/IGameState.cpp src/gamelogic/State/IGameState.hpp
+		src/gamelogic/State/LoadState.cpp src/gamelogic/State/LoadState.hppo
+		src/gamelogic/State/MenuState.cpp src/gamelogic/State/MenuState.hpp
+		src/gamelogic/State/PauseState.cpp src/gamelogic/State/PauseState.hpp
+		src/gamelogic/State/RunState.cpp src/gamelogic/State/RunState.hpp
+		src/gamelogic/State/StartUpState.cpp src/gamelogic/State/StartUpState.hpp
+
 		)
 
 add_executable(Minor_vidya ${SOURCE_FILES})

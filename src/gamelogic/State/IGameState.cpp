@@ -6,5 +6,17 @@
 
 namespace State {
 
+    IGameState::IGameState() {
+
+    }
+
+    IGameState::~IGameState() {
+
+    }
+
+    void IGameState::update(GameLogic::Game &game) {
+
+
+    }
 
 }
