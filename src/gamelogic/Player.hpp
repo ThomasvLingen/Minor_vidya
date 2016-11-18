@@ -38,15 +38,19 @@ namespace GameLogic {
     private:
         SPTR_Level _level;
 
-        const double _MOVE_SPEED = 0.005;
-        const double _ROT_SPEED = 0.002;
-        double _accel = 0;
+        const double _MOVE_SPEED = 0.003;
+        const double _STRAFE_SPEED = 0.004;
+        const double _ROT_SPEED = 0.003;
+        double _yAccel = 0;
+        double _xAccel = 0;
         double _rotation = 0;
 
         void _move_player(int timeSinceLastUpdate);
         void _rotate_player(int timeSinceLastUpdate);
         void _mov_forward();
         void _mov_backward();
+        void _move_left();
+        void _move_right();
         void _rot_right();
         void _rot_left();
 
