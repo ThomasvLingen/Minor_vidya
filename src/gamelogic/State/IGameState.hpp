@@ -17,10 +17,8 @@ namespace State{
     class IGameState {
 
     public:
-        IGameState();
-        virtual ~IGameState();
+        virtual void update(GameLogic::Game& game, int time_since_last_update) = 0;
 
-        virtual void update(GameLogic::Game& game);
     };
     typedef std::shared_ptr<IGameState> SPTR_IGameState;
 }

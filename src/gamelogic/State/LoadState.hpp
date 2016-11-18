@@ -24,12 +24,11 @@ namespace State {
     class LoadState : public IGameState {
 
     public:
-        LoadState();
-        ~LoadState();
+        void update(GameLogic::Game& game, int time_since_last_update) override ;
 
-        void update(GameLogic::Game& game) override ;
     private:
         int timer = 0;
+        Color color{255,255,255};
     };
 }
 #endif //MINOR_VIDYA_LOADSTATE_HPP

@@ -3,34 +3,24 @@
 //
 
 #include "StartUpState.hpp"
-
-using State::StartUpState;
+#include "MenuState.hpp"
 
 namespace State {
 
-    StartUpState::StartUpState(){
-
-    }
-
-    StartUpState::~StartUpState(){
-
-    }
-
-    void StartUpState::update(GameLogic::Game& game) {
-        game._SDL_facade.handle_sdl_events();
-        game._raycasting_engine.handle_input();
-        PressedKeys keys = game._SDL_facade.get_keys();
+    void StartUpState::update(GameLogic::Game& game, int time_since_last_update) {
+        game.SDL_facade.handle_sdl_events();
+        PressedKeys keys = game.SDL_facade.get_keys();
             for(auto key : keys){
                 switch (key) {
                     case Key::ENTER:
-                        game.set_new_state(game.get_menu_state());
+                        game.set_new_state(std::make_shared<MenuState>());
                         break;
                     default:
                         break;
                 }
             }
-        game._SDL_facade.clear_screen();
-        game._SDL_facade.draw_image("res/startscreen.bmp", CoordinateDouble{0,0});
-        game._SDL_facade.render_buffer();
+        game.SDL_facade.clear_screen();
+        game.SDL_facade.draw_image("res/startscreen.bmp", CoordinateDouble{0,0});
+        game.SDL_facade.render_buffer();
     }
 }

@@ -24,13 +24,12 @@ namespace State {
     class MenuState : public IGameState {
 
     public:
-        MenuState();
-        ~MenuState();
+        void update(GameLogic::Game& game, int time_since_last_update) override ;
 
-        void update(GameLogic::Game& game) override ;
     private:
         int timeSinceLastPress = 0;
         int selected = 1;
+        Color color{255,255,255};
     };
 }
 

@@ -3,24 +3,13 @@
 //
 
 #include "CreditState.hpp"
-
-using State::CreditState;
+#include "MenuState.hpp"
 
 namespace State {
 
-    CreditState::CreditState()
-    {
-
-    }
-
-    CreditState::~CreditState() {
-
-    }
-
-    void CreditState::update(GameLogic::Game& game) {
-        game._SDL_facade.handle_sdl_events();
-        game._raycasting_engine.handle_input();
-        PressedKeys keys = game._SDL_facade.get_keys();
+    void CreditState::update(GameLogic::Game& game, int time_since_last_update) {
+        game.SDL_facade.handle_sdl_events();
+        PressedKeys keys = game.SDL_facade.get_keys();
         if(timeSinceLastPress <= 20){ //TODO: TO SDL ticks
             timeSinceLastPress++;
         }
@@ -28,8 +17,7 @@ namespace State {
             for(auto key : keys){
                 switch (key) {
                     case Key::ESC:
-                        game.set_new_state(game.get_menu_state());
-                        timeSinceLastPress  = 0;
+                        game.set_new_state(std::make_shared<MenuState>());
                         break;
                     default:
                         break;
@@ -37,17 +25,16 @@ namespace State {
             }
         }
 
-        game._SDL_facade.clear_screen();
-        Color color{255,255,255};
-        game._SDL_facade.draw_image("res/creditscreen.bmp" , CoordinateDouble{0,0});
-        game._SDL_facade.draw_text("Vidya Game is made by:", FontType::alterebro_pixel, color, CoordinateDouble{300, 50});
-        game._SDL_facade.draw_text("- Thomas Pannekoek:", FontType::alterebro_pixel, color, CoordinateDouble{340, 80});
-        game._SDL_facade.draw_text("- Jorg de Bont", FontType::alterebro_pixel, color, CoordinateDouble{340, 110});
-        game._SDL_facade.draw_text("- Wouter van Geel", FontType::alterebro_pixel, color, CoordinateDouble{340, 140});
-        game._SDL_facade.draw_text("- Sander van Geel", FontType::alterebro_pixel, color, CoordinateDouble{340, 170});
-        game._SDL_facade.draw_text("- Martijn Frielink", FontType::alterebro_pixel, color, CoordinateDouble{340, 200});
-        game._SDL_facade.draw_text("- Joost van Rijsinge", FontType::alterebro_pixel, color, CoordinateDouble{340, 230});
-        game._SDL_facade.draw_text("- Jelmer van der Schoot", FontType::alterebro_pixel, color, CoordinateDouble{340, 260});
-        game._SDL_facade.render_buffer();
+        game.SDL_facade.clear_screen();
+        game.SDL_facade.draw_image("res/creditscreen.bmp" , CoordinateDouble{0,0});
+        game.SDL_facade.draw_text("Vidya Game is made by:", FontType::alterebro_pixel, color, CoordinateDouble{300, 50});
+        game.SDL_facade.draw_text("- Thomas Pannekoek:", FontType::alterebro_pixel, color, CoordinateDouble{340, 80});
+        game.SDL_facade.draw_text("- Jorg de Bont", FontType::alterebro_pixel, color, CoordinateDouble{340, 110});
+        game.SDL_facade.draw_text("- Wouter van Geel", FontType::alterebro_pixel, color, CoordinateDouble{340, 140});
+        game.SDL_facade.draw_text("- Sander van Geel", FontType::alterebro_pixel, color, CoordinateDouble{340, 170});
+        game.SDL_facade.draw_text("- Martijn Frielink", FontType::alterebro_pixel, color, CoordinateDouble{340, 200});
+        game.SDL_facade.draw_text("- Joost van Rijsinge", FontType::alterebro_pixel, color, CoordinateDouble{340, 230});
+        game.SDL_facade.draw_text("- Jelmer van der Schoot", FontType::alterebro_pixel, color, CoordinateDouble{340, 260});
+        game.SDL_facade.render_buffer();
     }
 }
