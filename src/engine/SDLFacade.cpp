@@ -142,10 +142,10 @@ namespace Engine {
     void SDLFacade::draw_rect(const CoordinateDouble& rect_start, const int width, const int height, const Color& color)
     {
          SDL_Rect r;
-            r.x = rect_start.x;
-            r.y = rect_start.y;
-            r.w = width;
-            r.h = height;
+         r.x = rect_start.x;
+         r.y = rect_start.y;
+         r.w = width;
+         r.h = height;
          SDL_SetRenderDrawColor(this->_renderer, color.r_value, color.g_value, color.b_value, 255);
          SDL_RenderFillRect(this->_renderer, &r);
     }
@@ -163,13 +163,13 @@ namespace Engine {
             cout << "FAILED TO FIND THE IMAGE" << endl;
             cout << path.c_str() << endl;
         } else {
-            SDL_Rect SrcR = {0, 0, image->w, image->h};
-            SDL_Rect DestR = {(int)coordinates.x, (int)coordinates.y, image->w, image->h};
+            SDL_Rect src_r = {0, 0, image->w, image->h};
+            SDL_Rect dest_r = {(int)coordinates.x, (int)coordinates.y, image->w, image->h};
 
             SDL_Texture* image_texture = SDL_CreateTextureFromSurface(this->_renderer, image);
             SDL_FreeSurface(image);
 
-            SDL_RenderCopy(this->_renderer, image_texture, &SrcR, &DestR);
+            SDL_RenderCopy(this->_renderer, image_texture, &src_r, &dest_r);
             SDL_DestroyTexture(image_texture);
         }
     }
