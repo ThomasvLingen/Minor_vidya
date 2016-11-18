@@ -19,7 +19,7 @@ namespace State {
         PauseState();
         ~PauseState();
 
-        void update(GameLogic::Game & game) override ;
+        void update(GameLogic::Game& game) override ;
     };
 }
 

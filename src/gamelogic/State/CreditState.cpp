@@ -3,6 +3,8 @@
 //
 
 #include "CreditState.hpp"
+#include "../Game.hpp"
+
 using State::CreditState;
 
 namespace State {
@@ -15,7 +17,7 @@ namespace State {
 
     }
 
-    void CreditState::update(GameLogic::Game & game) {
+    void CreditState::update(GameLogic::Game& game) {
         //TODO update
     }
 }

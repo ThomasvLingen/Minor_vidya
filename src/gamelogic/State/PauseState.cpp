@@ -3,6 +3,7 @@
 //
 
 #include "PauseState.hpp"
+#include "../Game.hpp"
 using State::PauseState;
 
 namespace State {
@@ -15,7 +16,7 @@ namespace State {
 
     }
 
-    void PauseState::update(GameLogic::Game & game) {
+    void PauseState::update(GameLogic::Game& game) {
         //TODO update
     }
 }

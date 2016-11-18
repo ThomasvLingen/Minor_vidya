@@ -3,6 +3,7 @@
 //
 
 #include "StartUpState.hpp"
+#include "../Game.hpp"
 using State::StartUpState;
 
 namespace State {
@@ -15,7 +16,7 @@ namespace State {
 
     }
 
-    void StartUpState::update(GameLogic::Game & game) {
+    void StartUpState::update(GameLogic::Game& game) {
         //TODO update
     }
 }

@@ -19,7 +19,7 @@ namespace State {
         MenuState();
         ~MenuState();
 
-        void update(GameLogic::Game & game) override ;
+        void update(GameLogic::Game& game) override ;
     };
 }
 

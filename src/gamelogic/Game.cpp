@@ -21,6 +21,13 @@ namespace GameLogic {
     , _raycasting_engine(this->_SDL_facade)
     {
         this->_SDL_facade.init();
+        this->_pause_state = std::make_shared<State::PauseState>();
+        this->_run_state = std::make_shared<State::RunState>();
+        this->_load_state = std::make_shared<State::LoadState>();
+        this->_credit_state = std::make_shared<State::CreditState>();
+        this->_menu_state = std::make_shared<State::MenuState>();
+        this->_start_up_state = std::make_shared<State::StartUpState>();
+        this->_current_state = _run_state;
 
         // TODO: This is test code of the worst kind, remove when no longer needed (f/e when we have a level editor)
         std::vector<std::vector<int>> world = {
@@ -83,7 +90,6 @@ namespace GameLogic {
     /// first handle input, thereafter update and finally clear and draw the screen.
     void Game::run()
     {
-        int time_since_last_frame;
         int last_frame_start_time = this->_SDL_facade.get_ticks();
         int current_frame_start_time;
         int time_spent;
@@ -91,17 +97,10 @@ namespace GameLogic {
         while (this->_running) {
 
             current_frame_start_time = this->_SDL_facade.get_ticks();
-            time_since_last_frame = current_frame_start_time - last_frame_start_time;
+            this->_time_since_last_frame = current_frame_start_time - last_frame_start_time;
             last_frame_start_time = this->_SDL_facade.get_ticks();
 
-            this->_SDL_facade.handle_sdl_events();
-            this->_raycasting_engine.handle_input();
-            this->_raycasting_engine.update(time_since_last_frame);
-            this->_SDL_facade.clear_screen();
-
-            this->_raycasting_engine.draw();
-
-            this->_SDL_facade.render_buffer();
+            this->_current_state->update(*this);
 
             time_spent = this->_SDL_facade.get_ticks() - current_frame_start_time;
 
@@ -109,6 +108,46 @@ namespace GameLogic {
                 this->_SDL_facade.delay_millis(FRAME_DURATION - time_spent);
             }
         }
+    }
+
+    int Game::get_time_since_last_frame()
+    {
+        return this->_time_since_last_frame;
+    }
+
+    void Game::set_new_state(SPTR_IGameState state)
+    {
+        this->_current_state = state;
+    }
+
+    SPTR_IGameState Game::get_credit_state()
+    {
+        return this->_credit_state;
+    }
+
+    SPTR_IGameState Game::get_load_state()
+    {
+        return this->_load_state;
+    }
+
+    SPTR_IGameState Game::get_menu_state()
+    {
+        return this->_menu_state;
+    }
+
+    SPTR_IGameState Game::get_pause_state()
+    {
+        return this->_menu_state;
+    }
+
+    SPTR_IGameState Game::get_run_state()
+    {
+        return this->_run_state;
+    }
+
+    SPTR_IGameState Game::get_start_up_state()
+    {
+        return this->_start_up_state;
     }
 }
 
