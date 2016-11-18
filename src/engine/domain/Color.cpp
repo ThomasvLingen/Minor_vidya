@@ -10,9 +10,9 @@ namespace Engine {
     Color Color::reduce_intensity()
     {
         return  {
-                .r_value = (uint8_t)(this->r_value / 2),
-                .g_value = (uint8_t)(this->g_value / 2),
-                .b_value = (uint8_t)(this->b_value / 2)
+                (uint8_t)(this->r_value / 2),
+                (uint8_t)(this->g_value / 2),
+                (uint8_t)(this->b_value / 2)
         };
     };
 }
