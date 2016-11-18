@@ -30,9 +30,8 @@ namespace Engine {
     using std::find;
     using std::cout;
     using std::endl;
-
-
-    enum class FontType {alterebro_pixel};
+    
+    enum class FontType {verdana, roman, alterebro_pixel, alterebro_pixel_plus};
 
 
     class SDLFacade {

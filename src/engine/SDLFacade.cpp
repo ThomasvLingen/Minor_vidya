@@ -347,6 +347,7 @@ namespace Engine {
     bool SDLFacade::_init_fonts()
     {
         //todo Needs to be expanded later on
+        _load_font("res/alterebro_pixel.ttf", FontType::alterebro_pixel_plus, 60);
         return _load_font("res/alterebro_pixel.ttf", FontType::alterebro_pixel, 30);
     }
 
