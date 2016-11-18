@@ -19,6 +19,7 @@ namespace State {
     using Engine::Color;
     using Engine::FontType;
     using Engine::PressedKeys;
+    using Engine::Key;
 
     class CreditState : public IGameState {
 

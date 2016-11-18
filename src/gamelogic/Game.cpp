@@ -27,7 +27,7 @@ namespace GameLogic {
         this->_credit_state = std::make_shared<State::CreditState>();
         this->_menu_state = std::make_shared<State::MenuState>();
         this->_start_up_state = std::make_shared<State::StartUpState>();
-        this->_current_state = _run_state;
+        this->_current_state = _start_up_state;
 
         // TODO: This is test code of the worst kind, remove when no longer needed (f/e when we have a level editor)
         std::vector<std::vector<int>> world = {
@@ -136,7 +136,7 @@ namespace GameLogic {
 
     SPTR_IGameState Game::get_pause_state()
     {
-        return this->_menu_state;
+        return this->_pause_state;
     }
 
     SPTR_IGameState Game::get_run_state()
