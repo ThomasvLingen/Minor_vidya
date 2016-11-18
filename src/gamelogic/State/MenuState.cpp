@@ -48,7 +48,7 @@ namespace State {
                             timeSinceLastPress = 0;
                         }
                         else if(selected == 2){
-                            //game.set_new_state(game.get_load_state());
+                            game.set_new_state(game.get_help_state());
                             timeSinceLastPress = 0;
                         }
                         else if(selected == 3){

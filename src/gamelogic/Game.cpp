@@ -11,6 +11,7 @@
 #include "State/PauseState.hpp"
 #include "State/RunState.hpp"
 #include "State/StartUpState.hpp"
+#include "State/HelpState.hpp"
 
 namespace GameLogic {
     Game::Game()
@@ -27,6 +28,7 @@ namespace GameLogic {
         this->_credit_state = std::make_shared<State::CreditState>();
         this->_menu_state = std::make_shared<State::MenuState>();
         this->_start_up_state = std::make_shared<State::StartUpState>();
+        this->_help_state = std::make_shared<State::HelpState>();
         this->_current_state = _start_up_state;
 
         // TODO: This is test code of the worst kind, remove when no longer needed (f/e when we have a level editor)
@@ -147,6 +149,10 @@ namespace GameLogic {
     SPTR_IGameState Game::get_start_up_state()
     {
         return this->_start_up_state;
+    }
+    SPTR_IGameState Game::get_help_state()
+    {
+        return this->_help_state;
     }
 }
 
