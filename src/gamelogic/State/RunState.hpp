@@ -23,7 +23,7 @@ namespace State {
         void update(GameLogic::Game& game, int time_since_last_update) override ;
 
     private:
-        int timeSinceLastPress = 0;
+        int _timeSinceLastPress = 0;
     };
 }
 
