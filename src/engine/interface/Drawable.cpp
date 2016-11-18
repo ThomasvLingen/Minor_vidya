@@ -5,7 +5,8 @@
 #include "Drawable.hpp"
 
 namespace Engine {
-    Drawable::Drawable()
+    Drawable::Drawable(SDLFacade& _SDL_facade)
+    : _SDL_facade(_SDL_facade)
     {
 
     }
