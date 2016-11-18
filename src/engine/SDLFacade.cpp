@@ -390,6 +390,7 @@ namespace Engine {
         SDL_Surface* image = SDL_LoadBMP(imagePath);
         if(image == NULL){
             cout << " NULL!" << endl;
+            SDL_FreeSurface(image);
             return pixels;
         } else {
             SDL_LockSurface(image);
@@ -402,6 +403,7 @@ namespace Engine {
                 }
             }
             SDL_UnlockSurface(image);
+            SDL_FreeSurface(image);
             return pixels;
         }
     }
