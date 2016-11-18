@@ -21,7 +21,7 @@ set(SOURCE_FILES
 		src/gamelogic/Tile.cpp src/gamelogic/Tile.hpp
 		src/engine/KeyStrokes.hpp
 		src/config.hpp
-		src/engine/IDrawable.cpp src/engine/IDrawable.hpp
+		src/engine/Drawable.cpp src/engine/Drawable.hpp
 		)
 
 add_executable(Minor_vidya ${SOURCE_FILES})

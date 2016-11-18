@@ -6,10 +6,10 @@
 #define MINOR_VIDYA_IDRAWABLE_HPP
 
 namespace Engine {
-    class IDrawable {
+    class Drawable {
 
     public:
-        IDrawable();
+        Drawable();
 
         virtual void draw() = 0;     // pure virtual func
 
