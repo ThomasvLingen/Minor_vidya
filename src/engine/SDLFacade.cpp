@@ -3,6 +3,7 @@
 //
 
 #include "SDLFacade.hpp"
+#include "../config.hpp"
 
 namespace Engine {
 
@@ -99,7 +100,7 @@ namespace Engine {
     /// \return This function returns True if the _window was successfully initialized, ohterwise it returns False
     bool SDLFacade::_init_window()
     {
-        this->_window = SDL_CreateWindow("Vidya game", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 500,
+        this->_window = SDL_CreateWindow(Config::GAME_WINDOW_TITLE.c_str(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 500,
                                    500, SDL_WINDOW_SHOWN);
         if (this->_window != nullptr) {
             this->_screenSurface = SDL_GetWindowSurface(this->_window);
