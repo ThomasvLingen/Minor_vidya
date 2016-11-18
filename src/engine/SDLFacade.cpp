@@ -69,7 +69,7 @@ namespace Engine {
             return false;
         }
 
-        if (!this->_init_screen_buffer()){
+        if (!this->_init_screen_buffer()) {
             return false;
         }
 
@@ -104,8 +104,8 @@ namespace Engine {
     /// \return This function returns True if the _window was successfully initialized, ohterwise it returns False
     bool SDLFacade::_init_window()
     {
-        this->_window = SDL_CreateWindow("Vidya game", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, this->_width,
-                                         this->_height, SDL_WINDOW_SHOWN);
+        this->_window = SDL_CreateWindow("Vidya game", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 500,
+                                         500, SDL_WINDOW_SHOWN);
         if (this->_window != nullptr) {
             this->_screenSurface = SDL_GetWindowSurface(this->_window);
             return true;
@@ -123,7 +123,7 @@ namespace Engine {
         this->_screen_buffer = SDL_CreateTexture(this->_renderer, SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_STREAMING,
                                                  this->_width, this->_height);
 
-        if(this->_screen_buffer != nullptr){
+        if (this->_screen_buffer != nullptr) {
             return true;
         }else{
             SDL_DestroyTexture(this->_screen_buffer);
@@ -151,7 +151,7 @@ namespace Engine {
         SDL_RenderDrawLine(this->_renderer, line_start.x, line_start.y, line_end.x, line_end.y);
     }
 
-    /// \brief Draws a single pixel
+    /// \brief Change a single pixel
     ///
     /// A pixel will be drawn at the given coordinates.
     ///
@@ -172,7 +172,7 @@ namespace Engine {
 
     /// \brief Update of _screen_buffer
     ///
-    /// Copies the drawn _screen_buffer (SDL_Texture) to the renderer
+    /// Copies the _screen_buffer (SDL_Texture) to the renderer
     void SDLFacade::update_screen_buffer()
     {
         SDL_RenderCopy(this->_renderer, _screen_buffer, NULL, NULL);
