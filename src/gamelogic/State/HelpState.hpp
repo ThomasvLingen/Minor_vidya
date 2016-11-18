@@ -5,6 +5,10 @@
 #ifndef MINOR_VIDYA_HELPSTATE_HPP
 #define MINOR_VIDYA_HELPSTATE_HPP
 
+#include "IGameState.hpp"
+#include "../Game.hpp"
+#include "../../engine/SDLFacade.hpp"
+
 namespace GameLogic {
     class Game;
 }
