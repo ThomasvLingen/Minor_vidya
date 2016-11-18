@@ -24,12 +24,11 @@ namespace State {
     class HelpState : public IGameState {
 
     public:
-        HelpState();
-        ~HelpState();
+        void update(GameLogic::Game& game, int time_since_last_update) override ;
 
-        void update(GameLogic::Game& game) override ;
     private:
         int timeSinceLastPress = 0;
+        Color color{255,255,255};
     };
 }
 

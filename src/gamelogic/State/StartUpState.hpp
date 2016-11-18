@@ -24,10 +24,8 @@ namespace State {
     class StartUpState : public IGameState {
 
     public:
-        StartUpState();
-        ~StartUpState();
+        void update(GameLogic::Game& game, int time_since_last_update) override ;
 
-        void update(GameLogic::Game& game) override ;
     private:
         int timeSinceLastPress = 0;
     };

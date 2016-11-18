@@ -20,10 +20,7 @@ namespace State {
     class RunState : public IGameState {
 
     public:
-        RunState();
-        ~RunState();
-
-        void update(GameLogic::Game& game) override ;
+        void update(GameLogic::Game& game, int time_since_last_update) override ;
 
     private:
         int timeSinceLastPress = 0;
