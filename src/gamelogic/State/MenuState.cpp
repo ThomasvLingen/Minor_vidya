@@ -26,7 +26,7 @@ namespace State {
                         }
                         break;
                     case Key::S :
-                        if(_selected != 3){
+                        if(this->_selected != 3){
                             this->_selected++;
                             this->_timeSinceLastPress = 0;
                         }
