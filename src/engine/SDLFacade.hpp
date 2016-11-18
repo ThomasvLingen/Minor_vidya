@@ -79,7 +79,7 @@ namespace Engine {
         bool draw_text(const string& text, const FontType& font, const Color& color,
                        const CoordinateDouble& position) const;
 
-        void draw_pixel_screen_buffer(const CoordinateDouble& position, const Uint32& pixel);
+        void draw_pixel_screen_buffer(const CoordinateDouble& position, Uint32 pixel);
 
         void update_screen_buffer();
 
