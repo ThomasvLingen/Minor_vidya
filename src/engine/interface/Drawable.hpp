@@ -13,7 +13,7 @@ namespace Engine {
     public:
         Drawable(SDLFacade& _SDL_facade);
 
-        virtual void draw() = 0;     // pure virtual func
+        virtual void draw() = 0;
 
     protected:
         SDLFacade& _SDL_facade;
