@@ -1,6 +1,9 @@
 # Clion IDE files
 .idea/
 
+# Gdb history
+.gdb_history
+
 # Doxygen generated docs
 docs/html
 
