@@ -19,7 +19,6 @@ namespace Engine {
     class Raycasting {
     public:
         Raycasting(SDLFacade& SDL_facade);
-
         void handle_input(/* TODO:  Input data type from SDL facade */);
         void update(int delta_time);
         void draw();

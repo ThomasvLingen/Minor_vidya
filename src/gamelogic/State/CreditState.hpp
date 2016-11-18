@@ -6,12 +6,19 @@
 #define MINOR_VIDYA_CREDITSTATE_HPP
 
 #include "IGameState.hpp"
+#include "../Game.hpp"
+#include "../../engine/SDLFacade.hpp"
 
 namespace GameLogic {
     class Game;
 }
 
 namespace State {
+    using Engine::SDLFacade;
+    using Engine::CoordinateDouble;
+    using Engine::Color;
+    using Engine::FontType;
+    using Engine::PressedKeys;
 
     class CreditState : public IGameState {
 
@@ -20,6 +27,9 @@ namespace State {
         ~CreditState();
 
         void update(GameLogic::Game& game) override ;
+    private:
+        int timeSinceLastPress = 0;
+
     };
 }
 
