@@ -69,6 +69,10 @@ namespace Engine {
             return false;
         }
 
+        if (!this->_init_screen_buffer()) {
+            return false;
+        }
+
         if (!this->_init_fonts()) {
             std::cout << "Your fonts could not be initted" << std::endl;
             return false;
@@ -101,13 +105,28 @@ namespace Engine {
     bool SDLFacade::_init_window()
     {
         this->_window = SDL_CreateWindow(Config::GAME_WINDOW_TITLE.c_str(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 500,
-                                   500, SDL_WINDOW_SHOWN);
+                                         500, SDL_WINDOW_SHOWN);
         if (this->_window != nullptr) {
             this->_screenSurface = SDL_GetWindowSurface(this->_window);
             return true;
         } else {
             //std::cout << "Something went wrong while making a window! : " + SDL_GetError() << std::endl;
             SDL_DestroyWindow(this->_window);
+            return false;
+        }
+    }
+    /// \brief Initialiser for the _screen_buffer (SDL_Texture)
+    ///
+    /// \return This function returns True if the _screen_buffer was successfully initialized, ohterwise it returns False
+    bool SDLFacade::_init_screen_buffer()
+    {
+        this->_screen_buffer = SDL_CreateTexture(this->_renderer, SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_STREAMING,
+                                                 this->_width, this->_height);
+
+        if (this->_screen_buffer != nullptr) {
+            return true;
+        } else {
+            SDL_DestroyTexture(this->_screen_buffer);
             return false;
         }
     }
@@ -130,6 +149,38 @@ namespace Engine {
     {
         SDL_SetRenderDrawColor(this->_renderer, color.r_value, color.g_value, color.b_value, 255);
         SDL_RenderDrawLine(this->_renderer, line_start.x, line_start.y, line_end.x, line_end.y);
+    }
+
+    /// \brief Change a single pixel
+    ///
+    /// A pixel will be drawn at the given coordinates.
+    ///
+    /// \param position The coordinate
+    /// \param pixel The pixel value that you want to draw
+    void SDLFacade::draw_pixel_screen_buffer(const CoordinateDouble& position, Uint32 pixel)
+    {
+        Uint32* buffer_pixels;
+        int pitch;
+        //TODO: locking and unlocking may cause performance issues
+        SDL_LockTexture(_screen_buffer, NULL, (void**) &buffer_pixels, &pitch);
+
+        int pixel_location = position.x + (position.y * this->_width);
+        buffer_pixels[pixel_location] = pixel;
+
+        SDL_UnlockTexture(_screen_buffer);
+    }
+
+    /// \brief Update of _screen_buffer
+    ///
+    /// Copies the _screen_buffer (SDL_Texture) to the renderer
+    void SDLFacade::update_screen_buffer()
+    {
+        SDL_RenderCopy(this->_renderer, _screen_buffer, NULL, NULL);
+
+        SDL_DestroyTexture(this->_screen_buffer);
+
+        this->_screen_buffer = SDL_CreateTexture(this->_renderer, SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_STREAMING,
+                                                 this->_width, this->_height);
     }
 
     /// \brief Updates the window
