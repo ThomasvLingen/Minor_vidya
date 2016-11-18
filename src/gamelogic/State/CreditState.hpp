@@ -19,7 +19,7 @@ namespace State {
         CreditState();
         ~CreditState();
 
-        void update(GameLogic::Game & game) override ;
+        void update(GameLogic::Game& game) override ;
     };
 }
 

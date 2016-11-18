@@ -3,6 +3,7 @@
 //
 
 #include "IGameState.hpp"
+#include "../Game.hpp"
 
 namespace State {
 
@@ -14,7 +15,7 @@ namespace State {
 
     }
 
-    void IGameState::update(GameLogic::Game &game) {
+    void IGameState::update(GameLogic::Game& game) {
 
 
     }

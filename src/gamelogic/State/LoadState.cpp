@@ -3,6 +3,7 @@
 //
 
 #include "LoadState.hpp"
+#include "../Game.hpp"
 using State::LoadState;
 
 namespace State {
@@ -15,7 +16,7 @@ namespace State {
 
     }
 
-    void LoadState::update(GameLogic::Game & game) {
+    void LoadState::update(GameLogic::Game& game) {
         //TODO update
     }
 }

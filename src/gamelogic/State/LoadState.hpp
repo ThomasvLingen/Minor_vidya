@@ -19,7 +19,7 @@ namespace State {
         LoadState();
         ~LoadState();
 
-        void update(GameLogic::Game & game) override ;
+        void update(GameLogic::Game& game) override ;
     };
 }
 #endif //MINOR_VIDYA_LOADSTATE_HPP

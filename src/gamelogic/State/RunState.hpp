@@ -19,7 +19,7 @@ namespace State {
         RunState();
         ~RunState();
 
-        void update(GameLogic::Game & game) override ;
+        void update(GameLogic::Game& game) override ;
     };
 }
 

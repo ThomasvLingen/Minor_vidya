@@ -5,8 +5,11 @@
 #ifndef MINOR_VIDYA_IGAMESTATE_HPP
 #define MINOR_VIDYA_IGAMESTATE_HPP
 
+#include <memory>
+
 namespace GameLogic {
     class Game;
+    typedef std::shared_ptr<Game> SPTR_Game;
 }
 
 namespace State{
@@ -17,8 +20,9 @@ namespace State{
         IGameState();
         virtual ~IGameState();
 
-        virtual void update(GameLogic::Game & game);
+        virtual void update(GameLogic::Game& game);
     };
+    typedef std::shared_ptr<IGameState> SPTR_IGameState;
 }
 
 #endif //MINOR_VIDYA_IGAMESTATE_HPP

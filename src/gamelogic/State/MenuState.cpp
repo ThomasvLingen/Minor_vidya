@@ -3,6 +3,7 @@
 //
 
 #include "MenuState.hpp"
+#include "../Game.hpp"
 using State::MenuState;
 
 namespace State {
@@ -15,7 +16,7 @@ namespace State {
 
     }
 
-    void MenuState::update(GameLogic::Game & game) {
+    void MenuState::update(GameLogic::Game& game) {
         //TODO update
     }
 }
