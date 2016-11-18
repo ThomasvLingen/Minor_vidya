@@ -28,6 +28,8 @@ namespace State {
         ~HelpState();
 
         void update(GameLogic::Game& game) override ;
+    private:
+        int timeSinceLastPress = 0;
     };
 }
 

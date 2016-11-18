@@ -41,6 +41,7 @@ namespace GameLogic {
         SPTR_IGameState get_pause_state();
         SPTR_IGameState get_run_state();
         SPTR_IGameState get_start_up_state();
+        SPTR_IGameState get_help_state();
 
 
     private:
@@ -51,6 +52,7 @@ namespace GameLogic {
         SPTR_IGameState _run_state;
         SPTR_IGameState _start_up_state;
         SPTR_IGameState _current_state;
+        SPTR_IGameState _help_state;
 
         int _time_since_last_frame;
         bool _running;

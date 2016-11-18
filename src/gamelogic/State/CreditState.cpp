@@ -49,6 +49,5 @@ namespace State {
         game._SDL_facade.draw_text("- Joost van Rijsinge", FontType::alterebro_pixel, color, CoordinateDouble{340, 230});
         game._SDL_facade.draw_text("- Jelmer van der Schoot", FontType::alterebro_pixel, color, CoordinateDouble{340, 260});
         game._SDL_facade.render_buffer();
-
     }
 }
