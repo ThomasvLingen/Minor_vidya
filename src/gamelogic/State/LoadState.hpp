@@ -27,8 +27,8 @@ namespace State {
         void update(GameLogic::Game& game, int time_since_last_update) override ;
 
     private:
-        int timer = 0;
-        Color color{255,255,255};
+        int _loading_screen_time = 0;
+        Color _color{255,255,255};
     };
 }
 #endif //MINOR_VIDYA_LOADSTATE_HPP

@@ -27,8 +27,8 @@ namespace State {
         void update(GameLogic::Game& game, int time_since_last_update) override ;
 
     private:
-        int timeSinceLastPress = 0;
-        Color color{255,255,255};
+        int _timeSinceLastPress = 0;
+        Color _color{255,255,255};
 
     };
 }
