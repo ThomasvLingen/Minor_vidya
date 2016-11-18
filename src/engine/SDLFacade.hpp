@@ -54,6 +54,7 @@ namespace Engine {
         SDL_Window* _window = nullptr;
         SDL_Surface* _screenSurface = nullptr;
         SDL_Renderer* _renderer = nullptr;
+        SDL_Texture* _screen_buffer = nullptr;
 
         int _width;
         int _height;
@@ -80,6 +81,10 @@ namespace Engine {
         bool draw_text(const string& text, const FontType& font, const Color& color,
                        const CoordinateDouble& position) const;
 
+        void draw_pixel_screen_buffer(const CoordinateDouble& position, const Uint32& pixel);
+
+        void update_screen_buffer();
+
         void set_height(const int& screen_height);
 
         int get_height() const;
@@ -99,6 +104,7 @@ namespace Engine {
 
         bool _init_window();
         bool _init_renderer();
+        bool _init_screen_buffer();
         bool _init_fonts();
         bool _load_font(const string& path, const FontType& font_type, uint8_t size);
     };
