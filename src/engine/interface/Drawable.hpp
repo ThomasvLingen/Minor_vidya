@@ -5,7 +5,7 @@
 #ifndef MINOR_VIDYA_IDRAWABLE_HPP
 #define MINOR_VIDYA_IDRAWABLE_HPP
 
-#include "SDLFacade.hpp"
+#include "../SDLFacade.hpp"
 
 namespace Engine {
     class Drawable {
@@ -15,7 +15,7 @@ namespace Engine {
 
         virtual void draw() = 0;     // pure virtual func
 
-    private:
+    protected:
         SDLFacade& _SDL_facade;
     };
 }
