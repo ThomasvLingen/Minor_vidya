@@ -6,12 +6,16 @@
 #define MINOR_VIDYA_RUNSTATE_HPP
 
 #include "IGameState.hpp"
+#include "../Game.hpp"
+#include "../../engine/SDLFacade.hpp"
 
 namespace GameLogic {
     class Game;
 }
 
 namespace State {
+    using Engine::PressedKeys;
+    using Engine::Key;
 
     class RunState : public IGameState {
 
@@ -20,6 +24,9 @@ namespace State {
         ~RunState();
 
         void update(GameLogic::Game& game) override ;
+
+    private:
+        int timeSinceLastPress = 0;
     };
 }
 

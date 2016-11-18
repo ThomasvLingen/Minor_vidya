@@ -47,7 +47,8 @@ namespace Engine {
             {SDLK_d, Key::D},
             {SDLK_e, Key::E},
             {SDLK_q, Key::Q},
-            {SDLK_ESCAPE, Key::ESC}
+            {SDLK_ESCAPE, Key::ESC},
+            {SDLK_RETURN, Key::ENTER}
         };
 
         SDL_Window* _window = nullptr;
