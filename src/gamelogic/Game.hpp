@@ -45,6 +45,7 @@ namespace GameLogic {
 
 
     private:
+        bool _running;
         SPTR_IGameState _credit_state;
         SPTR_IGameState _load_state;
         SPTR_IGameState _menu_state;
@@ -55,7 +56,7 @@ namespace GameLogic {
         SPTR_IGameState _help_state;
 
         int _time_since_last_frame;
-        bool _running;
+
         SPTR_Level _level; //TODO: perhaps change this to a level pointer
 
     };

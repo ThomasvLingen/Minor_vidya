@@ -21,7 +21,7 @@ namespace State {
         game._raycasting_engine.handle_input();
         game._SDL_facade.clear_screen();
         game._SDL_facade.draw_rect(CoordinateDouble{0,0}, 640, 480, Color{0,0,0});
-        timer = timer + 1; //TODO: To ticks
+        timer = timer + 2; //TODO: To ticks
         Color color{255,255,255};
         game._SDL_facade.draw_text("Level Name Here", FontType::alterebro_pixel, color, CoordinateDouble{500,15});
         if(timer < 150){
