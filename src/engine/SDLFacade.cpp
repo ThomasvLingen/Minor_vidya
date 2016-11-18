@@ -383,14 +383,21 @@ namespace Engine {
     }
 
 
+    //todo: change given variable to match tilemaps
+    /// \brief Function that returns a list of pixels
+    ///
+    /// Each pixel in the list is represented as Uint32
+    /// \return This function returns a list of Uint32
     vector<Uint32> SDLFacade::get_image_buffer(const string& path)
     {
+        //todo: change given variable to match tilemaps
         vector <Uint32> pixels;
         const char* imagePath = path.c_str();
         SDL_Surface* image = SDL_LoadBMP(imagePath);
         if(image == NULL){
             cout << " NULL!" << endl;
             SDL_FreeSurface(image);
+            //todo: what to do when image can't be found
             return pixels;
         } else {
             SDL_LockSurface(image);
