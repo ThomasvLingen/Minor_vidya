@@ -20,7 +20,7 @@ namespace GameLogic {
         for (auto key : keys) {
             switch (key) {
                 case Key::A :
-                    this->_rot_left();
+                    this->_move_left();
                     break;
                 case Key::S :
                     this->_mov_backward();
@@ -29,6 +29,12 @@ namespace GameLogic {
                     this->_mov_forward();
                     break;
                 case Key::D :
+                    this->_move_right();
+                    break;
+                case Key::Q :
+                    this->_rot_left();
+                    break;
+                case Key::E :
                     this->_rot_right();
                     break;
                 default:
@@ -45,10 +51,23 @@ namespace GameLogic {
         }
     }
 
+
+    /// \brief Moves the player to the new x and y position
+    ///
+    /// \param timeSinceLastUpdate
     void Player::_move_player(int timeSinceLastUpdate){
-        double moveSpeed = this->_accel * timeSinceLastUpdate;
-        double new_x = this->_position.x + this->_direction.x * moveSpeed;
-        double new_y = this->_position.y + this->_direction.y * moveSpeed;
+        double moveSpeedY = this->_yAccel * timeSinceLastUpdate;
+        double moveSpeedX = this->_xAccel * timeSinceLastUpdate;
+        double new_x = this->_position.x + this->_direction.x * moveSpeedY;
+        double new_y = this->_position.y + this->_direction.y * moveSpeedY;
+
+        double newDirectionX = this->_direction.x;
+        double newDirectionY = this->_direction.y;
+
+        VectorUtil::rotate_vector(newDirectionX, newDirectionY, 1.5);
+
+        new_x = new_x + newDirectionX * moveSpeedX;
+        new_y = new_y + newDirectionY * moveSpeedX;
 
         if (!this->_level->get_tile((int) new_x, (int) this->_position.y)->is_wall()) {
             this->_position.x = new_x;
@@ -57,7 +76,8 @@ namespace GameLogic {
             this->_position.y = new_y;
         }
         
-        this->_accel = 0;
+        this->_yAccel = 0;
+        this->_xAccel = 0;
     }
 
     void Player::_rotate_player(int timeSinceLastUpdate)
@@ -79,12 +99,22 @@ namespace GameLogic {
     // Should these functions be declared seperately or do we want one _move function?
     void Player::_mov_forward()
     {
-        this->_accel = this->_MOVE_SPEED;
+        this->_yAccel = this->_MOVE_SPEED;
     }
 
     void Player::_mov_backward()
     {
-        this->_accel = -this->_MOVE_SPEED;
+        this->_yAccel = -this->_MOVE_SPEED;
+    }
+
+    void Player::_move_left()
+    {
+        this->_xAccel = this->_STRAFE_SPEED;
+    }
+
+    void Player::_move_right()
+    {
+        this->_xAccel = -this->_STRAFE_SPEED;
     }
 
     void Player::_rot_right()
