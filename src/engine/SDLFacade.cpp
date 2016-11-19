@@ -117,6 +117,8 @@ namespace Engine {
     }
     /// \brief Initialiser for the _screen_buffer (SDL_Texture)
     ///
+    /// The format(SDL_PIXELFORMAT_ARGB8888) has been found to be the right one through testing. When using other formats, the images have a red/blue gradient or don't show at all
+    ///
     /// \return This function returns True if the _screen_buffer was successfully initialized, ohterwise it returns False
     bool SDLFacade::_init_screen_buffer()
     {
@@ -391,19 +393,19 @@ namespace Engine {
     {
         //todo: change given variable to match tilemaps
         vector <Uint32> pixels;
-        const char* imagePath = path.c_str();
-        SDL_Surface* image = SDL_LoadBMP(imagePath);
+        SDL_Surface* image = SDL_LoadBMP(path.c_str());
+
         if(image == NULL){
-            cout << " NULL!" << endl;
+            cout << "An error occurred while loading image " << path << ". This occurred while trying to convert an image to pixels for a texture." << endl;
             SDL_FreeSurface(image);
             //todo: what to do when image can't be found
             return pixels;
         } else {
             SDL_LockSurface(image);
 
+            int bpp = image->format->BytesPerPixel;
             for (int y = 0; y < image->h; y++) {
                 for (int x = 0; x < image->w; x++) {
-                    int bpp = image->format->BytesPerPixel;
                     Uint8 *p = (Uint8 *)image->pixels + y * image->pitch + x * bpp;
                     pixels.push_back(*(Uint32*)p);
                 }
