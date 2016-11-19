@@ -398,7 +398,6 @@ namespace Engine {
         if(image == NULL){
             cout << "An error occurred while loading image " << path << ". This occurred while trying to convert an image to pixels for a texture." << endl;
             SDL_FreeSurface(image);
-            //todo: what to do when image can't be found
             return pixels;
         } else {
             SDL_LockSurface(image);
