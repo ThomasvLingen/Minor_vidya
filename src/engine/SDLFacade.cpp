@@ -179,7 +179,7 @@ namespace Engine {
 
         SDL_DestroyTexture(this->_screen_buffer);
 
-        this->_screen_buffer = SDL_CreateTexture(this->_renderer, SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_STREAMING,
+        this->_screen_buffer = SDL_CreateTexture(this->_renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_STREAMING,
                                                  this->_width, this->_height);
     }
 
