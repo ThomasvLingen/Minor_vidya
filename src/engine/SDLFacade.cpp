@@ -382,7 +382,6 @@ namespace Engine {
         SDL_Delay((uint32_t)millis);
     }
 
-
     //todo: change given variable to match tilemaps
     /// \brief Function that returns a list of pixels
     ///
