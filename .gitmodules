@@ -1,0 +1,3 @@
+[submodule "libs/RapidXML"]
+	path = libs/RapidXML
+	url = git@github.com:jorgdebont/RapidXML.git
