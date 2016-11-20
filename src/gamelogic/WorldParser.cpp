@@ -24,7 +24,7 @@ namespace GameLogic {
     ///
     /// \param file_location location of the file to be used
     /// \return returns a Level pointer
-    Level* WorldParser::generate_level( std::string file_location )
+    Level WorldParser::generate_level( std::string file_location )
     {
         RapidXMLAdapter* rapid_adapter = new RapidXMLAdapter();
         //TileSet* tile_set = new TileSet();
@@ -46,13 +46,27 @@ namespace GameLogic {
             vector<Tile*> map_row;
             for ( int x = 0; x < int_map[y].size(); x++ ) {
                 Tile* new_tile = new Tile;
-                switch ( int_map[x][y] ) {
+                switch ( int_map[y][x] ) {
                 case 1:
                     new_tile->set_wall( true );
                     new_tile->set_color( { 255,0,0 } );
                     break;
-                    map_row.push_back( new_tile );
+                case 2:
+                    new_tile->set_wall( true );
+                    new_tile->set_color( { 0,255,0 } );
+                    break;
+                case 3:
+                    new_tile->set_wall( true );
+                    new_tile->set_color( { 0,0,255 } );
+                    break;
+                case 4:
+                    new_tile->set_wall( true );
+                    new_tile->set_color( { 100,100,100 } );
+                    break;
+                default:
+                    new_tile->set_wall( false );
                 }
+                map_row.push_back( new_tile );
             }
             map.push_back( map_row );
         }
@@ -70,7 +84,7 @@ namespace GameLogic {
         //}
 
         // generated_level needs to be deleted in the mainclass/gameloop when this level has been completed/finished/player quits.
-        Level* generated_level = new Level( map );
+        Level generated_level = Level( map );
         //generated_level->tile_set = tile_set;
 
         return generated_level;

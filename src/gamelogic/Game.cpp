@@ -4,6 +4,7 @@
 
 #include "Game.hpp"
 #include "Player.hpp"
+#include "WorldParser.hpp"
 
 #include "state/StartUpState.hpp"
 
@@ -16,59 +17,16 @@ namespace GameLogic {
     , running(true)
     {
         this->SDL_facade.init();
+        WorldParser parser;
         this->_init_sound_effects();
         this->init_states();
-
         Engine::SPTR_AssetsManager assets = std::make_shared<AssetsManager>(this->SDL_facade);
         if (!assets->init()) {
             std::cout << "AssetsManager has not initted correctly." << std::endl;
         }
 
-        // TODO: This is test code of the worst kind, remove when no longer needed (f/e when we have a level editor)
-        // {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-        std::vector<std::vector<int>> world = {
-            {1,1,1,1,1,7,7,7,7,7,7,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,13,1,1,1,1,1,1},
-            {1,0,0,0,0,7,0,0,0,0,7,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-            {1,0,0,0,0,7,0,0,0,0,7,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-            {1,0,0,0,0,7,0,0,0,0,7,3,3,3,3,3,3,1,0,0,8,9,10,11,12,0,0,0,0,0,0,0,0,0,1},
-            {1,0,0,0,0,7,0,0,0,0,0,0,0,0,0,0,3,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-            {1,0,0,0,0,7,7,7,7,7,7,3,3,3,3,0,3,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-            {1,1,1,1,1,1,1,1,1,1,1,0,0,0,3,0,3,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-            {1,0,0,0,0,0,0,0,4,0,1,0,0,0,3,0,3,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-            {1,0,0,0,0,0,0,0,5,0,1,0,0,0,3,0,3,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1},
-            {1,0,0,0,0,0,0,0,6,2,2,2,2,2,2,0,2,2,2,2,2,2,2,2,2,2,2,0,2,2,2,2,2,2,1},
-            {13,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,13},
-            {1,0,0,0,0,0,0,0,4,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1},
-            {1,0,0,0,0,0,0,0,5,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-            {1,0,0,0,0,0,0,0,6,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-            {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
-        };
-        std::vector<std::vector<Tile*>> tiles;
-
-        for(size_t i = 0; i < world.size(); i++){
-            std::vector<Tile*>* vector = new std::vector<Tile*>;
-            tiles.push_back(*vector);
-
-            for(size_t j = 0; j < world.at(i).size(); j++){
-                Tile* temp = new Tile(assets->get_texture(world[i][j]));
-
-                // Only > 0 is a wall, the rest is empty
-                temp->set_wall(world[i][j] > 0);
-
-                tiles.at(i).push_back(temp);
-            }
-        }
-
-        // Player start coords
-        CoordinateDouble coord = {10.5,1.5};
-        this->_player = std::make_shared<Player>(coord);
-
-        // TODO: The AssetsManager should not be newed here
-        this->_level = {
-            std::make_shared<Level>(
-                Level(*this->_player, tiles, assets)
-            )
-        };
+        this->_level = { std::make_shared<Level>(parser.generate_level("D:/Users/Joost/Source/Repos/Minor_vidya/res/test2.tmx")) };
+        this->_raycasting_engine.set_world(this->_level);
 
         this->raycasting_engine.set_world(this->_level);
         this->_player->set_level(this->_level);

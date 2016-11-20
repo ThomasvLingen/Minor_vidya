@@ -19,7 +19,7 @@ namespace GameLogic {
         WorldParser();
         ~WorldParser();
 
-        Level* generate_level( std::string file_location );
+        Level generate_level( std::string file_location );
     };
 
 };
