@@ -87,7 +87,6 @@ namespace GameLogic {
             }
             // Other Objects
             //else if ( std::strcmp(get<2>( object_list[i] ), "Other_Object" ) == 0 ) {
-
             //}
         }
 
