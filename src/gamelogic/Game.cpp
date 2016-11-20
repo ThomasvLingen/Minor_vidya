@@ -17,6 +17,7 @@ namespace GameLogic {
     , running(true)
     {
         this->SDL_facade.init();
+        this->init_states();
         WorldParser parser;
         this->_init_sound_effects();
         this->init_states();
