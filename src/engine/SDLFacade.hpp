@@ -32,7 +32,7 @@ namespace Engine {
     using std::endl;
 
 
-    enum class FontType {verdana, roman, alterebro_pixel};
+    enum class FontType {alterebro_pixel};
 
 
     class SDLFacade {
