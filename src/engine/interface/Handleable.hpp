@@ -9,7 +9,7 @@
 #include "../KeyStrokes.hpp"
 namespace Engine {
     class Handleable {
-        virtual void handle_input(::Engine::PressedKeys keys) = 0;
+        virtual void handle_input(::Engine::PressedKeys& keys) = 0;
     };
 }
 
