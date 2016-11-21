@@ -10,6 +10,40 @@
 
 namespace State {
 
+    MenuState::MenuState()
+    {
+        auto option_1 = [] (GameLogic::Game& game, int time_since_last_update) {
+            game.set_new_state(std::make_shared<LoadState>());
+        };
+
+        auto option_2 = [] (GameLogic::Game& game, int time_since_last_update) {
+            game.set_new_state(std::make_shared<HelpState>());
+        };
+
+        auto option_3 = [] (GameLogic::Game& game, int time_since_last_update) {
+            game.set_new_state(std::make_shared<CreditState>());
+        };
+
+        vector<CoordinateDouble> coordinates;
+        coordinates.push_back({150,100});
+        coordinates.push_back({150,140});
+        coordinates.push_back({150,180});
+
+        vector<string> names;
+        names.push_back("Start Game");
+        names.push_back("Help");
+        names.push_back("Credits");
+
+        vector<std::function> callbacks;
+        callbacks.push_back(option_1);
+        callbacks.push_back(option_2);
+        callbacks.push_back(option_3);
+
+        this->menu = new Menu(coordinates, names, callbacks);
+
+
+    }
+
     void MenuState::update(GameLogic::Game& game, int time_since_last_update) {
         game.SDL_facade.handle_sdl_events();
         PressedKeys keys = game.SDL_facade.get_keys();
@@ -35,6 +69,9 @@ namespace State {
                         game.set_new_state(std::make_shared<StartUpState>());
                         break;
                     case Key::ENTER:
+
+                        menu->get_selected().callback(game, time_since_last_update)
+
                         if(this->_selected == 1){
                             game.set_new_state(std::make_shared<LoadState>());
                         }

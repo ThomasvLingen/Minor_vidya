@@ -31,6 +31,8 @@ set(SOURCE_FILES
 		src/gamelogic/State/RunState.cpp src/gamelogic/State/RunState.hpp
 		src/gamelogic/State/StartUpState.cpp src/gamelogic/State/StartUpState.hpp
 		src/gamelogic/State/HelpState.cpp src/gamelogic/State/HelpState.hpp
+		src/gamelogic/State/Menu.cpp src/gamelogic/State/Menu.hpp
+		src/gamelogic/State/MenuOption.cpp src/gamelogic/State/MenuOption.hpp
 
 		)
 
