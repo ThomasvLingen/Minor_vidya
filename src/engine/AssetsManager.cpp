@@ -24,10 +24,13 @@ namespace Engine {
     {
         bool success = true;
 
+        // We put an empty texture at index 0, since an empty space should not have an index
+        // We can now directly map tile IDs to textures!
+        this->_known_textures[0] = ImageBuffer();
         // TODO: This should not be hardcoded here as soon as tiled integration works
-        success &= this->_load_texture(0, "res/BrickWall.bmp");
-        success &= this->_load_texture(1, "res/StoneWall.bmp");
-        success &= this->_load_texture(2, "res/WoodWall.bmp");
+        success &= this->_load_texture(1, "res/BrickWall.bmp");
+        success &= this->_load_texture(2, "res/StoneWall.bmp");
+        success &= this->_load_texture(3, "res/WoodWall.bmp");
 
         return success;
     }
@@ -44,5 +47,10 @@ namespace Engine {
 
         this->_known_textures[id] = retrieved;
         return true;
+    }
+
+    ImageBuffer& AssetsManager::get_texture(int id)
+    {
+        return this->_known_textures.at(id);
     }
 }

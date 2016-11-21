@@ -19,6 +19,7 @@ namespace Engine {
         AssetsManager(SDLFacade& SDL_facade);
 
         bool init();
+        ImageBuffer& get_texture(int id);
 
     private:
         TextureMap _known_textures;

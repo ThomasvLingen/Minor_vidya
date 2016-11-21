@@ -9,9 +9,6 @@ namespace Engine {
     WorldObject::WorldObject(AssetsManager* assets)
     : assets(assets)
     {
-        if (!this->assets->init()) {
-            cout << "AssetsManager has not initted correctly." << endl;
-        }
     }
 
     WorldObject::~WorldObject()
