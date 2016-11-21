@@ -90,7 +90,8 @@ namespace GameLogic {
             current_frame_start_time = this->SDL_facade.get_ticks();
             time_since_last_frame = current_frame_start_time - last_frame_start_time;
             last_frame_start_time = this->SDL_facade.get_ticks();
-            
+
+            this->_current_state = this->_new_state;
             this->_current_state->update(*this, time_since_last_frame);
 
             time_spent = this->SDL_facade.get_ticks() - current_frame_start_time;
@@ -103,12 +104,12 @@ namespace GameLogic {
 
     void Game::init_states()
     {
-        this->_current_state = std::make_shared<State::StartUpState>();
+        this->_new_state = std::make_shared<State::StartUpState>();
     }
 
     void Game::set_new_state(SPTR_IGameState state)
     {
-        this->_current_state = state;
+        this->_new_state = state;
     }
 }
 

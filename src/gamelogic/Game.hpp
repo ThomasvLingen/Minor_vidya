@@ -36,6 +36,7 @@ namespace GameLogic {
     private:
         bool _running;
         SPTR_IGameState _current_state;
+        SPTR_IGameState _new_state;
 
         SPTR_Level _level; //TODO: perhaps change this to a level pointer
 
