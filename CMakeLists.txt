@@ -23,6 +23,7 @@ set(SOURCE_FILES
 		src/config.hpp
 		src/engine/interface/Drawable.cpp src/engine/interface/Drawable.hpp
 		src/engine/interface/Updatable.hpp
+		src/engine/FPScounter.cpp src/engine/FPScounter.hpp
 		)
 
 add_executable(Minor_vidya ${SOURCE_FILES})
