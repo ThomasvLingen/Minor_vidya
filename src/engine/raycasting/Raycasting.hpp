@@ -16,6 +16,12 @@ namespace Engine {
     using std::shared_ptr;
     typedef shared_ptr<WorldObject> WorldPTR;
 
+    // TODO:
+    // This is ugly and stupid
+    // - Linus Torvalds
+    const int TEXTURE_WIDTH = 64;
+    const int TEXTURE_HEIGHT = 64;
+
     class Raycasting {
     public:
         Raycasting(SDLFacade& SDL_facade);
@@ -41,12 +47,15 @@ namespace Engine {
                                        double& delta_dist);
 
         Wall _search_wall(RaySteps step_sizes, CoordinateInt start_point, DeltaDist delta_dist);
-        int _get_wall_height(Wall wall, CoordinateDouble ray_pos, Direction ray_direction, RaySteps ray_steps);
+        int _get_wall_height(double perp_wall_dist);
         double _calculate_wall_dist(int& wall_cord, double& ray_pos, RayStep ray_step, double ray_dir);
+        double _calculate_wall_dist(Wall wall, CoordinateDouble ray_pos, RaySteps ray_steps, Direction ray_dir);
 
         LineCords _get_line_measures(int line_height);
         void _correct_line(LineCords& line);
-        void _draw_line(LineCords& line_cords, Color& color, int current_ray_index);
+
+        int _get_texture_x_coord(Wall wall, CoordinateDouble ray_pos, Direction ray_dir, double perp_wall_dist);
+        double _get_wall_x(Wall wall, CoordinateDouble ray_pos, Direction ray_dir, double perp_wall_dist);
     };
 }
 

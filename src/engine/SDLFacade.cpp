@@ -104,8 +104,8 @@ namespace Engine {
     /// \return This function returns True if the _window was successfully initialized, ohterwise it returns False
     bool SDLFacade::_init_window()
     {
-        this->_window = SDL_CreateWindow(Config::GAME_WINDOW_TITLE.c_str(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 500,
-                                         500, SDL_WINDOW_SHOWN);
+        this->_window = SDL_CreateWindow(Config::GAME_WINDOW_TITLE.c_str(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, this->_width,
+                                         this->_height, SDL_WINDOW_SHOWN);
         if (this->_window != nullptr) {
             this->_screenSurface = SDL_GetWindowSurface(this->_window);
             return true;
@@ -389,10 +389,10 @@ namespace Engine {
     ///
     /// Each pixel in the list is represented as Uint32
     /// \return This function returns a list of Uint32
-    vector<Uint32> SDLFacade::get_image_buffer(const string& path)
+    ImageBuffer SDLFacade::get_image_buffer(const string& path)
     {
         //todo: change given variable to match tilemaps
-        vector <Uint32> pixels;
+        ImageBuffer pixels;
         SDL_Surface* image = SDL_LoadBMP(path.c_str());
 
         if(image == NULL){

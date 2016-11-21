@@ -5,8 +5,8 @@
 #include "Tile.hpp"
 namespace GameLogic {
 
-    Tile::Tile()
-        : TileObject()
+    Tile::Tile(ImageBuffer& texture)
+    : TileObject(texture)
     {
 
     }

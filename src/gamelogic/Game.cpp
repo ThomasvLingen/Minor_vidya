@@ -14,6 +14,10 @@ namespace GameLogic {
     , _raycasting_engine(this->_SDL_facade)
     {
         this->_SDL_facade.init();
+        Engine::SPTR_AssetsManager assets = std::make_shared<AssetsManager>(this->_SDL_facade);
+        if (!assets->init()) {
+            std::cout << "AssetsManager has not initted correctly." << std::endl;
+        }
 
         // TODO: This is test code of the worst kind, remove when no longer needed (f/e when we have a level editor)
         std::vector<std::vector<int>> world = {
@@ -33,9 +37,8 @@ namespace GameLogic {
             std::vector<Tile*>* vector = new std::vector<Tile*>;
             tiles.push_back(*vector);
 
-
             for(size_t j = 0; j < world.at(i).size(); j++){
-                Tile* temp = new Tile();
+                Tile* temp = new Tile(assets->get_texture(world[i][j]));
 
                 switch (world[i][j]) {
                     case 1:
@@ -58,7 +61,12 @@ namespace GameLogic {
             }
         }
 
-        this->_level = { std::make_shared<Level>(Level(tiles)) };
+        // TODO: The AssetsManager should not be newed here
+        this->_level = {
+            std::make_shared<Level>(
+                Level(tiles, assets)
+            )
+        };
         this->_raycasting_engine.set_world(this->_level);
 
         CoordinateDouble coord = {1.5,1.5};

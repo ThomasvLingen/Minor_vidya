@@ -4,6 +4,7 @@
 #include <vector>
 #include <map>
 #include "Color.hpp"
+#include "../SDLFacade.hpp"
 
 
 namespace Engine {
@@ -29,9 +30,10 @@ namespace Engine {
         const int _width = 1;        // TODO: implement width value
         const int _length = 1;        // TODO: implement height value
         vector<TileObject*> _neighbour_tiles;
+        ImageBuffer& _texture;
 
     public:
-        TileObject();
+        TileObject(ImageBuffer& texture);
         TileObject(const TileObject& obj) = delete;            // Copy constructor for a base class has to be deleted (slicing)
         TileObject& operator=(const TileObject& obj) = delete; // Copy assignment for a base class has to be deleted (slicing)
 
@@ -46,6 +48,7 @@ namespace Engine {
 
         bool is_wall();
         Color get_color();
+        ImageBuffer& get_texture();
     };
 }
 

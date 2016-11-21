@@ -40,17 +40,31 @@ namespace Engine {
                 RaySteps ray_steps = _calculate_ray_steps(ray_dir, ray_position, map_coord, delta_dist);
 
                 Wall wall = _search_wall(ray_steps, map_coord, delta_dist);
-                int line_height = _get_wall_height(wall, ray_position, ray_dir, ray_steps);
+                double perp_wall_dist = this->_calculate_wall_dist(wall, ray_position, ray_steps, ray_dir);
+
+                int line_height = _get_wall_height(perp_wall_dist);
                 LineCords line_cords = _get_line_measures(line_height);
 
-                Color color = this->_world->get_tile(wall.cord.x, wall.cord.y)->get_color();
+                int tex_x = this->_get_texture_x_coord(wall, ray_position, ray_dir, perp_wall_dist);
 
-                if (wall.side == WallSide::y_wall) {
-                    color = color.reduce_intensity();
+                ImageBuffer& tile_texture = this->_world->get_tile(wall.cord.x, wall.cord.y)->get_texture();
+
+                // TODO: Maybe put this in a separate function
+                // Put pixels for a single vertical line on the screen
+                for (int y = line_cords.draw_start; y < line_cords.draw_end; y++) {
+                    // The multiplication and division is done so that we don't have to work with floats here, resulting
+                    // in much faster code. This is critical, since this tidbit of code is ran width * height times PER
+                    // FRAME (640*480 equates to 307,200 times, which is a lot).
+                    int d = y * 256 - this->_SDL_facade.get_height() * 128 + line_height * 128;
+                    int tex_y = ((d * TEXTURE_HEIGHT) / line_height) / 256;
+
+                    Uint32 pixel = tile_texture[TEXTURE_HEIGHT * tex_y + tex_x];
+
+                    this->_SDL_facade.draw_pixel_screen_buffer({ray_index, y}, pixel);
                 }
-
-                this->_draw_line(line_cords, color, ray_index);
             }
+
+             this->_SDL_facade.update_screen_buffer();
         }
     }
 
@@ -191,25 +205,13 @@ namespace Engine {
     }
 
     /// \brief Calculates wall_height using wall / ray position and direction using _calculate_wall_dist
-    /// \param wall Wall position
-    /// \param ray_pos
-    /// \param ray_direction
-    /// \param ray_steps
+    /// \param perp_wall_dist The distance to a wall
     /// \return wall height
-    int Raycasting::_get_wall_height(Wall wall, CoordinateDouble ray_pos, Direction ray_direction, RaySteps ray_steps)
+    int Raycasting::_get_wall_height(double perp_wall_dist)
     {
-        double perp_wall_dist;
-        int line_height;
         int height = this->_SDL_facade.get_height();
 
-        if (wall.side == WallSide::x_wall) {
-            perp_wall_dist = _calculate_wall_dist(wall.cord.x, ray_pos.x, ray_steps.x, ray_direction.x);
-        } else {
-            perp_wall_dist = _calculate_wall_dist(wall.cord.y, ray_pos.y, ray_steps.y, ray_direction.y);
-        }
-
-        line_height = (int)(height / perp_wall_dist);
-        return line_height;
+        return (int)(height / perp_wall_dist);
     }
 
     /// \brief Calculate the distance to the wall for an axis
@@ -221,6 +223,15 @@ namespace Engine {
     double Raycasting::_calculate_wall_dist(int& wall_cord, double& ray_pos, RayStep ray_step, double ray_dir)
     {
         return (wall_cord - ray_pos + (1 - ray_step.step_size) / 2) / ray_dir;
+    }
+
+    double Raycasting::_calculate_wall_dist(Wall wall, CoordinateDouble ray_pos, RaySteps ray_steps, Direction ray_dir)
+    {
+        if (wall.side == WallSide::x_wall) {
+            return this->_calculate_wall_dist(wall.cord.x, ray_pos.x, ray_steps.x, ray_dir.x);
+        } else {
+            return this->_calculate_wall_dist(wall.cord.y, ray_pos.y, ray_steps.y, ray_dir.y);
+        };
     }
 
     /// \brief get line measure from line_height
@@ -265,21 +276,37 @@ namespace Engine {
         return this->_world->get_pov().get_position();
     }
 
-    /// \brief Draws the line using the SDL facade
-    /// \param line_cords
-    /// \param color
-    /// \param current_ray_index
-    void Raycasting::_draw_line(LineCords& line_cords, Color& color, int current_ray_index)
-    {
-        this->_SDL_facade.draw_line(
-            CoordinateDouble {(double)current_ray_index, (double)line_cords.draw_start},
-            CoordinateDouble {(double)current_ray_index, (double)line_cords.draw_end},
-            color
-        );
-    }
-
     void Raycasting::set_world(WorldPTR new_world)
     {
         this->_world = new_world;
+    }
+
+    int Raycasting::_get_texture_x_coord(Wall wall, CoordinateDouble ray_pos, Direction ray_dir, double perp_wall_dist)
+    {
+        double wall_x = this->_get_wall_x(wall, ray_pos, ray_dir, perp_wall_dist);
+
+        // x coordinate on the texture
+        int tex_x = int(wall_x * double(TEXTURE_WIDTH));
+
+        if ((wall.side == WallSide::x_wall && ray_dir.x > 0) || (wall.side == WallSide::y_wall && ray_dir.y < 0)) {
+            tex_x = TEXTURE_WIDTH - tex_x - 1;
+        }
+
+        return tex_x;
+    }
+
+    double Raycasting::_get_wall_x(Wall wall, CoordinateDouble ray_pos, Direction ray_dir, double perp_wall_dist)
+    {
+        double wall_x;
+
+        if (wall.side == WallSide::x_wall) {
+            wall_x = ray_pos.y + perp_wall_dist * ray_dir.y;
+        } else {
+            wall_x = ray_pos.x + perp_wall_dist * ray_dir.x;
+        }
+
+        wall_x -= floor(wall_x);
+
+        return wall_x;
     }
 }
