@@ -23,7 +23,7 @@ namespace GameLogic {
     /// needs to be inside try catch
     ///
     /// \param file_location location of the file to be used
-    /// \return returns a Level pointer
+    /// \return returns a Level
     Level WorldParser::generate_level( std::string file_location )
     {
         RapidXMLAdapter* rapid_adapter = new RapidXMLAdapter();
@@ -31,7 +31,7 @@ namespace GameLogic {
         vector<vector<size_t>> int_map;
         vector<vector<Tile*>> map;
         vector<tuple<size_t, size_t, char*>> object_list;
-
+        CoordinateDouble spawn_point;
         rapid_adapter->setup_document( file_location );
 
 
@@ -61,7 +61,7 @@ namespace GameLogic {
                     break;
                 case 4:
                     new_tile->set_wall( true );
-                    new_tile->set_color( { 100,100,100 } );
+                    new_tile->set_color( { 255,255,255 } );
                     break;
                 default:
                     new_tile->set_wall( false );
@@ -71,20 +71,20 @@ namespace GameLogic {
             map.push_back( map_row );
         }
 
-        //object_list = rapid_adapter->get_objects();
+        object_list = rapid_adapter->get_objects();
 
-        //for ( size_t i = 0; i < object_list.size(); i++ ) {
-        //    if ( std::strcmp( get<2>( object_list[i] ), "PlayerSpawn" ) == 0 ) {
-        //        map[get<0>( object_list[i] )][get<1>( object_list[i] )]->type = SPAWN;
-        //    }
-        //    // Other Objects
-        //    //else if ( std::strcmp(get<2>( object_list[i] ), "Other_Object" ) == 0 ) {
+        for ( size_t i = 0; i < object_list.size(); i++ ) {
+            if ( std::strcmp( get<2>( object_list[i] ), "PlayerSpawn" ) == 0 ) {
+                spawn_point = CoordinateDouble{ get<0>( object_list[i] )+0.5, get<1>( object_list[i] )+0.5 };
+            }
+            // Other Objects
+            //else if ( std::strcmp(get<2>( object_list[i] ), "Other_Object" ) == 0 ) {
 
-        //    //}
-        //}
+            //}
+        }
 
         // generated_level needs to be deleted in the mainclass/gameloop when this level has been completed/finished/player quits.
-        Level generated_level = Level( map );
+        Level generated_level = Level( map, spawn_point );
         //generated_level->tile_set = tile_set;
 
         return generated_level;

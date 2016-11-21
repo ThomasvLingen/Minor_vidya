@@ -9,10 +9,11 @@ namespace GameLogic {
 
     using std::vector;
 
-    Level::Level(Player& player, vector<vector<Tile*>> field, Engine::SPTR_AssetsManager assets)
-    : World(assets)
+    Level::Level(Player& player, vector<vector<Tile*>> field, CoordinateDouble spawnpoint, Engine::SPTR_AssetsManager assets)
+    : WorldObject(assets)
     , _field(field)
     , _player(player)
+    , _spawnpoint(spawnpoint)
     {
     }
 

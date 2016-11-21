@@ -25,11 +25,13 @@ namespace GameLogic {
             std::cout << "AssetsManager has not initted correctly." << std::endl;
         }
 
-        this->_level = { std::make_shared<Level>(parser.generate_level("D:/Users/Joost/Source/Repos/Minor_vidya/res/test2.tmx")) };
+        this->_level = { std::make_shared<Level>(parser.generate_level("res/test2.tmx")) };
         this->_raycasting_engine.set_world(this->_level);
 
-        this->raycasting_engine.set_world(this->_level);
-        this->_player->set_level(this->_level);
+        CoordinateDouble coord = {1.5,1.5};
+        auto player = std::make_shared<Player>(this->_level->get_spawnpoint(), this->_level);
+
+        this->_level->set_player(player);
     }
 
     /// \brief The main game loop
