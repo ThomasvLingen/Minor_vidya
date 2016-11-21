@@ -38,7 +38,7 @@ namespace GameLogic {
 
     TileObject* Level::get_tile(int x, int y)
     {
-        return _field.at(x).at(y); //TODO: use at or []?
+        return _field[y][x];
     }
 
     PointOfView& Level::get_pov()
