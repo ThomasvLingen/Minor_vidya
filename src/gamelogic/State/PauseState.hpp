@@ -8,6 +8,7 @@
 #include "IGameState.hpp"
 #include "../Game.hpp"
 #include "../../engine/SDLFacade.hpp"
+#include "Menu.hpp"
 
 namespace GameLogic {
     class Game;
@@ -24,11 +25,15 @@ namespace State {
     class PauseState : public IGameState {
 
     public:
+
+        PauseState();
+        ~PauseState();
+
         void update(GameLogic::Game& game, int time_since_last_update) override ;
 
     private:
+        Menu* _menu; //TODO: Change this to smart-pointer??
         int _timeSinceLastPress = 0;
-        int _selected = 1;
         Color _color{255,255,255};
     };
 }

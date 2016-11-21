@@ -28,7 +28,7 @@ namespace State {
         game.SDL_facade.clear_screen();
         game.SDL_facade.draw_image("res/creditscreen.bmp" , CoordinateDouble{0,0});
         game.SDL_facade.draw_text("Vidya Game is made by:", FontType::alterebro_pixel, this->_color, CoordinateDouble{300, 50});
-        game.SDL_facade.draw_text("- Thomas Pannekoek:", FontType::alterebro_pixel, this->_color, CoordinateDouble{340, 80});
+        game.SDL_facade.draw_text("- Thomas van Lingen:", FontType::alterebro_pixel, this->_color, CoordinateDouble{340, 80});
         game.SDL_facade.draw_text("- Jorg de Bont", FontType::alterebro_pixel, this->_color, CoordinateDouble{340, 110});
         game.SDL_facade.draw_text("- Wouter van Geel", FontType::alterebro_pixel, this->_color, CoordinateDouble{340, 140});
         game.SDL_facade.draw_text("- Sander van Geel", FontType::alterebro_pixel, this->_color, CoordinateDouble{340, 170});

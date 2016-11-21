@@ -17,13 +17,11 @@ namespace State {
     class MenuOption {
 
     public:
-        MenuOption(CoordinateDouble coordinate, std::string name, std::function callback);
-        ~MenuOption();
+        MenuOption(CoordinateDouble coordinates, std::string name, std::function<void(Game&)> callback);
+        CoordinateDouble coordinates;
+        std::string name;
+        std::function<void(Game&)> callback;
 
-        void get_state();
-
-    private:
-        std::function<void(Game&, int)> callback;
     };
 
 }

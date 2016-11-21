@@ -8,6 +8,37 @@
 
 namespace State {
 
+    PauseState::PauseState()
+    {
+        auto option_1 = [] (GameLogic::Game& game) {
+            game.set_new_state(std::make_shared<RunState>());
+        };
+
+        auto option_2 = [] (GameLogic::Game& game) {
+            game.set_new_state(std::make_shared<MenuState>());
+        };
+
+        vector<CoordinateDouble> coordinates;
+        coordinates.push_back({150,100});
+        coordinates.push_back({150,140});
+
+        vector<string> names;
+        names.push_back("Resume game");
+        names.push_back("Quit to menu");
+
+        vector<std::function<void(GameLogic::Game&)>> callbacks;
+        callbacks.push_back(option_1);
+        callbacks.push_back(option_2);
+
+        this->_menu = new Menu(coordinates, names, callbacks);
+        this->_menu->set_selected(0);
+    }
+
+    PauseState::~PauseState()
+    {
+        delete this->_menu;
+    }
+
     void PauseState::update(GameLogic::Game& game, int time_since_last_update) {
         game.SDL_facade.handle_sdl_events();
         if(this->_timeSinceLastPress <= 15){ //TODO: TO SDL ticks
@@ -18,30 +49,17 @@ namespace State {
             for (auto key : keys) {
                 switch (key) {
                     case Key::W:
-                        if(this->_selected != 1){
-                            this->_selected--;
-                            this->_timeSinceLastPress = 0;
-                        }
+                        this->_menu->set_previous();
                         break;
                     case Key::S:
-                        if(this->_selected != 2){
-                            this->_selected++;
-                            this->_timeSinceLastPress = 0;
-                        }
+                        this->_menu->set_next();
                         break;
                     case Key::ESC:
                         game.set_new_state(std::make_shared<RunState>());
                         this->_timeSinceLastPress = 0;
                         break;
                     case Key::ENTER:
-                        if(this->_selected == 1){
-                            game.set_new_state(std::make_shared<RunState>());
-                            this->_timeSinceLastPress = 0;
-                        }
-                        else if(this->_selected == 2) {
-                            game.set_new_state(std::make_shared<MenuState>());
-                            this->_timeSinceLastPress = 0;
-                        }
+                        _menu->get_selected()->callback(game);
                         break;
                     default:
                         break;
@@ -50,14 +68,10 @@ namespace State {
         }
         game.SDL_facade.clear_screen();
         game.SDL_facade.draw_text("Game Paused", FontType::alterebro_pixel_plus, this->_color, CoordinateDouble{50, 15});
-        game.SDL_facade.draw_text("Resume game", FontType::alterebro_pixel, this->_color, CoordinateDouble{150,100});
-        game.SDL_facade.draw_text("Quit to menu", FontType::alterebro_pixel, this->_color, CoordinateDouble{150,140});
-        if(this->_selected == 1){
-            game.SDL_facade.draw_rect(CoordinateDouble{120,106}, 15, 15, this->_color);
-        }
-        else if(this->_selected == 2){
-            game.SDL_facade.draw_rect(CoordinateDouble{120,146}, 15, 15, this->_color);
-        }
+        for(auto option : _menu->menu_options){
+            game.SDL_facade.draw_text(option->name, FontType::alterebro_pixel, this->_color, option->coordinates);
+        };
+        game.SDL_facade.draw_rect(CoordinateDouble{120,this->_menu->get_selected()->coordinates.y + 6}, 15, 15, _color);
 
         game.SDL_facade.render_buffer();
     }

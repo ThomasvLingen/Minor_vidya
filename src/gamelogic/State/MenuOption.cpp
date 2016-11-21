@@ -5,15 +5,13 @@
 #include "MenuOption.hpp"
 
 namespace State{
-    MenuOption::MenuOption(CoordinateDouble coordinate, std::string name, std::function callback) {
+    MenuOption::MenuOption(CoordinateDouble coordinates, std::string name, std::function<void(Game&)> callback)
+    : coordinates(coordinates)
+    , name(name)
+    ,callback(callback)
+    {
 
     }
-
-    void MenuOption::get_state() {
-        this->callback;
-    }
-
-
 }
 
 

@@ -33,7 +33,6 @@ set(SOURCE_FILES
 		src/gamelogic/State/HelpState.cpp src/gamelogic/State/HelpState.hpp
 		src/gamelogic/State/Menu.cpp src/gamelogic/State/Menu.hpp
 		src/gamelogic/State/MenuOption.cpp src/gamelogic/State/MenuOption.hpp
-
 		)
 
 add_executable(Minor_vidya ${SOURCE_FILES})

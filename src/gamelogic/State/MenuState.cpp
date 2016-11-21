@@ -12,15 +12,15 @@ namespace State {
 
     MenuState::MenuState()
     {
-        auto option_1 = [] (GameLogic::Game& game, int time_since_last_update) {
+        auto option_1 = [] (GameLogic::Game& game) {
             game.set_new_state(std::make_shared<LoadState>());
         };
 
-        auto option_2 = [] (GameLogic::Game& game, int time_since_last_update) {
+        auto option_2 = [] (GameLogic::Game& game) {
             game.set_new_state(std::make_shared<HelpState>());
         };
 
-        auto option_3 = [] (GameLogic::Game& game, int time_since_last_update) {
+        auto option_3 = [] (GameLogic::Game& game) {
             game.set_new_state(std::make_shared<CreditState>());
         };
 
@@ -34,14 +34,18 @@ namespace State {
         names.push_back("Help");
         names.push_back("Credits");
 
-        vector<std::function> callbacks;
+        vector<std::function<void(GameLogic::Game&)>> callbacks;
         callbacks.push_back(option_1);
         callbacks.push_back(option_2);
         callbacks.push_back(option_3);
 
-        this->menu = new Menu(coordinates, names, callbacks);
+        this->_menu = new Menu(coordinates, names, callbacks);
+        this->_menu->set_selected(0);
 
+    }
 
+    MenuState::~MenuState(){
+        delete this->_menu;
     }
 
     void MenuState::update(GameLogic::Game& game, int time_since_last_update) {
@@ -54,56 +58,31 @@ namespace State {
             for(auto key : keys){
                 switch (key) {
                     case Key::W :
-                        if(this->_selected != 1){
-                            this->_selected--;
-                            this->_timeSinceLastPress = 0;
-                        }
+                        this->_menu->set_previous();
                         break;
                     case Key::S :
-                        if(this->_selected != 3){
-                            this->_selected++;
-                            this->_timeSinceLastPress = 0;
-                        }
+                        this->_menu->set_next();
                         break;
                     case Key::ESC:
                         game.set_new_state(std::make_shared<StartUpState>());
                         break;
                     case Key::ENTER:
-
-                        menu->get_selected().callback(game, time_since_last_update)
-
-                        if(this->_selected == 1){
-                            game.set_new_state(std::make_shared<LoadState>());
-                        }
-                        else if(this->_selected == 2){
-                            game.set_new_state(std::make_shared<HelpState>());
-                        }
-                        else if(this->_selected == 3){
-                            game.set_new_state(std::make_shared<CreditState>());
-                        }
+                        _menu->get_selected()->callback(game);
                         break;
                     default:
                         break;
                 }
+                _timeSinceLastPress = 0;
             }
         }
         game.SDL_facade.clear_screen();
         game.SDL_facade.draw_image("res/menuscreen.bmp", CoordinateDouble{0,0});
         game.SDL_facade.draw_text("Vidya Game", FontType::alterebro_pixel, this->_color, CoordinateDouble{20,20});
-        game.SDL_facade.draw_text("Start Game", FontType::alterebro_pixel, this->_color, CoordinateDouble{150,100});
-        game.SDL_facade.draw_text("Help", FontType::alterebro_pixel, this->_color, CoordinateDouble{150,140});
-        game.SDL_facade.draw_text("Credits", FontType::alterebro_pixel, this->_color, CoordinateDouble{150,180});
+        for(auto option : _menu->menu_options){
+            game.SDL_facade.draw_text(option->name, FontType::alterebro_pixel, this->_color, option->coordinates);
+        };
+        game.SDL_facade.draw_rect(CoordinateDouble{120,this->_menu->get_selected()->coordinates.y + 6}, 15, 15, _color);
 
-
-        if(this->_selected == 1){
-            game.SDL_facade.draw_rect(CoordinateDouble{120,106}, 15, 15, _color);
-        }
-        else if(this->_selected == 2){
-            game.SDL_facade.draw_rect(CoordinateDouble{120,146}, 15, 15, _color);
-        }
-        else if(this->_selected == 3){
-            game.SDL_facade.draw_rect(CoordinateDouble{120,186}, 15, 15, _color);
-        }
         game.SDL_facade.render_buffer();
     }
 }

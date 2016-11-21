@@ -20,17 +20,20 @@ namespace State {
     class Menu {
 
     public:
-        Menu(vector<CoordinateDouble> coordinates, vector<std::string> names, vector<std::function>& callbacks);
+        Menu(vector<CoordinateDouble> coordinates, vector<std::string> names, vector<std::function<void(GameLogic::Game&)>>& callbacks);
         ~Menu();
 
         void set_next();
         void set_previous();
 
-        MenuOption* get_selected();
+        MenuOption* get_selected(); //TODO: Change this to smart-pointer??
+
+        vector<MenuOption*> menu_options;
+
+        void set_selected(int i);
 
     private:
-
-        void set_selected();
+        int _selected_index = 0;
 
     };
 }
