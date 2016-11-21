@@ -13,7 +13,7 @@ namespace Engine {
         }
     }
 
-    void Collection::handle_input(::Engine::PressedKeys& keys)
+    void Collection::handle_input(PressedKeys& keys)
     {
         for (auto handleable : this->_handleables) {
             handleable->handle_input(keys);
@@ -27,17 +27,17 @@ namespace Engine {
         }
     }
 
-    void Collection::add_drawable(Engine::Drawable* to_add)
+    void Collection::add_drawable(Drawable* to_add)
     {
         this->_drawables.push_back(to_add);
     }
 
-    void Collection::add_handleable(Engine::Handleable* to_add)
+    void Collection::add_handleable(Handleable* to_add)
     {
         this->_handleables.push_back(to_add);
     }
 
-    void Collection::add_updatable(Engine::Updatable* to_add)
+    void Collection::add_updatable(Updatable* to_add)
     {
         this->_updatables.push_back(to_add);
     }
