@@ -71,12 +71,9 @@ namespace Engine {
 
         void draw_image(const std::string path, const CoordinateDouble& coordinates);
 
-        void render_buffer() const;
-
         void handle_sdl_events();
 
         PressedKeys get_keys() const;
-        void handle_sdl_events();
 
         void clear_screen(); //draws the background
         void draw_line(const CoordinateDouble& line_start, const CoordinateDouble& line_end, const Color& color);
