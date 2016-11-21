@@ -19,14 +19,14 @@ namespace Engine {
         void handle_input(::Engine::PressedKeys& keys);
         void update(int delta_time);
 
-        void add_drawable(Drawable& to_add);
-        void add_handleable(Handleable& to_add);
-        void add_updatable(Updatable& to_add);
+        void add_drawable(Drawable* to_add);
+        void add_handleable(Handleable* to_add);
+        void add_updatable(Updatable* to_add);
 
     private:
-        vector<Drawable> _drawables;
-        vector<Handleable> _handleables;
-        vector<Updatable> _updatables;
+        vector<Drawable*> _drawables;
+        vector<Handleable*> _handleables;
+        vector<Updatable*> _updatables;
     };
 }
 
