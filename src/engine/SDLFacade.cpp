@@ -4,6 +4,7 @@
 
 #include "SDLFacade.hpp"
 #include "../config.hpp"
+#include <SDL2/SDL_image.h>
 
 namespace Engine {
 
@@ -393,7 +394,7 @@ namespace Engine {
     {
         //todo: change given variable to match tilemaps
         ImageBuffer pixels;
-        SDL_Surface* image = SDL_LoadBMP(path.c_str());
+        SDL_Surface* image = IMG_Load(path.c_str());
 
         if(image == NULL){
             cout << "An error occurred while loading image " << path << ". This occurred while trying to convert an image to pixels for a texture." << endl;
