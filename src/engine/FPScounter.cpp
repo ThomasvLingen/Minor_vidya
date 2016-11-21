@@ -34,8 +34,8 @@ namespace Engine {
     {
         int FPS_this_frame = this->_calculate_FPS(delta_time);
 
-        if(this->_FPS_values.size() >= 30){
-            this->_current_FPS = _average_FPS_vector();
+        if (this->_FPS_values.size() >= 30) {
+            this->_current_FPS = this->_average_FPS_vector();
             this->_FPS_values.clear();
         }
 
@@ -46,7 +46,7 @@ namespace Engine {
     {
         int total = 0;
 
-        for (auto value : this->_FPS_values){
+        for (auto value : this->_FPS_values) {
             total += value;
         }
 
@@ -55,7 +55,7 @@ namespace Engine {
 
     int FPScounter::_calculate_FPS(int delta_time)
     {
-        if(delta_time <= 0){
+        if (delta_time <= 0) {
             return 0;
         }
 
