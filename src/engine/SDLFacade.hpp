@@ -32,7 +32,7 @@ namespace Engine {
     using std::endl;
 
 
-    enum class FontType {verdana, roman, alterebro_pixel};
+    enum class FontType {alterebro_pixel};
 
 
     class SDLFacade {
@@ -63,39 +63,28 @@ namespace Engine {
 
     public:
         SDLFacade(const function<void()>& callback_func);
-
         virtual ~SDLFacade();
 
         bool init();
 
-        void clear_screen(); //draws the background
-
-        void draw_line(const CoordinateDouble& line_start, const CoordinateDouble& line_end, const Color& color);
-
-        void render_buffer() const;
-
+        PressedKeys get_keys() const;
         void handle_sdl_events();
 
-        PressedKeys get_keys() const;
-
+        void clear_screen(); //draws the background
+        void draw_line(const CoordinateDouble& line_start, const CoordinateDouble& line_end, const Color& color);
         bool draw_text(const string& text, const FontType& font, const Color& color,
                        const CoordinateDouble& position) const;
-
         void draw_pixel_screen_buffer(const CoordinateDouble& position, Uint32 pixel);
-
         void update_screen_buffer();
+        void render_buffer() const;
 
         void set_height(const int& screen_height);
-
-        int get_height() const;
-
         void set_width(const int& screen_width);
-
+        int get_height() const;
         int get_width() const;
 
-        int get_ticks() const;
-
         void delay_millis(const int millis) const;
+        int get_ticks() const;
 
         vector<Uint32> get_image_buffer(const string& path);
 
