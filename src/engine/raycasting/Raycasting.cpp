@@ -229,18 +229,21 @@ namespace Engine {
     /// \return wall height
     int Raycasting::_get_wall_height(Wall wall, CoordinateDouble ray_pos, Direction ray_direction, RaySteps ray_steps)
     {
-        double perp_wall_dist;
+        double perp_wall_dist = this->_calculate_wall_dist(wall, ray_pos, ray_steps, ray_direction);
         int line_height;
         int height = this->_SDL_facade.get_height();
 
-        if (wall.side == WallSide::x_wall) {
-            perp_wall_dist = _calculate_wall_dist(wall.cord.x, ray_pos.x, ray_steps.x, ray_direction.x);
-        } else {
-            perp_wall_dist = _calculate_wall_dist(wall.cord.y, ray_pos.y, ray_steps.y, ray_direction.y);
-        }
-
         line_height = (int)(height / perp_wall_dist);
         return line_height;
+    }
+
+    double Raycasting::_calculate_wall_dist(Wall wall, CoordinateDouble ray_pos, RaySteps ray_steps, Direction ray_dir)
+    {
+        if (wall.side == WallSide::x_wall) {
+            return this->_calculate_wall_dist(wall.cord.x, ray_pos.x, ray_steps.x, ray_dir.x);
+        } else {
+            return this->_calculate_wall_dist(wall.cord.y, ray_pos.y, ray_steps.y, ray_dir.y);
+        };
     }
 
     /// \brief Calculate the distance to the wall for an axis

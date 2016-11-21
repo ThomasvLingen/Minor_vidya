@@ -49,6 +49,7 @@ namespace Engine {
         Wall _search_wall(RaySteps step_sizes, CoordinateInt start_point, DeltaDist delta_dist);
         int _get_wall_height(Wall wall, CoordinateDouble ray_pos, Direction ray_direction, RaySteps ray_steps);
         double _calculate_wall_dist(int& wall_cord, double& ray_pos, RayStep ray_step, double ray_dir);
+        double _calculate_wall_dist(Wall wall, CoordinateDouble ray_pos, RaySteps ray_steps, Direction ray_dir);
 
         LineCords _get_line_measures(int line_height);
         void _correct_line(LineCords& line);
