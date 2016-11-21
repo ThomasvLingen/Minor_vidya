@@ -1,4 +1,8 @@
 #include "gamelogic/Game.hpp"
+#ifdef _WIN32
+#define SDL_main main
+#endif // _WIN32
+
 
 using GameLogic::Game;
 
@@ -8,4 +12,3 @@ int main()
     game.run();
     return 0;
 }
-

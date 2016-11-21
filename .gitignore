@@ -1,6 +1,9 @@
 # Clion IDE files
 .idea/
 
+# Gdb history
+.gdb_history
+
 # Doxygen generated docs
 docs/html
 
@@ -37,6 +40,20 @@ build/
 *.exe
 *.out
 *.app
+
+#Visual Studio IDE files
+*.suo
+*.sln
+*.db
+*.opendb
+*.vcxproj
+*.filters
+*.pdb
+*.idb
+*.log
+/Debug
+*.user
+*.tlog
 
 # Profiler files
 callgraph*
