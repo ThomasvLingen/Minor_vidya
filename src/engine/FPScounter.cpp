@@ -13,8 +13,7 @@ namespace Engine {
 
     void FPScounter::draw()
     {
-
-        CoordinateDouble temp { //todo change this when drawtext takes a coordinate int
+        CoordinateDouble FPS_position{ //todo change this when drawtext takes a coordinate int
             this->_coord.x,
             this->_coord.y
         };
@@ -22,7 +21,7 @@ namespace Engine {
             this->_get_FPS_string(),
             this->_font,
             this->_color,
-            temp
+            FPS_position
         );
     }
 
