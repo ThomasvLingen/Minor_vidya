@@ -28,9 +28,10 @@ namespace GameLogic {
         void setup_document( string file_location );
 
         string get_texture_source();
-        size_t get_image_height();
-        size_t get_image_width();
-        size_t get_tile_size();
+        size_t get_tile_height();
+        size_t get_tile_width();
+        size_t get_tile_count();
+        size_t get_tile_column_size();
         vector<vector<size_t>> get_map();
         vector<tuple<size_t, size_t, char*>> get_objects();
     private:

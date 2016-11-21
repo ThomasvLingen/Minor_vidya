@@ -75,39 +75,40 @@ namespace GameLogic {
         return _image_node->first_attribute( "source" )->value();
     }
 
-    /// \brief gets the texture image height from loaded .tmx
+    /// \brief gets the texture tile height from loaded .tmx
     /// 
-    /// This function returns the texture image height of the texture that is used in this .tmx.
+    /// This function returns the texture tile height of the texture that is used in this .tmx.
     /// RapidXMLAdapter::setup_document has to be called before using this 
-    size_t RapidXMLAdapter::get_image_height()
+    size_t RapidXMLAdapter::get_tile_height()
     {
-        return std::stoi( _image_node->first_attribute( "height" )->value() );
+        return std::stoi( this->_tileset_node->first_attribute( "tileheight" )->value() );
     }
 
-    /// \brief gets the texture image width from loaded .tmx
+    /// \brief gets the texture tile width from loaded .tmx
     /// 
-    /// This function returns the texture image width of the texture that is used in this .tmx.
+    /// This function returns the texture tile width of the texture that is used in this .tmx.
     /// RapidXMLAdapter::setup_document has to be called before using this 
-    size_t RapidXMLAdapter::get_image_width()
+    size_t RapidXMLAdapter::get_tile_width()
     {
-        return std::stoi( _image_node->first_attribute( "width" )->value() );
+        return std::stoi( this->_tileset_node->first_attribute( "tilewidth" )->value() );
     }
 
-    /// \brief gets the texture tile size from loaded .tmx
+    /// \brief gets the texture tile count from loaded .tmx
     /// 
-    /// This function returns the texture tile size of the texture that is used in this .tmx.
+    /// This function returns the texture tile count of the texture that is used in this .tmx.
     /// RapidXMLAdapter::setup_document has to be called before using this 
-    size_t RapidXMLAdapter::get_tile_size()
+    size_t RapidXMLAdapter::get_tile_count()
     {
-        size_t tile_height, tile_width;
-        tile_height = std::stoi( this->_tileset_node->first_attribute( "tileheight" )->value() );
-        tile_width = std::stoi( this->_tileset_node->first_attribute( "tilewidth" )->value() );
-        if ( tile_height == tile_width ) {
-            return tile_height;
-        }
-        else {
-            throw exception( "file invalid tiles not squares" );
-        }
+        return std::stoi( this->_tileset_node->first_attribute( "tilecount" )->value() );
+    }
+
+    /// \brief gets the texture tile colomn size from loaded .tmx
+    /// 
+    /// This function returns the texture tile colomn size of the texture that is used in this .tmx.
+    /// RapidXMLAdapter::setup_document has to be called before using this 
+    size_t RapidXMLAdapter::get_tile_column_size()
+    {
+        return std::stoi( this->_tileset_node->first_attribute( "columns" )->value() );
     }
 
     /// \brief gets the texture valued map from loaded .tmx

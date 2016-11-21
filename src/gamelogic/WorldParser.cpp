@@ -36,9 +36,10 @@ namespace GameLogic {
 
 
         //tile_set->texture_source = rapid_adapter->get_texture_source();
-        //tile_set->image_height = rapid_adapter->get_image_height();
-        //tile_set->image_width = rapid_adapter->get_image_width();
-        //tile_set->tile_size = rapid_adapter->get_tile_size();
+        //tile_set->tile_size = rapid_adapter->get_tile_width();
+        //tile_set->tile_size = rapid_adapter->get_tile_height();
+        //tile_set->tile_size = rapid_adapter->get_tile_count();
+        //tile_set->tile_size = rapid_adapter->get_tile_colomn_size();
 
         int_map = rapid_adapter->get_map();
 
@@ -46,6 +47,7 @@ namespace GameLogic {
             vector<Tile*> map_row;
             for ( int x = 0; x < int_map[y].size(); x++ ) {
                 Tile* new_tile = new Tile;
+                // when textures implemented if ( int_map[y][x] != 0 ) { set_wall( true ) }
                 switch ( int_map[y][x] ) {
                 case 1:
                     new_tile->set_wall( true );
