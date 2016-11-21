@@ -58,7 +58,8 @@ namespace GameLogic {
             }
         }
 
-        this->_level = { std::make_shared<Level>(Level(tiles)) };
+        // TODO: The AssetsManager should not be newed here
+        this->_level = { std::make_shared<Level>(Level(tiles, new Engine::AssetsManager(this->_SDL_facade)))};
         this->_raycasting_engine.set_world(this->_level);
 
         CoordinateDouble coord = {1.5,1.5};

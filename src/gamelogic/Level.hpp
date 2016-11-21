@@ -12,6 +12,9 @@
 #include <vector>
 #include <memory>
 
+namespace Engine {
+    class AssetsManager;
+}
 
 namespace GameLogic {
 
@@ -19,6 +22,7 @@ namespace GameLogic {
     using Engine::CoordinateDouble;
     using Engine::TileObject;
     using Engine::PointOfView;
+    using Engine::AssetsManager;
     using std::shared_ptr;
 
     class Player;
@@ -38,7 +42,7 @@ namespace GameLogic {
          */
 
     public:
-        Level(vector<vector<Tile*>> field);
+        Level(vector<vector<Tile*>> field, AssetsManager* assets);
         Level(const Level& obj);
 
         void update(int delta_time) override;

@@ -33,7 +33,7 @@ namespace Engine {
 
 
     enum class FontType {alterebro_pixel};
-
+    typedef vector<Uint32> ImageBuffer;
 
     class SDLFacade {
     private:
@@ -86,7 +86,7 @@ namespace Engine {
         void delay_millis(const int millis) const;
         int get_ticks() const;
 
-        vector<Uint32> get_image_buffer(const string& path);
+        ImageBuffer get_image_buffer(const string& path);
 
     private:
         void _handle_key_pressed_event(SDL_Keycode key);

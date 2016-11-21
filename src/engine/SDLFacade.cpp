@@ -389,10 +389,10 @@ namespace Engine {
     ///
     /// Each pixel in the list is represented as Uint32
     /// \return This function returns a list of Uint32
-    vector<Uint32> SDLFacade::get_image_buffer(const string& path)
+    ImageBuffer SDLFacade::get_image_buffer(const string& path)
     {
         //todo: change given variable to match tilemaps
-        vector <Uint32> pixels;
+        ImageBuffer pixels;
         SDL_Surface* image = SDL_LoadBMP(path.c_str());
 
         if(image == NULL){
