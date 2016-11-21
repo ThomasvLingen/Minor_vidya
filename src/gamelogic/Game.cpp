@@ -15,7 +15,7 @@ namespace GameLogic {
     {
         this->_SDL_facade.init();
         AssetsManager* assets = new Engine::AssetsManager(this->_SDL_facade);
-        if (assets->init()) {
+        if (!assets->init()) {
             std::cout << "AssetsManager has not initted correctly." << std::endl;
         }
 

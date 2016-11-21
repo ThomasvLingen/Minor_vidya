@@ -16,6 +16,12 @@ namespace Engine {
     using std::shared_ptr;
     typedef shared_ptr<WorldObject> WorldPTR;
 
+    // TODO:
+    // This is ugly and stupid
+    // - Linus Torvalds
+    const int TEXTURE_WIDTH = 64;
+    const int TEXTURE_HEIGHT = 64;
+
     class Raycasting {
     public:
         Raycasting(SDLFacade& SDL_facade);

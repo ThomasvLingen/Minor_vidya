@@ -45,4 +45,9 @@ namespace Engine {
     {
         return this->_color;
     }
+
+    ImageBuffer& TileObject::get_texture()
+    {
+        return this->_texture;
+    }
 }

@@ -43,14 +43,45 @@ namespace Engine {
                 int line_height = _get_wall_height(wall, ray_position, ray_dir, ray_steps);
                 LineCords line_cords = _get_line_measures(line_height);
 
-                Color color = this->_world->get_tile(wall.cord.x, wall.cord.y)->get_color();
+                // TODO: Starting here, the code becomes messy
 
-                if (wall.side == WallSide::y_wall) {
-                    color = color.reduce_intensity();
+                double perp_wall_dist;
+
+                // TODO: This is done twice, if performance problems arise: fix this and kill jorg
+                if (wall.side == WallSide::x_wall) {
+                    perp_wall_dist = _calculate_wall_dist(wall.cord.x, ray_position.x, ray_steps.x, ray_dir.x);
+                } else {
+                    perp_wall_dist = _calculate_wall_dist(wall.cord.y, ray_position.y, ray_steps.y, ray_dir.y);
                 }
 
-                this->_draw_line(line_cords, color, ray_index);
+                double wall_x;
+                if (wall.side == WallSide::x_wall) {
+                    wall_x = ray_position.y + perp_wall_dist * ray_dir.y;
+                } else {
+                    wall_x = ray_position.x + perp_wall_dist * ray_dir.x;
+                }
+                wall_x -= floor(wall_x);
+
+                // x coordinate on the texture
+                int tex_x = int(wall_x * double(TEXTURE_WIDTH));
+                if (wall.side == WallSide::x_wall && ray_dir.x > 0) tex_x = TEXTURE_WIDTH - tex_x - 1;
+                if (wall.side == WallSide::y_wall && ray_dir.y < 0) tex_x = TEXTURE_WIDTH - tex_x - 1;
+
+                ImageBuffer& tile_texture = this->_world->get_tile(wall.cord.x, wall.cord.y)->get_texture();
+
+                // Put pixels for a single vertical line on the screen
+                for (int y = line_cords.draw_start; y < line_cords.draw_end; y++) {
+                    // TODO: This is probably very dumb and I have no idea where the 256 and 128 are needed for
+                    int d = y * 256 - this->_SDL_facade.get_height() * 128 + line_height * 128;
+                    int tex_y = ((d * TEXTURE_HEIGHT) / line_height) / 256;
+
+                    Uint32 pixel = tile_texture[TEXTURE_HEIGHT * tex_y + tex_x];
+
+                    this->_SDL_facade.draw_pixel_screen_buffer({ray_index, y}, pixel);
+                }
             }
+
+             this->_SDL_facade.update_screen_buffer();
         }
     }
 

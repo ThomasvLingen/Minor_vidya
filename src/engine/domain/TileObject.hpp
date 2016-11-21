@@ -48,6 +48,7 @@ namespace Engine {
 
         bool is_wall();
         Color get_color();
+        ImageBuffer& get_texture();
     };
 }
 
