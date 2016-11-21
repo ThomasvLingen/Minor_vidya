@@ -11,12 +11,11 @@ namespace Engine {
     class WorldObject {
 
     public:
-        WorldObject(AssetsManager* assets);                            // We now have to explicitly declare this since other def constructors are deleted
+        WorldObject(SPTR_AssetsManager assets);                            // We now have to explicitly declare this since other def constructors are deleted
         WorldObject(const WorldObject& obj) = delete;            // Copy constructor for a base class has to be deleted (slicing)
         WorldObject& operator=(const WorldObject& obj) = delete; // Copy assignment for a base class has to be deleted (slicing)
-        virtual ~WorldObject();
 
-        AssetsManager* assets;
+        SPTR_AssetsManager assets;
 
         virtual void update(int delta_time) = 0;
 

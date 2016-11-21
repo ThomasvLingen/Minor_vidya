@@ -8,7 +8,6 @@ namespace Engine {
     AssetsManager::AssetsManager(SDLFacade& SDL_facade)
     : _SDL_facade(SDL_facade)
     {
-
     }
 
     bool AssetsManager::init()

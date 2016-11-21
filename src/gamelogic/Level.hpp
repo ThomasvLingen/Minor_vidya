@@ -12,10 +12,6 @@
 #include <vector>
 #include <memory>
 
-namespace Engine {
-    class AssetsManager;
-}
-
 namespace GameLogic {
 
     using std::vector;
@@ -42,7 +38,7 @@ namespace GameLogic {
          */
 
     public:
-        Level(vector<vector<Tile*>> field, AssetsManager* assets);
+        Level(vector<vector<Tile*>> field, Engine::SPTR_AssetsManager assets);
         Level(const Level& obj);
 
         void update(int delta_time) override;

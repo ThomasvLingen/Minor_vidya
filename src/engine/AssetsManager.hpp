@@ -6,6 +6,7 @@
 #define MINOR_VIDYA_ASSETSMANAGER_HPP
 
 #include <map>
+#include <memory>
 #include "SDLFacade.hpp"
 
 namespace Engine {
@@ -28,6 +29,8 @@ namespace Engine {
         bool _load_texture(int id, string path);
         SDLFacade& _SDL_facade;
     };
+
+    typedef std::shared_ptr<AssetsManager> SPTR_AssetsManager;
 }
 
 

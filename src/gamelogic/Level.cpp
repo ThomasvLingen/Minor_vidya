@@ -9,7 +9,7 @@ namespace GameLogic {
 
     using std::vector;
 
-    Level::Level(vector<vector<Tile*>> field, AssetsManager* assets)
+    Level::Level(vector<vector<Tile*>> field, Engine::SPTR_AssetsManager assets)
     : WorldObject(assets)
     , _field(field)
     {

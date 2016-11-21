@@ -6,13 +6,8 @@
 #include "WorldObject.hpp"
 
 namespace Engine {
-    WorldObject::WorldObject(AssetsManager* assets)
+    WorldObject::WorldObject(SPTR_AssetsManager assets)
     : assets(assets)
     {
-    }
-
-    WorldObject::~WorldObject()
-    {
-        delete this->assets;
     }
 }

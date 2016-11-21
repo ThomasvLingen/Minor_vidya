@@ -14,7 +14,7 @@ namespace GameLogic {
     , _raycasting_engine(this->_SDL_facade)
     {
         this->_SDL_facade.init();
-        AssetsManager* assets = new Engine::AssetsManager(this->_SDL_facade);
+        Engine::SPTR_AssetsManager assets = std::make_shared<AssetsManager>(this->_SDL_facade);
         if (!assets->init()) {
             std::cout << "AssetsManager has not initted correctly." << std::endl;
         }
