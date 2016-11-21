@@ -31,8 +31,8 @@ namespace Engine {
         const FontType _font = FontType::alterebro_pixel;
 
         void _update_FPS(int delta_time);
-        int _avarage_FPS_vector();
-        int _calulate_FPS(int delta_time);
+        int _average_FPS_vector();
+        int _calculate_FPS(int delta_time);
 
         string _get_FPS_string();
     };
