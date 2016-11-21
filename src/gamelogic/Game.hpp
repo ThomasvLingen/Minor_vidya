@@ -11,10 +11,14 @@
 #include "../engine/raycasting/Raycasting.hpp"
 #include "Level.hpp"
 #include "Tile.hpp"
+#include <memory>
 
+#include "State/IGameState.hpp"
 
 namespace GameLogic {
 
+    using State::SPTR_IGameState;
+    using State::IGameState;
     using Engine::Raycasting;
     using Engine::SDLFacade;
     using Engine::WorldPTR;
@@ -24,13 +28,23 @@ namespace GameLogic {
         Game();
         void run();
 
+        SDLFacade SDL_facade;
+        Raycasting raycasting_engine;
+
+        void set_new_state(SPTR_IGameState state);
+
     private:
         bool _running;
-        SDLFacade _SDL_facade;
-        Raycasting _raycasting_engine;
+        SPTR_IGameState _current_state;
+        SPTR_IGameState _new_state;
+
         SPTR_Level _level; //TODO: perhaps change this to a level pointer
 
+        void init_states();
+
     };
+
+    typedef std::shared_ptr<Game> SPTR_Game;
 }
 
 

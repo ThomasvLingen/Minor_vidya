@@ -5,15 +5,24 @@
 #include "Game.hpp"
 #include "Player.hpp"
 
+#include "State/CreditState.hpp"
+#include "State/LoadState.hpp"
+#include "State/MenuState.hpp"
+#include "State/PauseState.hpp"
+#include "State/RunState.hpp"
+#include "State/StartUpState.hpp"
+#include "State/HelpState.hpp"
+
 namespace GameLogic {
     Game::Game()
-    : _running(true)
-    , _SDL_facade([this](){ //lambda function, captures this (the game class) and sets running to false as quit callback
+    : SDL_facade([this](){ //lambda function, captures this (the game class) and sets running to false as quit callback
         this->_running = false;
     })
-    , _raycasting_engine(this->_SDL_facade)
+    , raycasting_engine(this->SDL_facade)
+    , _running(true)
     {
-        this->_SDL_facade.init();
+        this->SDL_facade.init();
+        this->init_states();
 
         // TODO: This is test code of the worst kind, remove when no longer needed (f/e when we have a level editor)
         std::vector<std::vector<int>> world = {
@@ -59,7 +68,7 @@ namespace GameLogic {
         }
 
         this->_level = { std::make_shared<Level>(Level(tiles)) };
-        this->_raycasting_engine.set_world(this->_level);
+        this->raycasting_engine.set_world(this->_level);
 
         CoordinateDouble coord = {1.5,1.5};
         auto player = std::make_shared<Player>(coord, this->_level);
@@ -72,31 +81,35 @@ namespace GameLogic {
     /// first handle input, thereafter update and finally clear and draw the screen.
     void Game::run()
     {
-        int time_since_last_frame;
-        int last_frame_start_time = this->_SDL_facade.get_ticks();
+        int last_frame_start_time = this->SDL_facade.get_ticks();
         int current_frame_start_time;
+        int time_since_last_frame;
         int time_spent;
 
         while (this->_running) {
-            current_frame_start_time = this->_SDL_facade.get_ticks();
+            current_frame_start_time = this->SDL_facade.get_ticks();
             time_since_last_frame = current_frame_start_time - last_frame_start_time;
-            last_frame_start_time = this->_SDL_facade.get_ticks();
+            last_frame_start_time = this->SDL_facade.get_ticks();
 
-            this->_SDL_facade.handle_sdl_events();
-            this->_raycasting_engine.handle_input();
-            this->_raycasting_engine.update(time_since_last_frame);
-            this->_SDL_facade.clear_screen();
+            this->_current_state = this->_new_state;
+            this->_current_state->update(*this, time_since_last_frame);
 
-            this->_raycasting_engine.draw();
-
-            this->_SDL_facade.render_buffer();
-
-            time_spent = this->_SDL_facade.get_ticks() - current_frame_start_time;
+            time_spent = this->SDL_facade.get_ticks() - current_frame_start_time;
 
             if (FRAME_DURATION > time_spent) {
-                this->_SDL_facade.delay_millis(FRAME_DURATION - time_spent);
+                this->SDL_facade.delay_millis(FRAME_DURATION - time_spent);
             }
         }
+    }
+
+    void Game::init_states()
+    {
+        this->_new_state = std::make_shared<State::StartUpState>();
+    }
+
+    void Game::set_new_state(SPTR_IGameState state)
+    {
+        this->_new_state = state;
     }
 }
 

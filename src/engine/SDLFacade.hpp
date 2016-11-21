@@ -31,8 +31,7 @@ namespace Engine {
     using std::cout;
     using std::endl;
 
-
-    enum class FontType {alterebro_pixel};
+    enum class FontType {verdana, roman, alterebro_pixel, alterebro_pixel_plus};
 
 
     class SDLFacade {
@@ -48,7 +47,8 @@ namespace Engine {
             {SDLK_d, Key::D},
             {SDLK_e, Key::E},
             {SDLK_q, Key::Q},
-            {SDLK_ESCAPE, Key::ESC}
+            {SDLK_ESCAPE, Key::ESC},
+            {SDLK_RETURN, Key::ENTER}
         };
 
         SDL_Window* _window = nullptr;
@@ -67,8 +67,13 @@ namespace Engine {
 
         bool init();
 
-        PressedKeys get_keys() const;
+        void draw_rect(const CoordinateDouble& rect_start, const int width, const int height, const Color& color);
+
+        void draw_image(const std::string path, const CoordinateDouble& coordinates);
+
         void handle_sdl_events();
+
+        PressedKeys get_keys() const;
 
         void clear_screen(); //draws the background
         void draw_line(const CoordinateDouble& line_start, const CoordinateDouble& line_end, const Color& color);
