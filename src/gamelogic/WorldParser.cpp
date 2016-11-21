@@ -77,13 +77,20 @@ namespace GameLogic {
 
         for ( size_t i = 0; i < object_list.size(); i++ ) {
             if ( std::strcmp( get<2>( object_list[i] ), "PlayerSpawn" ) == 0 ) {
-                spawn_point = CoordinateDouble{ get<1>( object_list[i] )+0.5, get<0>( object_list[i] )+0.5 };
+                if ( map[get<1>( object_list[i] )][get<0>( object_list[i] )]->is_wall() ) {
+                    throw exception( "file invalid spawn point inside wall" );
+                }
+                else {
+                    spawn_point.x = get<0>( object_list[i] ) + 0.5;
+                    spawn_point.y = get<1>( object_list[i] ) + 0.5;
+                }
             }
             // Other Objects
             //else if ( std::strcmp(get<2>( object_list[i] ), "Other_Object" ) == 0 ) {
 
             //}
         }
+
 
         // generated_level needs to be deleted in the mainclass/gameloop when this level has been completed/finished/player quits.
         Level generated_level = Level( map, spawn_point );
