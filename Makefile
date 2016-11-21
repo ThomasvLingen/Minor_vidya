@@ -15,7 +15,7 @@ COMPILER_FLAGS = -Wall -Wextra -g -std=c++11 $(INCLUDE_PATHS)
 # Linker flags
 # g = debug symbols
 LIBS_PATH =
-LIBS = -lSDL2 -lSDL2_ttf
+LIBS = -lSDL2 -lSDL2_ttf -lSDL2_image
 LINKER_FLAGS = -g
 
 # Files to compile
