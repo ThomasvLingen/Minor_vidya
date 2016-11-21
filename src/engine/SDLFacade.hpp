@@ -30,7 +30,7 @@ namespace Engine {
     using std::find;
     using std::cout;
     using std::endl;
-    
+
     enum class FontType {verdana, roman, alterebro_pixel, alterebro_pixel_plus};
 
 
@@ -70,6 +70,10 @@ namespace Engine {
         void draw_rect(const CoordinateDouble& rect_start, const int width, const int height, const Color& color);
 
         void draw_image(const std::string path, const CoordinateDouble& coordinates);
+
+        void render_buffer() const;
+
+        void handle_sdl_events();
 
         PressedKeys get_keys() const;
         void handle_sdl_events();
