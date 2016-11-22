@@ -29,13 +29,13 @@ namespace State {
     }
 
     void Menu::set_previous() {
-        if (!(_selected_index <= 0)) {
+        if (_selected_index > 0) {
             this->_selected_index--;
         }
     }
 
     void Menu::set_next() {
-        if (!(_selected_index >= (int)menu_options.size() - 1)) {
+        if (_selected_index < (int)menu_options.size() - 1) {
             this->_selected_index++;
         }
     }
