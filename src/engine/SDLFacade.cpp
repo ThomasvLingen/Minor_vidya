@@ -449,8 +449,7 @@ namespace Engine {
                     y++;
                 }
 
-                CoordinateInt coordinate = {x, y};
-                texture_map[id] = get_image_buffer(tileset, coordinate, tile_width, tile_height);
+                texture_map[id] = get_image_buffer(tileset, CoordinateInt{x, y}, tile_width, tile_height);
                 x++;
 
             }
