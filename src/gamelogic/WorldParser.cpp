@@ -10,7 +10,6 @@ namespace GameLogic {
     {
     }
 
-
     WorldParser::~WorldParser()
     {
     }
@@ -23,6 +22,7 @@ namespace GameLogic {
     /// needs to be inside try catch
     ///
     /// \param file_location location of the file to be used
+    /// \param assets the assets manager for this .tmx
     /// \return returns a Level
     Level WorldParser::generate_level( std::string file_location, Engine::SPTR_AssetsManager assets )
     {
@@ -39,7 +39,48 @@ namespace GameLogic {
         }
 
         int_map = rapid_adapter->get_map();
+        map = this->_generate_tilemap( int_map, assets );
+        object_list = rapid_adapter->get_objects();
 
+        for ( size_t i = 0; i < object_list.size(); i++ ) {
+            if ( std::strcmp( get<2>( object_list[i] ), "PlayerSpawn" ) == 0 ) {
+                int y = get<1>( object_list[i] );
+                int x = get<0>( object_list[i] );
+                if ( y < map.size() ) {
+                    if ( x < map[y].size() ) {
+                        if ( map[y][x]->is_wall() ) {
+                            throw exception( "file invalid spawn point inside wall" );
+                        }
+                        else {
+                            //our map is y,x based that's why spawn point is y,x
+                            spawn_point = CoordinateDouble { y + this->_spawn_tile_offset, x + this->_spawn_tile_offset };
+                        }
+
+                    }
+                    else {
+                        throw exception( "file invalid spawn point out of map" );
+                    }
+                }
+                else {
+                    throw exception( "file invalid spawn point out of map" );
+                }
+
+            }
+        }
+
+        return Level( map, spawn_point, assets );
+    }
+
+    /// \brief Generates a 2D Tile vector from the int_map
+    /// 
+    /// This function generates a 2D Tile vector and adds the correct texture to the tiles
+    ///
+    /// \param int_map the integer valued that the tilemap needs to be generated from
+    /// \param assets the assets manager of this .tmx
+    /// \return returns a 2D Tile vector
+    vector<vector<Tile*>> WorldParser::_generate_tilemap( vector<vector<size_t>> int_map, Engine::SPTR_AssetsManager assets )
+    {
+        vector<vector<Tile*>> map;
         for ( int y = 1; y < int_map.size(); y++ ) {
             vector<Tile*> map_row;
             for ( int x = 0; x < int_map[y].size(); x++ ) {
@@ -49,30 +90,8 @@ namespace GameLogic {
                 }
                 map_row.push_back( new_tile );
             }
-
             map.push_back( map_row );
         }
-
-        object_list = rapid_adapter->get_objects();
-
-        for ( size_t i = 0; i < object_list.size(); i++ ) {
-            if ( std::strcmp( get<2>( object_list[i] ), "PlayerSpawn" ) == 0 ) {
-                if ( map[get<1>( object_list[i] )][get<0>( object_list[i] )]->is_wall() ) {
-                    throw exception( "file invalid spawn point inside wall" );
-                }
-                else {
-                    spawn_point = CoordinateDouble { get<1>( object_list[i] ) + 0.5, get<0>( object_list[i] ) + 0.5 };
-                }
-            }
-            // Other Objects
-            //else if ( std::strcmp(get<2>( object_list[i] ), "Other_Object" ) == 0 ) {
-            //}
-        }
-
-
-        // generated_level needs to be deleted in the mainclass/gameloop when this level has been completed/finished/player quits.
-        Level generated_level = Level( map, spawn_point, assets );
-
-        return generated_level;
+        return map;
     }
 }

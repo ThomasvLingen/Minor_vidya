@@ -4,7 +4,6 @@
 #include <string>
 #include <vector>
 #include <cstring>
-//#include "TileSet.hpp"
 #include "Level.hpp"
 #include "Tile.hpp"
 #include "RapidXMLAdapter.hpp"
@@ -20,6 +19,9 @@ namespace GameLogic {
         ~WorldParser();
 
         Level generate_level( std::string file_location, Engine::SPTR_AssetsManager assets );
+    private:
+        vector<vector<Tile*>> _generate_tilemap( vector<vector<size_t>> int_map, Engine::SPTR_AssetsManager assets );
+        double _spawn_tile_offset = 0.5;
     };
 
 };
