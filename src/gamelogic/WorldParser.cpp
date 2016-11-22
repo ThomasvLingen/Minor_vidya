@@ -81,8 +81,7 @@ namespace GameLogic {
                     throw exception( "file invalid spawn point inside wall" );
                 }
                 else {
-                    spawn_point.x = get<0>( object_list[i] ) + 0.5;
-                    spawn_point.y = get<1>( object_list[i] ) + 0.5;
+                    spawn_point = CoordinateDouble { get<1>( object_list[i] ) + 0.5, get<0>( object_list[i] ) + 0.5 };
                 }
             }
             // Other Objects
