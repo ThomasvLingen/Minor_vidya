@@ -438,8 +438,7 @@ namespace Engine {
             int id = 1;
             while(!all_drawn){
                 for(int x = 0; x < amount_of_tiles_horizontally; x++){
-                    CoordinateInt c = { .x = x, .y = y};
-                    buffer_list[id] = get_image_buffer(tileset, c, tile_width, tile_height);
+                    buffer_list[id] = get_image_buffer(tileset, CoordinateInt{ .x = x, .y = y}, tile_width, tile_height);
                     if(id == amount_of_tiles){
                         return buffer_list;
                     }
