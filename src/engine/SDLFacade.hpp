@@ -34,6 +34,7 @@ namespace Engine {
 
     enum class FontType {alterebro_pixel, alterebro_pixel_plus};
     typedef vector<Uint32> ImageBuffer;
+    typedef map<int, ImageBuffer*> TextureMap;
 
     class SDLFacade {
     private:
@@ -89,7 +90,7 @@ namespace Engine {
         void delay_millis(const int millis) const;
         int get_ticks() const;
 
-        ImageBuffer get_image_buffer(const string& path);
+        TextureMap get_tileset_buffers(const string& path, const int tile_width, const int tile_height, const int amount_of_tiles);
 
     private:
         void _handle_key_pressed_event(SDL_Keycode key);
@@ -101,6 +102,7 @@ namespace Engine {
         bool _init_screen_buffer();
         bool _init_fonts();
         bool _load_font(const string& path, const FontType& font_type, uint8_t size);
+        ImageBuffer* get_image_buffer(SDL_Surface* tileset, const CoordinateInt& position, const int tile_width, const int tile_height);
     };
 }
 

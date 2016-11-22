@@ -433,34 +433,77 @@ namespace Engine {
         SDL_Delay((uint32_t)millis);
     }
 
-    //todo: change given variable to match tilemaps
     /// \brief Function that returns a list of pixels
     ///
     /// Each pixel in the list is represented as Uint32
+    ///
+    /// \param position The position where a tile can be found (e.g. 1,3 / 2,2 / 4,0)
+    /// \param tile_width The width of a single tile
+    /// \param tile_height The height of a single tile
+    /// \param tileset The image that contains all tile textures
+    ///
     /// \return This function returns a list of Uint32
-    ImageBuffer SDLFacade::get_image_buffer(const string& path)
+    ImageBuffer* SDLFacade::get_image_buffer(SDL_Surface* tileset, const CoordinateInt &position,
+                                             const int tile_width, const int tile_height)
     {
-        //todo: change given variable to match tilemaps
         ImageBuffer pixels;
-        SDL_Surface* image = IMG_Load(path.c_str());
 
-        if(image == NULL){
-            cout << "An error occurred while loading image " << path << ". This occurred while trying to convert an image to pixels for a texture." << endl;
-            SDL_FreeSurface(image);
-            return pixels;
-        } else {
-            SDL_LockSurface(image);
+        int start_y_pos = position.y * tile_height;
+        int end_y_pos = position.y * tile_height + tile_height;
 
-            int bpp = image->format->BytesPerPixel;
-            for (int y = 0; y < image->h; y++) {
-                for (int x = 0; x < image->w; x++) {
-                    Uint8 *p = (Uint8 *)image->pixels + y * image->pitch + x * bpp;
-                    pixels.push_back(*(Uint32*)p);
-                }
+        int start_x_pos = position.x * tile_width;
+        int end_x_pos = position.x * tile_width + tile_width;
+
+        int bytes_per_pixel = tileset->format->BytesPerPixel;
+
+        for (int current_y = start_y_pos; current_y < end_y_pos; current_y++) {
+            for (int current_x = start_x_pos; current_x < end_x_pos; current_x++) {
+                Uint8 *pixel = (Uint8 *)tileset->pixels + current_y * tileset->pitch + current_x * bytes_per_pixel;
+                pixels.push_back(*(Uint32*)pixel);
             }
-            SDL_UnlockSurface(image);
-            SDL_FreeSurface(image);
-            return pixels;
         }
+        return new ImageBuffer(pixels);
+    }
+
+    /// \brief Function that converts the tileset to multiple lists of pixels
+    ///
+    /// \param path The path on which the tileset can be found
+    /// \param tile_width The width of each tile
+    /// \param tile_height The height of each tile
+    /// \param amount_of_tiles Number of tiles that are stored within the tileset
+    ///
+    /// \return Returns a map with an Id as key and a vector<Uint32> as value. The list is empty when the image could not be loaded
+    TextureMap SDLFacade::get_tileset_buffers(const string &path, const int tile_width, const int tile_height,
+                                              const int amount_of_tiles)
+    {
+        TextureMap texture_map;
+        // load image
+        // todo: change to IMG_Load from SDL_Image package
+        SDL_Surface* tileset = SDL_LoadBMP(path.c_str());
+        if (tileset == NULL) {
+            // check of succeeded
+            cout << "An error occurred while loading tileset " << path
+                 << ". This occurred while trying to convert an image to pixels for a texture." << endl;
+        } else {
+            SDL_LockSurface(tileset);
+            int amount_of_tiles_horizontally = tileset->w / tile_width;
+
+            int y = 0;
+            int x = 0;
+
+            for (int id = 1; id <= amount_of_tiles; id++) {
+                if (x == amount_of_tiles_horizontally) {
+                    x = 0;
+                    y++;
+                }
+
+                texture_map[id] = get_image_buffer(tileset, CoordinateInt{x, y}, tile_width, tile_height);
+                x++;
+            }
+
+            SDL_FreeSurface(tileset);
+        }
+
+        return texture_map;
     }
 }
