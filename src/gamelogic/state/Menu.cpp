@@ -91,7 +91,7 @@ namespace State {
                         this->set_next();
                         break;
                     case Key::ESC:
-                        this->_context.set_new_state(std::make_shared<StartUpState>(this->_context));
+                        this->_escape_option.callback(this->_context);
                         break;
                     case Key::ENTER:
                         this->get_selected()->callback(this->_context);
@@ -104,4 +104,8 @@ namespace State {
         }
     }
 
+    void Menu::set_escape_option(MenuOption option)
+    {
+        this->_escape_option = option;
+    }
 }

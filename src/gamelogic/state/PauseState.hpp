@@ -27,12 +27,11 @@ namespace State {
 
     public:
         PauseState(Game& context);
-        ~PauseState();
 
         void update(int time_since_last_update) override;
 
     private:
-        Menu* _menu; //TODO: Change this to smart-pointer??
+        Menu _menu;
         int _timeSinceLastPress = 0;
         Color _color{255,255,255};
     };

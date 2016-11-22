@@ -17,7 +17,9 @@ namespace State {
     class MenuOption {
 
     public:
+        MenuOption();
         MenuOption(CoordinateDouble coordinates, std::string name, std::function<void(Game&)> callback);
+
         CoordinateDouble coordinates;
         std::string text;
         std::function<void(Game&)> callback;

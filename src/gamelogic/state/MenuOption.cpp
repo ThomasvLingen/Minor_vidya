@@ -4,7 +4,13 @@
 
 #include "MenuOption.hpp"
 
-namespace State{
+namespace State {
+
+    MenuOption::MenuOption()
+    {
+        // TODO: This constructor exists for bad reasons
+    }
+
     MenuOption::MenuOption(CoordinateDouble coordinates, std::string name, std::function<void(Game&)> callback)
     : coordinates(coordinates)
     , text(name)

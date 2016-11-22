@@ -51,6 +51,7 @@ namespace State {
         );
 
         this->_menu.set_selected(0);
+        this->_menu.set_escape_option(quit);
         this->_collection.add_drawable(&this->_menu);
         this->_collection.add_handleable(&this->_menu);
     }

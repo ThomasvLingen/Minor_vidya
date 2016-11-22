@@ -40,12 +40,17 @@ namespace State {
         void set_previous();
         void add_option(MenuOption option);
         void add_options(vector<MenuOption> options);
+        void set_escape_option(MenuOption option);
+
         MenuOption* get_selected(); //TODO: Change this to smart-pointer??
 
         void set_selected(int index);
 
     private:
         vector<MenuOption> _menu_options;
+        // TODO: This directly conflicts with RAII, Strousoup would be very disappointed
+        MenuOption _escape_option;
+
         int _selected_index = 0;
         const FontType _font = FontType::alterebro_pixel;
         const Color _color = {255,255,255};
