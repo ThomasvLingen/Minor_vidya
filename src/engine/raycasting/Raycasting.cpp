@@ -64,7 +64,7 @@ namespace Engine {
 
                     Uint32 pixel = tile_texture[TEXTURE_HEIGHT * tex_y + tex_x];
 
-                    this->_SDL_facade.draw_pixel_screen_buffer({(double)ray_index, (double)y}, pixel);
+                    this->_SDL_facade.draw_pixel_screen_buffer({ray_index, y}, pixel);
                 }
             }
 
