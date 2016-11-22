@@ -52,7 +52,7 @@ namespace Engine {
         };
 
         SDL_Window* _window = nullptr;
-        SDL_Surface* _screenSurface = nullptr;
+        SDL_Surface* _screen_surface = nullptr;
         SDL_Renderer* _renderer = nullptr;
         SDL_Texture* _screen_buffer = nullptr;
 
@@ -71,10 +71,10 @@ namespace Engine {
         void handle_sdl_events();
 
         void clear_screen(); //draws the background
-        void draw_line(const CoordinateDouble& line_start, const CoordinateDouble& line_end, const Color& color);
+        void draw_line(const CoordinateInt& line_start, const CoordinateInt& line_end, const Color& color);
         bool draw_text(const string& text, const FontType& font, const Color& color,
-                       const CoordinateDouble& position) const;
-        void draw_pixel_screen_buffer(const CoordinateDouble& position, Uint32 pixel);
+                       const CoordinateInt& position) const;
+        void draw_pixel_screen_buffer(const CoordinateInt& position, Uint32 pixel);
         void update_screen_buffer();
         void render_buffer() const;
 

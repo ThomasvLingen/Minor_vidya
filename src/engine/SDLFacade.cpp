@@ -23,7 +23,7 @@ namespace Engine {
     /// \brief Destructor of the class
     SDLFacade::~SDLFacade()
     {
-        SDL_FreeSurface(this->_screenSurface);
+        SDL_FreeSurface(this->_screen_surface);
         SDL_DestroyRenderer(this->_renderer);
         SDL_DestroyWindow(this->_window);
 
@@ -108,7 +108,7 @@ namespace Engine {
         this->_window = SDL_CreateWindow(Config::GAME_WINDOW_TITLE.c_str(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, this->_width,
                                          this->_height, SDL_WINDOW_SHOWN);
         if (this->_window != nullptr) {
-            this->_screenSurface = SDL_GetWindowSurface(this->_window);
+            this->_screen_surface = SDL_GetWindowSurface(this->_window);
             return true;
         } else {
             //std::cout << "Something went wrong while making a window! : " + SDL_GetError() << std::endl;
@@ -138,7 +138,7 @@ namespace Engine {
     void SDLFacade::clear_screen()
     {
         // Draw background
-        SDL_FillRect(_screenSurface, NULL, SDL_MapRGB(_screenSurface->format, 0x00, 0x00, 0x00));
+        SDL_FillRect(_screen_surface, NULL, SDL_MapRGB(_screen_surface->format, 0x00, 0x00, 0x00));
     }
 
     /// \brief Draws a line
@@ -148,7 +148,7 @@ namespace Engine {
     /// \param line_start The first coordinate
     /// \param line_end The second coordinate
     /// \param color The color of the line. The color class comes from the engine
-    void SDLFacade::draw_line(const CoordinateDouble& line_start, const CoordinateDouble& line_end, const Color& color)
+    void SDLFacade::draw_line(const CoordinateInt& line_start, const CoordinateInt& line_end, const Color& color)
     {
         SDL_SetRenderDrawColor(this->_renderer, color.r_value, color.g_value, color.b_value, 255);
         SDL_RenderDrawLine(this->_renderer, line_start.x, line_start.y, line_end.x, line_end.y);
@@ -160,7 +160,7 @@ namespace Engine {
     ///
     /// \param position The coordinate
     /// \param pixel The pixel value that you want to draw
-    void SDLFacade::draw_pixel_screen_buffer(const CoordinateDouble& position, Uint32 pixel)
+    void SDLFacade::draw_pixel_screen_buffer(const CoordinateInt& position, Uint32 pixel)
     {
         Uint32* buffer_pixels;
         int pitch;
@@ -242,7 +242,7 @@ namespace Engine {
     ///
     /// \return This function returns True if text is successfully drawn, ohterwise it returns False
     bool SDLFacade::draw_text(const string& text, const FontType& font, const Color& color,
-                              const CoordinateDouble& position) const
+                              const CoordinateInt& position) const
     {
         SDL_Color render_color = { color.r_value, color.g_value, color.b_value, 255 };
         TTF_Font* render_font = nullptr;
