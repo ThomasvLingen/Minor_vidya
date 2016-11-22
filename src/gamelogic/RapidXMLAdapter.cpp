@@ -102,15 +102,6 @@ namespace GameLogic {
         return std::stoi( this->_tileset_node->first_attribute( "tilecount" )->value() );
     }
 
-    /// \brief gets the texture tile colomn size from loaded .tmx
-    /// 
-    /// This function returns the texture tile colomn size of the texture that is used in this .tmx.
-    /// RapidXMLAdapter::setup_document has to be called before using this 
-    size_t RapidXMLAdapter::get_tile_column_size()
-    {
-        return std::stoi( this->_tileset_node->first_attribute( "columns" )->value() );
-    }
-
     /// \brief gets the texture valued map from loaded .tmx
     /// 
     /// This function returns the texture valued map that is used in this .tmx.

@@ -17,14 +17,19 @@ namespace Engine {
     public:
         AssetsManager(SDLFacade& SDL_facade);
 
-        bool init();
+        bool init( string& texture_source, size_t tile_width, size_t tile_height, size_t tile_count);
         ImageBuffer& get_texture(int id);
-
     private:
         TextureMap _known_textures;
 
-        bool _init_texture_map();
+        bool _init_texture_map( string& texture_source, size_t tile_width, size_t tile_height, size_t tile_count );
+        bool _load_texture(int id, string path);
         SDLFacade& _SDL_facade;
+
+        string _texture_source;
+        size_t _tile_height;
+        size_t _tile_width;
+        size_t _tile_count;
 
         // TODO: This should not be hardcoded here as soon as tiled integration works
         // The second number is the position of the tile in the tilemap

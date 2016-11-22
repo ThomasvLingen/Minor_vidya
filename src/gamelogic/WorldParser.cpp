@@ -34,12 +34,9 @@ namespace GameLogic {
         CoordinateDouble spawn_point;
         rapid_adapter->setup_document( file_location );
 
-
-        //tile_set->texture_source = rapid_adapter->get_texture_source();
-        //tile_set->tile_size = rapid_adapter->get_tile_width();
-        //tile_set->tile_size = rapid_adapter->get_tile_height();
-        //tile_set->tile_size = rapid_adapter->get_tile_count();
-        //tile_set->tile_size = rapid_adapter->get_tile_colomn_size();
+        if ( !assets->init( rapid_adapter->get_texture_source(), rapid_adapter->get_tile_width(), rapid_adapter->get_tile_height(), rapid_adapter->get_tile_count() ) ) {
+            std::cout << "AssetsManager has not initted correctly." << std::endl;
+        }
 
         int_map = rapid_adapter->get_map();
 
@@ -75,7 +72,6 @@ namespace GameLogic {
 
         // generated_level needs to be deleted in the mainclass/gameloop when this level has been completed/finished/player quits.
         Level generated_level = Level( map, spawn_point, assets );
-        //generated_level->tile_set = tile_set;
 
         return generated_level;
     }

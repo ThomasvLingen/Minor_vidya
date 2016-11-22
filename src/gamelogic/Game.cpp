@@ -21,9 +21,7 @@ namespace GameLogic {
         this->_init_sound_effects();
         this->init_states();
         Engine::SPTR_AssetsManager assets = std::make_shared<AssetsManager>(this->SDL_facade);
-        if (!assets->init()) {
-            std::cout << "AssetsManager has not initted correctly." << std::endl;
-        }
+
         try {
             this->_level = { std::make_shared<Level>( parser.generate_level( "res/test2.tmx", assets ) ) };
         }

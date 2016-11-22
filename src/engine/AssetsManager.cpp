@@ -11,16 +11,15 @@ namespace Engine {
     {
     }
 
-    bool AssetsManager::init()
+    bool AssetsManager::init( string& texture_source, size_t tile_width, size_t tile_height, size_t tile_count )
     {
         bool success = true;
-
-        success &= this->_init_texture_map();
+        success &= this->_init_texture_map( texture_source, tile_width, tile_height, tile_count );
 
         return success;
     }
 
-    bool AssetsManager::_init_texture_map()
+    bool AssetsManager::_init_texture_map( string& texture_source, size_t tile_width, size_t tile_height, size_t tile_count )
     {
         bool success = true;
 
