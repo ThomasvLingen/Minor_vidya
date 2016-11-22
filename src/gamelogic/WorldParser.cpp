@@ -81,16 +81,16 @@ namespace GameLogic {
     vector<vector<Tile*>> WorldParser::_generate_tilemap( vector<vector<size_t>> int_map, Engine::SPTR_AssetsManager assets )
     {
         vector<vector<Tile*>> map;
+        map.resize( int_map.size());
+        //start at y = 1 as .tmx starts with empty row
         for ( int y = 1; y < int_map.size(); y++ ) {
-            vector<Tile*> map_row;
             for ( int x = 0; x < int_map[y].size(); x++ ) {
                 Tile* new_tile = new Tile( assets->get_texture( int_map[y][x] ) );
                 if ( int_map[y][x] != 0 ) {
                     new_tile->set_wall( true );
                 }
-                map_row.push_back( new_tile );
+                map[y].push_back( new_tile );
             }
-            map.push_back( map_row );
         }
         return map;
     }
