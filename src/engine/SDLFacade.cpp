@@ -406,6 +406,14 @@ namespace Engine {
         return pixels;
     }
 
+    /// \brief Function that converts the tileset to multiple lists of pixels
+    ///
+    /// \param path The path on which the tileset can be found
+    /// \param tile_width The width of each tile
+    /// \param tile_height The height of each tile
+    /// \param amount_of_tiles Number of tiles that are stored within the tileset
+    ///
+    /// \return Returns a map with an Id as key and a vector<Uint32> as value. The list is empty when the image could not be loaded
     map<int, vector<Uint32>> SDLFacade::get_tileset_buffers(const string &path, const int tile_width, const int tile_height,
                                                             const int amount_of_tiles)
     {
