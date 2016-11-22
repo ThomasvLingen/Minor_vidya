@@ -134,6 +134,49 @@ namespace Engine {
         }
     }
 
+    /// \brief Draws a rectangle
+    ///
+    /// A rect will be drawn from the given coordinate with the given width and height The color is set first, secondly the rect is being drawn.
+    ///
+    /// \param rect_start Coordinate of the start of the rectangle
+    /// \param width Width of the rectangle
+    /// \param height Height of the rectangle
+    /// \param color The color of the rectangle. The color class comes from the engine
+    void SDLFacade::draw_rect(const CoordinateDouble& rect_start, const int width, const int height, const Color& color)
+    {
+        SDL_Rect r;
+        r.x = rect_start.x;
+        r.y = rect_start.y;
+        r.w = width;
+        r.h = height;
+        SDL_SetRenderDrawColor(this->_renderer, color.r_value, color.g_value, color.b_value, 255);
+        SDL_RenderFillRect(this->_renderer, &r);
+    }
+
+    /// \brief Draws an image
+    ///
+    /// An image will be drawn on the coordinates (Accepts only bmp files)
+    ///
+    /// \param path Path to image (if in res it is: res/imagename.bmp)
+    /// \param coordinates Coordinates of where the image has to be drawn
+    void SDLFacade::draw_image(const std::string path, const CoordinateDouble& coordinates)
+    {
+        SDL_Surface* image = IMG_Load(path.c_str());
+        if (image == NULL) { //TODO: exception
+            cout << "FAILED TO FIND THE IMAGE" << endl;
+            cout << path.c_str() << endl;
+        } else {
+            SDL_Rect src_r = {0, 0, image->w, image->h};
+            SDL_Rect dest_r = {(int)coordinates.x, (int)coordinates.y, image->w, image->h};
+
+            SDL_Texture* image_texture = SDL_CreateTextureFromSurface(this->_renderer, image);
+            SDL_FreeSurface(image);
+
+            SDL_RenderCopy(this->_renderer, image_texture, &src_r, &dest_r);
+            SDL_DestroyTexture(image_texture);
+        }
+    }
+
     /// \brief Draws a rectangle on the whole screen
     void SDLFacade::clear_screen()
     {
@@ -262,6 +305,7 @@ namespace Engine {
 
             SDL_RenderCopy(this->_renderer, text_texture, nullptr, &text_rect);
             SDL_FreeSurface(text_surface);
+            SDL_DestroyTexture(text_texture);
 
             return true;
         } catch (int exception) {
@@ -297,8 +341,12 @@ namespace Engine {
     /// \return This function returns True if all fonts are successfully initialised, ohterwise it returns False
     bool SDLFacade::_init_fonts()
     {
-        //todo Needs to be expanded later on
-        return _load_font("res/alterebro_pixel.ttf", FontType::alterebro_pixel, 30);
+        bool success = true;
+
+        success &= _load_font("res/alterebro_pixel.ttf", FontType::alterebro_pixel, 30);
+        success &= _load_font("res/alterebro_pixel.ttf", FontType::alterebro_pixel_plus, 60);
+
+        return success;
     }
 
     /// \brief Initialiser for one font

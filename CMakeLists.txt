@@ -27,6 +27,17 @@ set(SOURCE_FILES
 		src/engine/interface/Handleable.hpp
 		src/engine/interface/Collection.cpp src/engine/interface/Collection.hpp
 		src/engine/AssetsManager.cpp src/engine/AssetsManager.hpp
+		src/gamelogic/state/IGameState.hpp
+		src/gamelogic/state/CreditState.cpp src/gamelogic/state/CreditState.hpp
+		src/gamelogic/state/Menu.cpp src/gamelogic/state/Menu.hpp
+		src/gamelogic/state/MenuOption.cpp src/gamelogic/state/MenuOption.hpp
+		src/gamelogic/state/MenuState.cpp src/gamelogic/state/MenuState.hpp
+		src/gamelogic/state/StartUpState.cpp src/gamelogic/state/StartUpState.hpp
+		src/gamelogic/state/HelpState.cpp src/gamelogic/state/HelpState.hpp
+		src/gamelogic/state/LoadState.cpp src/gamelogic/state/LoadState.hpp
+		src/gamelogic/state/PauseState.cpp src/gamelogic/state/PauseState.hpp
+		src/gamelogic/state/RunState.cpp src/gamelogic/state/RunState.hpp
+		src/gamelogic/state/IGameState.cpp
 		)
 
 add_executable(Minor_vidya ${SOURCE_FILES})

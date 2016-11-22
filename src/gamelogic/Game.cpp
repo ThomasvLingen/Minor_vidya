@@ -5,16 +5,20 @@
 #include "Game.hpp"
 #include "Player.hpp"
 
+#include "state/StartUpState.hpp"
+
 namespace GameLogic {
     Game::Game()
-    : _running(true)
-    , _SDL_facade([this](){ //lambda function, captures this (the game class) and sets running to false as quit callback
-        this->_running = false;
+    : SDL_facade([this](){ //lambda function, captures this (the game class) and sets running to false as quit callback
+        this->running = false;
     })
-    , _raycasting_engine(this->_SDL_facade)
+    , raycasting_engine(this->SDL_facade)
+    , running(true)
     {
-        this->_SDL_facade.init();
-        Engine::SPTR_AssetsManager assets = std::make_shared<AssetsManager>(this->_SDL_facade);
+        this->SDL_facade.init();
+        this->init_states();
+
+        Engine::SPTR_AssetsManager assets = std::make_shared<AssetsManager>(this->SDL_facade);
         if (!assets->init()) {
             std::cout << "AssetsManager has not initted correctly." << std::endl;
         }
@@ -67,7 +71,7 @@ namespace GameLogic {
                 Level(tiles, assets)
             )
         };
-        this->_raycasting_engine.set_world(this->_level);
+        this->raycasting_engine.set_world(this->_level);
 
         CoordinateDouble coord = {1.5,1.5};
         auto player = std::make_shared<Player>(coord, this->_level);
@@ -81,30 +85,34 @@ namespace GameLogic {
     void Game::run()
     {
         int time_since_last_frame;
-        int last_frame_start_time = this->_SDL_facade.get_ticks();
+        int last_frame_start_time = this->SDL_facade.get_ticks();
         int current_frame_start_time;
         int time_spent;
 
-        while (this->_running) {
-            current_frame_start_time = this->_SDL_facade.get_ticks();
+        while (this->running) {
+            current_frame_start_time = this->SDL_facade.get_ticks();
             time_since_last_frame = current_frame_start_time - last_frame_start_time;
-            last_frame_start_time = this->_SDL_facade.get_ticks();
+            last_frame_start_time = this->SDL_facade.get_ticks();
 
-            this->_SDL_facade.handle_sdl_events();
-            this->_raycasting_engine.handle_input();
-            this->_raycasting_engine.update(time_since_last_frame);
-            this->_SDL_facade.clear_screen();
+            this->_current_state = this->_new_state;
+            this->_current_state->update(time_since_last_frame);
 
-            this->_raycasting_engine.draw();
-
-            this->_SDL_facade.render_buffer();
-
-            time_spent = this->_SDL_facade.get_ticks() - current_frame_start_time;
+            time_spent = this->SDL_facade.get_ticks() - current_frame_start_time;
 
             if (FRAME_DURATION > time_spent) {
-                this->_SDL_facade.delay_millis(FRAME_DURATION - time_spent);
+                this->SDL_facade.delay_millis(FRAME_DURATION - time_spent);
             }
         }
+    }
+
+    void Game::set_new_state(SPTR_IGameState state)
+    {
+        this->_new_state = state;
+    }
+
+    void Game::init_states()
+    {
+        this->_new_state = std::make_shared<State::StartUpState>(*this);
     }
 }
 
