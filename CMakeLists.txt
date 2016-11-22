@@ -35,6 +35,7 @@ set(SOURCE_FILES
 		src/gamelogic/state/StartUpState.cpp src/gamelogic/state/StartUpState.hpp
 		src/gamelogic/state/HelpState.cpp src/gamelogic/state/HelpState.hpp
 		src/gamelogic/state/LoadState.cpp src/gamelogic/state/LoadState.hpp
+		src/gamelogic/state/IGameState.cpp
 		)
 
 add_executable(Minor_vidya ${SOURCE_FILES})

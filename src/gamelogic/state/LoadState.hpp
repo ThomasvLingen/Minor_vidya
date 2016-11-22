@@ -25,7 +25,8 @@ namespace State {
     class LoadState : public IGameState {
 
     public:
-        void update(Game& game, int time_since_last_update) override ;
+        LoadState(Game& context);
+        void update(int time_since_last_update) override ;
 
     private:
         int _loading_screen_time = 0;

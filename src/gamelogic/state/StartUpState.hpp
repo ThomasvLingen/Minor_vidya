@@ -25,7 +25,8 @@ namespace State {
     class StartUpState : public IGameState {
 
     public:
-        void update(Game& game, int time_since_last_update) override;
+        StartUpState(Game& context);
+        void update(int time_since_last_update) override;
         
     };
 }

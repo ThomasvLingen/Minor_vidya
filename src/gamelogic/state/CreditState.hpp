@@ -25,7 +25,8 @@ namespace State {
     class CreditState : public IGameState {
 
     public:
-        void update(Game& game, int time_since_last_update) override;
+        CreditState(Game& context);
+        void update(int time_since_last_update) override;
 
     private:
         int _timeSinceLastPress = 0;
