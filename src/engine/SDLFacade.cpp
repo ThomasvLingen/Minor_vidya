@@ -385,10 +385,15 @@ namespace Engine {
         SDL_Delay((uint32_t)millis);
     }
 
-    //todo: change given variable to match tilemaps
     /// \brief Function that returns a list of pixels
     ///
     /// Each pixel in the list is represented as Uint32
+    ///
+    /// \param position The position where a tile can be found (e.g. 1,3 / 2,2 / 4,0)
+    /// \param tile_width The width of a single tile
+    /// \param tile_height The height of a single tile
+    /// \param tileset The image that contains all tile textures
+    ///
     /// \return This function returns a list of Uint32
     vector<Uint32>
     SDLFacade::get_image_buffer(SDL_Surface* tileset, const CoordinateInt &position, const int tile_width,
