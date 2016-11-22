@@ -415,4 +415,37 @@ namespace Engine {
             return pixels;
         }
     }
+
+    map<int, vector<Uint32>> SDLFacade::get_tileset_buffers(const string &path, const int tile_width, const int tile_height,
+                                                            const int amount_of_tiles)
+    {
+        map<int, vector<Uint32>> buffer_list;
+        // load image
+        SDL_Surface* tileset = SDL_LoadBMP(path.c_str());
+        if(tileset == NULL){
+            // check of succeeded
+            cout << "An error occurred while loading tileset " << path
+                 << ". This occurred while trying to convert an image to pixels for a texture." << endl;
+        } else {
+            SDL_LockSurface(tileset);
+            int amount_of_tiles_horizontally = tileset->w / tile_width;
+
+            bool all_drawn = false;
+            int y = 0;
+            int id = 1;
+            while(!all_drawn){
+                for(int x = 0; x < amount_of_tiles_horizontally; x++){
+                    CoordinateInt c = { .x = x, .y = y};
+                    buffer_list[id] = get_image_buffer(tileset, c, tile_width, tile_height);
+                    if(id == amount_of_tiles){
+                        return buffer_list;
+                    }
+                    id++;
+                }
+                y++;
+            }
+        }
+        SDL_FreeSurface(tileset);
+        return buffer_list;
+    }
 }
