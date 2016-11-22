@@ -400,16 +400,16 @@ namespace Engine {
     {
         ImageBuffer pixels;
 
-        int startYPos = position.y * tile_height;
-        int endYPos = position.y * tile_height + tile_height;
+        int start_y_pos = position.y * tile_height;
+        int end_y_pos = position.y * tile_height + tile_height;
 
-        int startXPos = position.x * tile_width;
-        int endXPos = position.x * tile_width + tile_width;
+        int start_x_pos = position.x * tile_width;
+        int end_x_pos = position.x * tile_width + tile_width;
 
         int bytes_per_pixel = tileset->format->BytesPerPixel;
 
-        for (int current_y = startYPos; current_y < endYPos; current_y++) {
-            for (int current_x = startXPos; current_x < endXPos; current_x++) {
+        for (int current_y = start_y_pos; current_y < end_y_pos; current_y++) {
+            for (int current_x = start_x_pos; current_x < end_x_pos; current_x++) {
                 Uint8 *pixel = (Uint8 *)tileset->pixels + current_y * tileset->pitch + current_x * bytes_per_pixel;
                 pixels.push_back(*(Uint32*)pixel);
             }
