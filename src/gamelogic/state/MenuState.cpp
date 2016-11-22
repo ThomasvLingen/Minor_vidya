@@ -4,96 +4,77 @@
 
 #include "MenuState.hpp"
 #include "StartUpState.hpp"
+#include "LoadState.hpp"
+#include "HelpState.hpp"
+#include "CreditState.hpp"
 
 namespace State {
 
-    MenuState::MenuState()
+    MenuState::MenuState(Game& context)
+    : IGameState(context)
+    , _menu(this->_context.SDL_facade, this->_context)
     {
-        auto option_1 = [] (GameLogic::Game& game) {
-            // game.set_new_state(std::make_shared<LoadState>());
-            std::cout << "Start game" << std::endl;
-        };
-
-        auto option_2 = [] (GameLogic::Game& game) {
-            // game.set_new_state(std::make_shared<HelpState>());
-            std::cout << "Help" << std::endl;
-        };
-
-        auto option_3 = [] (GameLogic::Game& game) {
-            // game.set_new_state(std::make_shared<CreditState>());
-            std::cout << "Credits" << std::endl;
-        };
-
-        auto option_4 = [] (GameLogic::Game& game) {
-            game.running = false;
-        };
-
-        vector<CoordinateDouble> coordinates;
-        coordinates.push_back({150,100});
-        coordinates.push_back({150,140});
-        coordinates.push_back({150,180});
-        coordinates.push_back({150,220});
-
-        vector<string> names;
-        names.push_back("Start Game");
-        names.push_back("Help");
-        names.push_back("Credits");
-        names.push_back("Quit Game");
-
-        vector<std::function<void(GameLogic::Game&)>> callbacks;
-        callbacks.push_back(option_1);
-        callbacks.push_back(option_2);
-        callbacks.push_back(option_3);
-        callbacks.push_back(option_4);
-
-        this->_menu = new Menu(coordinates, names, callbacks);
-        this->_menu->set_selected(0);
-    }
-
-    MenuState::~MenuState(){
-        delete this->_menu;
-    }
-
-    void MenuState::update(GameLogic::Game& game, int time_since_last_update) {
-        game.SDL_facade.handle_sdl_events();
-
-        PressedKeys keys = game.SDL_facade.get_keys();
-
-        if (this->_timeSinceLastPress <= 20) { //TODO: TO SDL ticks
-            this->_timeSinceLastPress++;
-        }
-        if (this->_timeSinceLastPress > 20) {
-            for(auto key : keys){
-                switch (key) {
-                    case Key::W :
-                        this->_menu->set_previous();
-                        break;
-                    case Key::S :
-                        this->_menu->set_next();
-                        break;
-                    case Key::ESC:
-                        game.set_new_state(std::make_shared<StartUpState>());
-                        break;
-                    case Key::ENTER:
-                        _menu->get_selected()->callback(game);
-                        break;
-                    default:
-                        break;
-                }
-                _timeSinceLastPress = 0;
+        MenuOption start_game {
+            {150,100}, //coordinates
+            "Start Game", //text
+            [] (Game& game) { //callback
+                 game.set_new_state(std::make_shared<LoadState>(game));
             }
-        }
+        };
 
-        game.SDL_facade.clear_screen();
-        game.SDL_facade.draw_image("res/menuscreen.bmp", CoordinateDouble{0,0});
-        game.SDL_facade.draw_text("Vidya Gaem", FontType::alterebro_pixel, this->_color, CoordinateDouble{20,20});
+        MenuOption help {
+            {150,140}, //coordinates
+            "Help", //text
+            [] (Game& game) { //callback
+                 game.set_new_state(std::make_shared<HelpState>(game));
+            }
+        };
 
-        for (auto option : _menu->menu_options) {
-            game.SDL_facade.draw_text(option->name, FontType::alterebro_pixel, this->_color, option->coordinates);
-        }
+        MenuOption credits{
+            {150,180}, //coordinates
+            "Credits", //text
+            [] (Game& game) { //callback
+                 game.set_new_state(std::make_shared<CreditState>(game));
+            }
+        };
 
-        game.SDL_facade.draw_rect(CoordinateDouble{120, this->_menu->get_selected()->coordinates.y + 6}, 15, 15, _color);
+        MenuOption quit {
+            {150,220}, //coordinates
+            "Quit Game", //text
+            [] (Game& game) { //callback
+                game.running = false;
+            }
+        };
 
-        game.SDL_facade.render_buffer();
+        this->_menu.add_options( //add options to menu
+            {start_game, help, credits, quit}
+        );
+
+        this->_menu.set_selected(0);
+        this->_collection.add_drawable(&this->_menu);
+        this->_collection.add_handleable(&this->_menu);
+    }
+
+    void MenuState::update(int time_since_last_update) {
+        this->_context.SDL_facade.clear_screen();
+
+        this->_context.SDL_facade.draw_image(
+            "res/menuscreen.bmp",
+            CoordinateDouble{0,0}
+        );
+
+        this->_context.SDL_facade.draw_text(
+            "Vidya Gaem",
+            FontType::alterebro_pixel,
+            this->_color,
+            CoordinateDouble{20,20}
+        );
+
+        this->_context.SDL_facade.handle_sdl_events();
+        PressedKeys keys = this->_context.SDL_facade.get_keys();
+        this->_collection.handle_input(keys);
+        this->_collection.draw();
+
+        this->_context.SDL_facade.render_buffer();
     }
 }

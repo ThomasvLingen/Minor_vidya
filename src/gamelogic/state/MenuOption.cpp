@@ -7,7 +7,7 @@
 namespace State{
     MenuOption::MenuOption(CoordinateDouble coordinates, std::string name, std::function<void(Game&)> callback)
     : coordinates(coordinates)
-    , name(name)
+    , text(name)
     , callback(callback)
     {
 

@@ -21,7 +21,7 @@ namespace State {
         for(auto key : keys){
             switch (key) {
                 case Key::ENTER:
-                    this->_context.set_new_state(std::make_shared<MenuState>());
+                    this->_context.set_new_state(std::make_shared<MenuState>(this->_context));
                     break;
                 default:
                     break;

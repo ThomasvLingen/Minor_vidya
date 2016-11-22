@@ -27,16 +27,14 @@ namespace State {
     class MenuState : public IGameState {
 
     public:
+        MenuState(Game& context);
 
-        MenuState();
-        virtual ~MenuState();
-
-        void update(GameLogic::Game& game, int time_since_last_update) override ;
+        void update(int time_since_last_update) override;
 
     private:
-        Menu* _menu; //TODO: Change this to smart-pointer??
-        int _timeSinceLastPress = 0;
+        Menu _menu;
         Color _color{255,255,255};
+
     };
 }
 

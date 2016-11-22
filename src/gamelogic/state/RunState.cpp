@@ -24,7 +24,7 @@ namespace State {
             for (auto key : keys) {
                 switch (key) {
                     case Key::ESC:
-                        this->_context.set_new_state(std::make_shared<PauseState>());
+//                        this->_context.set_new_state(std::make_shared<PauseState>(this->_context));
                         break;
                     default:
                         break;

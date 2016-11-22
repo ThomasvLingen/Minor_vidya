@@ -10,30 +10,48 @@
 #include <vector>
 #include <string>
 #include <functional>
+#include "../../engine/interface/Drawable.hpp"
+#include "../../engine/interface/Handleable.hpp"
+#include "../../engine/SDLFacade.hpp"
+#include "../../engine/domain/Color.hpp"
 
 namespace State {
 
     using Engine::CoordinateDouble;
     using std::vector;
+    using Engine::Drawable;
+    using Engine::SDLFacade;
+    using Engine::Handleable;
+    using Engine::Key;
+    using Engine::FontType;
+    using Engine::Color;
 
-    class Menu {
+    class Menu : public Drawable, public Handleable {
 
     public:
-        Menu(vector<CoordinateDouble> coordinates, vector<std::string> names, vector<std::function<void(GameLogic::Game&)>>& callbacks);
-        ~Menu();
+        Menu(vector<MenuOption> options, SDLFacade& SDL_facade, Game& context);
+        Menu(SDLFacade& SDL_facade, Game& context);
 
         void set_next();
-        void set_previous();
 
+        virtual void draw() override;
+        virtual void handle_input(::Engine::PressedKeys& keys) override;
+
+        void set_previous();
+        void add_option(MenuOption option);
+        void add_options(vector<MenuOption> options);
         MenuOption* get_selected(); //TODO: Change this to smart-pointer??
 
-        vector<MenuOption*> menu_options;
-
-        void set_selected(int i);
+        void set_selected(int index);
 
     private:
+        vector<MenuOption> _menu_options;
         int _selected_index = 0;
+        const FontType _font = FontType::alterebro_pixel;
+        const Color _color = {255,255,255};
+        Game& _context;
 
+        int _time_since_last_press = 0;
     };
 }
 

@@ -3,6 +3,7 @@
 //
 
 #include "LoadState.hpp"
+#include "RunState.hpp"
 
 namespace State {
 
@@ -73,7 +74,7 @@ namespace State {
         }
         else {
             this->_loading_screen_time = 0;
-            // this->_context.set_new_state(std::make_shared<RunState>(this->_context));
+             this->_context.set_new_state(std::make_shared<RunState>(this->_context));
         }
 
         this->_context.SDL_facade.render_buffer();

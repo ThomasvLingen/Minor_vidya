@@ -4,6 +4,7 @@
 
 #include "PauseState.hpp"
 #include "MenuState.hpp"
+#include "RunState.hpp"
 
 namespace State {
 
@@ -11,11 +12,11 @@ namespace State {
     : IGameState(context)
     {
         auto option_1 = [] (GameLogic::Game& game) {
-            // game.set_new_state(std::make_shared<RunState>());
+             game.set_new_state(std::make_shared<RunState>(game));
         };
 
         auto option_2 = [] (GameLogic::Game& game) {
-            game.set_new_state(std::make_shared<MenuState>());
+            game.set_new_state(std::make_shared<MenuState>(game));
         };
 
         vector<CoordinateDouble> coordinates;
