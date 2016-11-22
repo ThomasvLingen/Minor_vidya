@@ -402,8 +402,8 @@ namespace Engine {
         vector<Uint32> pixels;
 
         int bpp = tileset->format->BytesPerPixel;
-        for (int x = tile_width * position.x; x < tile_width + position.x * tile_width; x++) {
-            for (int y = position.y * tile_height; y < tile_height + position.y * tile_height; y++) {
+        for (int y = position.y * tile_height; y < tile_height + position.y * tile_height; y++) {
+            for (int x = tile_width * position.x; x < tile_width + position.x * tile_width; x++) {
                 Uint8 *p = (Uint8 *)tileset->pixels + y * tileset->pitch + x * bpp;
                 pixels.push_back(*(Uint32*)p);
             }
