@@ -396,7 +396,7 @@ namespace Engine {
     ///
     /// \return This function returns a list of Uint32
     ImageBuffer* SDLFacade::get_image_buffer(SDL_Surface* tileset, const CoordinateInt &position,
-                               const int tile_width, const int tile_height)
+                                             const int tile_width, const int tile_height)
     {
         vector<Uint32> pixels;
 
@@ -426,7 +426,7 @@ namespace Engine {
     ///
     /// \return Returns a map with an Id as key and a vector<Uint32> as value. The list is empty when the image could not be loaded
     TextureMap SDLFacade::get_tileset_buffers(const string &path, const int tile_width, const int tile_height,
-                                                            const int amount_of_tiles)
+                                              const int amount_of_tiles)
     {
         TextureMap texture_map;
         // load image
