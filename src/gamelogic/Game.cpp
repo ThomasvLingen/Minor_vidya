@@ -28,7 +28,7 @@ namespace GameLogic {
         this->_level = { std::make_shared<Level>(parser.generate_level("res/test2.tmx")) };
         this->_raycasting_engine.set_world(this->_level);
 
-        CoordinateDouble coord = {1.5,1.5};
+        //CoordinateDouble coord = {1.5,1.5};
         auto player = std::make_shared<Player>(this->_level->get_spawnpoint(), this->_level);
 
         this->_level->set_player(player);
