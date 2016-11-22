@@ -39,7 +39,7 @@ namespace State {
         // foo
         this->_context.SDL_facade.clear_screen();
 
-        this->_context.SDL_facade.draw_text("Game Paused", FontType::alterebro_pixel_plus, this->_color, CoordinateDouble{50, 15});
+        this->_context.SDL_facade.draw_text("Game Paused", FontType::alterebro_pixel_plus, this->_color, {50, 15});
 
         this->_context.SDL_facade.handle_sdl_events();
 

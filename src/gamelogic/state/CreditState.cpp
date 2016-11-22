@@ -36,14 +36,14 @@ namespace State {
 
         this->_context.SDL_facade.clear_screen();
         this->_context.SDL_facade.draw_image("res/creditscreen.bmp" , CoordinateDouble{0,0});
-        this->_context.SDL_facade.draw_text("Vidya Game is made by:", FontType::alterebro_pixel, this->_color, CoordinateDouble{300, 50});
-        this->_context.SDL_facade.draw_text("- Thomas van Lingen:", FontType::alterebro_pixel, this->_color, CoordinateDouble{340, 80});
-        this->_context.SDL_facade.draw_text("- Jorg de Bont", FontType::alterebro_pixel, this->_color, CoordinateDouble{340, 110});
-        this->_context.SDL_facade.draw_text("- Wouter van Geel", FontType::alterebro_pixel, this->_color, CoordinateDouble{340, 140});
-        this->_context.SDL_facade.draw_text("- Sander van Geel", FontType::alterebro_pixel, this->_color, CoordinateDouble{340, 170});
-        this->_context.SDL_facade.draw_text("- Martijn Frielink", FontType::alterebro_pixel, this->_color, CoordinateDouble{340, 200});
-        this->_context.SDL_facade.draw_text("- Joost van Rijsinge", FontType::alterebro_pixel, this->_color, CoordinateDouble{340, 230});
-        this->_context.SDL_facade.draw_text("- Jelmer van der Schoot", FontType::alterebro_pixel, this->_color, CoordinateDouble{340, 260});
+        this->_context.SDL_facade.draw_text("Vidya Game is made by:", FontType::alterebro_pixel, this->_color, {300, 50});
+        this->_context.SDL_facade.draw_text("- Thomas van Lingen:", FontType::alterebro_pixel, this->_color, {340, 80});
+        this->_context.SDL_facade.draw_text("- Jorg de Bont", FontType::alterebro_pixel, this->_color, {340, 110});
+        this->_context.SDL_facade.draw_text("- Wouter van Geel", FontType::alterebro_pixel, this->_color, {340, 140});
+        this->_context.SDL_facade.draw_text("- Sander van Geel", FontType::alterebro_pixel, this->_color, {340, 170});
+        this->_context.SDL_facade.draw_text("- Martijn Frielink", FontType::alterebro_pixel, this->_color, {340, 200});
+        this->_context.SDL_facade.draw_text("- Joost van Rijsinge", FontType::alterebro_pixel, this->_color, {340, 230});
+        this->_context.SDL_facade.draw_text("- Jelmer van der Schoot", FontType::alterebro_pixel, this->_color, {340, 260});
         this->_context.SDL_facade.render_buffer();
     }
 }

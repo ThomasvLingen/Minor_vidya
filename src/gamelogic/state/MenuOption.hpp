@@ -12,15 +12,15 @@
 namespace State {
 
     using GameLogic::Game;
-    using Engine::CoordinateDouble;
+    using Engine::CoordinateInt;
 
     class MenuOption {
 
     public:
         MenuOption();
-        MenuOption(CoordinateDouble coordinates, std::string name, std::function<void(Game&)> callback);
+        MenuOption(CoordinateInt coordinates, std::string name, std::function<void(Game&)> callback);
 
-        CoordinateDouble coordinates;
+        CoordinateInt coordinates;
         std::string text;
         std::function<void(Game&)> callback;
 

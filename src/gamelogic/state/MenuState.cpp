@@ -68,7 +68,7 @@ namespace State {
             "Vidya Gaem",
             FontType::alterebro_pixel,
             this->_color,
-            CoordinateDouble{20,20}
+            {20,20}
         );
 
         this->_context.SDL_facade.handle_sdl_events();
