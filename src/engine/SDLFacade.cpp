@@ -148,7 +148,7 @@ namespace Engine {
     /// \param line_start The first coordinate
     /// \param line_end The second coordinate
     /// \param color The color of the line. The color class comes from the engine
-    void SDLFacade::draw_line(const CoordinateDouble& line_start, const CoordinateDouble& line_end, const Color& color)
+    void SDLFacade::draw_line(const CoordinateInt& line_start, const CoordinateInt& line_end, const Color& color)
     {
         SDL_SetRenderDrawColor(this->_renderer, color.r_value, color.g_value, color.b_value, 255);
         SDL_RenderDrawLine(this->_renderer, line_start.x, line_start.y, line_end.x, line_end.y);
@@ -160,7 +160,7 @@ namespace Engine {
     ///
     /// \param position The coordinate
     /// \param pixel The pixel value that you want to draw
-    void SDLFacade::draw_pixel_screen_buffer(const CoordinateDouble& position, Uint32 pixel)
+    void SDLFacade::draw_pixel_screen_buffer(const CoordinateInt& position, Uint32 pixel)
     {
         Uint32* buffer_pixels;
         int pitch;
@@ -242,7 +242,7 @@ namespace Engine {
     ///
     /// \return This function returns True if text is successfully drawn, ohterwise it returns False
     bool SDLFacade::draw_text(const string& text, const FontType& font, const Color& color,
-                              const CoordinateDouble& position) const
+                              const CoordinateInt& position) const
     {
         SDL_Color render_color = { color.r_value, color.g_value, color.b_value, 255 };
         TTF_Font* render_font = nullptr;
