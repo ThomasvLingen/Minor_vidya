@@ -398,7 +398,7 @@ namespace Engine {
     ImageBuffer* SDLFacade::get_image_buffer(SDL_Surface* tileset, const CoordinateInt &position,
                                              const int tile_width, const int tile_height)
     {
-        vector<Uint32> pixels;
+        ImageBuffer pixels;
 
         int startYPos = position.y * tile_height;
         int endYPos = position.y * tile_height + tile_height;
@@ -432,7 +432,7 @@ namespace Engine {
         // load image
         // todo: change to IMG_Load from SDL_Image package
         SDL_Surface* tileset = SDL_LoadBMP(path.c_str());
-        if(tileset == NULL){
+        if (tileset == NULL) {
             // check of succeeded
             cout << "An error occurred while loading tileset " << path
                  << ". This occurred while trying to convert an image to pixels for a texture." << endl;
@@ -451,11 +451,11 @@ namespace Engine {
 
                 texture_map[id] = get_image_buffer(tileset, CoordinateInt{x, y}, tile_width, tile_height);
                 x++;
-
             }
 
             SDL_FreeSurface(tileset);
         }
+
         return texture_map;
     }
 }
