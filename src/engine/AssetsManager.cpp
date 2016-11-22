@@ -26,26 +26,16 @@ namespace Engine {
         // We put an empty texture at index 0, since an empty space should not have an index
         // We can now directly map tile IDs to textures!
         this->_known_textures[0] = new ImageBuffer();
-        // TODO: This should not be hardcoded here as soon as tiled integration works
-        success &= this->_load_texture(1, "res/Wolf3DWallSheet.bmp");
-        success &= this->_load_texture(2, "res/Wolf3DWallSheet.bmp");
-        success &= this->_load_texture(3, "res/Wolf3DWallSheet.bmp");
 
-        return success;
-    }
-
-    bool AssetsManager::_load_texture(int id, string path)
-    {
-        ImageBuffer* retrieved = new ImageBuffer(this->_SDL_facade.get_tileset_buffers(path, 64, 64, 108)[id]);
-
-        // If the size is zero, the SDL_Facade could not load the image
-        if (retrieved->size() == 0) {
-            cout << "The following texture could not be loaded: " << path << endl;
-            return false;
+        map<int, ImageBuffer> tiles = this->_SDL_facade.get_tileset_buffers("res/Wolf3DWallSheet.bmp", 64, 64, 108);
+        if (tiles.size() == 0) {
+            success = false;
+        }
+        for (auto tile_pair : this->_tileset_map_to_id) {
+            this->_known_textures[tile_pair.first] = new ImageBuffer(tiles[tile_pair.second]);
         }
 
-        this->_known_textures[id] = retrieved;
-        return true;
+        return success;
     }
 
     ImageBuffer& AssetsManager::get_texture(int id)

@@ -26,8 +26,15 @@ namespace Engine {
         TextureMap _known_textures;
 
         bool _init_texture_map();
-        bool _load_texture(int id, string path);
         SDLFacade& _SDL_facade;
+
+        // TODO: This should not be hardcoded here as soon as tiled integration works
+        // The second number is the position of the tile in the tilemap
+        map<int, int> _tileset_map_to_id = {
+            {1, 33}, // Brick wall
+            {2, 1},  // Stone wall
+            {3, 23}, // Wood wall
+        };
     };
 
     typedef std::shared_ptr<AssetsManager> SPTR_AssetsManager;
