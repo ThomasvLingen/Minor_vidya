@@ -395,20 +395,26 @@ namespace Engine {
     /// \param tileset The image that contains all tile textures
     ///
     /// \return This function returns a list of Uint32
-    vector<Uint32>
-    SDLFacade::get_image_buffer(SDL_Surface* tileset, const CoordinateInt &position, const int tile_width,
-                                const int tile_height)
+    ImageBuffer* SDLFacade::get_image_buffer(SDL_Surface* tileset, const CoordinateInt &position,
+                               const int tile_width, const int tile_height)
     {
         vector<Uint32> pixels;
 
-        int bpp = tileset->format->BytesPerPixel;
-        for (int y = position.y * tile_height; y < tile_height + position.y * tile_height; y++) {
-            for (int x = tile_width * position.x; x < tile_width + position.x * tile_width; x++) {
-                Uint8 *p = (Uint8 *)tileset->pixels + y * tileset->pitch + x * bpp;
-                pixels.push_back(*(Uint32*)p);
+        int startYPos = position.y * tile_height;
+        int endYPos = position.y * tile_height + tile_height;
+
+        int startXPos = position.x * tile_width;
+        int endXPos = position.x * tile_width + tile_width;
+
+        int bytes_per_pixel = tileset->format->BytesPerPixel;
+
+        for (int current_y = startYPos; current_y < endYPos; current_y++) {
+            for (int current_x = startXPos; current_x < endXPos; current_x++) {
+                Uint8 *pixel = (Uint8 *)tileset->pixels + current_y * tileset->pitch + current_x * bytes_per_pixel;
+                pixels.push_back(*(Uint32*)pixel);
             }
         }
-        return pixels;
+        return new ImageBuffer(pixels);
     }
 
     /// \brief Function that converts the tileset to multiple lists of pixels
@@ -419,11 +425,12 @@ namespace Engine {
     /// \param amount_of_tiles Number of tiles that are stored within the tileset
     ///
     /// \return Returns a map with an Id as key and a vector<Uint32> as value. The list is empty when the image could not be loaded
-    map<int, vector<Uint32>> SDLFacade::get_tileset_buffers(const string &path, const int tile_width, const int tile_height,
+    TextureMap SDLFacade::get_tileset_buffers(const string &path, const int tile_width, const int tile_height,
                                                             const int amount_of_tiles)
     {
-        map<int, vector<Uint32>> buffer_list;
+        TextureMap texture_map;
         // load image
+        // todo: change to IMG_Load from SDL_Image package
         SDL_Surface* tileset = SDL_LoadBMP(path.c_str());
         if(tileset == NULL){
             // check of succeeded
@@ -433,22 +440,22 @@ namespace Engine {
             SDL_LockSurface(tileset);
             int amount_of_tiles_horizontally = tileset->w / tile_width;
 
-            bool all_drawn = false;
             int y = 0;
-            int id = 1;
-            while(!all_drawn){
-                for(int x = 0; x < amount_of_tiles_horizontally; x++){
-                    buffer_list[id] = get_image_buffer(tileset, CoordinateInt{ .x = x, .y = y}, tile_width, tile_height);
-                    if(id == amount_of_tiles){
-                        SDL_FreeSurface(tileset);
-                        return buffer_list;
-                    }
-                    id++;
+            int x = 0;
+
+            for (int id = 1; id <= amount_of_tiles; id++) {
+                if (x == amount_of_tiles_horizontally) {
+                    x = 0;
+                    y++;
                 }
-                y++;
+
+                texture_map[id] = get_image_buffer(tileset, CoordinateInt{.x = x, .y = y}, tile_width, tile_height);
+                x++;
+
             }
+
+            SDL_FreeSurface(tileset);
         }
-        SDL_FreeSurface(tileset);
-        return buffer_list;
+        return texture_map;
     }
 }

@@ -13,8 +13,6 @@ namespace Engine {
     using std::map;
     using std::string;
 
-    typedef map<int, ImageBuffer*> TextureMap;
-
     class AssetsManager {
     public:
         AssetsManager(SDLFacade& SDL_facade);

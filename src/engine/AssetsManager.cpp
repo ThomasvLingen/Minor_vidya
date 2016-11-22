@@ -27,12 +27,12 @@ namespace Engine {
         // We can now directly map tile IDs to textures!
         this->_known_textures[0] = new ImageBuffer();
 
-        map<int, ImageBuffer> tiles = this->_SDL_facade.get_tileset_buffers("res/Wolf3DWallSheet.bmp", 64, 64, 108);
-        if (tiles.size() == 0) {
+        TextureMap texture_map = this->_SDL_facade.get_tileset_buffers("res/Wolf3DWallSheet.bmp", 64, 64, 108);
+        if (texture_map.size() == 0) {
             success = false;
-        }
-        for (auto tile_pair : this->_tileset_map_to_id) {
-            this->_known_textures[tile_pair.first] = new ImageBuffer(tiles[tile_pair.second]);
+        } else {
+            _known_textures = texture_map;
+            _known_textures[0] = new ImageBuffer();
         }
 
         return success;
