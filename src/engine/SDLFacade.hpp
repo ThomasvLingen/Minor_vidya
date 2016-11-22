@@ -32,7 +32,7 @@ namespace Engine {
     using std::endl;
 
 
-    enum class FontType {alterebro_pixel};
+    enum class FontType {alterebro_pixel, alterebro_pixel_plus};
     typedef vector<Uint32> ImageBuffer;
 
     class SDLFacade {
@@ -75,6 +75,7 @@ namespace Engine {
         bool draw_text(const string& text, const FontType& font, const Color& color,
                        const CoordinateInt& position) const;
         void draw_pixel_screen_buffer(const CoordinateInt& position, Uint32 pixel);
+        void draw_image(const std::string path, const CoordinateDouble& coordinates);
         void update_screen_buffer();
         void render_buffer() const;
 
