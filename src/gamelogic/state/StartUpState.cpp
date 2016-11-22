@@ -3,6 +3,7 @@
 //
 
 #include "StartUpState.hpp"
+#include "MenuState.hpp"
 
 namespace State {
 
@@ -14,8 +15,7 @@ namespace State {
         for(auto key : keys){
             switch (key) {
                 case Key::ENTER:
-                    // game.set_new_state(std::make_shared<MenuState>());
-                    std::cout << "doot" << std::endl;
+                    game.set_new_state(std::make_shared<MenuState>());
                     break;
                 default:
                     break;

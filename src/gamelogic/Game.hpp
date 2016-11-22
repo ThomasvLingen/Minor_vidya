@@ -28,14 +28,15 @@ namespace GameLogic {
         void run();
 
         SDLFacade SDL_facade;
+        bool running;
 
         void init_states();
+        void set_new_state(SPTR_IGameState state);
 
     private:
         SPTR_IGameState _current_state;
         SPTR_IGameState _new_state;
 
-        bool _running;
         Raycasting _raycasting_engine;
         SPTR_Level _level;
 

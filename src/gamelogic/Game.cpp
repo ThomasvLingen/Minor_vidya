@@ -10,9 +10,9 @@
 namespace GameLogic {
     Game::Game()
     : SDL_facade([this](){ //lambda function, captures this (the game class) and sets running to false as quit callback
-        this->_running = false;
+        this->running = false;
     })
-    , _running(true)
+    , running(true)
     , _raycasting_engine(this->SDL_facade)
     {
         this->SDL_facade.init();
@@ -89,7 +89,7 @@ namespace GameLogic {
         int current_frame_start_time;
         int time_spent;
 
-        while (this->_running) {
+        while (this->running) {
             current_frame_start_time = this->SDL_facade.get_ticks();
             time_since_last_frame = current_frame_start_time - last_frame_start_time;
             last_frame_start_time = this->SDL_facade.get_ticks();
@@ -103,6 +103,11 @@ namespace GameLogic {
                 this->SDL_facade.delay_millis(FRAME_DURATION - time_spent);
             }
         }
+    }
+
+    void Game::set_new_state(SPTR_IGameState state)
+    {
+        this->_new_state = state;
     }
 
     void Game::init_states()
