@@ -46,19 +46,13 @@ namespace GameLogic {
             if ( std::strcmp( get<2>( object_list[i] ), "PlayerSpawn" ) == 0 ) {
                 int y = get<1>( object_list[i] );
                 int x = get<0>( object_list[i] );
-                if ( y < map.size() ) {
-                    if ( x < map[y].size() ) {
-                        if ( map[y][x]->is_wall() ) {
-                            throw exception( "file invalid spawn point inside wall" );
-                        }
-                        else {
-                            //our map is y,x based that's why spawn point is y,x
-                            spawn_point = CoordinateDouble { y + this->_spawn_tile_offset, x + this->_spawn_tile_offset };
-                        }
-
+                if ( y < map.size() && x < map[y].size() ) {
+                    if ( map[y][x]->is_wall() ) {
+                        throw exception( "file invalid spawn point inside wall" );
                     }
                     else {
-                        throw exception( "file invalid spawn point out of map" );
+                        //our map is y,x based that's why spawn point is y,x
+                        spawn_point = CoordinateDouble { y + this->_spawn_tile_offset, x + this->_spawn_tile_offset };
                     }
                 }
                 else {
