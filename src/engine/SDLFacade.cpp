@@ -390,30 +390,20 @@ namespace Engine {
     ///
     /// Each pixel in the list is represented as Uint32
     /// \return This function returns a list of Uint32
-    ImageBuffer SDLFacade::get_image_buffer(const string& path)
+    vector<Uint32>
+    SDLFacade::get_image_buffer(SDL_Surface* tileset, const CoordinateInt &position, const int tile_width,
+                                const int tile_height)
     {
-        //todo: change given variable to match tilemaps
-        ImageBuffer pixels;
-        SDL_Surface* image = IMG_Load(path.c_str());
+        vector<Uint32> pixels;
 
-        if(image == NULL){
-            cout << "An error occurred while loading image " << path << ". This occurred while trying to convert an image to pixels for a texture." << endl;
-            SDL_FreeSurface(image);
-            return pixels;
-        } else {
-            SDL_LockSurface(image);
-
-            int bpp = image->format->BytesPerPixel;
-            for (int y = 0; y < image->h; y++) {
-                for (int x = 0; x < image->w; x++) {
-                    Uint8 *p = (Uint8 *)image->pixels + y * image->pitch + x * bpp;
-                    pixels.push_back(*(Uint32*)p);
-                }
+        int bpp = tileset->format->BytesPerPixel;
+        for (int x = tile_width * position.x; x < tile_width + position.x * tile_width; x++) {
+            for (int y = position.y * tile_height; y < tile_height + position.y * tile_height; y++) {
+                Uint8 *p = (Uint8 *)tileset->pixels + y * tileset->pitch + x * bpp;
+                pixels.push_back(*(Uint32*)p);
             }
-            SDL_UnlockSurface(image);
-            SDL_FreeSurface(image);
-            return pixels;
         }
+        return pixels;
     }
 
     map<int, vector<Uint32>> SDLFacade::get_tileset_buffers(const string &path, const int tile_width, const int tile_height,
