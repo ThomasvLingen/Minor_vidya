@@ -27,16 +27,16 @@ namespace Engine {
         // We can now directly map tile IDs to textures!
         this->_known_textures[0] = new ImageBuffer();
         // TODO: This should not be hardcoded here as soon as tiled integration works
-        success &= this->_load_texture(1, "res/BrickWall.bmp");
-        success &= this->_load_texture(2, "res/StoneWall.bmp");
-        success &= this->_load_texture(3, "res/WoodWall.bmp");
+        success &= this->_load_texture(1, "res/Wolf3DWallSheet.bmp");
+        success &= this->_load_texture(2, "res/Wolf3DWallSheet.bmp");
+        success &= this->_load_texture(3, "res/Wolf3DWallSheet.bmp");
 
         return success;
     }
 
     bool AssetsManager::_load_texture(int id, string path)
     {
-        ImageBuffer* retrieved = new ImageBuffer(this->_SDL_facade.get_image_buffer(path));
+        ImageBuffer* retrieved = new ImageBuffer(this->_SDL_facade.get_tileset_buffers(path, 64, 64, 108)[id]);
 
         // If the size is zero, the SDL_Facade could not load the image
         if (retrieved->size() == 0) {
