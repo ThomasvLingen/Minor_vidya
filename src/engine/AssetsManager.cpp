@@ -31,8 +31,10 @@ namespace Engine {
         if (texture_map.size() == 0) {
             success = false;
         } else {
-            _known_textures = texture_map;
-            _known_textures[0] = new ImageBuffer();
+            this->_known_textures[0] = new ImageBuffer();
+            for (auto tile_pair : this->_tileset_map_to_id) {
+                this->_known_textures[tile_pair.first] = texture_map[tile_pair.second];
+            }
         }
 
         return success;
