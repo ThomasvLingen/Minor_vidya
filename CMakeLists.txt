@@ -27,6 +27,7 @@ set(SOURCE_FILES
 		src/engine/interface/Handleable.hpp
 		src/engine/interface/Collection.cpp src/engine/interface/Collection.hpp
 		src/engine/AssetsManager.cpp src/engine/AssetsManager.hpp
+		src/gamelogic/state/IGameState.hpp
 		)
 
 add_executable(Minor_vidya ${SOURCE_FILES})
