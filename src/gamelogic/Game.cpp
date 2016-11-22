@@ -12,8 +12,8 @@ namespace GameLogic {
     : SDL_facade([this](){ //lambda function, captures this (the game class) and sets running to false as quit callback
         this->running = false;
     })
+    , raycasting_engine(this->SDL_facade)
     , running(true)
-    , _raycasting_engine(this->SDL_facade)
     {
         this->SDL_facade.init();
         this->init_states();
@@ -71,7 +71,7 @@ namespace GameLogic {
                 Level(tiles, assets)
             )
         };
-        this->_raycasting_engine.set_world(this->_level);
+        this->raycasting_engine.set_world(this->_level);
 
         CoordinateDouble coord = {1.5,1.5};
         auto player = std::make_shared<Player>(coord, this->_level);

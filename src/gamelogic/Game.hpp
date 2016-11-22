@@ -28,6 +28,7 @@ namespace GameLogic {
         void run();
 
         SDLFacade SDL_facade;
+        Raycasting raycasting_engine;
         bool running;
 
         void init_states();
@@ -37,7 +38,6 @@ namespace GameLogic {
         SPTR_IGameState _current_state;
         SPTR_IGameState _new_state;
 
-        Raycasting _raycasting_engine;
         SPTR_Level _level;
 
     };

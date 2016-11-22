@@ -36,6 +36,7 @@ set(SOURCE_FILES
 		src/gamelogic/state/HelpState.cpp src/gamelogic/state/HelpState.hpp
 		src/gamelogic/state/LoadState.cpp src/gamelogic/state/LoadState.hpp
 		src/gamelogic/state/PauseState.cpp src/gamelogic/state/PauseState.hpp
+		src/gamelogic/state/RunState.cpp src/gamelogic/state/RunState.hpp
 		src/gamelogic/state/IGameState.cpp
 		)
 
