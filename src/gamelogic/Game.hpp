@@ -30,11 +30,11 @@ namespace GameLogic {
 
         SDLFacade SDL_facade;
         Raycasting raycasting_engine;
+        bool running;
 
         void set_new_state(SPTR_IGameState state);
 
     private:
-        bool _running;
         SPTR_IGameState _current_state;
         SPTR_IGameState _new_state;
 

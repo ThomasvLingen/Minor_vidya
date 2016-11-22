@@ -24,20 +24,27 @@ namespace State {
             game.set_new_state(std::make_shared<CreditState>());
         };
 
+        auto option_4 = [] (GameLogic::Game& game) {
+            game.running = false;
+        };
+
         vector<CoordinateDouble> coordinates;
         coordinates.push_back({150,100});
         coordinates.push_back({150,140});
         coordinates.push_back({150,180});
+        coordinates.push_back({150,220});
 
         vector<string> names;
         names.push_back("Start Game");
         names.push_back("Help");
         names.push_back("Credits");
+        names.push_back("Quit Game");
 
         vector<std::function<void(GameLogic::Game&)>> callbacks;
         callbacks.push_back(option_1);
         callbacks.push_back(option_2);
         callbacks.push_back(option_3);
+        callbacks.push_back(option_4);
 
         this->_menu = new Menu(coordinates, names, callbacks);
         this->_menu->set_selected(0);
