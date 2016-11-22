@@ -440,6 +440,7 @@ namespace Engine {
                 for(int x = 0; x < amount_of_tiles_horizontally; x++){
                     buffer_list[id] = get_image_buffer(tileset, CoordinateInt{ .x = x, .y = y}, tile_width, tile_height);
                     if(id == amount_of_tiles){
+                        SDL_FreeSurface(tileset);
                         return buffer_list;
                     }
                     id++;
