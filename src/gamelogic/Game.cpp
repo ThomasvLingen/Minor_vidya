@@ -24,8 +24,12 @@ namespace GameLogic {
         if (!assets->init()) {
             std::cout << "AssetsManager has not initted correctly." << std::endl;
         }
-
-        this->_level = { std::make_shared<Level>(parser.generate_level("res/test2.tmx", assets )) };
+        try {
+            this->_level = { std::make_shared<Level>( parser.generate_level( "res/test2.tmx", assets ) ) };
+        }
+        catch ( const std::exception& e) {
+                std::cout << e.what();
+        }
         this->_raycasting_engine.set_world(this->_level);
 
         auto player = std::make_shared<Player>(this->_level->get_spawnpoint(), this->_level);
