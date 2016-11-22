@@ -27,7 +27,6 @@ namespace GameLogic {
     Level WorldParser::generate_level( std::string file_location, Engine::SPTR_AssetsManager assets )
     {
         RapidXMLAdapter* rapid_adapter = new RapidXMLAdapter();
-        //TileSet* tile_set = new TileSet();
         vector<vector<size_t>> int_map;
         vector<vector<Tile*>> map;
         vector<tuple<size_t, size_t, char*>> object_list;
@@ -41,27 +40,8 @@ namespace GameLogic {
         int_map = rapid_adapter->get_map();
         map = this->_generate_tilemap( int_map, assets );
         object_list = rapid_adapter->get_objects();
-
-        for ( size_t i = 0; i < object_list.size(); i++ ) {
-            if ( std::strcmp( get<2>( object_list[i] ), "PlayerSpawn" ) == 0 ) {
-                int y = get<1>( object_list[i] );
-                int x = get<0>( object_list[i] );
-                if ( y < map.size() && x < map[y].size() ) {
-                    if ( map[y][x]->is_wall() ) {
-                        throw exception( "file invalid spawn point inside wall" );
-                    }
-                    else {
-                        //our map is y,x based that's why spawn point is y,x
-                        spawn_point = CoordinateDouble { y + this->_spawn_tile_offset, x + this->_spawn_tile_offset };
-                    }
-                }
-                else {
-                    throw exception( "file invalid spawn point out of map" );
-                }
-
-            }
-        }
-
+        spawn_point = this->_get_spawnpoint(object_list, map);
+        
         return Level( map, spawn_point, assets );
     }
 
@@ -87,5 +67,35 @@ namespace GameLogic {
             }
         }
         return map;
+    }
+
+    /// \brief Checks and gets the location of the spawnpoint object
+    /// 
+    /// This function  Checks and gets the location of the spawnpoint object of the .tmx.
+    ///
+    /// \param object_list the object list which contains a spwanpoint
+    /// \param map the tilemap
+    /// \return returns a CoordinateDouble of the spawnlocation
+    CoordinateDouble WorldParser::_get_spawnpoint( vector<tuple<size_t, size_t, char*>> object_list, vector<vector<Tile*>> map )
+    {
+        for ( size_t i = 0; i < object_list.size(); i++ ) {
+            if ( std::strcmp( get<2>( object_list[i] ), "PlayerSpawn" ) == 0 ) {
+                int y = get<1>( object_list[i] );
+                int x = get<0>( object_list[i] );
+                if ( y < map.size() && x < map[y].size() ) {
+                    if ( map[y][x]->is_wall() ) {
+                        throw exception( "file invalid spawn point inside wall" );
+                    }
+                    else {
+                        //our map is y,x based that's why spawn point is y,x
+                        return CoordinateDouble { y + this->_spawn_tile_offset, x + this->_spawn_tile_offset };
+                    }
+                }
+                else {
+                    throw exception( "file invalid spawn point out of map" );
+                }
+
+            }
+        }
     }
 }
