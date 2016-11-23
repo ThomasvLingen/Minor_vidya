@@ -40,7 +40,8 @@ namespace Engine {
             {9, 13},    // Skeleton prison
             {10, 25},   // Steel door
             {11, 29},   // Blue steel wall
-            {12, 47}    // Disgusting wall
+            {12, 47},   // Disgusting wall
+            {13, 7}     // Bob texture
         };
     };
 
