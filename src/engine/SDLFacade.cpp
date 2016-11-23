@@ -479,7 +479,7 @@ namespace Engine {
         TextureMap texture_map;
         // load image
         // todo: change to IMG_Load from SDL_Image package
-        SDL_Surface* tileset = SDL_LoadBMP(path.c_str());
+        SDL_Surface* tileset = IMG_Load(path.c_str());
         if (tileset == NULL) {
             // check of succeeded
             cout << "An error occurred while loading tileset " << path
