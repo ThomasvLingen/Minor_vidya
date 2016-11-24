@@ -8,6 +8,7 @@
 #include "IGameState.hpp"
 #include "../Game.hpp"
 #include "../../engine/SDLFacade.hpp"
+#include "../../engine/FPScounter.hpp"
 
 namespace GameLogic {
     class Game;
@@ -26,6 +27,7 @@ namespace State {
 
     private:
         int _timeSinceLastPress = 0;
+        Engine::FPScounter _fps;
     };
 }
 
