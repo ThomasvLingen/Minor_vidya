@@ -31,6 +31,8 @@ namespace Engine {
     void Raycasting::draw()
     {
         if (this->_world != nullptr) {
+            this->_SDL_facade.lock_screen_buffer();
+
             for (int ray_index = 0; ray_index < this->_SDL_facade.get_width(); ray_index++) {
                 CoordinateDouble ray_position = _get_ray_pos();
                 Direction ray_dir = _calculate_ray_direction(ray_index);
@@ -64,7 +66,8 @@ namespace Engine {
                 }
             }
 
-             this->_SDL_facade.update_screen_buffer();
+            this->_SDL_facade.unlock_screen_buffer();
+            this->_SDL_facade.update_screen_buffer();
         }
     }
 
