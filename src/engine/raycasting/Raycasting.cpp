@@ -30,6 +30,7 @@ namespace Engine {
     /// \brief Draws a single frame with raycasting using the world object and SDL facade
     void Raycasting::draw()
     {
+        int screen_height_calc = this->_SDL_facade.get_height() * 128;
         if (this->_world != nullptr) {
             this->_SDL_facade.lock_screen_buffer();
 
@@ -45,6 +46,7 @@ namespace Engine {
                 double perp_wall_dist = this->_calculate_wall_dist(wall, ray_position, ray_steps, ray_dir);
 
                 int line_height = _get_wall_height(perp_wall_dist);
+                int line_height_calc = line_height * 128;
                 LineCords line_cords = _get_line_measures(line_height);
 
                 int tex_x = this->_get_texture_x_coord(wall, ray_position, ray_dir, perp_wall_dist);
@@ -57,7 +59,7 @@ namespace Engine {
                     // The multiplication and division is done so that we don't have to work with floats here, resulting
                     // in much faster code. This is critical, since this tidbit of code is ran width * height times PER
                     // FRAME (640*480 equates to 307,200 times, which is a lot).
-                    int d = y * 256 - this->_SDL_facade.get_height() * 128 + line_height * 128;
+                    int d = y * 256 - screen_height_calc + line_height_calc;
                     int tex_y = ((d * TEXTURE_HEIGHT) / line_height) / 256;
 
                     Uint32 pixel = tile_texture[TEXTURE_HEIGHT * tex_y + tex_x];
