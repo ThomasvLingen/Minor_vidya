@@ -93,7 +93,7 @@ namespace GameLogic {
 
             time_spent = this->SDL_facade.get_ticks() - current_frame_start_time;
 
-            if (FRAME_DURATION > time_spent) {
+            if (FRAME_DURATION > time_spent) { //TODO use vsync instead of this
                 this->SDL_facade.delay_millis(FRAME_DURATION - time_spent);
             }
         }
