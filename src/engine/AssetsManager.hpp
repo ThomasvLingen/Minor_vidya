@@ -29,9 +29,19 @@ namespace Engine {
         // TODO: This should not be hardcoded here as soon as tiled integration works
         // The second number is the position of the tile in the tilemap
         map<int, int> _tileset_map_to_id = {
-            {1, 33}, // Brick wall
-            {2, 1},  // Stone wall
-            {3, 23}, // Wood wall
+            {1, 33},    // Brick wall
+            {2, 1},     // Stone wall
+            {3, 23},    // Wood wall
+            {4, 106},   // swap-e 1
+            {5, 107},   // swap-e 2
+            {6, 108},   // swap-e 3
+            {7, 69},    // white brick wall
+            {8, 9},     // Prison
+            {9, 13},    // Skeleton prison
+            {10, 25},   // Steel door
+            {11, 29},   // Blue steel wall
+            {12, 47},   // Disgusting wall
+            {13, 7}     // Bob texture
         };
     };
 

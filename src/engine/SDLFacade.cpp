@@ -205,15 +205,20 @@ namespace Engine {
     /// \param pixel The pixel value that you want to draw
     void SDLFacade::draw_pixel_screen_buffer(const CoordinateInt& position, Uint32 pixel)
     {
-        Uint32* buffer_pixels;
+        this->_screen_buffer_pixels[position.x + (position.y * this->_width)] = pixel;
+    }
+
+    /// \brief Lock the screen buffer for pixel manipulating
+    void SDLFacade::lock_screen_buffer()
+    {
         int pitch;
-        //TODO: locking and unlocking may cause performance issues
-        SDL_LockTexture(_screen_buffer, NULL, (void**) &buffer_pixels, &pitch);
+        SDL_LockTexture(this->_screen_buffer, NULL, (void**) &this->_screen_buffer_pixels, &pitch);
+    }
 
-        int pixel_location = position.x + (position.y * this->_width);
-        buffer_pixels[pixel_location] = pixel;
-
-        SDL_UnlockTexture(_screen_buffer);
+    /// \brief Unlock the screen buffer (it can no longer a manupulated)
+    void SDLFacade::unlock_screen_buffer()
+    {
+        SDL_UnlockTexture(this->_screen_buffer);
     }
 
     /// \brief Update of _screen_buffer

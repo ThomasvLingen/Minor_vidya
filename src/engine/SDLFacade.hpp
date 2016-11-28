@@ -57,6 +57,7 @@ namespace Engine {
         SDL_Surface* _screen_surface = nullptr;
         SDL_Renderer* _renderer = nullptr;
         SDL_Texture* _screen_buffer = nullptr;
+        Uint32* _screen_buffer_pixels = nullptr;
 
         int _width;
         int _height;
@@ -76,11 +77,14 @@ namespace Engine {
         void draw_line(const CoordinateInt& line_start, const CoordinateInt& line_end, const Color& color);
         bool draw_text(const string& text, const FontType& font, const Color& color,
                        const CoordinateInt& position) const;
-        void draw_pixel_screen_buffer(const CoordinateInt& position, Uint32 pixel);
         void draw_image(const std::string path, const CoordinateDouble& coordinates);
         void draw_rect(const CoordinateDouble& rect_start, const int width, const int height, const Color& color);
         void update_screen_buffer();
         void render_buffer() const;
+
+        void lock_screen_buffer();
+        void draw_pixel_screen_buffer(const CoordinateInt& position, Uint32 pixel);
+        void unlock_screen_buffer();
 
         void set_height(const int& screen_height);
         void set_width(const int& screen_width);

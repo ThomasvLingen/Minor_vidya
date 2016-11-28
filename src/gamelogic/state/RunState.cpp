@@ -9,8 +9,10 @@ namespace State {
 
     RunState::RunState(Game& context)
     : IGameState(context)
+    , _fps(context.SDL_facade)
     {
-
+        this->_collection.add_drawable(&_fps);
+        this->_collection.add_updatable(&_fps);
     }
 
     void RunState::update(int time_since_last_update) { //TODO: If called again, level has to reload
@@ -33,9 +35,12 @@ namespace State {
         }
 
         this->_context.raycasting_engine.update(time_since_last_update);
+        this->_collection.update(time_since_last_update);
+
         this->_context.SDL_facade.clear_screen();
 
         this->_context.raycasting_engine.draw();
+        this->_collection.draw();
 
         this->_context.SDL_facade.render_buffer();
     }

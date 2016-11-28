@@ -24,16 +24,23 @@ namespace GameLogic {
         }
 
         // TODO: This is test code of the worst kind, remove when no longer needed (f/e when we have a level editor)
+        // {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
         std::vector<std::vector<int>> world = {
-            {1,1,1,1,1,1,1,1,1,1,1},
-            {1,0,0,0,0,0,0,0,0,0,2},
-            {1,0,2,0,0,0,0,0,0,0,2},
-            {1,0,0,0,0,0,0,0,0,0,2},
-            {1,0,0,0,0,0,0,0,0,0,2},
-            {1,0,0,0,0,0,0,0,0,0,2},
-            {1,0,3,0,0,0,0,0,0,0,2},
-            {1,0,0,0,0,0,0,0,0,0,2},
-            {1,1,1,1,1,1,1,1,1,1,1}
+            {1,1,1,1,1,7,7,7,7,7,7,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,13,1,1,1,1,1,1},
+            {1,0,0,0,0,7,0,0,0,0,7,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+            {1,0,0,0,0,7,0,0,0,0,7,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+            {1,0,0,0,0,7,0,0,0,0,7,3,3,3,3,3,3,1,0,0,8,9,10,11,12,0,0,0,0,0,0,0,0,0,1},
+            {1,0,0,0,0,7,0,0,0,0,0,0,0,0,0,0,3,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+            {1,0,0,0,0,7,7,7,7,7,7,3,3,3,3,0,3,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+            {1,1,1,1,1,1,1,1,1,1,1,0,0,0,3,0,3,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+            {1,0,0,0,0,0,0,0,4,0,1,0,0,0,3,0,3,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+            {1,0,0,0,0,0,0,0,5,0,1,0,0,0,3,0,3,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1},
+            {1,0,0,0,0,0,0,0,6,2,2,2,2,2,2,0,2,2,2,2,2,2,2,2,2,2,2,0,2,2,2,2,2,2,1},
+            {13,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,13},
+            {1,0,0,0,0,0,0,0,4,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1},
+            {1,0,0,0,0,0,0,0,5,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+            {1,0,0,0,0,0,0,0,6,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+            {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
         };
         std::vector<std::vector<Tile*>> tiles;
 
@@ -44,22 +51,8 @@ namespace GameLogic {
             for(size_t j = 0; j < world.at(i).size(); j++){
                 Tile* temp = new Tile(assets->get_texture(world[i][j]));
 
-                switch (world[i][j]) {
-                    case 1:
-                        temp->set_wall(true);
-                        temp->set_color({255,0,0});
-                    break;
-                    case 2:
-                        temp->set_wall(true);
-                        temp->set_color({0,255,0});
-                    break;
-                    case 3:
-                        temp->set_wall(true);
-                        temp->set_color({0,0,255});
-                    break;
-                    default:
-                        temp->set_wall(false);
-                }
+                // Only > 0 is a wall, the rest is empty
+                temp->set_wall(world[i][j] > 0);
 
                 tiles.at(i).push_back(temp);
             }
@@ -73,7 +66,8 @@ namespace GameLogic {
         };
         this->raycasting_engine.set_world(this->_level);
 
-        CoordinateDouble coord = {1.5,1.5};
+        // Player start coords
+        CoordinateDouble coord = {10.5,1.5};
         auto player = std::make_shared<Player>(coord, this->_level);
 
         this->_level->set_player(player);
@@ -99,7 +93,7 @@ namespace GameLogic {
 
             time_spent = this->SDL_facade.get_ticks() - current_frame_start_time;
 
-            if (FRAME_DURATION > time_spent) {
+            if (FRAME_DURATION > time_spent) { //TODO use vsync instead of this
                 this->SDL_facade.delay_millis(FRAME_DURATION - time_spent);
             }
         }
