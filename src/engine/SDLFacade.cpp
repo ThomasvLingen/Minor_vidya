@@ -85,7 +85,7 @@ namespace Engine {
             return false;
         }
 
-        if (Mix_OpenAudio( 22050, MIX_DEFAULT_FORMAT, 2, 4096 ) == -1) {
+        if (Mix_OpenAudio(this->_frequency, this->_audio_format, this->_channels, this->_chunksize) == -1) {
             return false;
         }
 
