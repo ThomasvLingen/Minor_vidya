@@ -5,6 +5,8 @@
 #ifndef MINOR_VIDYA_PATHUTIL_HPP
 #define MINOR_VIDYA_PATHUTIL_HPP
 
+#define VIDYA_RUNPATH ::Engine::PathUtil::get_run_path()
+
 #include <string>
 
 namespace Engine {
@@ -13,10 +15,6 @@ namespace Engine {
     class PathUtil {
     public:
         static string get_run_path();
-    private:
-        static bool _initialised;
-        static void _init_run_path();
-        static string _run_path;
     };
 }
 

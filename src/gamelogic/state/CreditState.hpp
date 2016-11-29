@@ -22,7 +22,6 @@ namespace State {
     using Engine::PressedKeys;
     using Engine::Key;
     using GameLogic::Game;
-    using Engine::PathUtil;
 
     class CreditState : public IGameState {
 

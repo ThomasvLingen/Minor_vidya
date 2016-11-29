@@ -349,8 +349,8 @@ namespace Engine {
     {
         bool success = true;
 
-        success &= _load_font(PathUtil::get_run_path() + "res/alterebro_pixel.ttf", FontType::alterebro_pixel, 30);
-        success &= _load_font(PathUtil::get_run_path() + "res/alterebro_pixel.ttf", FontType::alterebro_pixel_plus, 60);
+        success &= _load_font(VIDYA_RUNPATH + "res/alterebro_pixel.ttf", FontType::alterebro_pixel, 30);
+        success &= _load_font(VIDYA_RUNPATH + "res/alterebro_pixel.ttf", FontType::alterebro_pixel_plus, 60);
 
         return success;
     }
