@@ -14,7 +14,7 @@ set(SOURCE_FILES
 		src/engine/domain/PointOfView.hpp src/engine/domain/PointOfView.cpp
 		src/engine/raycasting/RaycastingVector.hpp
 		src/engine/domain/TileObject.hpp src/engine/domain/TileObject.cpp
-		src/engine/domain/WorldObject.cpp src/engine/domain/WorldObject.hpp
+		src/engine/domain/World.cpp src/engine/domain/World.hpp
 		src/gamelogic/Game.cpp src/gamelogic/Game.hpp
 		src/gamelogic/Player.cpp src/gamelogic/Player.hpp
 		src/gamelogic/VectorUtil.cpp src/gamelogic/VectorUtil.hpp

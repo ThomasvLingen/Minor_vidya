@@ -6,7 +6,7 @@
 #define MINOR_VIDYA_PLAYER_HPP
 
 #include <memory>
-#include "../engine/domain/WorldObject.hpp"
+#include "../engine/domain/World.hpp"
 #include "../engine/domain/PointOfView.hpp"
 #include "../engine/domain/CoordinateDouble.hpp"
 #include "../engine/raycasting/RaycastingVector.hpp"
@@ -19,7 +19,7 @@ namespace GameLogic {
     using Engine::CoordinateDouble;
     using Engine::RaycastingVector;
     using Engine::PointOfView;
-    using Engine::WorldObject;
+    using Engine::World;
     using Engine::PressedKeys;
     using Engine::Key;
 

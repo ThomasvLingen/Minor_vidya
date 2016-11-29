@@ -8,12 +8,12 @@
 
 namespace Engine {
     using Engine::PointOfView;
-    class WorldObject {
+    class World {
 
     public:
-        WorldObject(SPTR_AssetsManager assets);                            // We now have to explicitly declare this since other def constructors are deleted
-        WorldObject(const WorldObject& obj) = delete;            // Copy constructor for a base class has to be deleted (slicing)
-        WorldObject& operator=(const WorldObject& obj) = delete; // Copy assignment for a base class has to be deleted (slicing)
+        World(SPTR_AssetsManager assets);                            // We now have to explicitly declare this since other def constructors are deleted
+        World(const World& obj) = delete;            // Copy constructor for a base class has to be deleted (slicing)
+        World& operator=(const World& obj) = delete; // Copy assignment for a base class has to be deleted (slicing)
 
         SPTR_AssetsManager assets;
 

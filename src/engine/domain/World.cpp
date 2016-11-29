@@ -3,10 +3,10 @@
 //
 
 #include "../SDLFacade.hpp"
-#include "WorldObject.hpp"
+#include "World.hpp"
 
 namespace Engine {
-    WorldObject::WorldObject(SPTR_AssetsManager assets)
+    World::World(SPTR_AssetsManager assets)
     : assets(assets)
     {
     }

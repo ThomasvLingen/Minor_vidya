@@ -9,12 +9,12 @@
 #include <memory>
 #include "RayCastingTypes.hpp"
 #include "../SDLFacade.hpp"
-#include "../domain/WorldObject.hpp"
+#include "../domain/World.hpp"
 #include "../domain/CoordinateDouble.hpp"
 
 namespace Engine {
     using std::shared_ptr;
-    typedef shared_ptr<WorldObject> WorldPTR;
+    typedef shared_ptr<World> WorldPTR;
 
     // TODO:
     // This is ugly and stupid

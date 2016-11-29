@@ -10,7 +10,7 @@ namespace GameLogic {
     using std::vector;
 
     Level::Level(vector<vector<Tile*>> field, Engine::SPTR_AssetsManager assets)
-    : WorldObject(assets)
+    : World(assets)
     , _field(field)
     {
     }
@@ -55,7 +55,7 @@ namespace GameLogic {
     }
 
     Level::Level(const Level& obj)
-    : WorldObject(obj.assets)
+    : World(obj.assets)
     , _field(obj._field)
     , _spawnpoint(obj._spawnpoint)
     , _player(obj._player)
