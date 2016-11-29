@@ -35,7 +35,7 @@ namespace State {
         }
 
         this->_context.SDL_facade.clear_screen();
-        this->_context.SDL_facade.draw_image("res/creditscreen.bmp" , CoordinateDouble{0,0});
+        this->_context.SDL_facade.draw_image(VIDYA_RUNPATH + "res/creditscreen.bmp" , CoordinateDouble{0,0});
         this->_context.SDL_facade.draw_text("Vidya Game is made by:", FontType::alterebro_pixel, this->_color, {300, 50});
         this->_context.SDL_facade.draw_text("- Thomas van Lingen:", FontType::alterebro_pixel, this->_color, {340, 80});
         this->_context.SDL_facade.draw_text("- Jorg de Bont", FontType::alterebro_pixel, this->_color, {340, 110});

@@ -29,7 +29,7 @@ namespace State {
         }
 
         this->_context.SDL_facade.clear_screen();
-        this->_context.SDL_facade.draw_image("res/startscreen.bmp", CoordinateDouble{0,0});
+        this->_context.SDL_facade.draw_image(VIDYA_RUNPATH + "res/startscreen.bmp", CoordinateDouble{0,0});
         this->_context.SDL_facade.render_buffer();
     }
 }

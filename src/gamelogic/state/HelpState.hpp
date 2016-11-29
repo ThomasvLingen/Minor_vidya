@@ -8,6 +8,7 @@
 #include "IGameState.hpp"
 #include "../Game.hpp"
 #include "../../engine/SDLFacade.hpp"
+#include "../../engine/PathUtil.hpp"
 
 namespace GameLogic {
     class Game;
