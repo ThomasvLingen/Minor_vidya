@@ -113,10 +113,10 @@ namespace Engine {
         bool _load_font(const string& path, const FontType& font_type, uint8_t size);
         ImageBuffer* get_image_buffer(SDL_Surface* tileset, const CoordinateInt& position, const int tile_width, const int tile_height);
 
-        const int _frequency = 22050;
-        const Uint16 _audio_format = MIX_DEFAULT_FORMAT;
-        const int _channels = 2;
-        const int _chunksize = 4096;
+        static constexpr int _frequency = 22050;
+        static constexpr Uint16 _audio_format = MIX_DEFAULT_FORMAT;
+        static constexpr int _channels = 2;
+        static constexpr int _chunksize = 4096;
         Mix_Music* _music = NULL;
         Mix_Chunk* _sound_effect = NULL;
     };
