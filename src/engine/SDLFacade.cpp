@@ -27,6 +27,11 @@ namespace Engine {
         SDL_FreeSurface(this->_screen_surface);
         SDL_DestroyRenderer(this->_renderer);
         SDL_DestroyWindow(this->_window);
+        if (this->_sound_effect != NULL) {
+            Mix_FreeChunk(this->_sound_effect);
+        }
+        Mix_CloseAudio();
+        Mix_Quit();
 
         for (auto font : this->_fonts) {
             TTF_CloseFont(font.second);
@@ -77,6 +82,10 @@ namespace Engine {
 
         if (!this->_init_fonts()) {
             std::cout << "Your fonts could not be initted" << std::endl;
+            return false;
+        }
+
+        if (Mix_OpenAudio( 22050, MIX_DEFAULT_FORMAT, 2, 4096 ) == -1) {
             return false;
         }
 
@@ -512,4 +521,42 @@ namespace Engine {
 
         return texture_map;
     }
+
+    /// \brief Plays a music file
+    ///
+    /// Music will be played if the path is correct. Supports: WAVE, MP3, MIDI etc. Be sure to call when you want the music to stop.
+    /// If another play_music is called it will overwrite the old one.
+    ///
+    /// \param path to the file (if it's in res/music write: "res/music/filename.mp3")
+    void SDLFacade::play_music(const string path)
+    {
+        this->_music = Mix_LoadMUS(path.c_str());
+        if(this->_music == NULL) { //TODO exception{
+            return;
+        }
+        Mix_PlayMusic(this->_music, -1);
+    }
+
+    /// \brief Plays a sound effect
+    ///
+    /// Sound effect will be played if the path is correct. Supports ONLY: WAVE. Plays multiple at once.
+    ///
+    /// \param path to the file (if it's in res/music write: "res/music/filename.wav")
+    void SDLFacade::play_sound_effect(const string path)
+    {
+        this->_sound_effect = Mix_LoadWAV(path.c_str());
+        if (this->_sound_effect == NULL) { //TODO exception{
+            return;
+        }
+        Mix_PlayChannel(-1, this->_sound_effect, 0);
+    }
+
+    /// \brief Stops music from playing
+    void SDLFacade::stop_music() const
+    {
+        if (this->_music != NULL || this->_music != nullptr) {
+            Mix_FreeMusic(this->_music);
+        }
+    }
+
 }

@@ -19,6 +19,7 @@
 
 #include "SDL2/SDL.h"
 #include "SDL2/SDL_ttf.h"
+#include "SDL2/SDL_mixer.h"
 
 
 namespace Engine {
@@ -94,6 +95,10 @@ namespace Engine {
         void delay_millis(const int millis) const;
         int get_ticks() const;
 
+        void play_music(const string path);
+        void play_sound_effect(const string path);
+        void stop_music() const;
+
         TextureMap get_tileset_buffers(const string& path, const int tile_width, const int tile_height, const int amount_of_tiles);
 
     private:
@@ -107,6 +112,9 @@ namespace Engine {
         bool _init_fonts();
         bool _load_font(const string& path, const FontType& font_type, uint8_t size);
         ImageBuffer* get_image_buffer(SDL_Surface* tileset, const CoordinateInt& position, const int tile_width, const int tile_height);
+
+        Mix_Music* _music = NULL;
+        Mix_Chunk* _sound_effect = NULL;
     };
 }
 
