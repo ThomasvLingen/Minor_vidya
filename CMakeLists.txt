@@ -38,6 +38,7 @@ set(SOURCE_FILES
 		src/gamelogic/state/PauseState.cpp src/gamelogic/state/PauseState.hpp
 		src/gamelogic/state/RunState.cpp src/gamelogic/state/RunState.hpp
 		src/gamelogic/state/IGameState.cpp
+		src/engine/PathUtil.cpp src/engine/PathUtil.hpp
 		)
 
 add_executable(Minor_vidya ${SOURCE_FILES})

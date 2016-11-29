@@ -8,6 +8,7 @@
 #include "IGameState.hpp"
 #include "../Game.hpp"
 #include "../../engine/SDLFacade.hpp"
+#include "../../engine/PathUtil.hpp"
 
 namespace GameLogic {
     class Game;
@@ -21,6 +22,7 @@ namespace State {
     using Engine::PressedKeys;
     using Engine::Key;
     using GameLogic::Game;
+    using Engine::PathUtil;
 
     class StartUpState : public IGameState {
 

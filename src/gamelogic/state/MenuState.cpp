@@ -60,7 +60,7 @@ namespace State {
         this->_context.SDL_facade.clear_screen();
 
         this->_context.SDL_facade.draw_image(
-            "res/menuscreen.bmp",
+            PathUtil::get_run_path() + "res/menuscreen.bmp",
             CoordinateDouble{0,0}
         );
 

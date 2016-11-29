@@ -36,7 +36,7 @@ namespace State {
         }
 
         this->_context.SDL_facade.clear_screen();
-        this->_context.SDL_facade.draw_image("res/helpscreen.bmp" , {0,0});
+        this->_context.SDL_facade.draw_image(PathUtil::get_run_path() + "res/helpscreen.bmp" , {0,0});
         // TODO: This is retarded and should be refactored
         this->_context.SDL_facade.draw_text("Controls for Vidya Game", FontType::alterebro_pixel, this->_color, {120, 50});
         this->_context.SDL_facade.draw_text("Movement Forward:   W", FontType::alterebro_pixel, this->_color, {160, 80});
