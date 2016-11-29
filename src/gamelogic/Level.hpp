@@ -5,7 +5,7 @@
 #ifndef MINOR_VIDYA_LEVEL_HPP
 #define MINOR_VIDYA_LEVEL_HPP
 
-#include "../engine/domain/WorldObject.hpp"
+#include "../engine/domain/World.hpp"
 #include "../engine/domain/TileObject.hpp"
 #include "Tile.hpp"
 #include "../engine/domain/PointOfView.hpp"
@@ -23,7 +23,7 @@ namespace GameLogic {
 
     class Player;
 
-    class Level : public Engine::WorldObject {
+    class Level : public Engine::World {
 
     private:
         vector<vector<Tile*>> _field; //TODO create a typedef for this
