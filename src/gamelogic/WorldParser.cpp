@@ -1,8 +1,11 @@
 #include "WorldParser.hpp"
 #include <tuple>
+#include "Exceptions/FileInvalidException.hpp"
+
 
 namespace GameLogic {
 
+    using Exceptions::FileInvalidException;
     using std::tuple;
     using std::get;
 
@@ -84,7 +87,7 @@ namespace GameLogic {
                 int x = get<0>( object_list[i] );
                 if ( y < map.size() && x < map[y].size() ) {
                     if ( map[y][x]->is_wall() ) {
-                        throw exception( "file invalid spawn point inside wall" );
+                        throw FileInvalidException();
                     }
                     else {
                         //our map is y,x based that's why spawn point is y,x
@@ -92,7 +95,7 @@ namespace GameLogic {
                     }
                 }
                 else {
-                    throw exception( "file invalid spawn point out of map" );
+                    throw FileInvalidException();
                 }
 
             }

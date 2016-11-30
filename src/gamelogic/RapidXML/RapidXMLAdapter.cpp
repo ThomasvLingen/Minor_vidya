@@ -1,5 +1,7 @@
 #include "RapidXMLAdapter.hpp"
+#include "../Exceptions/FileInvalidException.hpp"
 
+using Exceptions::FileInvalidException;
 
 namespace GameLogic {
 
@@ -33,36 +35,36 @@ namespace GameLogic {
             // setup main node map
             this->_map_node = this->_doc->first_node( "map" );
             if ( this->_map_node == 0 ) {
-                throw exception( "file invalid no TileMap" );
+                throw FileInvalidException();
             }
             // setup tileset node
             this->_tileset_node = this->_map_node->first_node( "tileset" );
             if ( this->_tileset_node == 0 ) {
-                throw exception( "file invalid no textures" );
+                throw FileInvalidException();
             }
             // setup tileset->image node
             this->_image_node = this->_tileset_node->first_node( "image" );
             if ( this->_image_node == 0 ) {
-                throw exception( "file invalid no textures" );
+                throw FileInvalidException();
             }
             // setup layer node
             this->_layer_node = this->_map_node->first_node( "layer" );
             if ( this->_layer_node == 0 ) {
-                throw exception( "file invalid no TileMap" );
+                throw FileInvalidException();
             }
             // setup layer->data node
             this->_data_node = this->_layer_node->first_node( "data" );
             if ( this->_data_node == 0 ) {
-                throw exception( "file invalid no TileMap" );
+                throw FileInvalidException();
             }
             // setup objectgroup node
             this->_object_group_node = this->_map_node->first_node( "objectgroup" );
             if ( this->_object_group_node == 0 ) {
-                throw exception( "file invalid no Objects" );
+                throw FileInvalidException();
             }
         }
         else {
-            throw exception( "can't open file" );
+            throw FileInvalidException();
         }
     }
 

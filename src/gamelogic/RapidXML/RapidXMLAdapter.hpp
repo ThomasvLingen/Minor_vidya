@@ -8,7 +8,7 @@
 #include <sstream>
 #include <cstring>
 #include <tuple>
-#include "../../libs/RapidXML/rapidxml.hpp"
+#include "../../../libs/RapidXML/rapidxml.hpp"
 
 namespace GameLogic {
     using std::string;
