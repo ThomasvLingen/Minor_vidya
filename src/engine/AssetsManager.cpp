@@ -27,9 +27,7 @@ namespace Engine {
         // We can now directly map tile IDs to textures!
         this->_known_textures[0] = new ImageBuffer();
 
-        TextureMap texture_map = this->_SDL_facade.get_tileset_buffers(VIDYA_RUNPATH + "res/Wolfswapebobpepper.bmp", 64, 64, 108);
-        //TODO don't hardcode this, perhaps place it in the config file
-        //TODO change the name of this file
+        TextureMap texture_map = this->_SDL_facade.get_tileset_buffers( texture_source, tile_width, tile_height, tile_count );
         if (texture_map.size() == 0) {
             success = false;
         } else {

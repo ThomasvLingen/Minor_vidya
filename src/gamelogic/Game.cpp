@@ -17,7 +17,6 @@ namespace GameLogic {
     , running(true)
     {
         this->SDL_facade.init();
-        this->init_states();
         WorldParser parser;
         this->_init_sound_effects();
         this->init_states();
@@ -29,7 +28,7 @@ namespace GameLogic {
         catch ( const std::exception& e) {
                 std::cout << e.what();
         }
-        this->_raycasting_engine.set_world(this->_level);
+        this->raycasting_engine.set_world(this->_level);
 
         auto player = std::make_shared<Player>(this->_level->get_spawnpoint(), this->_level);
 
