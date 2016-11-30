@@ -23,7 +23,6 @@ namespace Engine {
         TextureMap _known_textures;
 
         bool _init_texture_map( string& texture_source, size_t tile_width, size_t tile_height, size_t tile_count );
-        bool _load_texture(int id, string path);
         SDLFacade& _SDL_facade;
 
         string _texture_source;
@@ -35,6 +34,7 @@ namespace Engine {
             { 1, 33 },    // Brick wall
             { 2, 1 },     // Stone wall
             { 3, 23 },    // Wood wall
+            { 4, 15}      // Blue wall
         };
     };
 

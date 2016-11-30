@@ -36,7 +36,7 @@ namespace GameLogic {
         CoordinateDouble spawn_point;
         rapid_adapter->setup_document( file_location );
 
-        if ( !assets->init( "res/" + rapid_adapter->get_texture_source(), rapid_adapter->get_tile_width(), rapid_adapter->get_tile_height(), rapid_adapter->get_tile_count() ) ) {
+        if ( !assets->init( "res\\" + rapid_adapter->get_texture_source(), rapid_adapter->get_tile_width(), rapid_adapter->get_tile_height(), rapid_adapter->get_tile_count() ) ) {
             std::cout << "AssetsManager has not initted correctly." << std::endl;
         }
 
@@ -66,7 +66,7 @@ namespace GameLogic {
                 if ( int_map[y][x] != 0 ) {
                     new_tile->set_wall( true );
                 }
-                map[y].push_back( new_tile );
+                map[y-1].push_back( new_tile );
             }
         }
         return map;
