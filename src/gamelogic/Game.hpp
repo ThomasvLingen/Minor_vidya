@@ -35,6 +35,8 @@ namespace GameLogic {
         void set_new_state(SPTR_IGameState state);
 
     private:
+        void _init_sound_effects();
+
         SPTR_IGameState _current_state;
         SPTR_IGameState _new_state;
 

@@ -27,9 +27,12 @@ namespace Engine {
         SDL_FreeSurface(this->_screen_surface);
         SDL_DestroyRenderer(this->_renderer);
         SDL_DestroyWindow(this->_window);
-        if (this->_sound_effect != NULL) {
-            Mix_FreeChunk(this->_sound_effect);
+
+        for (auto sound_effect : this->_sound_effects) {
+            Mix_FreeChunk(sound_effect.second);
         }
+
+        this->stop_music();
         Mix_CloseAudio();
         Mix_Quit();
 
@@ -530,32 +533,51 @@ namespace Engine {
     /// \param path to the file (if it's in res/music write: "res/music/filename.mp3")
     void SDLFacade::play_music(const string path)
     {
+        this->stop_music();
         this->_music = Mix_LoadMUS(path.c_str());
         if(this->_music == NULL) { //TODO exception{
             return;
         }
-        Mix_PlayMusic(this->_music, -1);
+        Mix_FadeInMusic(this->_music, -1, this->_fade_in_time);
+    }
+
+    /// \brief Loads a sound effect
+    ///
+    /// Sound effect will be loaded in the map if the path is correct. Supports ONLY: WAVE. Plays multiple at once.
+    ///
+    /// \param name of the key you want to call the sound_effect
+    /// \param path to the file (if it's in res/music write: "res/music/filename.wav")
+    void SDLFacade::load_sound_effect(const string name, const string path) {
+        if (this->_sound_effects.find(name) != this->_sound_effects.end()) { //key already exists
+            return;
+        }
+        Mix_Chunk* sound_effect = Mix_LoadWAV(path.c_str());
+        if (sound_effect == NULL) { //TODO exception{
+            return;
+        }
+        // this->_sound_effects.insert(std::pair<string, Mix_Chunk*>(name, sound_effect));
+        this->_sound_effects[name] = sound_effect;
     }
 
     /// \brief Plays a sound effect
     ///
     /// Sound effect will be played if the path is correct. Supports ONLY: WAVE. Plays multiple at once.
     ///
-    /// \param path to the file (if it's in res/music write: "res/music/filename.wav")
-    void SDLFacade::play_sound_effect(const string path)
+    /// \param name of the key that the sound_effect is linked to
+    void SDLFacade::play_sound_effect(const string name)
     {
-        this->_sound_effect = Mix_LoadWAV(path.c_str());
-        if (this->_sound_effect == NULL) { //TODO exception{
-            return;
+        if (this->_sound_effects.find(name) == this->_sound_effects.end()) { //if sound_effect is not loaded
+            return; //TODO exception{
         }
-        Mix_PlayChannel(-1, this->_sound_effect, 0);
+        Mix_PlayChannel(-1, this->_sound_effects.at(name), 0);
     }
 
-    /// \brief Stops music from playing
-    void SDLFacade::stop_music() const
+    /// \brief Stops music from playing and free's the music
+    void SDLFacade::stop_music()
     {
-        if (this->_music != NULL || this->_music != nullptr) {
+        if (this->_music != NULL) {
             Mix_FreeMusic(this->_music);
+            this->_music = NULL;
         }
     }
 

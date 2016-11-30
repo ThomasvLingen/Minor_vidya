@@ -11,6 +11,9 @@ namespace State {
     : IGameState(context)
     {
         context.SDL_facade.play_music("res/music/startup.mp3");
+
+        context.SDL_facade.play_sound_effect("monsterkill");
+        context.SDL_facade.play_sound_effect("headshot");
     }
 
     void StartUpState::update(int time_since_last_update) {

@@ -16,6 +16,7 @@ namespace GameLogic {
     , running(true)
     {
         this->SDL_facade.init();
+        this->_init_sound_effects();
         this->init_states();
 
         Engine::SPTR_AssetsManager assets = std::make_shared<AssetsManager>(this->SDL_facade);
@@ -107,6 +108,11 @@ namespace GameLogic {
     void Game::init_states()
     {
         this->_new_state = std::make_shared<State::StartUpState>(*this);
+    }
+
+    void Game::_init_sound_effects() {
+        this->SDL_facade.load_sound_effect("monsterkill", "res/sound_effects/monsterkill.wav");
+        this->SDL_facade.load_sound_effect("headshot", "res/sound_effects/headshot.wav");
     }
 }
 
