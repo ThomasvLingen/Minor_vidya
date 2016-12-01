@@ -10,7 +10,7 @@ namespace State {
     StartUpState::StartUpState(Game& context)
     : IGameState(context)
     {
-
+        context.SDL_facade.play_music(VIDYA_RUNPATH + "res/music/startup.mp3");
     }
 
     void StartUpState::update(int time_since_last_update) {

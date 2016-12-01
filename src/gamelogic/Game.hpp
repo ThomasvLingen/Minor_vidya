@@ -14,6 +14,7 @@
 #include "Level.hpp"
 #include "Tile.hpp"
 #include "state/IGameState.hpp"
+#include "../engine/PathUtil.hpp"
 
 namespace GameLogic {
 
@@ -21,6 +22,7 @@ namespace GameLogic {
     using Engine::Raycasting;
     using Engine::SDLFacade;
     using Engine::WorldPTR;
+    using Engine::PathUtil;
 
     class Game {
     public:
@@ -35,6 +37,8 @@ namespace GameLogic {
         void set_new_state(SPTR_IGameState state);
 
     private:
+        void _init_sound_effects();
+
         SPTR_IGameState _current_state;
         SPTR_IGameState _new_state;
 

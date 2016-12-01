@@ -19,6 +19,7 @@
 
 #include "SDL2/SDL.h"
 #include "SDL2/SDL_ttf.h"
+#include "SDL2/SDL_mixer.h"
 
 
 namespace Engine {
@@ -94,6 +95,11 @@ namespace Engine {
         void delay_millis(const int millis) const;
         int get_ticks() const;
 
+        void play_music(const string path);
+        void load_sound_effect(const string name, const string path);
+        void play_sound_effect(const string name);
+        void stop_music();
+
         TextureMap get_tileset_buffers(const string& path, const int tile_width, const int tile_height, const int amount_of_tiles);
 
     private:
@@ -107,6 +113,19 @@ namespace Engine {
         bool _init_fonts();
         bool _load_font(const string& path, const FontType& font_type, uint8_t size);
         ImageBuffer* get_image_buffer(SDL_Surface* tileset, const CoordinateInt& position, const int tile_width, const int tile_height);
+
+        static constexpr int _frequency = 22050;
+        static constexpr Uint16 _audio_format = MIX_DEFAULT_FORMAT;
+        static constexpr int _channels = 2;
+        static constexpr int _chunksize = 4096;
+        static constexpr int _fade_in_time = 750;
+        static constexpr int _loop_forever = -1;
+        static constexpr int _play_once = 0;
+        static constexpr int _next_available_channel = -1;
+
+        map<const string, Mix_Chunk*> _sound_effects;
+        Mix_Music* _music = NULL;
+        Mix_Chunk* _sound_effect = NULL;
     };
 }
 

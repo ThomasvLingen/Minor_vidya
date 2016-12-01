@@ -13,6 +13,7 @@ namespace State {
     {
         this->_collection.add_drawable(&_fps);
         this->_collection.add_updatable(&_fps);
+        context.SDL_facade.stop_music();
     }
 
     void RunState::update(int time_since_last_update) { //TODO: If called again, level has to reload
