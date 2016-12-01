@@ -54,7 +54,7 @@ namespace State {
         this->_menu.set_escape_option(quit);
         this->_collection.add_drawable(&this->_menu);
         this->_collection.add_handleable(&this->_menu);
-        context.SDL_facade.play_music("res/music/mainmenu.mp3");
+        context.SDL_facade.play_music(VIDYA_RUNPATH + "res/music/mainmenu.mp3");
     }
 
     void MenuState::update(int time_since_last_update) {

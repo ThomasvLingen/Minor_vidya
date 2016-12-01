@@ -10,7 +10,7 @@ namespace State {
     StartUpState::StartUpState(Game& context)
     : IGameState(context)
     {
-        context.SDL_facade.play_music("res/music/startup.mp3");
+        context.SDL_facade.play_music(VIDYA_RUNPATH + "res/music/startup.mp3");
 
         context.SDL_facade.play_sound_effect("monsterkill");
         context.SDL_facade.play_sound_effect("headshot");

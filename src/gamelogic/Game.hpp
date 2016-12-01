@@ -14,6 +14,7 @@
 #include "Level.hpp"
 #include "Tile.hpp"
 #include "state/IGameState.hpp"
+#include "../engine/PathUtil.hpp"
 
 namespace GameLogic {
 
@@ -21,6 +22,7 @@ namespace GameLogic {
     using Engine::Raycasting;
     using Engine::SDLFacade;
     using Engine::WorldPTR;
+    using Engine::PathUtil;
 
     class Game {
     public:
