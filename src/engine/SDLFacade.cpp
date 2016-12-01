@@ -555,7 +555,6 @@ namespace Engine {
         if (sound_effect == NULL) { //TODO exception{
             return;
         }
-        // this->_sound_effects.insert(std::pair<string, Mix_Chunk*>(name, sound_effect));
         this->_sound_effects[name] = sound_effect;
     }
 

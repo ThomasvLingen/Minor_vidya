@@ -11,9 +11,6 @@ namespace State {
     : IGameState(context)
     {
         context.SDL_facade.play_music(VIDYA_RUNPATH + "res/music/startup.mp3");
-
-        context.SDL_facade.play_sound_effect("monsterkill");
-        context.SDL_facade.play_sound_effect("headshot");
     }
 
     void StartUpState::update(int time_since_last_update) {
@@ -24,7 +21,6 @@ namespace State {
         for(auto key : keys){
             switch (key) {
                 case Key::ENTER:
-                    this->_context.SDL_facade.stop_music();
                     this->_context.set_new_state(std::make_shared<MenuState>(this->_context));
                     break;
                 default:
