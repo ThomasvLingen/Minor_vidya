@@ -538,7 +538,7 @@ namespace Engine {
         if(this->_music == NULL) { //TODO exception{
             return;
         }
-        Mix_FadeInMusic(this->_music, -1, this->_fade_in_time);
+        Mix_FadeInMusic(this->_music, this->_loop_forever, this->_fade_in_time);
     }
 
     /// \brief Loads a sound effect
@@ -569,7 +569,7 @@ namespace Engine {
         if (this->_sound_effects.find(name) == this->_sound_effects.end()) { //if sound_effect is not loaded
             return; //TODO exception{
         }
-        Mix_PlayChannel(-1, this->_sound_effects.at(name), 0);
+        Mix_PlayChannel(this->_next_available_channel, this->_sound_effects.at(name), this->_play_once);
     }
 
     /// \brief Stops music from playing and free's the music

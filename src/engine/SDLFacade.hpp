@@ -119,6 +119,9 @@ namespace Engine {
         static constexpr int _channels = 2;
         static constexpr int _chunksize = 4096;
         static constexpr int _fade_in_time = 750;
+        static constexpr int _loop_forever = -1;
+        static constexpr int _play_once = 0;
+        static constexpr int _next_available_channel = -1;
 
         map<const string, Mix_Chunk*> _sound_effects;
         Mix_Music* _music = NULL;
