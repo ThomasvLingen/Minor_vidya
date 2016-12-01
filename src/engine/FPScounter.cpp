@@ -8,6 +8,7 @@ namespace Engine {
 
     FPScounter::FPScounter(SDLFacade& _SDL_facade)
     : Drawable(_SDL_facade)
+    , _current_FPS(0)
     {
     }
 
