@@ -63,6 +63,8 @@ namespace GameLogic {
          */
 
     };
+
+    typedef std::shared_ptr<Player> SPTR_Player;
 }
 
 #endif //MINOR_VIDYA_PLAYER_HPP

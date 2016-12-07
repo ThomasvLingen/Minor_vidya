@@ -15,6 +15,7 @@
 #include "Tile.hpp"
 #include "state/IGameState.hpp"
 #include "../engine/PathUtil.hpp"
+#include "Player.hpp"
 
 namespace GameLogic {
 
@@ -45,7 +46,7 @@ namespace GameLogic {
         SPTR_IGameState _new_state;
 
         SPTR_Level _level;
-        std::shared_ptr<Player> _player;
+        SPTR_Player _player;
     };
 }
 
