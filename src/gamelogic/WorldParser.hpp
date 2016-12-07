@@ -6,7 +6,7 @@
 #include <cstring>
 #include "Level.hpp"
 #include "Tile.hpp"
-#include "rapidXML/RapidXMLAdapter.hpp"
+#include "rapidxml/RapidXMLAdapter.hpp"
 
 namespace GameLogic {
 
