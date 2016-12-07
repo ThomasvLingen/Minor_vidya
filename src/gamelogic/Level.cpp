@@ -9,9 +9,10 @@ namespace GameLogic {
 
     using std::vector;
 
-    Level::Level(vector<vector<Tile*>> field, Engine::SPTR_AssetsManager assets)
+    Level::Level(Player& player, vector<vector<Tile*>> field, Engine::SPTR_AssetsManager assets)
     : World(assets)
     , _field(field)
+    , _player(player)
     {
     }
 
@@ -26,7 +27,7 @@ namespace GameLogic {
             }
         }
 
-        this->_player->update(delta_time);
+        this->_player.update(delta_time);
     }
 
     CoordinateDouble Level::get_spawnpoint()
@@ -41,17 +42,12 @@ namespace GameLogic {
 
     PointOfView& Level::get_pov()
     {
-        return *(this->_player);
-    }
-
-    void Level::set_player(shared_ptr<Player> player)
-    {
-        this->_player = player;
+        return this->_player;
     }
 
     void Level::handle_input(Engine::PressedKeys keys)
     {
-        this->_player->handleInput(keys);
+        this->_player.handleInput(keys);
     }
 
     Level::Level(const Level& obj)

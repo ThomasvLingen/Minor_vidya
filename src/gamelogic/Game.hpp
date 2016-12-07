@@ -24,6 +24,8 @@ namespace GameLogic {
     using Engine::WorldPTR;
     using Engine::PathUtil;
 
+    class Player;
+
     class Game {
     public:
         Game();
@@ -43,7 +45,7 @@ namespace GameLogic {
         SPTR_IGameState _new_state;
 
         SPTR_Level _level;
-
+        std::shared_ptr<Player> _player;
     };
 }
 
