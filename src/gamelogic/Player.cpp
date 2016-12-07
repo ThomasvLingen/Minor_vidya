@@ -130,5 +130,6 @@ namespace GameLogic {
     void Player::set_level(SPTR_Level level)
     {
         this->_level = level;
+        this->_position = level->get_spawnpoint();
     }
 }

@@ -17,6 +17,12 @@ namespace GameLogic {
     {
     }
 
+    Level::Level(Player& player, Engine::SPTR_AssetsManager assets)
+    : World(assets)
+    , _player(player)
+    {
+    }
+
     /// \brief update every tile from this level
     void Level::update(int delta_time)
     {
@@ -57,5 +63,20 @@ namespace GameLogic {
     , _spawnpoint(obj._spawnpoint)
     , _player(obj._player)
     {
+    }
+
+    void Level::set_spawnpoint(CoordinateDouble coordinate)
+    {
+        this->_spawnpoint = coordinate;
+    }
+
+    void Level::set_field(vector<vector<Tile*>> field)
+    {
+        this->_field = field;
+    }
+
+    vector<vector<Tile*>> Level::get_field()
+    {
+        return this->_field;
     }
 }

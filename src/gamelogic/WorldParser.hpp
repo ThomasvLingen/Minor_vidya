@@ -18,7 +18,7 @@ namespace GameLogic {
         WorldParser();
         ~WorldParser();
 
-        Level generate_level( std::string file_location, Engine::SPTR_AssetsManager assets );
+        void fill_level(Level& level, std::string file_location);
     private:
         vector<vector<Tile*>> _generate_tilemap( vector<vector<size_t>> int_map, Engine::SPTR_AssetsManager assets );
         CoordinateDouble _get_spawnpoint( vector<tuple<size_t, size_t, char*>> object_list, vector<vector<Tile*>> map );

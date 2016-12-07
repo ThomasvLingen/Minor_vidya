@@ -13,7 +13,6 @@ namespace GameLogic {
     RapidXMLAdapter::~RapidXMLAdapter()
     {
         delete this->_doc;
-        delete this->_map_node;
     }
 
     /// \brief Set-up of RapidXML xml_document and xml_nodes

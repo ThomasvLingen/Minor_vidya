@@ -38,6 +38,7 @@ namespace GameLogic {
 
     public:
         Level(Player& player, vector<vector<Tile*>> field, CoordinateDouble spawnpoint, Engine::SPTR_AssetsManager assets);
+        Level(Player& player, Engine::SPTR_AssetsManager assets);
         Level(const Level& obj);
 
         void update(int delta_time) override;
@@ -45,6 +46,10 @@ namespace GameLogic {
         TileObject* get_tile(int x, int y) override;
 
         CoordinateDouble get_spawnpoint();
+        void set_spawnpoint(CoordinateDouble coordinate);
+
+        vector<vector<Tile*>> get_field();
+        void set_field(vector<vector<Tile*>> field);
 
         PointOfView& get_pov() override;
 

@@ -64,8 +64,11 @@ namespace GameLogic {
         WorldParser parser;
         Engine::SPTR_AssetsManager assets = std::make_shared<AssetsManager>( this->SDL_facade );
 
+        this->_player = std::make_shared<Player>(CoordinateDouble{0,0});
+        this->_level = { std::make_shared<Level>(*this->_player, assets) };
+
         try {
-            this->_level = { std::make_shared<Level>( parser.generate_level( file_location, assets ) ) };
+            parser.fill_level(*this->_level, file_location);
         }
         catch ( const Exceptions::FileInvalidException& e ) {
             std::cout << e.what() << std::endl;
@@ -77,11 +80,9 @@ namespace GameLogic {
             std::cout << "Returning to Menu" << std::endl;
             return false;
         }
+
+        this->_player->set_level(this->_level);
         this->raycasting_engine.set_world( this->_level );
-
-        auto player = std::make_shared<Player>( this->_level->get_spawnpoint(), this->_level );
-
-        this->_level->set_player( player );
 
         return true;
     }

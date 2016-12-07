@@ -17,35 +17,37 @@ namespace GameLogic {
     {
     }
 
-    /// \brief Generates a level from the source .tmx file
+    /// \brief Fills a level using a source .tmx file
     /// 
-    /// This function generates a Level object which has:
+    /// This function fills a Level object which has:
     /// * 2D vector of Tiles
     /// * TileSet struct
     /// needs to be inside try catch
     ///
+    /// \param level level to fill
     /// \param file_location location of the file to be used
-    /// \param assets the assets manager for this .tmx
-    /// \return returns a Level
-    Level WorldParser::generate_level( std::string file_location, Engine::SPTR_AssetsManager assets )
+    void WorldParser::fill_level(Level& level, std::string file_location)
     {
-        RapidXMLAdapter* rapid_adapter = new RapidXMLAdapter();
+        RapidXMLAdapter rapid_adapter;
         vector<vector<size_t>> int_map;
-        vector<vector<Tile*>> map;
         vector<tuple<size_t, size_t, char*>> object_list;
-        CoordinateDouble spawn_point;
-        rapid_adapter->setup_document( file_location );
-        string path = file_location.substr( 0, file_location.find_last_of( "\\/" ) ) + "/" + rapid_adapter->get_texture_source();
-        if ( !assets->init( path, rapid_adapter->get_tile_width(), rapid_adapter->get_tile_height(), rapid_adapter->get_tile_count() ) ) {
+
+        rapid_adapter.setup_document( file_location );
+        string path = file_location.substr( 0, file_location.find_last_of( "\\/" ) ) + "/" + rapid_adapter.get_texture_source();
+        if ( !level.assets->init( path, rapid_adapter.get_tile_width(), rapid_adapter.get_tile_height(), rapid_adapter.get_tile_count() ) ) {
             std::cout << "AssetsManager has not initted correctly." << std::endl;
         }
 
-        int_map = rapid_adapter->get_map();
-        map = this->_generate_tilemap( int_map, assets );
-        object_list = rapid_adapter->get_objects();
-        spawn_point = this->_get_spawnpoint(object_list, map);
-        
-        return Level( map, spawn_point, assets );
+        int_map = rapid_adapter.get_map();
+        level.set_field(
+            this->_generate_tilemap(int_map, level.assets)
+        );
+
+        object_list = rapid_adapter.get_objects();
+
+        level.set_spawnpoint(
+            this->_get_spawnpoint(object_list, level.get_field())
+        );
     }
 
     /// \brief Generates a 2D Tile vector from the int_map
