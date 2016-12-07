@@ -59,19 +59,19 @@ namespace GameLogic {
             }
         }
 
+        // Player start coords
+        CoordinateDouble coord = {10.5,1.5};
+        this->_player = std::make_shared<Player>(coord);
+
         // TODO: The AssetsManager should not be newed here
         this->_level = {
             std::make_shared<Level>(
-                Level(tiles, assets)
+                Level(*this->_player, tiles, assets)
             )
         };
+
         this->raycasting_engine.set_world(this->_level);
-
-        // Player start coords
-        CoordinateDouble coord = {10.5,1.5};
-        auto player = std::make_shared<Player>(coord, this->_level);
-
-        this->_level->set_player(player);
+        this->_player->set_level(this->_level);
     }
 
     /// \brief The main game loop

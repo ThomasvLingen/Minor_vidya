@@ -19,7 +19,6 @@ namespace GameLogic {
     using Engine::TileObject;
     using Engine::PointOfView;
     using Engine::AssetsManager;
-    using std::shared_ptr;
 
     class Player;
 
@@ -28,7 +27,7 @@ namespace GameLogic {
     private:
         vector<vector<Tile*>> _field; //TODO create a typedef for this
         CoordinateDouble _spawnpoint;
-        shared_ptr<Player> _player;
+        Player& _player;
 
         /*
          * WorldParser
@@ -38,12 +37,10 @@ namespace GameLogic {
          */
 
     public:
-        Level(vector<vector<Tile*>> field, Engine::SPTR_AssetsManager assets);
+        Level(Player& player, vector<vector<Tile*>> field, Engine::SPTR_AssetsManager assets);
         Level(const Level& obj);
 
         void update(int delta_time) override;
-
-        void set_player(shared_ptr<Player> player);
 
         TileObject* get_tile(int x, int y) override;
 

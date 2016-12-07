@@ -15,6 +15,7 @@
 #include "Tile.hpp"
 #include "state/IGameState.hpp"
 #include "../engine/PathUtil.hpp"
+#include "Player.hpp"
 
 namespace GameLogic {
 
@@ -23,6 +24,8 @@ namespace GameLogic {
     using Engine::SDLFacade;
     using Engine::WorldPTR;
     using Engine::PathUtil;
+
+    class Player;
 
     class Game {
     public:
@@ -43,7 +46,7 @@ namespace GameLogic {
         SPTR_IGameState _new_state;
 
         SPTR_Level _level;
-
+        SPTR_Player _player;
     };
 }
 

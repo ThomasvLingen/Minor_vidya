@@ -28,7 +28,7 @@ namespace GameLogic {
     class Player : public PointOfView {
 
     public:
-        Player(CoordinateDouble position, SPTR_Level level);
+        Player(CoordinateDouble position);
 
         bool is_at(int x, int y);
         void set_level(SPTR_Level level);
@@ -63,6 +63,8 @@ namespace GameLogic {
          */
 
     };
+
+    typedef std::shared_ptr<Player> SPTR_Player;
 }
 
 #endif //MINOR_VIDYA_PLAYER_HPP
