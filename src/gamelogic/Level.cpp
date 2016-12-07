@@ -23,6 +23,16 @@ namespace GameLogic {
     {
     }
 
+
+    Level::~Level()
+    {
+        for (auto row : this->_field) {
+            for (auto tile : row) {
+                delete tile;
+            }
+        }
+    }
+
     /// \brief update every tile from this level
     void Level::update(int delta_time)
     {

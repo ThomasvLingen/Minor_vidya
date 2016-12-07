@@ -40,6 +40,7 @@ namespace GameLogic {
         Level(Player& player, vector<vector<Tile*>> field, CoordinateDouble spawnpoint, Engine::SPTR_AssetsManager assets);
         Level(Player& player, Engine::SPTR_AssetsManager assets);
         Level(const Level& obj);
+        virtual ~Level();
 
         void update(int delta_time) override;
 
