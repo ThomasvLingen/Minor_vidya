@@ -5,6 +5,7 @@
 #include "Game.hpp"
 #include "Player.hpp"
 #include "WorldParser.hpp"
+#include "../engine/PathUtil.hpp"
 
 #include "state/StartUpState.hpp"
 
@@ -23,7 +24,7 @@ namespace GameLogic {
         Engine::SPTR_AssetsManager assets = std::make_shared<AssetsManager>(this->SDL_facade);
 
         try {
-            this->_level = { std::make_shared<Level>( parser.generate_level( "res/test2.tmx", assets ) ) };
+            this->_level = { std::make_shared<Level>( parser.generate_level( VIDYA_RUNPATH + "res/test2.tmx", assets ) ) };
         }
         catch ( const std::exception& e) {
                 std::cout << e.what();
