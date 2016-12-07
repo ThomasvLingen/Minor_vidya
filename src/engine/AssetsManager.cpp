@@ -32,8 +32,8 @@ namespace Engine {
             success = false;
         } else {
             this->_known_textures[0] = new ImageBuffer();
-            for (auto tile_pair : this->_tileset_map_to_id) {
-                this->_known_textures[tile_pair.first] = texture_map[tile_pair.second];
+            for (auto tile_pair : texture_map) {
+                this->_known_textures[tile_pair.first] = tile_pair.second;
             }
         }
 
