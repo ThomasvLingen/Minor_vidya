@@ -11,16 +11,15 @@ namespace Engine {
     {
     }
 
-    bool AssetsManager::init()
+    bool AssetsManager::init( string& texture_source, size_t tile_width, size_t tile_height, size_t tile_count )
     {
         bool success = true;
-
-        success &= this->_init_texture_map();
+        success &= this->_init_texture_map( texture_source, tile_width, tile_height, tile_count );
 
         return success;
     }
 
-    bool AssetsManager::_init_texture_map()
+    bool AssetsManager::_init_texture_map( string& texture_source, size_t tile_width, size_t tile_height, size_t tile_count )
     {
         bool success = true;
 
@@ -28,9 +27,7 @@ namespace Engine {
         // We can now directly map tile IDs to textures!
         this->_known_textures[0] = new ImageBuffer();
 
-        TextureMap texture_map = this->_SDL_facade.get_tileset_buffers(VIDYA_RUNPATH + "res/Wolfswapebobpepper.bmp", 64, 64, 108);
-        //TODO don't hardcode this, perhaps place it in the config file
-        //TODO change the name of this file
+        TextureMap texture_map = this->_SDL_facade.get_tileset_buffers( texture_source, tile_width, tile_height, tile_count );
         if (texture_map.size() == 0) {
             success = false;
         } else {

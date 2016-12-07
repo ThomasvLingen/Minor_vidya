@@ -17,31 +17,24 @@ namespace Engine {
     public:
         AssetsManager(SDLFacade& SDL_facade);
 
-        bool init();
+        bool init( string& texture_source, size_t tile_width, size_t tile_height, size_t tile_count);
         ImageBuffer& get_texture(int id);
-
     private:
         TextureMap _known_textures;
 
-        bool _init_texture_map();
+        bool _init_texture_map( string& texture_source, size_t tile_width, size_t tile_height, size_t tile_count );
         SDLFacade& _SDL_facade;
 
-        // TODO: This should not be hardcoded here as soon as tiled integration works
-        // The second number is the position of the tile in the tilemap
+        string _texture_source;
+        size_t _tile_height;
+        size_t _tile_width;
+        size_t _tile_count;
+
         map<int, int> _tileset_map_to_id = {
-            {1, 33},    // Brick wall
-            {2, 1},     // Stone wall
-            {3, 23},    // Wood wall
-            {4, 106},   // swap-e 1
-            {5, 107},   // swap-e 2
-            {6, 108},   // swap-e 3
-            {7, 69},    // white brick wall
-            {8, 9},     // Prison
-            {9, 13},    // Skeleton prison
-            {10, 25},   // Steel door
-            {11, 29},   // Blue steel wall
-            {12, 47},   // Disgusting wall
-            {13, 7}     // Bob texture
+            { 1, 33 },    // Brick wall
+            { 2, 1 },     // Stone wall
+            { 3, 23 },    // Wood wall
+            { 4, 15}      // Blue wall
         };
     };
 

@@ -4,6 +4,9 @@
 
 #include "Game.hpp"
 #include "Player.hpp"
+#include "WorldParser.hpp"
+#include "../engine/PathUtil.hpp"
+#include "exceptions/FileInvalidException.hpp"
 
 #include "state/StartUpState.hpp"
 
@@ -18,60 +21,6 @@ namespace GameLogic {
         this->SDL_facade.init();
         this->_init_sound_effects();
         this->init_states();
-
-        Engine::SPTR_AssetsManager assets = std::make_shared<AssetsManager>(this->SDL_facade);
-        if (!assets->init()) {
-            std::cout << "AssetsManager has not initted correctly." << std::endl;
-        }
-
-        // TODO: This is test code of the worst kind, remove when no longer needed (f/e when we have a level editor)
-        // {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-        std::vector<std::vector<int>> world = {
-            {1,1,1,1,1,7,7,7,7,7,7,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,13,1,1,1,1,1,1},
-            {1,0,0,0,0,7,0,0,0,0,7,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-            {1,0,0,0,0,7,0,0,0,0,7,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-            {1,0,0,0,0,7,0,0,0,0,7,3,3,3,3,3,3,1,0,0,8,9,10,11,12,0,0,0,0,0,0,0,0,0,1},
-            {1,0,0,0,0,7,0,0,0,0,0,0,0,0,0,0,3,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-            {1,0,0,0,0,7,7,7,7,7,7,3,3,3,3,0,3,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-            {1,1,1,1,1,1,1,1,1,1,1,0,0,0,3,0,3,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-            {1,0,0,0,0,0,0,0,4,0,1,0,0,0,3,0,3,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-            {1,0,0,0,0,0,0,0,5,0,1,0,0,0,3,0,3,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1},
-            {1,0,0,0,0,0,0,0,6,2,2,2,2,2,2,0,2,2,2,2,2,2,2,2,2,2,2,0,2,2,2,2,2,2,1},
-            {13,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,13},
-            {1,0,0,0,0,0,0,0,4,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1},
-            {1,0,0,0,0,0,0,0,5,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-            {1,0,0,0,0,0,0,0,6,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-            {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
-        };
-        std::vector<std::vector<Tile*>> tiles;
-
-        for(size_t i = 0; i < world.size(); i++){
-            std::vector<Tile*>* vector = new std::vector<Tile*>;
-            tiles.push_back(*vector);
-
-            for(size_t j = 0; j < world.at(i).size(); j++){
-                Tile* temp = new Tile(assets->get_texture(world[i][j]));
-
-                // Only > 0 is a wall, the rest is empty
-                temp->set_wall(world[i][j] > 0);
-
-                tiles.at(i).push_back(temp);
-            }
-        }
-
-        // Player start coords
-        CoordinateDouble coord = {10.5,1.5};
-        this->_player = std::make_shared<Player>(coord);
-
-        // TODO: The AssetsManager should not be newed here
-        this->_level = {
-            std::make_shared<Level>(
-                Level(*this->_player, tiles, assets)
-            )
-        };
-
-        this->raycasting_engine.set_world(this->_level);
-        this->_player->set_level(this->_level);
     }
 
     /// \brief The main game loop
@@ -103,6 +52,39 @@ namespace GameLogic {
     void Game::set_new_state(SPTR_IGameState state)
     {
         this->_new_state = state;
+    }
+
+    /// \brief Load a level
+    ///
+    /// Loads a level based on the file_location
+    ///
+    /// \param file_location location of the level.tmx to be loaded 
+    bool Game::load_Level(std::string file_location)
+    {
+        WorldParser parser;
+        Engine::SPTR_AssetsManager assets = std::make_shared<AssetsManager>( this->SDL_facade );
+
+        this->_player = std::make_shared<Player>(CoordinateDouble{0,0});
+        this->_level = { std::make_shared<Level>(*this->_player, assets) };
+
+        try {
+            parser.fill_level(*this->_level, file_location);
+        }
+        catch ( const Exceptions::FileInvalidException& e ) {
+            std::cout << e.what() << std::endl;
+            std::cout << "Returning to Menu" << std::endl;
+            return false;
+        }
+        catch ( const std::exception& e ) {
+            std::cout << e.what() << std::endl;
+            std::cout << "Returning to Menu" << std::endl;
+            return false;
+        }
+
+        this->_player->set_level(this->_level);
+        this->raycasting_engine.set_world( this->_level );
+
+        return true;
     }
 
     void Game::init_states()

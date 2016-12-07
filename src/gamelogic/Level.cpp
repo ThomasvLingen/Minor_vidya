@@ -9,11 +9,28 @@ namespace GameLogic {
 
     using std::vector;
 
-    Level::Level(Player& player, vector<vector<Tile*>> field, Engine::SPTR_AssetsManager assets)
+    Level::Level(Player& player, vector<vector<Tile*>> field, CoordinateDouble spawnpoint, Engine::SPTR_AssetsManager assets)
     : World(assets)
     , _field(field)
     , _player(player)
+    , _spawnpoint(spawnpoint)
     {
+    }
+
+    Level::Level(Player& player, Engine::SPTR_AssetsManager assets)
+    : World(assets)
+    , _player(player)
+    {
+    }
+
+
+    Level::~Level()
+    {
+        for (auto row : this->_field) {
+            for (auto tile : row) {
+                delete tile;
+            }
+        }
     }
 
     /// \brief update every tile from this level
@@ -37,7 +54,7 @@ namespace GameLogic {
 
     TileObject* Level::get_tile(int x, int y)
     {
-        return _field.at(x).at(y); //TODO: use at or []?
+        return _field[x][y];
     }
 
     PointOfView& Level::get_pov()
@@ -56,5 +73,20 @@ namespace GameLogic {
     , _spawnpoint(obj._spawnpoint)
     , _player(obj._player)
     {
+    }
+
+    void Level::set_spawnpoint(CoordinateDouble coordinate)
+    {
+        this->_spawnpoint = coordinate;
+    }
+
+    void Level::set_field(vector<vector<Tile*>> field)
+    {
+        this->_field = field;
+    }
+
+    vector<vector<Tile*>> Level::get_field()
+    {
+        return this->_field;
     }
 }
