@@ -21,21 +21,6 @@ namespace GameLogic {
         this->SDL_facade.init();
         this->_init_sound_effects();
         this->init_states();
-
-        //try {
-        //    this->_level = { std::make_shared<Level>( parser.generate_level( VIDYA_RUNPATH + "res/troll.tmx", assets ) ) };
-        //}
-        //catch ( const Exceptions::FileInvalidException& e) {
-        //    std::cout << e.what() << std::endl;
-        //}
-        //catch ( const std::exception& e ) {
-        //    std::cout << e.what();
-        //}
-        //this->raycasting_engine.set_world(this->_level);
-
-        //auto player = std::make_shared<Player>(this->_level->get_spawnpoint(), this->_level);
-
-        //this->_level->set_player(player);
     }
 
     /// \brief The main game loop
@@ -69,13 +54,18 @@ namespace GameLogic {
         this->_new_state = state;
     }
 
-    bool Game::load_Level()
+    /// \brief Load a level
+    ///
+    /// Loads a level based on the file_location
+    ///
+    /// \param file_location location of the level.tmx to be loaded 
+    bool Game::load_Level(std::string file_location)
     {
         WorldParser parser;
         Engine::SPTR_AssetsManager assets = std::make_shared<AssetsManager>( this->SDL_facade );
 
         try {
-            this->_level = { std::make_shared<Level>( parser.generate_level( VIDYA_RUNPATH + "res/Test2.tmx", assets ) ) };
+            this->_level = { std::make_shared<Level>( parser.generate_level( file_location, assets ) ) };
         }
         catch ( const Exceptions::FileInvalidException& e ) {
             std::cout << e.what() << std::endl;
@@ -83,7 +73,7 @@ namespace GameLogic {
             return false;
         }
         catch ( const std::exception& e ) {
-            std::cout << e.what();
+            std::cout << e.what() << std::endl;
             std::cout << "Returning to Menu" << std::endl;
             return false;
         }
