@@ -1,6 +1,6 @@
 #include "WorldParser.hpp"
 #include <tuple>
-#include "Exceptions/FileInvalidException.hpp"
+#include "exceptions/FileInvalidException.hpp"
 
 
 namespace GameLogic {
@@ -35,7 +35,7 @@ namespace GameLogic {
         vector<tuple<size_t, size_t, char*>> object_list;
         CoordinateDouble spawn_point;
         rapid_adapter->setup_document( file_location );
-        string path = "res\\" + rapid_adapter->get_texture_source();
+        string path = file_location.substr( 0, file_location.find_last_of( "\\/" ) ) + "/" + rapid_adapter->get_texture_source();
         if ( !assets->init( path, rapid_adapter->get_tile_width(), rapid_adapter->get_tile_height(), rapid_adapter->get_tile_count() ) ) {
             std::cout << "AssetsManager has not initted correctly." << std::endl;
         }
@@ -63,9 +63,7 @@ namespace GameLogic {
         for ( int y = 1; y < int_map.size(); y++ ) {
             for ( int x = 0; x < int_map[y].size(); x++ ) {
                 Tile* new_tile = new Tile( assets->get_texture( int_map[y][x] ) );
-                if ( int_map[y][x] != 0 ) {
-                    new_tile->set_wall( true );
-                }
+                new_tile->set_wall( int_map[y][x] != 0 );
                 map[y-1].push_back( new_tile );
             }
         }
@@ -100,5 +98,6 @@ namespace GameLogic {
 
             }
         }
+        throw FileInvalidException();
     }
 }

@@ -27,7 +27,7 @@ namespace Engine {
         // We can now directly map tile IDs to textures!
         this->_known_textures[0] = new ImageBuffer();
 
-        TextureMap texture_map = this->_SDL_facade.get_tileset_buffers( VIDYA_RUNPATH + texture_source, tile_width, tile_height, tile_count );
+        TextureMap texture_map = this->_SDL_facade.get_tileset_buffers( texture_source, tile_width, tile_height, tile_count );
         if (texture_map.size() == 0) {
             success = false;
         } else {

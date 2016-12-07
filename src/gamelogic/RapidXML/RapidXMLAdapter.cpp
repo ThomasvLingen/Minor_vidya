@@ -1,5 +1,5 @@
 #include "RapidXMLAdapter.hpp"
-#include "../Exceptions/FileInvalidException.hpp"
+#include "../exceptions/FileInvalidException.hpp"
 
 using Exceptions::FileInvalidException;
 

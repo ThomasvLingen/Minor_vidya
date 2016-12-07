@@ -38,6 +38,7 @@ namespace GameLogic {
 
         void init_states();
         void set_new_state(SPTR_IGameState state);
+        bool load_Level(); //TODO: load level based on file location
 
     private:
         void _init_sound_effects();

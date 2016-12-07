@@ -6,6 +6,7 @@
 #include "Player.hpp"
 #include "WorldParser.hpp"
 #include "../engine/PathUtil.hpp"
+#include "exceptions/FileInvalidException.hpp"
 
 #include "state/StartUpState.hpp"
 
@@ -18,22 +19,23 @@ namespace GameLogic {
     , running(true)
     {
         this->SDL_facade.init();
-        WorldParser parser;
         this->_init_sound_effects();
         this->init_states();
-        Engine::SPTR_AssetsManager assets = std::make_shared<AssetsManager>(this->SDL_facade);
 
-        try {
-            this->_level = { std::make_shared<Level>( parser.generate_level( VIDYA_RUNPATH + "res/test2.tmx", assets ) ) };
-        }
-        catch ( const std::exception& e) {
-                std::cout << e.what();
-        }
-        this->raycasting_engine.set_world(this->_level);
+        //try {
+        //    this->_level = { std::make_shared<Level>( parser.generate_level( VIDYA_RUNPATH + "res/troll.tmx", assets ) ) };
+        //}
+        //catch ( const Exceptions::FileInvalidException& e) {
+        //    std::cout << e.what() << std::endl;
+        //}
+        //catch ( const std::exception& e ) {
+        //    std::cout << e.what();
+        //}
+        //this->raycasting_engine.set_world(this->_level);
 
-        auto player = std::make_shared<Player>(this->_level->get_spawnpoint(), this->_level);
+        //auto player = std::make_shared<Player>(this->_level->get_spawnpoint(), this->_level);
 
-        this->_level->set_player(player);
+        //this->_level->set_player(player);
     }
 
     /// \brief The main game loop
@@ -65,6 +67,33 @@ namespace GameLogic {
     void Game::set_new_state(SPTR_IGameState state)
     {
         this->_new_state = state;
+    }
+
+    bool Game::load_Level()
+    {
+        WorldParser parser;
+        Engine::SPTR_AssetsManager assets = std::make_shared<AssetsManager>( this->SDL_facade );
+
+        try {
+            this->_level = { std::make_shared<Level>( parser.generate_level( VIDYA_RUNPATH + "res/Test2.tmx", assets ) ) };
+        }
+        catch ( const Exceptions::FileInvalidException& e ) {
+            std::cout << e.what() << std::endl;
+            std::cout << "Returning to Menu" << std::endl;
+            return false;
+        }
+        catch ( const std::exception& e ) {
+            std::cout << e.what();
+            std::cout << "Returning to Menu" << std::endl;
+            return false;
+        }
+        this->raycasting_engine.set_world( this->_level );
+
+        auto player = std::make_shared<Player>( this->_level->get_spawnpoint(), this->_level );
+
+        this->_level->set_player( player );
+
+        return true;
     }
 
     void Game::init_states()
