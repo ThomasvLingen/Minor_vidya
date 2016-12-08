@@ -62,9 +62,9 @@ namespace GameLogic {
         vector<vector<Tile*>> map;
         map.resize( int_map.size());
         //start at y = 1 as .tmx starts with empty row
-        for ( int y = 1; y < int_map.size(); y++ ) {
-            for ( int x = 0; x < int_map[y].size(); x++ ) {
-                Tile* new_tile = new Tile( assets->get_texture( int_map[y][x] ) );
+        for ( size_t y = 1; y < int_map.size(); y++ ) {
+            for ( size_t x = 0; x < int_map[y].size(); x++ ) {
+                Tile* new_tile = new Tile( assets->get_texture( (int)int_map[y][x] ) );
                 new_tile->set_wall( int_map[y][x] != 0 );
                 map[y-1].push_back( new_tile );
             }
@@ -83,8 +83,8 @@ namespace GameLogic {
     {
         for ( size_t i = 0; i < object_list.size(); i++ ) {
             if ( std::strcmp( get<2>( object_list[i] ), "PlayerSpawn" ) == 0 ) {
-                int y = get<1>( object_list[i] );
-                int x = get<0>( object_list[i] );
+                size_t y = get<1>( object_list[i] );
+                size_t x = get<0>( object_list[i] );
                 if ( y < map.size() && x < map[y].size() ) {
                     if ( map[y][x]->is_wall() ) {
                         throw FileInvalidException();
