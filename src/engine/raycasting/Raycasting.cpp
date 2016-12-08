@@ -16,7 +16,7 @@ namespace Engine {
     /// \brief Get pressed keys from SDL_facade and parse it to the worldInterface
     void Raycasting::handle_input()
     {
-        this->_world->handle_input(this->_SDL_facade.get_keys());
+        this->_world->handle_input(this->_SDL_facade.get_input());
 
         // If we need to do something on a keystroke, handle input ourselves
     }

@@ -17,21 +17,16 @@ namespace State {
     {
         this->_context.SDL_facade.handle_sdl_events();
 
-        PressedKeys keys = this->_context.SDL_facade.get_keys();
+        Input keys = this->_context.SDL_facade.get_input();
 
-        if (this->_timeSinceLastPress <= 20) { //TODO: TO SDL ticks
-            this->_timeSinceLastPress++;
-        }
-        if (this->_timeSinceLastPress > 20) {
-            for (auto key : keys) {
-                switch (key) {
-                    case Key::ESC:
-                        this->_context.set_new_state(std::make_shared<MenuState>(this->_context));
-                        this->_timeSinceLastPress  = 0;
-                        break;
-                    default:
-                        break;
-                }
+
+        for (auto key : keys.keys_released) {
+            switch (key) {
+                case Key::ESC:
+                    this->_context.set_new_state(std::make_shared<MenuState>(this->_context));
+                    break;
+                default:
+                    break;
             }
         }
 

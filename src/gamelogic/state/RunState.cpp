@@ -19,19 +19,15 @@ namespace State {
     void RunState::update(int time_since_last_update) { //TODO: If called again, level has to reload
         this->_context.SDL_facade.handle_sdl_events();
         this->_context.raycasting_engine.handle_input();
-        if(this->_timeSinceLastPress <= 20){ //TODO: TO SDL ticks
-            this->_timeSinceLastPress++;
-        }
-        if(this->_timeSinceLastPress > 20) {
-            PressedKeys keys = this->_context.SDL_facade.get_keys();
-            for (auto key : keys) {
-                switch (key) {
-                    case Key::ESC:
-                        this->_context.set_new_state(std::make_shared<PauseState>(this->_context));
-                        break;
-                    default:
-                        break;
-                }
+
+        Input keys = this->_context.SDL_facade.get_input();
+        for (auto key : keys.keys_released) {
+            switch (key) {
+                case Key::ESC:
+                    this->_context.set_new_state(std::make_shared<PauseState>(this->_context));
+                    break;
+                default:
+                    break;
             }
         }
 

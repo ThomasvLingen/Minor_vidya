@@ -16,9 +16,9 @@ namespace State {
     void StartUpState::update(int time_since_last_update) {
         this->_context.SDL_facade.handle_sdl_events();
 
-        PressedKeys keys = this->_context.SDL_facade.get_keys();
+        Input keys = this->_context.SDL_facade.get_input();
 
-        for(auto key : keys){
+        for (auto key : keys.keys_released) {
             switch (key) {
                 case Key::ENTER:
                     this->_context.set_new_state(std::make_shared<MenuState>(this->_context));

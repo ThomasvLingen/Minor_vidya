@@ -83,31 +83,26 @@ namespace State {
         );
     }
 
-    void Menu::handle_input(::Engine::PressedKeys& keys)
+    void Menu::handle_input(Input& keys)
     {
-        if(this->_time_since_last_press < 20){ //todo this is not nice
-            this->_time_since_last_press++;
-        } else {
-            for (auto key : keys) {
-                switch (key) {
-                    case Key::W :
-                    case Key::UP :
-                        this->set_previous();
-                        break;
-                    case Key::S :
-                    case Key::DOWN :
-                        this->set_next();
-                        break;
-                    case Key::ESC:
-                        this->_escape_option.callback(this->_context);
-                        break;
-                    case Key::ENTER:
-                        this->get_selected()->callback(this->_context);
-                        break;
-                    default:
-                        break;
-                }
-                this->_time_since_last_press = 0;
+        for (auto key : keys.keys_released) {
+            switch (key) {
+                case Key::W :
+                case Key::UP :
+                    this->set_previous();
+                    break;
+                case Key::S :
+                case Key::DOWN :
+                    this->set_next();
+                    break;
+                case Key::ESC:
+                    this->_escape_option.callback(this->_context);
+                    break;
+                case Key::ENTER:
+                    this->get_selected()->callback(this->_context);
+                    break;
+                default:
+                    break;
             }
         }
     }

@@ -23,6 +23,7 @@ namespace State {
     using Engine::SDLFacade;
     using Engine::Handleable;
     using Engine::Key;
+    using Engine::Input;
     using Engine::FontType;
     using Engine::Color;
 
@@ -35,7 +36,7 @@ namespace State {
         void set_next();
 
         virtual void draw() override;
-        virtual void handle_input(::Engine::PressedKeys& keys) override;
+        virtual void handle_input(Input& keys) override;
 
         void set_previous();
         void add_option(MenuOption option);
@@ -55,8 +56,6 @@ namespace State {
         const FontType _font = FontType::alterebro_pixel;
         const Color _color = {255,255,255};
         Game& _context;
-
-        int _time_since_last_press = 0;
     };
 }
 

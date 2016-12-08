@@ -81,7 +81,7 @@ namespace State {
         );
 
         this->_context.SDL_facade.handle_sdl_events();
-        PressedKeys keys = this->_context.SDL_facade.get_keys();
+        Input keys = this->_context.SDL_facade.get_input();
         this->_collection.handle_input(keys);
         this->_collection.draw();
 

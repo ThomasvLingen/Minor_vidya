@@ -69,7 +69,7 @@ namespace GameLogic {
         return this->_player;
     }
 
-    void Level::handle_input(Engine::PressedKeys keys)
+    void Level::handle_input(Engine::Input keys)
     {
         this->_player.handleInput(keys);
     }

@@ -19,7 +19,8 @@ namespace State {
     using Engine::CoordinateDouble;
     using Engine::Color;
     using Engine::FontType;
-    using Engine::PressedKeys;
+    using Engine::Keys;
+    using Engine::Input;
     using Engine::Key;
     using GameLogic::Game;
 

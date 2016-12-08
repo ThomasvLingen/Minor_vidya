@@ -19,7 +19,7 @@ namespace State {
     using Engine::CoordinateDouble;
     using Engine::Color;
     using Engine::FontType;
-    using Engine::PressedKeys;
+    using Engine::Keys;
     using Engine::Key;
     using GameLogic::Game;
 
@@ -32,7 +32,6 @@ namespace State {
 
     private:
         Menu _menu;
-        int _timeSinceLastPress = 0;
         Color _color{255,255,255};
     };
 }
