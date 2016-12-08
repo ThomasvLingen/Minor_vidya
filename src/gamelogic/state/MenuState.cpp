@@ -46,12 +46,20 @@ namespace State {
             }
         };
 
+        MenuOption back {
+                {0,0}, //coordinates
+                "", //text
+                [] (Game& game) { //callback
+                    game.set_new_state(std::make_shared<StartUpState>(game));
+                }
+        };
+
         this->_menu.add_options( //add options to menu
             {start_game, help, credits, quit}
         );
 
         this->_menu.set_selected(0);
-        this->_menu.set_escape_option(quit);
+        this->_menu.set_escape_option(back);
         this->_collection.add_drawable(&this->_menu);
         this->_collection.add_handleable(&this->_menu);
         context.SDL_facade.play_music(VIDYA_RUNPATH + "res/music/mainmenu.mp3");
