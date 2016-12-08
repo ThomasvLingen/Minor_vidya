@@ -69,10 +69,10 @@ namespace GameLogic {
         new_x = new_x + newDirectionX * moveSpeedX;
         new_y = new_y + newDirectionY * moveSpeedX;
 
-        if (!this->_level->get_tile((int) new_x, (int) this->_position.y)->is_wall()) {
+        if (!this->_level->get_tile(CoordinateInt{(int) new_x , (int) this->_position.y})->is_wall()) {
             this->_position.x = new_x;
         }
-        if (!this->_level->get_tile((int) this->_position.x, (int) new_y)->is_wall()) {
+        if (!this->_level->get_tile(CoordinateInt{(int) this->_position.x, (int) new_y})->is_wall()) {
             this->_position.y = new_y;
         }
         
