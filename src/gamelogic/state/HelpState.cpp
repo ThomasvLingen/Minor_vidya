@@ -37,16 +37,26 @@ namespace State {
 
         this->_context.SDL_facade.clear_screen();
         this->_context.SDL_facade.draw_image(VIDYA_RUNPATH + "res/helpscreen.bmp" , {0,0});
-        // TODO: This is retarded and should be refactored
         this->_context.SDL_facade.draw_text("Controls for Vidya Game", FontType::alterebro_pixel, this->_color, {120, 50});
-        this->_context.SDL_facade.draw_text("Movement Forward:   W", FontType::alterebro_pixel, this->_color, {160, 80});
-        this->_context.SDL_facade.draw_text("Movement Backward:  S", FontType::alterebro_pixel, this->_color, {160, 110});
-        this->_context.SDL_facade.draw_text("Movement Left:         A", FontType::alterebro_pixel, this->_color, {160, 140});
-        this->_context.SDL_facade.draw_text("Movement Right:        D", FontType::alterebro_pixel, this->_color, {160, 170});
-        this->_context.SDL_facade.draw_text("Rotate Left:             Q", FontType::alterebro_pixel, this->_color, {160, 200});
-        this->_context.SDL_facade.draw_text("Rotate Right:            E", FontType::alterebro_pixel, this->_color, {160, 230});
-        this->_context.SDL_facade.draw_text("Select:                    Enter", FontType::alterebro_pixel, this->_color, {160, 260});
-        this->_context.SDL_facade.draw_text("Back:                       ESC", FontType::alterebro_pixel, this->_color, {160, 290});
+        this->_context.SDL_facade.draw_text("Movement Forward:", FontType::alterebro_pixel, this->_color, {100, 80});
+        this->_context.SDL_facade.draw_text("Movement Backward:", FontType::alterebro_pixel, this->_color, {100, 110});
+        this->_context.SDL_facade.draw_text("Rotate Left:", FontType::alterebro_pixel, this->_color, {100, 140});
+        this->_context.SDL_facade.draw_text("Rotate Right:", FontType::alterebro_pixel, this->_color, {100, 170});
+        this->_context.SDL_facade.draw_text("Strafe Left:", FontType::alterebro_pixel, this->_color, {100, 200});
+        this->_context.SDL_facade.draw_text("Strafe Right:", FontType::alterebro_pixel, this->_color, {100, 230});
+        this->_context.SDL_facade.draw_text("Select:", FontType::alterebro_pixel, this->_color, {100, 260});
+        this->_context.SDL_facade.draw_text("Back:", FontType::alterebro_pixel, this->_color, {100, 290});
+        //TODO: Mapping
+        this->_context.SDL_facade.draw_text("Up Arrow", FontType::alterebro_pixel, this->_color, {300, 80});
+        this->_context.SDL_facade.draw_text("Down Arrow", FontType::alterebro_pixel, this->_color, {300, 110});
+        this->_context.SDL_facade.draw_text("Left Arrow", FontType::alterebro_pixel, this->_color, {300, 140});
+        this->_context.SDL_facade.draw_text("Right Arrow", FontType::alterebro_pixel, this->_color, {300, 170});
+        this->_context.SDL_facade.draw_text("A", FontType::alterebro_pixel, this->_color, {300, 200});
+        this->_context.SDL_facade.draw_text("D", FontType::alterebro_pixel, this->_color, {300, 230});
+        this->_context.SDL_facade.draw_text("Enter", FontType::alterebro_pixel, this->_color, {300, 260});
+        this->_context.SDL_facade.draw_text("ESC", FontType::alterebro_pixel, this->_color, {300, 290});
+
+
         this->_context.SDL_facade.render_buffer();
     }
 }

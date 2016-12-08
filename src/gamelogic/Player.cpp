@@ -22,19 +22,19 @@ namespace GameLogic {
                 case Key::A :
                     this->_move_left();
                     break;
-                case Key::S :
+                case Key::DOWN :
                     this->_mov_backward();
                     break;
-                case Key::W :
+                case Key::UP :
                     this->_mov_forward();
                     break;
                 case Key::D :
                     this->_move_right();
                     break;
-                case Key::Q :
+                case Key::LEFT :
                     this->_rot_left();
                     break;
-                case Key::E :
+                case Key::RIGHT :
                     this->_rot_right();
                     break;
                 default:
