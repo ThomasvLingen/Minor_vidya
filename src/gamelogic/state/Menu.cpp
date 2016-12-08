@@ -91,14 +91,10 @@ namespace State {
             for (auto key : keys) {
                 switch (key) {
                     case Key::W :
-                        this->set_previous();
-                        break;
                     case Key::UP :
                         this->set_previous();
                         break;
                     case Key::S :
-                        this->set_next();
-                        break;
                     case Key::DOWN :
                         this->set_next();
                         break;
