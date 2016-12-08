@@ -36,14 +36,13 @@ namespace State {
 
         this->_context.SDL_facade.clear_screen();
         this->_context.SDL_facade.draw_image(VIDYA_RUNPATH + "res/creditscreen.bmp" , CoordinateDouble{0,0});
-        this->_context.SDL_facade.draw_text("Vidya Game is made by:", FontType::alterebro_pixel, this->_color, {300, 50});
-        this->_context.SDL_facade.draw_text("- Thomas van Lingen:", FontType::alterebro_pixel, this->_color, {340, 80});
-        this->_context.SDL_facade.draw_text("- Jorg de Bont", FontType::alterebro_pixel, this->_color, {340, 110});
-        this->_context.SDL_facade.draw_text("- Wouter van Geel", FontType::alterebro_pixel, this->_color, {340, 140});
-        this->_context.SDL_facade.draw_text("- Sander van Geel", FontType::alterebro_pixel, this->_color, {340, 170});
-        this->_context.SDL_facade.draw_text("- Martijn Frielink", FontType::alterebro_pixel, this->_color, {340, 200});
-        this->_context.SDL_facade.draw_text("- Joost van Rijsinge", FontType::alterebro_pixel, this->_color, {340, 230});
-        this->_context.SDL_facade.draw_text("- Jelmer van der Schoot", FontType::alterebro_pixel, this->_color, {340, 260});
+
+        int current_y_pos = this->_start_pos_y;
+        for (auto& line : this->_text) {
+            this->_context.SDL_facade.draw_text(line, this->_font, this->_color, {this->_start_pos_x, current_y_pos});
+            current_y_pos += this->_step_size_y;
+        }
+
         this->_context.SDL_facade.render_buffer();
     }
 }
