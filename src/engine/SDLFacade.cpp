@@ -440,7 +440,7 @@ namespace Engine {
 
         // Add key to keys_released
         if (is_possible) {
-            if (find(this->_input.keys_released.begin(), this->_input.keys_released.end(), it_possible->second) != this->_input.keys_released.end()) {
+            if (find(this->_input.keys_released.begin(), this->_input.keys_released.end(), it_possible->second) == this->_input.keys_released.end()) {
                 this->_input.keys_released.push_back(it_possible->second);
             }
         }
