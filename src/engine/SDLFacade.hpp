@@ -59,7 +59,6 @@ namespace Engine {
         };
 
         SDL_Window* _window = nullptr;
-        SDL_Surface* _screen_surface = nullptr;
         SDL_Renderer* _renderer = nullptr;
         SDL_Texture* _screen_buffer = nullptr;
         Uint32* _screen_buffer_pixels = nullptr;

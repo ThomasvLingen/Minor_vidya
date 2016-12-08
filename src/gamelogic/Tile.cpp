@@ -3,6 +3,8 @@
 //
 
 #include "Tile.hpp"
+#include "../util/UnusedMacro.hpp"
+
 namespace GameLogic {
 
     Tile::Tile(ImageBuffer& texture)
@@ -13,6 +15,7 @@ namespace GameLogic {
 
     void Tile::update(int delta_time)
     {
+        UNUSED(delta_time)
         //TODO implement
     }
 }

@@ -36,6 +36,7 @@ namespace Engine {
         TileObject(ImageBuffer& texture);
         TileObject(const TileObject& obj) = delete;            // Copy constructor for a base class has to be deleted (slicing)
         TileObject& operator=(const TileObject& obj) = delete; // Copy assignment for a base class has to be deleted (slicing)
+        virtual ~TileObject();
 
         virtual void update(int delta_time);
 

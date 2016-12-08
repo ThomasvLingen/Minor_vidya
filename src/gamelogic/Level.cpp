@@ -12,8 +12,8 @@ namespace GameLogic {
     Level::Level(Player& player, vector<vector<Tile*>> field, CoordinateDouble spawnpoint, Engine::SPTR_AssetsManager assets)
     : World(assets)
     , _field(field)
-    , _player(player)
     , _spawnpoint(spawnpoint)
+    , _player(player)
     {
     }
 
@@ -34,7 +34,7 @@ namespace GameLogic {
     Level::~Level()
     {
         for (auto row : this->_field) {
-            for (auto tile : row) {
+            for (Tile* tile : row) {
                 delete tile;
             }
         }

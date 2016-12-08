@@ -24,7 +24,6 @@ namespace Engine {
     /// \brief Destructor of the class
     SDLFacade::~SDLFacade()
     {
-        SDL_FreeSurface(this->_screen_surface);
         SDL_DestroyRenderer(this->_renderer);
         SDL_DestroyWindow(this->_window);
 
@@ -129,7 +128,6 @@ namespace Engine {
         this->_window = SDL_CreateWindow(Config::GAME_WINDOW_TITLE.c_str(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, this->_width,
                                          this->_height, SDL_WINDOW_SHOWN);
         if (this->_window != nullptr) {
-            this->_screen_surface = SDL_GetWindowSurface(this->_window);
             return true;
         } else {
             //std::cout << "Something went wrong while making a window! : " + SDL_GetError() << std::endl;
@@ -201,8 +199,7 @@ namespace Engine {
     /// \brief Draws a rectangle on the whole screen
     void SDLFacade::clear_screen()
     {
-        // Draw background
-        SDL_FillRect(_screen_surface, NULL, SDL_MapRGB(_screen_surface->format, 0x00, 0x00, 0x00));
+        SDL_RenderClear(this->_renderer);
     }
 
     /// \brief Draws a line
