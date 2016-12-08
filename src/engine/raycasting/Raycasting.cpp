@@ -51,7 +51,7 @@ namespace Engine {
 
                 int tex_x = this->_get_texture_x_coord(wall, ray_position, ray_dir, perp_wall_dist);
 
-                ImageBuffer& tile_texture = this->_world->get_tile(wall.cord.x, wall.cord.y)->get_texture();
+                ImageBuffer& tile_texture = this->_world->get_tile(wall.cord)->get_texture();
 
                 // TODO: Maybe put this in a separate function
                 // Put pixels for a single vertical line on the screen
@@ -194,7 +194,7 @@ namespace Engine {
                 side = WallSide::y_wall;
             }
 
-            if (this->_world->get_tile(start_point.x, start_point.y)->is_wall()) {
+            if (this->_world->get_tile(start_point)->is_wall()) {
                 break;
             }
         }

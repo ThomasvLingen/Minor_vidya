@@ -52,9 +52,9 @@ namespace GameLogic {
         return this->_spawnpoint;
     }
 
-    TileObject* Level::get_tile(int x, int y)
+    TileObject* Level::get_tile(CoordinateInt coordinate)
     {
-        return _field[x][y];
+        return _field[coordinate.x][coordinate.y];
     }
 
     PointOfView& Level::get_pov()
