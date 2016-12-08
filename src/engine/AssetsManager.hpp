@@ -25,6 +25,8 @@ namespace Engine {
         bool _init_texture_map( string& texture_source, size_t tile_width, size_t tile_height, size_t tile_count );
         SDLFacade& _SDL_facade;
 
+        // TODO: This can be removed since it's unused.
+        // Although it might be good to set these on init so that they can be retrieved where needed (raycaster?)
         string _texture_source;
         size_t _tile_height;
         size_t _tile_width;
