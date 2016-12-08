@@ -40,12 +40,18 @@ namespace State {
         if (_selected_index > 0) {
             this->_selected_index--;
         }
+        else {
+            this->_selected_index = (int)this->_menu_options.size() - 1;
+        }
     }
 
     void Menu::set_next()
     {
         if (_selected_index < (int)_menu_options.size() - 1) {
             this->_selected_index++;
+        }
+        else {
+            this->_selected_index = 0;
         }
     }
 
@@ -87,7 +93,13 @@ namespace State {
                     case Key::W :
                         this->set_previous();
                         break;
+                    case Key::UP :
+                        this->set_previous();
+                        break;
                     case Key::S :
+                        this->set_next();
+                        break;
+                    case Key::DOWN :
                         this->set_next();
                         break;
                     case Key::ESC:
