@@ -101,8 +101,16 @@ namespace Engine {
     /// \return This function returns True if the _renderer was successfully initialized, ohterwise it returns False
     bool SDLFacade::_init_renderer()
     {
+        Uint32 renderer_flags;
+
+        if (Config::USE_VSYNC) {
+            renderer_flags = SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC;
+        } else {
+            renderer_flags = SDL_RENDERER_SOFTWARE;
+        }
+
         // Attempt to make a software renderer
-        this->_renderer = SDL_CreateRenderer(this->_window, -1, SDL_RENDERER_SOFTWARE);
+        this->_renderer = SDL_CreateRenderer(this->_window, -1, renderer_flags);
         if (this->_renderer != nullptr) {
             //std::cout << "Warning: could not use hardware acceleration --> SDL_Renderer uses software rendering" << std::endl;
             return true;
@@ -250,8 +258,8 @@ namespace Engine {
     /// \brief Updates the window
     void SDLFacade::render_buffer() const
     {
-        // Update window surface
-        SDL_UpdateWindowSurface(this->_window);
+        // Update window surface through renderer
+        SDL_RenderPresent(this->_renderer);
     }
 
     /// \brief Function that handles all relevant SDL_Event types
