@@ -75,7 +75,7 @@ namespace State {
         }
         else {
             this->_loading_screen_time = 0;
-            if ( this->_context.load_Level(VIDYA_RUNPATH + "res/Test2.tmx") ) { //TODO needs to come from a level selecter or campaign level loading or something
+            if ( this->_context.load_Level(VIDYA_RUNPATH + "res/TestMap.tmx") ) { //TODO needs to come from a level selecter or campaign level loading or something
                 this->_context.set_new_state( std::make_shared<RunState>( this->_context ) );
             }
             else {
