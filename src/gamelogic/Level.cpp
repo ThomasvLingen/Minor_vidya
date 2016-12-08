@@ -24,10 +24,10 @@ namespace GameLogic {
     }
 
     Level::Level(const Level& obj)
-            : World(obj.assets)
-            , _field(obj._field)
-            , _spawnpoint(obj._spawnpoint)
-            , _player(obj._player)
+    : World(obj.assets)
+    , _field(obj._field)
+    , _spawnpoint(obj._spawnpoint)
+    , _player(obj._player)
     {
     }
 
