@@ -56,8 +56,6 @@ namespace State {
         const FontType _font = FontType::alterebro_pixel;
         const Color _color = {255,255,255};
         Game& _context;
-
-        int _time_since_last_press = 0;
     };
 }
 

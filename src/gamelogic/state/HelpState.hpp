@@ -35,7 +35,6 @@ namespace State {
         void update(int time_since_last_update) override ;
 
     private:
-        int _timeSinceLastPress = 0;
         Color _color{255,255,255};
         FontType _font{FontType::alterebro_pixel};
         int _start_pos_x {100};
