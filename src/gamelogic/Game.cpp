@@ -9,6 +9,7 @@
 #include "exceptions/FileInvalidException.hpp"
 
 #include "state/StartUpState.hpp"
+#include "../config.hpp"
 
 namespace GameLogic {
     Game::Game()
@@ -31,7 +32,6 @@ namespace GameLogic {
         int time_since_last_frame;
         int last_frame_start_time = this->SDL_facade.get_ticks();
         int current_frame_start_time;
-        int time_spent;
 
         while (this->running) {
             current_frame_start_time = this->SDL_facade.get_ticks();
@@ -41,10 +41,13 @@ namespace GameLogic {
             this->_current_state = this->_new_state;
             this->_current_state->update(time_since_last_frame);
 
-            time_spent = this->SDL_facade.get_ticks() - current_frame_start_time;
+            // We only have to wait if VSync is disabled. Otherwise it's done for us.
+            if (!Config::USE_VSYNC) {
+                int time_spent = this->SDL_facade.get_ticks() - current_frame_start_time;
 
-            if (FRAME_DURATION > time_spent) { //TODO use vsync instead of this
-                this->SDL_facade.delay_millis(FRAME_DURATION - time_spent);
+                if (FRAME_DURATION > time_spent) { //TODO use vsync instead of this
+                    this->SDL_facade.delay_millis(FRAME_DURATION - time_spent);
+                }
             }
         }
     }
