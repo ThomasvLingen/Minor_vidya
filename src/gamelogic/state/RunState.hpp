@@ -15,7 +15,7 @@ namespace GameLogic {
 }
 
 namespace State {
-    using Engine::PressedKeys;
+    using Engine::Keys;
     using Engine::Key;
     using GameLogic::Game;
 

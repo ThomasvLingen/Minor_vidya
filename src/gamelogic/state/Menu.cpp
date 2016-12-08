@@ -83,12 +83,12 @@ namespace State {
         );
     }
 
-    void Menu::handle_input(::Engine::PressedKeys& keys)
+    void Menu::handle_input(Input& keys)
     {
         if(this->_time_since_last_press < 20){ //todo this is not nice
             this->_time_since_last_press++;
         } else {
-            for (auto key : keys) {
+            for (auto key : keys.keys_down) {
                 switch (key) {
                     case Key::W :
                     case Key::UP :

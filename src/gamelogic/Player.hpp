@@ -20,7 +20,8 @@ namespace GameLogic {
     using Engine::RaycastingVector;
     using Engine::PointOfView;
     using Engine::World;
-    using Engine::PressedKeys;
+    using Engine::Keys;
+    using Engine::Input;
     using Engine::Key;
 
     class Level;
@@ -32,7 +33,7 @@ namespace GameLogic {
 
         bool is_at(int x, int y);
         void set_level(SPTR_Level level);
-        void handleInput(PressedKeys keys);
+        void handleInput(Input keys);
         virtual void update(int timeSinceLastUpdate);
 
     private:

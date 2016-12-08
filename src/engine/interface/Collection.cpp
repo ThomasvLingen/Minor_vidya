@@ -13,7 +13,7 @@ namespace Engine {
         }
     }
 
-    void Collection::handle_input(PressedKeys& keys)
+    void Collection::handle_input(Input& keys)
     {
         for (auto handleable : this->_handleables) {
             handleable->handle_input(keys);

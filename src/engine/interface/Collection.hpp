@@ -16,7 +16,7 @@ namespace Engine {
     class Collection {
     public:
         void draw();
-        void handle_input(PressedKeys& keys);
+        void handle_input(Input& keys);
         void update(int delta_time);
 
         void add_drawable(Drawable* to_add);

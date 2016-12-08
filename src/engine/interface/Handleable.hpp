@@ -11,7 +11,7 @@
 namespace Engine {
     class Handleable {
     public:
-        virtual void handle_input(::Engine::PressedKeys& keys) = 0;
+        virtual void handle_input(Input& keys) = 0;
     };
 }
 

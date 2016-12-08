@@ -15,9 +15,9 @@ namespace GameLogic {
     /// \brief Handles the keys that were pressed during the last tick
     ///
     /// \param keys is a vector of Key enumerables that were pressed
-    void Player::handleInput(PressedKeys keys)
+    void Player::handleInput(Input keys)
     {
-        for (auto key : keys) {
+        for (auto key : keys.keys_down) {
             switch (key) {
                 case Key::A :
                     this->_move_left();

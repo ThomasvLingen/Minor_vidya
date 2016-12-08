@@ -272,6 +272,9 @@ namespace Engine {
     /// Each supported event type has its own handler (or callback)
     void SDLFacade::handle_sdl_events()
     {
+        // Clear _keys_released
+        this->_input.keys_released.clear();
+
         SDL_Event event;
 
         while (SDL_PollEvent(&event) != 0) {
@@ -294,10 +297,10 @@ namespace Engine {
         }
     }
 
-    PressedKeys SDLFacade::get_keys() const
+    Input SDLFacade::get_input() const
     {
         //todo
-        return this->_keys_down;
+        return this->_input;
     }
 
     /// \brief Draws text
@@ -406,10 +409,10 @@ namespace Engine {
         // Check if SDL_Keycode needs to be handled
         if (it != this->_possible_keys.end()) {
             vector<Key>::iterator it_pressed;
-            it_pressed = find(this->_keys_down.begin(), this->_keys_down.end(), it->second);
+            it_pressed = find(this->_input.keys_down.begin(), this->_input.keys_down.end(), it->second);
 
-            if (it_pressed == _keys_down.end()) {
-                this->_keys_down.push_back(it->second);
+            if (it_pressed == this->_input.keys_down.end()) {
+                this->_input.keys_down.push_back(it->second);
             }
         }
     }
@@ -421,15 +424,24 @@ namespace Engine {
     {
         map<SDL_Keycode, Key>::iterator it_possible;
         it_possible = this->_possible_keys.find(key);
+        bool is_possible = it_possible != this->_possible_keys.end();
 
+        // Remove key from keys_pressed
         // Check if SDL_Keycode needs to be handled
-        if (it_possible != this->_possible_keys.end()) {
+        if (is_possible) {
             vector<Key>::iterator it_down;
-            it_down = find(this->_keys_down.begin(), this->_keys_down.end(), it_possible->second);
+            it_down = find(this->_input.keys_down.begin(), this->_input.keys_down.end(), it_possible->second);
 
             // Check if released key is in _keys_down
-            if (it_down != this->_keys_down.end()) {
-                this->_keys_down.erase(it_down);
+            if (it_down != this->_input.keys_down.end()) {
+                this->_input.keys_down.erase(it_down);
+            }
+        }
+
+        // Add key to keys_released
+        if (is_possible) {
+            if (find(this->_input.keys_released.begin(), this->_input.keys_released.end(), it_possible->second) != this->_input.keys_released.end()) {
+                this->_input.keys_released.push_back(it_possible->second);
             }
         }
     }

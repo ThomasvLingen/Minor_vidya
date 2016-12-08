@@ -23,8 +23,8 @@ namespace State {
             this->_timeSinceLastPress++;
         }
         if(this->_timeSinceLastPress > 20) {
-            PressedKeys keys = this->_context.SDL_facade.get_keys();
-            for (auto key : keys) {
+            Input keys = this->_context.SDL_facade.get_input();
+            for (auto key : keys.keys_down) {
                 switch (key) {
                     case Key::ESC:
                         this->_context.set_new_state(std::make_shared<PauseState>(this->_context));

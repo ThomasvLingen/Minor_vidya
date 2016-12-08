@@ -21,7 +21,7 @@ namespace Engine {
 
         virtual PointOfView& get_pov() = 0;
         virtual TileObject* get_tile(CoordinateInt coordinate) = 0;
-        virtual void handle_input(PressedKeys keys) = 0;
+        virtual void handle_input(Input keys) = 0;
 
     };
 }

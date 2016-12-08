@@ -16,14 +16,14 @@ namespace State {
     void CreditState::update(int time_since_last_update) {
         this->_context.SDL_facade.handle_sdl_events();
 
-        PressedKeys keys = this->_context.SDL_facade.get_keys();
+        Input keys = this->_context.SDL_facade.get_input();
 
         if (this->_timeSinceLastPress <= 20) { //TODO: TO SDL ticks
             this->_timeSinceLastPress++;
         }
 
         if (this->_timeSinceLastPress > 20) {
-            for (auto key : keys) {
+            for (auto key : keys.keys_down) {
                 switch (key) {
                     case Key::ESC:
                         this->_context.set_new_state(std::make_shared<MenuState>(this->_context));

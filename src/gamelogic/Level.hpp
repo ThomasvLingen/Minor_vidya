@@ -55,7 +55,7 @@ namespace GameLogic {
 
         PointOfView& get_pov() override;
 
-        void handle_input(Engine::PressedKeys keys) override;
+        void handle_input(Engine::Input keys) override;
     };
 
     typedef std::shared_ptr<Level> SPTR_Level;

@@ -39,7 +39,7 @@ namespace Engine {
 
     class SDLFacade {
     private:
-        PressedKeys _keys_down;
+        Input _input;
 
         map<FontType, TTF_Font*> _fonts;
 
@@ -75,7 +75,7 @@ namespace Engine {
 
         bool init();
 
-        PressedKeys get_keys() const;
+        Input get_input() const;
         void handle_sdl_events();
 
         void clear_screen(); //draws the background
