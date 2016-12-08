@@ -25,17 +25,12 @@ namespace Engine {
         bool _init_texture_map( string& texture_source, size_t tile_width, size_t tile_height, size_t tile_count );
         SDLFacade& _SDL_facade;
 
+        // TODO: This can be removed since it's unused.
+        // Although it might be good to set these on init so that they can be retrieved where needed (raycaster?)
         string _texture_source;
         size_t _tile_height;
         size_t _tile_width;
         size_t _tile_count;
-
-        map<int, int> _tileset_map_to_id = {
-            { 1, 33 },    // Brick wall
-            { 2, 1 },     // Stone wall
-            { 3, 23 },    // Wood wall
-            { 4, 15}      // Blue wall
-        };
     };
 
     typedef std::shared_ptr<AssetsManager> SPTR_AssetsManager;
