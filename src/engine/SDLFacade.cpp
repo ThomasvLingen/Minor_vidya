@@ -424,11 +424,11 @@ namespace Engine {
     {
         map<SDL_Keycode, Key>::iterator it_possible;
         it_possible = this->_possible_keys.find(key);
-        bool is_possible = it_possible != this->_possible_keys.end();
+        bool key_is_in_possible_keys = it_possible != this->_possible_keys.end();
 
         // Remove key from keys_pressed
         // Check if SDL_Keycode needs to be handled
-        if (is_possible) {
+        if (key_is_in_possible_keys) {
             vector<Key>::iterator it_down;
             it_down = find(this->_input.keys_down.begin(), this->_input.keys_down.end(), it_possible->second);
 
@@ -439,7 +439,7 @@ namespace Engine {
         }
 
         // Add key to keys_released
-        if (is_possible) {
+        if (key_is_in_possible_keys) {
             if (find(this->_input.keys_released.begin(), this->_input.keys_released.end(), it_possible->second) == this->_input.keys_released.end()) {
                 this->_input.keys_released.push_back(it_possible->second);
             }
