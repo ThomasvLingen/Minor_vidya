@@ -20,7 +20,7 @@ namespace State {
         this->_context.SDL_facade.clear_screen();
         this->_context.SDL_facade.draw_rect({0,0}, 640, 480, Color{0,0,0});
 
-        this->_loading_screen_time = this->_loading_screen_time + 20; //TODO: To ticks
+        this->_loading_screen_time = this->_loading_screen_time + 2; //TODO: To ticks
 
         this->_context.SDL_facade.draw_text("Level Name Here", FontType::alterebro_pixel, this->_color, {500,15});
 
