@@ -29,13 +29,6 @@ namespace Engine {
         size_t _tile_height;
         size_t _tile_width;
         size_t _tile_count;
-
-        map<int, int> _tileset_map_to_id = {
-            { 1, 33 },    // Brick wall
-            { 2, 1 },     // Stone wall
-            { 3, 23 },    // Wood wall
-            { 4, 15}      // Blue wall
-        };
     };
 
     typedef std::shared_ptr<AssetsManager> SPTR_AssetsManager;
