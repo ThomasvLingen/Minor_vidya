@@ -5,6 +5,7 @@
 #include "PauseState.hpp"
 #include "MenuState.hpp"
 #include "RunState.hpp"
+#include "../../util/UnusedMacro.hpp"
 
 namespace State {
 
@@ -36,7 +37,7 @@ namespace State {
     }
 
     void PauseState::update(int time_since_last_update) {
-        // foo
+        UNUSED(time_since_last_update)
         this->_context.SDL_facade.clear_screen();
 
         this->_context.SDL_facade.draw_text("Game Paused", FontType::alterebro_pixel_plus, this->_color, {50, 15});

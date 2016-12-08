@@ -1,4 +1,5 @@
 #include "TileObject.hpp"
+#include "../../util/UnusedMacro.hpp"
 
 
 namespace Engine {
@@ -13,6 +14,7 @@ namespace Engine {
     /// \brief update all objects in this particular tile.
     void TileObject::update(int delta_time)
     {
+        UNUSED(delta_time)
         // TODO: Implement this
     }
 

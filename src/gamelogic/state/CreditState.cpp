@@ -4,6 +4,7 @@
 
 #include "CreditState.hpp"
 #include "MenuState.hpp"
+#include "../../util/UnusedMacro.hpp"
 
 namespace State {
 
@@ -14,6 +15,7 @@ namespace State {
     }
 
     void CreditState::update(int time_since_last_update) {
+        UNUSED(time_since_last_update)
         this->_context.SDL_facade.handle_sdl_events();
 
         Input keys = this->_context.SDL_facade.get_input();

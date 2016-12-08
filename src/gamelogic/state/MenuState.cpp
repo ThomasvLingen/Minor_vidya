@@ -7,6 +7,7 @@
 #include "LoadState.hpp"
 #include "HelpState.hpp"
 #include "CreditState.hpp"
+#include "../../util/UnusedMacro.hpp"
 
 namespace State {
 
@@ -66,6 +67,7 @@ namespace State {
     }
 
     void MenuState::update(int time_since_last_update) {
+        UNUSED(time_since_last_update)
         this->_context.SDL_facade.clear_screen();
 
         this->_context.SDL_facade.draw_image(
