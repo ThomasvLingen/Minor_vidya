@@ -38,14 +38,13 @@ namespace State {
         this->_context.SDL_facade.clear_screen();
         this->_context.SDL_facade.draw_image(VIDYA_RUNPATH + "res/helpscreen.bmp" , {0,0});
         this->_context.SDL_facade.draw_text("Controls for Vidya Game", FontType::alterebro_pixel, this->_color, {120, 50});
-        this->_context.SDL_facade.draw_text("Movement Forward:", FontType::alterebro_pixel, this->_color, {100, 80});
-        this->_context.SDL_facade.draw_text("Movement Backward:", FontType::alterebro_pixel, this->_color, {100, 110});
-        this->_context.SDL_facade.draw_text("Rotate Left:", FontType::alterebro_pixel, this->_color, {100, 140});
-        this->_context.SDL_facade.draw_text("Rotate Right:", FontType::alterebro_pixel, this->_color, {100, 170});
-        this->_context.SDL_facade.draw_text("Strafe Left:", FontType::alterebro_pixel, this->_color, {100, 200});
-        this->_context.SDL_facade.draw_text("Strafe Right:", FontType::alterebro_pixel, this->_color, {100, 230});
-        this->_context.SDL_facade.draw_text("Select:", FontType::alterebro_pixel, this->_color, {100, 260});
-        this->_context.SDL_facade.draw_text("Back:", FontType::alterebro_pixel, this->_color, {100, 290});
+
+        int current_y_pos = this->_start_pos_y;
+        for (auto& line : this->_text) {
+            this->_context.SDL_facade.draw_text(line, this->_font, this->_color, {this->_start_pos_x, current_y_pos});
+            current_y_pos += this->_step_size_y;
+        }
+
         //TODO: Mapping
         this->_context.SDL_facade.draw_text("Up Arrow", FontType::alterebro_pixel, this->_color, {300, 80});
         this->_context.SDL_facade.draw_text("Down Arrow", FontType::alterebro_pixel, this->_color, {300, 110});
