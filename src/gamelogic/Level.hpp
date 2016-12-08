@@ -16,6 +16,7 @@ namespace GameLogic {
 
     using std::vector;
     using Engine::CoordinateDouble;
+    using Engine::CoordinateInt;
     using Engine::TileObject;
     using Engine::PointOfView;
     using Engine::AssetsManager;
@@ -44,7 +45,7 @@ namespace GameLogic {
 
         void update(int delta_time) override;
 
-        TileObject* get_tile(int x, int y) override;
+        TileObject* get_tile(CoordinateInt coordinate) override;
 
         CoordinateDouble get_spawnpoint();
         void set_spawnpoint(CoordinateDouble coordinate);
