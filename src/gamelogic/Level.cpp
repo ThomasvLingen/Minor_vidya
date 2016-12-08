@@ -23,6 +23,13 @@ namespace GameLogic {
     {
     }
 
+    Level::Level(const Level& obj)
+            : World(obj.assets)
+            , _field(obj._field)
+            , _spawnpoint(obj._spawnpoint)
+            , _player(obj._player)
+    {
+    }
 
     Level::~Level()
     {
@@ -65,14 +72,6 @@ namespace GameLogic {
     void Level::handle_input(Engine::PressedKeys keys)
     {
         this->_player.handleInput(keys);
-    }
-
-    Level::Level(const Level& obj)
-    : World(obj.assets)
-    , _field(obj._field)
-    , _spawnpoint(obj._spawnpoint)
-    , _player(obj._player)
-    {
     }
 
     void Level::set_spawnpoint(CoordinateDouble coordinate)
