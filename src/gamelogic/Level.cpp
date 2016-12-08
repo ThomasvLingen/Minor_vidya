@@ -34,7 +34,7 @@ namespace GameLogic {
     Level::~Level()
     {
         for (auto row : this->_field) {
-            for (auto tile : row) {
+            for (Tile* tile : row) {
                 delete tile;
             }
         }
