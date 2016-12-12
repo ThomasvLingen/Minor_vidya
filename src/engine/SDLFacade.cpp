@@ -161,7 +161,7 @@ namespace Engine {
     /// \param width Width of the rectangle
     /// \param height Height of the rectangle
     /// \param color The color of the rectangle. The color class comes from the engine
-    void SDLFacade::draw_rect(const CoordinateDouble& rect_start, const int width, const int height, const Color& color)
+    void SDLFacade::draw_rect(const CoordinateInt& rect_start, const int width, const int height, const Color& color)
     {
         SDL_Rect r;
         r.x = rect_start.x;
@@ -178,7 +178,7 @@ namespace Engine {
     ///
     /// \param path Path to image (if in res it is: res/imagename.bmp)
     /// \param coordinates Coordinates of where the image has to be drawn
-    void SDLFacade::draw_image(const std::string path, const CoordinateDouble& coordinates)
+    void SDLFacade::draw_image(const std::string path, const CoordinateInt& coordinates)
     {
         SDL_Surface* image = IMG_Load(path.c_str());
         if (image == NULL) { //TODO: exception

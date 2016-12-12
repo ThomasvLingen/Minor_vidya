@@ -31,7 +31,7 @@ namespace State {
         }
 
         this->_context.SDL_facade.clear_screen();
-        this->_context.SDL_facade.draw_image(VIDYA_RUNPATH + "res/creditscreen.bmp" , CoordinateDouble{0,0});
+        this->_context.SDL_facade.draw_image(VIDYA_RUNPATH + "res/creditscreen.bmp" , CoordinateInt{0,0});
 
         int current_y_pos = this->_start_pos_y;
         for (auto& line : this->_text) {

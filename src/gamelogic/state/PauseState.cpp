@@ -40,6 +40,7 @@ namespace State {
         UNUSED(time_since_last_update)
         this->_context.SDL_facade.clear_screen();
 
+        this->_context.SDL_facade.draw_rect({0,0}, this->_context.SDL_facade.get_width(),this->_context.SDL_facade.get_height(), {0,0,0});
         this->_context.SDL_facade.draw_text("Game Paused", FontType::alterebro_pixel_plus, this->_color, {50, 15});
 
         this->_context.SDL_facade.handle_sdl_events();

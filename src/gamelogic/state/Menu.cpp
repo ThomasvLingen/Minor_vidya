@@ -76,7 +76,7 @@ namespace State {
         }
 
         this->_context.SDL_facade.draw_rect(
-            CoordinateDouble{(double)120, (double)this->get_selected()->coordinates.y + 6}, //todo delete this magic number
+            {120, this->get_selected()->coordinates.y + 6}, //todo delete this magic number
             15,
             15,
             _color
