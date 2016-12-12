@@ -119,17 +119,10 @@ namespace Engine {
                 // TODO: Make this work with _get_line_measures or something
                 // calculate width of the sprite
                 int sprite_width = abs(int(h / (transformed.y)));
-                int draw_start_x = -sprite_width / 2 + sprite_screen_x;
-                if (draw_start_x < 0) {
-                    draw_start_x = 0;
-                }
-                int draw_end_x = sprite_width / 2 + sprite_screen_x;
-                if (draw_end_x >= w) {
-                    draw_end_x = w - 1;
-                }
+                LineCords sprite_x = this->_get_sprite_horizontal_measures(sprite_width, sprite_screen_x);
 
                 // loop through every vertical stripe of the sprite on screen
-                for (int stripe = draw_start_x; stripe < draw_end_x; stripe++) {
+                for (int stripe = sprite_x.draw_start; stripe < sprite_x.draw_end; stripe++) {
                     int tex_x = int(256 * (stripe - (-sprite_width / 2 + sprite_screen_x)) * TEXTURE_WIDTH / sprite_width) / 256;
                     // the conditions in the if are:
                     // 1) it's in front of camera plane so you don't see things behind you
@@ -335,29 +328,28 @@ namespace Engine {
         line.draw_start = -line_height / 2 + screen_height / 2;
         line.draw_end = line_height / 2 + screen_height / 2;
 
-        this->_correct_line(line);
+        this->_correct_line(line, screen_height);
 
         return line;
     }
 
     /// \brief Corrects lineCords if out if screen range
     /// \param LineCords containing the line coordinates
-    void Raycasting::_correct_line(LineCords& line)
+    /// \param max_axis_value max value for the corrected line
+    void Raycasting::_correct_line(LineCords& line, int max_axis_value)
     {
-        int screen_height = this->_SDL_facade.get_height();
-
         if (line.draw_end < 0) {
             line.draw_end = 0;
         }
-        if (line.draw_end >= screen_height) {
-            line.draw_end = screen_height - 1;
+        if (line.draw_end >= max_axis_value) {
+            line.draw_end = max_axis_value - 1;
         }
 
         if (line.draw_start < 0) {
             line.draw_start = 0;
         }
-        if (line.draw_start >= screen_height) {
-            line.draw_start = screen_height - 1;
+        if (line.draw_start >= max_axis_value) {
+            line.draw_start = max_axis_value - 1;
         }
     }
 
@@ -398,5 +390,17 @@ namespace Engine {
         wall_x -= floor(wall_x);
 
         return wall_x;
+    }
+
+    LineCords Raycasting::_get_sprite_horizontal_measures(int sprite_width, int sprite_screen_x)
+    {
+        LineCords line;
+
+        line.draw_start = -sprite_width / 2 + sprite_screen_x;
+        line.draw_end = sprite_width / 2 + sprite_screen_x;
+
+        this->_correct_line(line, this->_SDL_facade.get_width());
+
+        return line;
     }
 }

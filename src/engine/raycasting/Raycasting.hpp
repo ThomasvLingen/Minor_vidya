@@ -80,7 +80,8 @@ namespace Engine {
         double _calculate_wall_dist(Wall wall, CoordinateDouble ray_pos, RaySteps ray_steps, Direction ray_dir);
 
         LineCords _get_line_measures(int line_height);
-        void _correct_line(LineCords& line);
+        LineCords _get_sprite_horizontal_measures(int sprite_width, int sprite_screen_x);
+        void _correct_line(LineCords& line, int max_axis_value);
 
         int _get_texture_x_coord(Wall wall, CoordinateDouble ray_pos, Direction ray_dir, double perp_wall_dist);
         double _get_wall_x(Wall wall, CoordinateDouble ray_pos, Direction ray_dir, double perp_wall_dist);
