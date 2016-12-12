@@ -5,10 +5,14 @@
 #ifndef MINOR_VIDYA_LOADSTATE_HPP
 #define MINOR_VIDYA_LOADSTATE_HPP
 
+#include <string>
+#include <vector>
+#include <utility>
 #include "IGameState.hpp"
 #include "../Game.hpp"
 #include "../../engine/SDLFacade.hpp"
 #include "../../engine/PathUtil.hpp"
+#include "../../engine/raycasting/RayCastingTypes.hpp"
 
 namespace GameLogic {
     class Game;
@@ -22,6 +26,10 @@ namespace State {
     using Engine::Keys;
     using Engine::Key;
     using GameLogic::Game;
+    using std::string;
+    using std::vector;
+    using Engine::CoordinateInt;
+    using std::pair;
 
     class LoadState : public IGameState {
 
@@ -32,6 +40,29 @@ namespace State {
     private:
         int _loading_screen_time = 0;
         Color _color{255,255,255};
+
+        FontType _load_font{FontType::alterebro_pixel_plus};
+        string _load_text {"Loading..."};
+        CoordinateInt _load_text_pos {255,150};
+
+        FontType _text_font{FontType::alterebro_pixel};
+        vector<pair<string,string>> _text_image {
+            {"Finding Files...", "res/loading_bar/loading_bar_1.bmp"},
+            {"Casting Rays...", "res/loading_bar/loading_bar_2.bmp"},
+            {"Calculating Edges...", "res/loading_bar/loading_bar_3.bmp"},
+            {"Doing other stuff...", "res/loading_bar/loading_bar_4.bmp"},
+            {"Placing Player...", "res/loading_bar/loading_bar_5.bmp"},
+            {"Increasing movement speed...", "res/loading_bar/loading_bar_6.bmp"},
+            {"Making textures...", "res/loading_bar/loading_bar_7.bmp"},
+            {"Destroying textures...", "res/loading_bar/loading_bar_6.bmp"},
+            {"Overloading!!!", "res/loading_bar/loading_bar_8.bmp"},
+            {"Done Loading!", "res/loading_bar/loading_bar_8.bmp"}
+        };
+        CoordinateInt _text_pos {220,260};
+        CoordinateInt _loading_bar_pos {220, 220};
+
+        int _current_index {0};
+        int _wait_time {30};
     };
 }
 #endif //MINOR_VIDYA_LOADSTATE_HPP
