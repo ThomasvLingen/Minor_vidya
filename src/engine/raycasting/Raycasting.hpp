@@ -64,6 +64,9 @@ namespace Engine {
         SDLFacade& _SDL_facade;
         WorldPTR _world;
 
+        void _draw_walls(CoordinateDouble ray_position, double distance_buffer[]);
+        void _draw_entities(CoordinateDouble ray_position, double distance_buffer[]);
+
         DeltaDist _calculate_delta_distance(Direction ray_dir);
         CoordinateDouble _get_ray_pos();
         Direction _calculate_ray_direction(int current_ray_index);
