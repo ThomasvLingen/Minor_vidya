@@ -87,7 +87,7 @@ namespace Engine {
             {Key::TAB,          SDLK_TAB},
             {Key::ARROW_UP,     SDLK_UP},
             {Key::ARROW_DOWN,   SDLK_DOWN},
-            {Key::ARROW_LEFT,   SDLK_LEFT},
+            {Key::ARROW_LEFT,   SDLK_LEFT}
         };
 
         SDL_Window* _window = nullptr;
