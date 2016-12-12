@@ -11,6 +11,7 @@ namespace Config {
     using std::string;
 
     const string GAME_WINDOW_TITLE = "Vidya Gaem";
+    const string LOAD_AD_PATH = "res/advertisement.bmp";
 
     // Warning: This not only triggers the use of VSYNC but also the use of hardware rendering.
     const bool USE_VSYNC = true; // TODO: We probably want to make this editable through some settings menu
