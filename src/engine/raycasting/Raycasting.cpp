@@ -34,11 +34,13 @@ namespace Engine {
         if (this->_world != nullptr) {
             this->_SDL_facade.lock_screen_buffer();
 
-            // Draw walls
+            // This is the ZBuffer for the entities to draw
             double distance_buffer[_SDL_facade.get_width()];
 
+            // Things that don't change within a frame can be calculated here
+            CoordinateDouble ray_position = this->_get_ray_pos();
+
             for (int ray_index = 0; ray_index < this->_SDL_facade.get_width(); ray_index++) {
-                CoordinateDouble ray_position = _get_ray_pos();
                 Direction ray_dir = _calculate_ray_direction(ray_index);
                 CoordinateInt map_coord = _get_map_coord(ray_position);
 
@@ -74,13 +76,12 @@ namespace Engine {
 
             // Draw drawables
             // First sort the sprites by distance to the player
-            CoordinateDouble ray_pos = this->_get_ray_pos();
+            // TODO: This is copied, but we might not have to. Does order of enemies matter for anything else?
             vector<Enemy*> sorted_enemies {this->test_enemies.begin(), this->test_enemies.end()};
-
             std::sort(
                 sorted_enemies.begin(), sorted_enemies.end(),
-                [ray_pos] (Enemy* a, Enemy* b) {
-                    return a->get_distance_to_point(ray_pos) > b->get_distance_to_point(ray_pos);
+                [ray_position] (Enemy* a, Enemy* b) {
+                    return a->get_distance_to_point(ray_position) > b->get_distance_to_point(ray_position);
                 }
             );
 
