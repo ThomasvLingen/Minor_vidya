@@ -56,4 +56,9 @@ namespace Engine {
     {
         return this->_texture;
     }
+
+    vector<Entity> TileObject::get_entities()
+    {
+        return _entities;
+    }
 }

@@ -5,6 +5,7 @@
 #include <map>
 #include "Color.hpp"
 #include "../SDLFacade.hpp"
+#include "Entity.hpp"
 
 
 namespace Engine {
@@ -23,6 +24,8 @@ namespace Engine {
             left_tile  = 2,
             right_tile = 3
         };
+    protected:
+        vector<Entity> _entities;
 
     private:
         bool _wall;
@@ -50,6 +53,8 @@ namespace Engine {
         bool is_wall();
         Color get_color();
         ImageBuffer& get_texture();
+
+        vector<Entity> get_entities();
     };
 }
 
