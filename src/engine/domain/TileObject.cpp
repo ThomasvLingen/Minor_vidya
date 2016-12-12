@@ -6,9 +6,7 @@ namespace Engine {
     TileObject::TileObject(ImageBuffer& texture)
     : _texture(texture)
     {
-        for (size_t i = 0; i < 4; i++) {
-            this->_neighbour_tiles.push_back(nullptr);
-        }
+        this->_neighbour_tiles.resize(4);
     }
 
     TileObject::~TileObject()
