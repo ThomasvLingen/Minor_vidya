@@ -137,7 +137,7 @@ namespace Engine {
                             Uint32 pixel = enemy->texture[TEXTURE_WIDTH * tex_y + tex_x]; // get current pixel from the texture
 
                             // TODO: Transparency is done here. pls fix
-                            if ((pixel & 0xFFFFFF00) != 0) {
+                            if ((pixel & 0x000000FF) == 0xFF) {
                                 this->_SDL_facade.draw_pixel_screen_buffer({stripe, y}, pixel); // paint pixel if it isn't black, black is the invisible pixel
                             }
                         }
