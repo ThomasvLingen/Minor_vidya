@@ -37,7 +37,7 @@ namespace State {
         Input keys = this->_context.SDL_facade.get_input();
         for (auto key : keys.keys_released) {
             switch (key) {
-                case Key::ESC:
+                case Key::PAUSE_GAME:
                     this->_context.set_new_state(std::make_shared<PauseState>(this->_context));
                     break;
                 default:
