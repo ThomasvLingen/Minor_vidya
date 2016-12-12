@@ -130,7 +130,6 @@ namespace Engine {
             // calculate lowest and highest pixel to fill in current stripe
             LineCords draw_coords = this->_get_line_measures(sprite_height);
 
-            // TODO: Make this work with _get_line_measures or something
             // calculate width of the sprite
             int sprite_width = abs(int(h / (transformed.y)));
             LineCords sprite_x = this->_get_sprite_horizontal_measures(sprite_width, sprite_screen_x);
