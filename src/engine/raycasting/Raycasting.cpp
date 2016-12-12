@@ -156,8 +156,6 @@ namespace Engine {
 
                 int w = _SDL_facade.get_width();
                 int h = _SDL_facade.get_height();
-                int texWidth = 32;
-                int texHeight = 64;
 
                 int spriteScreenX = int((w / 2) * (1 + transformX / transformY));
 
@@ -179,7 +177,7 @@ namespace Engine {
 
                 //loop through every vertical stripe of the sprite on screen
                 for (int stripe = drawStartX; stripe < drawEndX; stripe++) {
-                    int texX = int(256 * (stripe - (-spriteWidth / 2 + spriteScreenX)) * texWidth / spriteWidth) / 256;
+                    int texX = int(256 * (stripe - (-spriteWidth / 2 + spriteScreenX)) * TEXTURE_WIDTH / spriteWidth) / 256;
                     //the conditions in the if are:
                     //1) it's in front of camera plane so you don't see things behind you
                     //2) it's on the screen (left)
@@ -189,8 +187,8 @@ namespace Engine {
                         for (int y = drawStartY; y < drawEndY; y++) //for every pixel of the current stripe
                         {
                             int d = (y) * 256 - h * 128 + spriteHeight * 128; //256 and 128 factors to avoid floats
-                            int texY = ((d * texHeight) / spriteHeight) / 256;
-                            Uint32 color = enemy->texture[texWidth * texY + texX]; //get current color from the texture
+                            int texY = ((d * TEXTURE_HEIGHT) / spriteHeight) / 256;
+                            Uint32 color = enemy->texture[TEXTURE_WIDTH * texY + texX]; //get current color from the texture
 
                             if ((color & 0x00FFFFFF) != 0)
                                 _SDL_facade.draw_pixel_screen_buffer({stripe, y},
