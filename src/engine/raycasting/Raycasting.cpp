@@ -72,28 +72,8 @@ namespace Engine {
                 }
             }
 
-            struct Enemy {
-                double x_pos;
-                double y_pos;
-                ImageBuffer texture;
-                Enemy(double newX, double newY, ImageBuffer newTexture){
-                    this->x_pos = newX;
-                    this->y_pos = newY;
-                    this->texture = newTexture;
-                }
-            };
-
             // Draw drawables
             // TODO: Only the enemy closest to the player is drawn for some reason.
-            vector<Enemy*> enemies;
-            Enemy* e1 = new Enemy(12.0, 10.0, this->_world->assets->get_texture(29));
-            Enemy* e2 = new Enemy(7.2, 4.3, this->_world->assets->get_texture(29));
-            Enemy* e3 = new Enemy(14.5, 10.0, this->_world->assets->get_texture(29));
-            Enemy* e4 = new Enemy(12.0, 8.0, this->_world->assets->get_texture(29));
-            enemies.push_back(e1);
-            enemies.push_back(e2);
-            enemies.push_back(e3);
-            enemies.push_back(e4);
 
             //todo sort sprites by distance
             double current_x = this->_world->get_pov().get_position().x;
@@ -103,8 +83,8 @@ namespace Engine {
             Enemy* enemy_with_shortest_distance = nullptr;
             double shortest_found_distance;
 
-            for(int i = 0; i < enemies.size(); i++){
-                for(Enemy* enemy : enemies){
+            for(int i = 0; i < this->test_enemies.size(); i++){
+                for(Enemy* enemy : this->test_enemies){
                     if(!(std::find(sorted_enemies.begin(), sorted_enemies.end(), enemy) != sorted_enemies.end())) {
                         // sorted_enemies does not contain enemy
                         if(enemy_with_shortest_distance == nullptr){

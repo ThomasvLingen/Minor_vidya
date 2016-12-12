@@ -24,9 +24,26 @@ namespace Engine {
     const int TEXTURE_WIDTH = 64;
     const int TEXTURE_HEIGHT = 64;
 
+    // TODO: THIS IS TEMPORARY TESTING CODE
+    struct Enemy {
+        double x_pos;
+        double y_pos;
+        ImageBuffer texture;
+        Enemy(double newX, double newY, ImageBuffer newTexture){
+            this->x_pos = newX;
+            this->y_pos = newY;
+            this->texture = newTexture;
+        }
+    };
+    // END TODO
+
     class Raycasting {
     public:
         Raycasting(SDLFacade& SDL_facade);
+
+        // TODO: THIS IS TEMPORARY TESTING CODE
+        vector<Enemy*> test_enemies;
+        // END TODO
 
         void handle_input(/* TODO:  Input data type from SDL facade */);
         void update(int delta_time);
