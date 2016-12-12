@@ -22,12 +22,6 @@ namespace State {
         this->_context.SDL_facade.clear_screen();
         this->_context.SDL_facade.draw_rect({0,0}, 640, 480, Color{0,0,0});
 
-        this->_loading_screen_time = this->_loading_screen_time + 2; //TODO: To ticks
-        if (this->_loading_screen_time > this->_wait_time) {
-            this->_loading_screen_time = 0;
-            this->_current_index++;
-        }
-
         this->_context.SDL_facade.draw_text(
             this->_load_text,
             this->_load_font,
@@ -54,7 +48,13 @@ namespace State {
 
         this->_context.SDL_facade.render_buffer();
 
-        if (this->_current_index >= 9) {
+        this->_loading_screen_time = this->_loading_screen_time + 2; //TODO: To ticks
+        if (this->_loading_screen_time > this->_wait_time) {
+            this->_loading_screen_time = 0;
+            this->_current_index++;
+        }
+
+        if (this->_current_index >= (int)this->_text_image.size()) {
             if ( this->_context.load_Level(VIDYA_RUNPATH + "res/TestMap.tmx") ) { //TODO needs to come from a level selecter or campaign level loading or something
                 this->_context.set_new_state( std::make_shared<RunState>( this->_context ) );
             }
