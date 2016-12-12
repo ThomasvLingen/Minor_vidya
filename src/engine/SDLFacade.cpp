@@ -400,16 +400,15 @@ namespace Engine {
     /// Supported keys will be handled and, if not already present, added to the _keys_down vector.
     void SDLFacade::_handle_key_pressed_event(SDL_Keycode key)
     {
-        map<SDL_Keycode, Key>::iterator it;
-        it = this->_possible_keys.find(key);
+        for(auto it = this->_possible_keys.begin(); it != this->_possible_keys.end(); ++it){
+            if(it->second == key){
+                vector<Key>::iterator it_pressed = this->_input.keys_down.begin();
+                // it_pressed might need to be 0 first time
+                it_pressed = find(it_pressed, this->_input.keys_down.end(), it->first);
 
-        // Check if SDL_Keycode needs to be handled
-        if (it != this->_possible_keys.end()) {
-            vector<Key>::iterator it_pressed;
-            it_pressed = find(this->_input.keys_down.begin(), this->_input.keys_down.end(), it->second);
-
-            if (it_pressed == this->_input.keys_down.end()) {
-                this->_input.keys_down.push_back(it->second);
+                if(it_pressed == this->_input.keys_down.end()){
+                    this->_input.keys_down.push_back(it->first);
+                }
             }
         }
     }
@@ -419,29 +418,22 @@ namespace Engine {
     /// Supported keys will be handled and, if present, removed from the _keys_down vector.
     void SDLFacade::_handle_key_released_event(SDL_Keycode key)
     {
-        map<SDL_Keycode, Key>::iterator it_possible;
-        it_possible = this->_possible_keys.find(key);
-        bool key_is_in_possible_keys = it_possible != this->_possible_keys.end();
+        for(auto it = this->_possible_keys.begin(); it != this->_possible_keys.end(); ++it){
+            if(it->second == key){
+                vector<Key>::iterator it_down = this->_input.keys_down.begin();
+                // it_down might need to be 0 first time
+                it_down = find(it_down, this->_input.keys_down.end(), it->first);
 
-        // Remove key from keys_pressed
-        // Check if SDL_Keycode needs to be handled
-        if (key_is_in_possible_keys) {
-            vector<Key>::iterator it_down;
-            it_down = find(this->_input.keys_down.begin(), this->_input.keys_down.end(), it_possible->second);
+                if(it_down != this->_input.keys_down.end()){
+                    this->_input.keys_down.erase(it_down);
+                }
 
-            // Check if released key is in _keys_down
-            if (it_down != this->_input.keys_down.end()) {
-                this->_input.keys_down.erase(it_down);
+                this->_input.keys_released.push_back(it->first);
             }
         }
 
-        // Add key to keys_released
-        if (key_is_in_possible_keys) {
-            if (find(this->_input.keys_released.begin(), this->_input.keys_released.end(), it_possible->second) == this->_input.keys_released.end()) {
-                this->_input.keys_released.push_back(it_possible->second);
-            }
-        }
     }
+
 
     /// \brief Function that handles a SDL_WINDOWEVENT event
     ///

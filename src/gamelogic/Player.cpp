@@ -19,22 +19,22 @@ namespace GameLogic {
     {
         for (auto key : keys.keys_down) {
             switch (key) {
-                case Key::A :
+                case Key::MOVE_LEFT :
                     this->_move_left();
                     break;
-                case Key::DOWN :
+                case Key::MOVE_BACKWARDS :
                     this->_mov_backward();
                     break;
-                case Key::UP :
+                case Key::MOVE_FORWARD :
                     this->_mov_forward();
                     break;
-                case Key::D :
+                case Key::MOVE_RIGHT :
                     this->_move_right();
                     break;
-                case Key::LEFT :
+                case Key::ROTATE_LEFT :
                     this->_rot_left();
                     break;
-                case Key::RIGHT :
+                case Key::ROTATE_RIGHT :
                     this->_rot_right();
                     break;
                 default:

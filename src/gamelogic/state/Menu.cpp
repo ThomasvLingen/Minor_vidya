@@ -87,18 +87,18 @@ namespace State {
     {
         for (auto key : keys.keys_released) {
             switch (key) {
-                case Key::W :
-                case Key::UP :
+                //case Key::W :
+                case Key::MENU_UP :
                     this->set_previous();
                     break;
-                case Key::S :
-                case Key::DOWN :
+                //case Key::S :
+                case Key::MENU_DOWN :
                     this->set_next();
                     break;
-                case Key::ESC:
+                case Key::PAUSE_GAME:
                     this->_escape_option.callback(this->_context);
                     break;
-                case Key::ENTER:
+                case Key::MENU_ENTER:
                     this->get_selected()->callback(this->_context);
                     break;
                 default:
