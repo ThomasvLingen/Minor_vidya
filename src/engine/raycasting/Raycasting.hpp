@@ -34,6 +34,15 @@ namespace Engine {
             this->y_pos = newY;
             this->texture = newTexture;
         }
+
+        inline double get_distance_to_point(CoordinateDouble pos) const
+        {
+            double delta_x = pos.x - this->x_pos;
+            double delta_y = pos.y - this->y_pos;
+
+            // For some reason the sqrt is not needed. wut.
+            return pow(delta_x, 2) + pow(delta_y, 2);
+        };
     };
     // END TODO
 

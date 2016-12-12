@@ -73,39 +73,16 @@ namespace Engine {
             }
 
             // Draw drawables
-            // TODO: Only the enemy closest to the player is drawn for some reason.
+            // First sort the sprites by distance to the player
+            CoordinateDouble ray_pos = this->_get_ray_pos();
+            vector<Enemy*> sorted_enemies {this->test_enemies.begin(), this->test_enemies.end()};
 
-            //todo sort sprites by distance
-            double current_x = this->_world->get_pov().get_position().x;
-            double current_y = this->_world->get_pov().get_position().y;
-
-            vector<Enemy*> sorted_enemies;
-            Enemy* enemy_with_shortest_distance = nullptr;
-            double shortest_found_distance;
-
-            for(int i = 0; i < this->test_enemies.size(); i++){
-                for(Enemy* enemy : this->test_enemies){
-                    if(!(std::find(sorted_enemies.begin(), sorted_enemies.end(), enemy) != sorted_enemies.end())) {
-                        // sorted_enemies does not contain enemy
-                        if(enemy_with_shortest_distance == nullptr){
-                            enemy_with_shortest_distance = enemy;
-                            double delta_x = current_x - enemy->x_pos;
-                            double delta_y = current_y - enemy->y_pos;
-                            shortest_found_distance = pow(delta_x, 2) + pow(delta_y, 2);
-                        } else {
-                            double delta_x = current_x - enemy->x_pos;
-                            double delta_y = current_y - enemy->y_pos;
-                            double current_distance = pow(delta_x, 2) + pow(delta_y, 2);
-                            if(shortest_found_distance > current_distance){
-                                shortest_found_distance = current_distance;
-                                enemy_with_shortest_distance = enemy;
-                            }
-                        }
-                    }
+            std::sort(
+                sorted_enemies.begin(), sorted_enemies.end(),
+                [ray_pos] (Enemy* a, Enemy* b) {
+                    return a->get_distance_to_point(ray_pos) > b->get_distance_to_point(ray_pos);
                 }
-
-                sorted_enemies.push_back(enemy_with_shortest_distance);
-            }
+            );
 
             for(Enemy* enemy : sorted_enemies) {
                 //translate sprite position to relative to camera
