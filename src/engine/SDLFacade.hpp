@@ -52,13 +52,13 @@ namespace Engine {
             {SDLK_a,        Key::ROTATE_LEFT},
             {SDLK_d,        Key::ROTATE_RIGHT},
 
-            {SDLK_UP,       Key::MENU_UP},
-            {SDLK_DOWN,     Key::MENU_DOWN},
-            {SDLK_RETURN,   Key::MENU_ENTER},
+            {Key::MENU_UP,          SDLK_UP},
+            {Key::MENU_DOWN,        SDLK_DOWN},
+            {Key::MENU_ENTER,       SDLK_RETURN},
 
-            {SDLK_ESCAPE,   Key::PAUSE_GAME},
+            {Key::PAUSE_GAME,       SDLK_ESCAPE},
 
-            {SDLK_SPACE,    Key::ACTION_INTERACT},
+            {Key::ACTION_INTERACT,  SDLK_SPACE},
         };
 
         SDL_Window* _window = nullptr;
