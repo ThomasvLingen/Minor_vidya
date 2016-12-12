@@ -14,21 +14,10 @@ namespace Engine {
 
     class TileObject {
 
-    public:
-        // direction for set_tile
-        // Maps to a position in the _neighbour_tiles vector
-        enum class Direction {
-            up_tile    = 0,
-            down_tile  = 1,
-            left_tile  = 2,
-            right_tile = 3
-        };
-
     private:
         bool _wall;
         const int _width = 1;        // TODO: implement width value
         const int _length = 1;        // TODO: implement height value
-        vector<TileObject*> _neighbour_tiles;
         ImageBuffer& _texture;
 
     public:
@@ -40,10 +29,6 @@ namespace Engine {
         virtual void update(int delta_time);
 
         void set_wall(bool has_wall);
-
-        void set_tile_neighbour(TileObject* tile, Direction direction);
-
-        TileObject* get_tile_neighbour(Direction direction);
 
         bool is_wall();
         ImageBuffer& get_texture();

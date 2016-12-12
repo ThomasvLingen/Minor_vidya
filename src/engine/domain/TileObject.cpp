@@ -6,7 +6,6 @@ namespace Engine {
     TileObject::TileObject(ImageBuffer& texture)
     : _texture(texture)
     {
-        this->_neighbour_tiles.resize(4);
     }
 
     TileObject::~TileObject()
@@ -23,16 +22,6 @@ namespace Engine {
     void TileObject::set_wall(bool has_wall)
     {
         this->_wall = has_wall;
-    }
-
-    void TileObject::set_tile_neighbour(TileObject* tile, Direction direction)
-    {
-        this->_neighbour_tiles[(size_t)direction] = tile;
-    }
-
-    TileObject* TileObject::get_tile_neighbour(Direction direction)
-    {
-        return this->_neighbour_tiles[(size_t)direction];
     }
 
     bool TileObject::is_wall()
