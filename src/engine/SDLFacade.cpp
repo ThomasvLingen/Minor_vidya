@@ -597,6 +597,7 @@ namespace Engine {
         }
     }
 
+    /// \brief get image width of path
     int SDLFacade::get_image_width(const std::string path)
     {
         SDL_Surface* image = IMG_Load(path.c_str());
