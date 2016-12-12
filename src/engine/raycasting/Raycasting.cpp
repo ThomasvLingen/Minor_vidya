@@ -87,45 +87,38 @@ namespace Engine {
 
             for (Enemy* enemy : sorted_enemies) {
                 // translate sprite position to relative to camera
-                double sprite_x = enemy->x_pos - ray_position.x;
-                double sprite_y = enemy->y_pos - ray_position.y;
+                CoordinateDouble sprite_pos = {
+                    enemy->x_pos - ray_position.x, enemy->y_pos - ray_position.y
+                };
 
                 // transform sprite with the inverse camera matrix
                 // [ plane_x   dir_x ] -1                                       [ dir_y      -dir_x ]
                 // [               ]       =  1/(plane_x*dir_y-dir_x*plane_y) *   [                 ]
                 // [ plane_y   dir_y ]                                          [ -plane_y  plane_x ]
 
-                double dir_x = this->_world->get_pov().get_direction().x;
-                double dir_y = this->_world->get_pov().get_direction().y;
+                Direction& dir = this->_world->get_pov().get_direction();
 
-                RaycastingVector PoV_plane = this->_world->get_pov().get_camera_plane();
-                double plane_x = PoV_plane.x;
-                double plane_y = PoV_plane.y;
-                double inv_det = 1.0 / (plane_x * dir_y - dir_x * plane_y); // required for correct matrix multiplication
+                RaycastingVector& PoV_plane = this->_world->get_pov().get_camera_plane();
+                double inv_det = 1.0 / (PoV_plane.x * dir.y - dir.x * PoV_plane.y); // required for correct matrix multiplication
 
-                double transform_x = inv_det * (dir_y * sprite_x - dir_x * sprite_y);
-                double transform_y = inv_det * (-plane_y * sprite_x + plane_x *
-                                                                  sprite_y); // this is actually the depth inside the screen, that what Z is in 3D
+                CoordinateDouble transformed = {
+                    inv_det * (dir.y * sprite_pos.x - dir.x * sprite_pos.y),
+                    inv_det * (-PoV_plane.y * sprite_pos.x + PoV_plane.x * sprite_pos.y)
+                };
 
                 int w = this->_SDL_facade.get_width();
                 int h = this->_SDL_facade.get_height();
 
-                int sprite_screen_x = int((w / 2) * (1 + transform_x / transform_y));
+                int sprite_screen_x = int((w / 2) * (1 + transformed.x / transformed.y));
 
                 // calculate height of the sprite on screen
-                int sprite_height = abs(int(h / (transform_y))); //using "transform_y" instead of the real distance prevents fisheye
+                int sprite_height = abs(int(h / (transformed.y))); //using "transform_y" instead of the real distance prevents fisheye
                 // calculate lowest and highest pixel to fill in current stripe
-                int draw_start_y = -sprite_height / 2 + h / 2;
-                if (draw_start_y < 0) {
-                    draw_start_y = 0;
-                }
-                int draw_end_y = sprite_height / 2 + h / 2;
-                if (draw_end_y >= h) {
-                    draw_end_y = h - 1;
-                };
+                LineCords draw_coords = this->_get_line_measures(sprite_height);
 
+                // TODO: Make this work with _get_line_measures or something
                 // calculate width of the sprite
-                int sprite_width = abs(int(h / (transform_y)));
+                int sprite_width = abs(int(h / (transformed.y)));
                 int draw_start_x = -sprite_width / 2 + sprite_screen_x;
                 if (draw_start_x < 0) {
                     draw_start_x = 0;
@@ -143,8 +136,8 @@ namespace Engine {
                     // 2) it's on the screen (left)
                     // 3) it's on the screen (right)
                     // 4) ZBuffer, with perpendicular distance
-                    if (transform_y > 0 && stripe > 0 && stripe < w && transform_y < distance_buffer[stripe]) {
-                        for (int y = draw_start_y; y < draw_end_y; y++) {  // for every pixel of the current stripe
+                    if (transformed.y > 0 && stripe > 0 && stripe < w && transformed.y < distance_buffer[stripe]) {
+                        for (int y = draw_coords.draw_start; y < draw_coords.draw_end; y++) {  // for every pixel of the current stripe
                             int d = (y) * 256 - h * 128 + sprite_height * 128; // 256 and 128 factors to avoid floats
                             int tex_y = ((d * TEXTURE_HEIGHT) / sprite_height) / 256;
 
