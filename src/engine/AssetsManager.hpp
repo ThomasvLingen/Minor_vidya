@@ -34,7 +34,9 @@ namespace Engine {
             { 1, 33 },    // Brick wall
             { 2, 1 },     // Stone wall
             { 3, 23 },    // Wood wall
-            { 4, 15}      // Blue wall
+            { 4, 15},      // Blue wall
+            {21, 21},
+            {97, 97}
         };
     };
 
