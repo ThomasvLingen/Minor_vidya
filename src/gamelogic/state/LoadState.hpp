@@ -13,6 +13,7 @@
 #include "../../engine/SDLFacade.hpp"
 #include "../../engine/PathUtil.hpp"
 #include "../../engine/raycasting/RayCastingTypes.hpp"
+#include "../../config.hpp"
 
 namespace GameLogic {
     class Game;
@@ -43,7 +44,7 @@ namespace State {
 
         FontType _load_font{FontType::alterebro_pixel_plus};
         string _load_text {"Loading..."};
-        CoordinateInt _load_text_pos {255,150};
+        CoordinateInt _load_text_pos {255,50};
 
         FontType _text_font{FontType::alterebro_pixel};
         vector<pair<string,string>> _text_image {
@@ -58,8 +59,10 @@ namespace State {
             {"Overloading!!!", "res/loading_bar/loading_bar_8.bmp"},
             {"Done Loading!", "res/loading_bar/loading_bar_8.bmp"}
         };
-        CoordinateInt _text_pos {220,260};
-        CoordinateInt _loading_bar_pos {220, 220};
+        CoordinateInt _text_pos {220,160};
+        CoordinateInt _loading_bar_pos {220, 120};
+
+        CoordinateInt _advertisement_pos {320, 300};
 
         int _current_index {0};
         int _wait_time {30};

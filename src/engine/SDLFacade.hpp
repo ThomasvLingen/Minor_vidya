@@ -86,6 +86,8 @@ namespace Engine {
         void update_screen_buffer();
         void render_buffer() const;
 
+        int get_image_width(const std::string path);
+
         void lock_screen_buffer();
         void draw_pixel_screen_buffer(const CoordinateInt& position, Uint32 pixel);
         void unlock_screen_buffer();
