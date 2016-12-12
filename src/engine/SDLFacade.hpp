@@ -42,23 +42,21 @@ namespace Engine {
 
         map<FontType, TTF_Font*> _fonts;
 
-        map<string, SDL_Texture*> _images;
+        map<Key, SDL_Keycode > _possible_keys = {
+            {Key::MOVE_FORWARD,     SDLK_UP},
+            {Key::MOVE_BACKWARDS,   SDLK_DOWN},
+            {Key::MOVE_LEFT,        SDLK_LEFT},
+            {Key::MOVE_RIGHT,       SDLK_RIGHT},
+            {Key::ROTATE_LEFT,      SDLK_a},
+            {Key::ROTATE_RIGHT,     SDLK_d},
 
-        map<SDL_Keycode, Key> _possible_keys = {
-            {SDLK_UP,       Key::MOVE_FORWARD},
-            {SDLK_DOWN,     Key::MOVE_BACKWARDS},
-            {SDLK_LEFT,     Key::MOVE_LEFT},
-            {SDLK_RIGHT,    Key::MOVE_RIGHT},
-            {SDLK_a,        Key::ROTATE_LEFT},
-            {SDLK_d,        Key::ROTATE_RIGHT},
+            {Key::MENU_UP,          SDLK_UP},
+            {Key::MENU_DOWN,        SDLK_DOWN},
+            {Key::MENU_ENTER,       SDLK_RETURN},
 
-            {SDLK_UP,       Key::MENU_UP},
-            {SDLK_DOWN,     Key::MENU_DOWN},
-            {SDLK_RETURN,   Key::MENU_ENTER},
+            {Key::PAUSE_GAME,       SDLK_ESCAPE},
 
-            {SDLK_ESCAPE,   Key::PAUSE_GAME},
-
-            {SDLK_SPACE,    Key::ACTION_INTERACT},
+            {Key::ACTION_INTERACT,  SDLK_SPACE},
         };
 
         SDL_Window* _window = nullptr;
