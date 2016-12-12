@@ -599,12 +599,18 @@ namespace Engine {
 
     int SDLFacade::get_image_width(const std::string path)
     {
-        return IMG_Load(path.c_str())->w;
-    }
+        SDL_Surface* image = IMG_Load(path.c_str());
+        int size = 0;
 
-    int SDLFacade::get_image_height(const std::string path)
-    {
-        return IMG_Load(path.c_str())->h;
+        if (image == NULL) { //TODO: exception
+            cout << "FAILED TO FIND THE IMAGE" << endl;
+            cout << path.c_str() << endl;
+        } else {
+            size = image->w;
+            SDL_FreeSurface(image);
+        }
+
+        return size;
     }
 
 }
