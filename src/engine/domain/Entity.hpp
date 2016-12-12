@@ -12,8 +12,8 @@ namespace Engine {
     class Entity {
 
     public:
-        CoordinateInt* get_position();
-        ImageBuffer* get_image_buffer();
+        CoordinateInt& get_position();
+        ImageBuffer& get_image_buffer();
 
     private:
         CoordinateInt* _position;
