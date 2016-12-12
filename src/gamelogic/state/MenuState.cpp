@@ -72,7 +72,7 @@ namespace State {
 
         this->_context.SDL_facade.draw_image(
             VIDYA_RUNPATH + "res/menuscreen.bmp",
-            CoordinateDouble{0,0}
+            {0,0}
         );
 
         this->_context.SDL_facade.draw_text(

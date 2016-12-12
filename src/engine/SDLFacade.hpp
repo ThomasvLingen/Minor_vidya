@@ -81,8 +81,8 @@ namespace Engine {
         void draw_line(const CoordinateInt& line_start, const CoordinateInt& line_end, const Color& color);
         bool draw_text(const string& text, const FontType& font, const Color& color,
                        const CoordinateInt& position) const;
-        void draw_image(const std::string path, const CoordinateDouble& coordinates);
-        void draw_rect(const CoordinateDouble& rect_start, const int width, const int height, const Color& color);
+        void draw_image(const std::string path, const CoordinateInt& coordinates);
+        void draw_rect(const CoordinateInt& rect_start, const int width, const int height, const Color& color);
         void update_screen_buffer();
         void render_buffer() const;
 
