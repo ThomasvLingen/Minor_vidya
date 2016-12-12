@@ -67,13 +67,15 @@ namespace GameLogic {
                 Tile* new_tile = new Tile( assets->get_texture( (int)int_map[y][x] ) );
                 new_tile->set_wall( int_map[y][x] != 0 );
                 map[y-1].push_back( new_tile );
-                if(y == 5 && x == 9){
+
+                //Test Trigger
+                if(y == 10 && x == 5){
                     std::function<void(World&)> appel = [](World& wereld) {
-                        TileObject* tile = wereld.get_tile({5,9});
+                        TileObject* tile = wereld.get_tile({10, 5});
                         tile->set_wall(false);
                     };
 
-                    Engine::TileTrigger* tileTrigger = new Engine::TileTrigger(&appel);
+                    Engine::TileTrigger* tileTrigger = new Engine::TileTrigger(appel);
 
                     new_tile->_tiletrigger = tileTrigger;
                 }
