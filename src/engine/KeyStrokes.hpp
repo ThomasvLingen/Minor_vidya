@@ -10,8 +10,8 @@
 namespace Engine {
     using std::vector;
 
-    enum class Key {A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, ZERO, ONE, TWO, THREE, FOUR,
-            FIVE, SIX, SEVEN, EIGHT, NINE, ESC, ENTER, UP, DOWN, LEFT, RIGHT};
+    enum class Key {MOVE_FORWARD, MOVE_BACKWARDS, MOVE_RIGHT, MOVE_LEFT, ROTATE_LEFT, ROTATE_RIGHT, MENU_ENTER, MENU_UP,
+            MENU_DOWN, PAUSE_GAME, ACTION_INTERACT};
 
     typedef vector<Key> Keys;
 
