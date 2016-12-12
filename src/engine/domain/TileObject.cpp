@@ -13,6 +13,9 @@ namespace Engine {
 
     TileObject::~TileObject()
     {
+        if(_tiletrigger != nullptr){
+            delete _tiletrigger;
+        }
     }
 
     /// \brief update all objects in this particular tile.

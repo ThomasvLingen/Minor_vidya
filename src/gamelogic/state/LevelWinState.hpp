@@ -10,17 +10,16 @@
 #include "../../engine/SDLFacade.hpp"
 #include "Menu.hpp"
 
-class LevelWinState {
-    namespace GameLogic {
-            class Game;
-    }
+namespace GameLogic {
+    class Game;
+}
 
 namespace State {
     using Engine::SDLFacade;
     using Engine::CoordinateDouble;
     using Engine::Color;
     using Engine::FontType;
-    using Engine::PressedKeys;
+    using Engine::Keys;
     using Engine::Key;
     using GameLogic::Game;
 
@@ -37,7 +36,6 @@ namespace State {
         Color _color{255,255,255};
     };
 }
-};
 
 
 #endif //MINOR_VIDYA_LEVELWINSTATE_HPP

@@ -5,7 +5,7 @@
 #include <map>
 #include "Color.hpp"
 #include "../SDLFacade.hpp"
-
+#include "TileTrigger.hpp"
 
 namespace Engine {
     using std::vector;
@@ -32,6 +32,7 @@ namespace Engine {
         vector<TileObject*> _neighbour_tiles;
         ImageBuffer& _texture;
 
+
     public:
         TileObject(ImageBuffer& texture);
         TileObject(const TileObject& obj) = delete;            // Copy constructor for a base class has to be deleted (slicing)
@@ -50,6 +51,8 @@ namespace Engine {
         bool is_wall();
         Color get_color();
         ImageBuffer& get_texture();
+        TileTrigger* _tiletrigger = nullptr;
+
     };
 }
 
