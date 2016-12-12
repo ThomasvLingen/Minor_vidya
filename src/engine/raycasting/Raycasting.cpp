@@ -84,12 +84,12 @@ namespace Engine {
             };
 
             // Draw drawables
-
+            // TODO: Only the enemy closest to the player is drawn for some reason.
             vector<Enemy*> enemies;
-            Enemy* e1 = new Enemy(16.0, 16.0, this->_world->assets->get_texture(21));
-            Enemy* e2 = new Enemy(80.0, 80.0, this->_world->assets->get_texture(21));
-            Enemy* e3 = new Enemy(16.0, 80.0, this->_world->assets->get_texture(97));
-            Enemy* e4 = new Enemy(80.0, 16.0, this->_world->assets->get_texture(21));
+            Enemy* e1 = new Enemy(12.0, 10.0, this->_world->assets->get_texture(29));
+            Enemy* e2 = new Enemy(7.2, 4.3, this->_world->assets->get_texture(29));
+            Enemy* e3 = new Enemy(14.5, 10.0, this->_world->assets->get_texture(29));
+            Enemy* e4 = new Enemy(12.0, 8.0, this->_world->assets->get_texture(29));
             enemies.push_back(e1);
             enemies.push_back(e2);
             enemies.push_back(e3);
