@@ -14,7 +14,7 @@ namespace GameLogic {
     class Tile : public Engine::TileObject {
 
     public:
-        Tile(ImageBuffer& texture);
+        Tile(ImageBuffer* texture);
 
         void update(int delta_time) override;
 

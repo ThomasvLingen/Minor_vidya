@@ -15,7 +15,7 @@ namespace Engine {
         World(const World& obj) = delete;            // Copy constructor for a base class has to be deleted (slicing)
         World& operator=(const World& obj) = delete; // Copy assignment for a base class has to be deleted (slicing)
 
-        SPTR_AssetsManager assets;
+        SPTR_AssetsManager assets = 0;
 
         virtual void update(int delta_time) = 0;
 

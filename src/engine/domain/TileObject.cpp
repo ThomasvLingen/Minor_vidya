@@ -3,7 +3,7 @@
 
 
 namespace Engine {
-    TileObject::TileObject(ImageBuffer& texture)
+    TileObject::TileObject(ImageBuffer* texture)
     : _texture(texture)
     {
     }
@@ -29,8 +29,13 @@ namespace Engine {
         return this->_wall;
     }
 
-    ImageBuffer& TileObject::get_texture()
+    ImageBuffer* TileObject::get_texture()
     {
         return this->_texture;
+    }
+
+    void TileObject::set_texture(ImageBuffer* texture)
+    {
+        this->_texture = texture;
     }
 }
