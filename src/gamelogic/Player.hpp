@@ -55,6 +55,8 @@ namespace GameLogic {
         void _rot_right();
         void _rot_left();
 
+        void _do_action();
+
         /*
          * int health
          * obj Inventory -> vector<items>

@@ -5,7 +5,7 @@
 #include <map>
 #include "Color.hpp"
 #include "../SDLFacade.hpp"
-
+#include "TileTrigger.hpp"
 
 namespace Engine {
     using std::vector;
@@ -20,6 +20,7 @@ namespace Engine {
         const int _length = 1;        // TODO: implement height value
 
         ImageBuffer* _texture;
+
 
     public:
         TileObject(ImageBuffer* texture);
@@ -36,6 +37,8 @@ namespace Engine {
         bool is_wall();
 
         ImageBuffer* get_texture();
+
+        TileTrigger* _tiletrigger = nullptr;
     };
 }
 

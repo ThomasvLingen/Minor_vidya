@@ -37,6 +37,9 @@ namespace GameLogic {
                 case Key::RIGHT :
                     this->_rot_right();
                     break;
+                case Key::E :
+                    this->_do_action();
+                    break;
                 default:
                     break;
             }
@@ -131,5 +134,18 @@ namespace GameLogic {
     {
         this->_level = level;
         this->_position = level->get_spawnpoint();
+    }
+
+    void Player::_do_action()
+    {
+        double new_x = this->_position.x + this->_direction.x * 0.5;
+        double new_y = this->_position.y + this->_direction.y * 0.5;
+        TileObject* tile = this->_level->get_tile({(int)new_x, (int)new_y});
+        std::cout << ", tile: " <<  (int)new_x << " : "  << (int)new_y << " is: " << ((tile->is_wall()) ? "true" : "false") << std::endl;
+        std::cout << tile->_tiletrigger;
+        if(tile->_tiletrigger != nullptr){
+            std::cout << "Triggered" << std::endl;
+            tile->_tiletrigger->make_call(*this->_level);
+        }
     }
 }
