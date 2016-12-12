@@ -85,68 +85,77 @@ namespace Engine {
                 }
             );
 
-            for(Enemy* enemy : sorted_enemies) {
-                //translate sprite position to relative to camera
-                double spriteX = enemy->x_pos - _get_ray_pos().x;
-                double spriteY = enemy->y_pos - _get_ray_pos().y;
+            for (Enemy* enemy : sorted_enemies) {
+                // translate sprite position to relative to camera
+                double sprite_x = enemy->x_pos - ray_position.x;
+                double sprite_y = enemy->y_pos - ray_position.y;
 
-                //transform sprite with the inverse camera matrix
-                // [ planeX   dirX ] -1                                       [ dirY      -dirX ]
-                // [               ]       =  1/(planeX*dirY-dirX*planeY) *   [                 ]
-                // [ planeY   dirY ]                                          [ -planeY  planeX ]
+                // transform sprite with the inverse camera matrix
+                // [ plane_x   dir_x ] -1                                       [ dir_y      -dir_x ]
+                // [               ]       =  1/(plane_x*dir_y-dir_x*plane_y) *   [                 ]
+                // [ plane_y   dir_y ]                                          [ -plane_y  plane_x ]
 
-                double dirX = this->_world->get_pov().get_direction().x;
-                double dirY = this->_world->get_pov().get_direction().y;
+                double dir_x = this->_world->get_pov().get_direction().x;
+                double dir_y = this->_world->get_pov().get_direction().y;
 
                 RaycastingVector PoV_plane = this->_world->get_pov().get_camera_plane();
-                double planeX = PoV_plane.x;
-                double planeY = PoV_plane.y;
-                double invDet = 1.0 / (planeX * dirY - dirX * planeY); //required for correct matrix multiplication
+                double plane_x = PoV_plane.x;
+                double plane_y = PoV_plane.y;
+                double inv_det = 1.0 / (plane_x * dir_y - dir_x * plane_y); // required for correct matrix multiplication
 
-                double transformX = invDet * (dirY * spriteX - dirX * spriteY);
-                double transformY = invDet * (-planeY * spriteX + planeX *
-                                                                  spriteY); //this is actually the depth inside the screen, that what Z is in 3D
+                double transform_x = inv_det * (dir_y * sprite_x - dir_x * sprite_y);
+                double transform_y = inv_det * (-plane_y * sprite_x + plane_x *
+                                                                  sprite_y); // this is actually the depth inside the screen, that what Z is in 3D
 
-                int w = _SDL_facade.get_width();
-                int h = _SDL_facade.get_height();
+                int w = this->_SDL_facade.get_width();
+                int h = this->_SDL_facade.get_height();
 
-                int spriteScreenX = int((w / 2) * (1 + transformX / transformY));
+                int sprite_screen_x = int((w / 2) * (1 + transform_x / transform_y));
 
-                //calculate height of the sprite on screen
-                int spriteHeight = abs(
-                        int(h / (transformY))); //using "transformY" instead of the real distance prevents fisheye
-                //calculate lowest and highest pixel to fill in current stripe
-                int drawStartY = -spriteHeight / 2 + h / 2;
-                if (drawStartY < 0) drawStartY = 0;
-                int drawEndY = spriteHeight / 2 + h / 2;
-                if (drawEndY >= h) drawEndY = h - 1;
+                // calculate height of the sprite on screen
+                int sprite_height = abs(int(h / (transform_y))); //using "transform_y" instead of the real distance prevents fisheye
+                // calculate lowest and highest pixel to fill in current stripe
+                int draw_start_y = -sprite_height / 2 + h / 2;
+                if (draw_start_y < 0) {
+                    draw_start_y = 0;
+                }
+                int draw_end_y = sprite_height / 2 + h / 2;
+                if (draw_end_y >= h) {
+                    draw_end_y = h - 1;
+                };
 
-                //calculate width of the sprite
-                int spriteWidth = abs(int(h / (transformY)));
-                int drawStartX = -spriteWidth / 2 + spriteScreenX;
-                if (drawStartX < 0) drawStartX = 0;
-                int drawEndX = spriteWidth / 2 + spriteScreenX;
-                if (drawEndX >= w) drawEndX = w - 1;
+                // calculate width of the sprite
+                int sprite_width = abs(int(h / (transform_y)));
+                int draw_start_x = -sprite_width / 2 + sprite_screen_x;
+                if (draw_start_x < 0) {
+                    draw_start_x = 0;
+                }
+                int draw_end_x = sprite_width / 2 + sprite_screen_x;
+                if (draw_end_x >= w) {
+                    draw_end_x = w - 1;
+                }
 
-                //loop through every vertical stripe of the sprite on screen
-                for (int stripe = drawStartX; stripe < drawEndX; stripe++) {
-                    int texX = int(256 * (stripe - (-spriteWidth / 2 + spriteScreenX)) * TEXTURE_WIDTH / spriteWidth) / 256;
-                    //the conditions in the if are:
-                    //1) it's in front of camera plane so you don't see things behind you
-                    //2) it's on the screen (left)
-                    //3) it's on the screen (right)
-                    //4) ZBuffer, with perpendicular distance
-                    if (transformY > 0 && stripe > 0 && stripe < w && transformY < distance_buffer[stripe])
-                        for (int y = drawStartY; y < drawEndY; y++) //for every pixel of the current stripe
-                        {
-                            int d = (y) * 256 - h * 128 + spriteHeight * 128; //256 and 128 factors to avoid floats
-                            int texY = ((d * TEXTURE_HEIGHT) / spriteHeight) / 256;
-                            Uint32 color = enemy->texture[TEXTURE_WIDTH * texY + texX]; //get current color from the texture
+                // loop through every vertical stripe of the sprite on screen
+                for (int stripe = draw_start_x; stripe < draw_end_x; stripe++) {
+                    int tex_x = int(256 * (stripe - (-sprite_width / 2 + sprite_screen_x)) * TEXTURE_WIDTH / sprite_width) / 256;
+                    // the conditions in the if are:
+                    // 1) it's in front of camera plane so you don't see things behind you
+                    // 2) it's on the screen (left)
+                    // 3) it's on the screen (right)
+                    // 4) ZBuffer, with perpendicular distance
+                    if (transform_y > 0 && stripe > 0 && stripe < w && transform_y < distance_buffer[stripe]) {
+                        for (int y = draw_start_y; y < draw_end_y; y++) {  // for every pixel of the current stripe
+                            int d = (y) * 256 - h * 128 + sprite_height * 128; // 256 and 128 factors to avoid floats
+                            int tex_y = ((d * TEXTURE_HEIGHT) / sprite_height) / 256;
+
+                            Uint32 pixel = enemy->texture[TEXTURE_WIDTH * tex_y + tex_x]; // get current pixel from the texture
+
                             // TODO: Transparency is done here. pls fix
-                            if ((color & 0xFFFFFF00) != 0)
-                                _SDL_facade.draw_pixel_screen_buffer({stripe, y},
-                                                                     color); //paint pixel if it isn't black, black is the invisible color
+                            if ((pixel & 0xFFFFFF00) != 0) {
+                                this->_SDL_facade.draw_pixel_screen_buffer({stripe, y}, pixel); // paint pixel if it isn't black, black is the invisible pixel
+                            }
                         }
+                    }
                 }
             }
 
