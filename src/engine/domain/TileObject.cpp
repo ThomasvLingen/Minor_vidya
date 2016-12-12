@@ -13,6 +13,9 @@ namespace Engine {
 
     TileObject::~TileObject()
     {
+        for(Entity* entity : _entities){
+            delete entity;
+        }
     }
 
     /// \brief update all objects in this particular tile.
@@ -57,7 +60,7 @@ namespace Engine {
         return this->_texture;
     }
 
-    vector<Entity> TileObject::get_entities()
+    vector<Entity*> TileObject::get_entities()
     {
         return _entities;
     }

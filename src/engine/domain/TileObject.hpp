@@ -25,7 +25,7 @@ namespace Engine {
             right_tile = 3
         };
     protected:
-        vector<Entity> _entities;
+        vector<Entity*> _entities;
 
     private:
         bool _wall;
@@ -54,7 +54,7 @@ namespace Engine {
         Color get_color();
         ImageBuffer& get_texture();
 
-        vector<Entity> get_entities();
+        vector<Entity*> get_entities();
     };
 }
 
