@@ -11,6 +11,8 @@
 #include "../SDLFacade.hpp"
 #include "../domain/World.hpp"
 #include "../domain/CoordinateDouble.hpp"
+#include <vector>
+#include <algorithm>
 
 namespace Engine {
     using std::shared_ptr;
