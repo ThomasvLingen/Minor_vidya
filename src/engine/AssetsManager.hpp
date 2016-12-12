@@ -8,6 +8,7 @@
 #include <map>
 #include <memory>
 #include "SDLFacade.hpp"
+#include "ImageTypes.hpp"
 
 namespace Engine {
     using std::map;

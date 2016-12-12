@@ -14,6 +14,7 @@
 
 #include "domain/Color.hpp"
 #include "raycasting/RayCastingTypes.hpp"
+#include "ImageTypes.hpp"
 #include "domain/CoordinateDouble.hpp"
 #include "KeyStrokes.hpp"
 
@@ -34,8 +35,6 @@ namespace Engine {
 
 
     enum class FontType {alterebro_pixel, alterebro_pixel_plus};
-    typedef vector<Uint32> ImageBuffer;
-    typedef map<int, ImageBuffer*> TextureMap;
 
     class SDLFacade {
     private:
