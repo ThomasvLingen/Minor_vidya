@@ -128,9 +128,9 @@ namespace Engine {
             }
 
             int counter = 9;
-            cout << "here" << endl;
+            // cout << "here" << endl;
             for(Enemy* enemy : sorted_enemies) {
-                cout << counter << endl;
+                // cout << counter << endl;
                 counter = counter * 11111;
 
                 //translate sprite position to relative to camera
