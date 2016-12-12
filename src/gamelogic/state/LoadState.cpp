@@ -46,6 +46,15 @@ namespace State {
             {500,15}
         );
 
+        int advertisement_x = this->_advertisement_pos.x - this->_context.SDL_facade.get_image_width(VIDYA_RUNPATH + Config::LOAD_AD_PATH) / 2;
+        this->_context.SDL_facade.draw_image(
+            VIDYA_RUNPATH + Config::LOAD_AD_PATH,
+            CoordinateInt {
+                advertisement_x,//x
+                this->_advertisement_pos.y//y
+            }
+        );
+
         this->_context.SDL_facade.render_buffer();
 
         this->_loading_screen_time = this->_loading_screen_time + 2; //TODO: To ticks

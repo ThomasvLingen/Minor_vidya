@@ -13,6 +13,7 @@
 #include "../../engine/SDLFacade.hpp"
 #include "../../engine/PathUtil.hpp"
 #include "../../engine/raycasting/RayCastingTypes.hpp"
+#include "../../config.hpp"
 
 namespace GameLogic {
     class Game;
@@ -60,6 +61,8 @@ namespace State {
         };
         CoordinateInt _text_pos {220,260};
         CoordinateInt _loading_bar_pos {220, 220};
+
+        CoordinateInt _advertisement_pos {320, 300};
 
         int _current_index {0};
         int _wait_time {30};
