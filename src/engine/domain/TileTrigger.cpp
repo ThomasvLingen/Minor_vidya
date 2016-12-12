@@ -2,10 +2,11 @@
 // Created by waseland on 12/12/16.
 //
 
+#include <iostream>
 #include "TileTrigger.hpp"
 
 namespace Engine {
-    TileTrigger::TileTrigger(function<void(World&)>* event)
+    TileTrigger::TileTrigger(function<void(World&)> event)
     : _event(event)
     {
 
@@ -18,7 +19,7 @@ namespace Engine {
 
     void TileTrigger::make_call(World &world)
     {
-        (*this->_event)(world);
+        this->_event(world);
     }
 
 }
