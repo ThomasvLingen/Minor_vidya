@@ -107,12 +107,7 @@ namespace Engine {
                 sorted_enemies.push_back(enemy_with_shortest_distance);
             }
 
-            int counter = 9;
-            // cout << "here" << endl;
             for(Enemy* enemy : sorted_enemies) {
-                // cout << counter << endl;
-                counter = counter * 11111;
-
                 //translate sprite position to relative to camera
                 double spriteX = enemy->x_pos - _get_ray_pos().x;
                 double spriteY = enemy->y_pos - _get_ray_pos().y;
