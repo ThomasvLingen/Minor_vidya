@@ -25,7 +25,6 @@ namespace State {
         this->_context.control_mapper.handle_input(keys);
         InputActions input_actions = this->_context.control_mapper.get_input_actions();
 
-
         for (auto action : input_actions.actions_off) {
             switch (action) {
                 case Action::MENU_BACK:
