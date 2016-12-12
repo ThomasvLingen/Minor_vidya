@@ -30,10 +30,10 @@ namespace Engine {
         const int _width = 1;        // TODO: implement width value
         const int _length = 1;        // TODO: implement height value
         vector<TileObject*> _neighbour_tiles;
-        ImageBuffer& _texture;
+        ImageBuffer* _texture;
 
     public:
-        TileObject(ImageBuffer& texture);
+        TileObject(ImageBuffer* texture);
         TileObject(const TileObject& obj) = delete;            // Copy constructor for a base class has to be deleted (slicing)
         TileObject& operator=(const TileObject& obj) = delete; // Copy assignment for a base class has to be deleted (slicing)
         virtual ~TileObject();
@@ -47,9 +47,11 @@ namespace Engine {
 
         TileObject* get_tile_neighbour(Direction direction);
 
+        void set_texture(ImageBuffer* texture);
+
         bool is_wall();
         Color get_color();
-        ImageBuffer& get_texture();
+        ImageBuffer* get_texture();
     };
 }
 

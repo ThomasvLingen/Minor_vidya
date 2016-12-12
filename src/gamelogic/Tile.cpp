@@ -7,7 +7,7 @@
 
 namespace GameLogic {
 
-    Tile::Tile(ImageBuffer& texture)
+    Tile::Tile(ImageBuffer* texture)
     : TileObject(texture)
     {
 
