@@ -50,8 +50,8 @@ namespace State {
         this->_context.SDL_facade.draw_image(
             VIDYA_RUNPATH + Config::LOAD_AD_PATH,
             CoordinateInt {
-                advertisement_x,//x
-                this->_advertisement_pos.y//y
+                advertisement_x,
+                this->_advertisement_pos.y
             }
         );
 
