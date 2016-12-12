@@ -30,127 +30,135 @@ namespace Engine {
     /// \brief Draws a single frame with raycasting using the world object and SDL facade
     void Raycasting::draw()
     {
-        int screen_height_calc = this->_SDL_facade.get_height() * 128;
         if (this->_world != nullptr) {
             this->_SDL_facade.lock_screen_buffer();
 
             // This is the ZBuffer for the entities to draw
             double distance_buffer[_SDL_facade.get_width()];
-
             // Things that don't change within a frame can be calculated here
             CoordinateDouble ray_position = this->_get_ray_pos();
 
-            for (int ray_index = 0; ray_index < this->_SDL_facade.get_width(); ray_index++) {
-                Direction ray_dir = _calculate_ray_direction(ray_index);
-                CoordinateInt map_coord = _get_map_coord(ray_position);
-
-                DeltaDist delta_dist = _calculate_delta_distance(ray_dir);
-                RaySteps ray_steps = _calculate_ray_steps(ray_dir, ray_position, map_coord, delta_dist);
-
-                Wall wall = _search_wall(ray_steps, map_coord, delta_dist);
-                double perp_wall_dist = this->_calculate_wall_dist(wall, ray_position, ray_steps, ray_dir);
-                distance_buffer[ray_index] = perp_wall_dist;
-
-                int line_height = _get_wall_height(perp_wall_dist);
-                int line_height_calc = line_height * 128;
-                LineCords line_cords = _get_line_measures(line_height);
-
-                int tex_x = this->_get_texture_x_coord(wall, ray_position, ray_dir, perp_wall_dist);
-
-                ImageBuffer& tile_texture = *this->_world->get_tile(wall.cord)->get_texture();
-
-                // TODO: Maybe put this in a separate function
-                // Put pixels for a single vertical line on the screen
-                for (int y = line_cords.draw_start; y < line_cords.draw_end; y++) {
-                    // The multiplication and division is done so that we don't have to work with floats here, resulting
-                    // in much faster code. This is critical, since this tidbit of code is ran width * height times PER
-                    // FRAME (640*480 equates to 307,200 times, which is a lot).
-                    int d = y * 256 - screen_height_calc + line_height_calc;
-                    int tex_y = ((d * TEXTURE_HEIGHT) / line_height) / 256;
-
-                    Uint32 pixel = tile_texture[TEXTURE_HEIGHT * tex_y + tex_x];
-
-                    this->_SDL_facade.draw_pixel_screen_buffer({ray_index, y}, pixel);
-                }
-            }
-
-            // Draw drawables
-            // First sort the sprites by distance to the player
-            // TODO: This is copied, but we might not have to. Does order of enemies matter for anything else?
-            vector<Enemy*> sorted_enemies {this->test_enemies.begin(), this->test_enemies.end()};
-            std::sort(
-                sorted_enemies.begin(), sorted_enemies.end(),
-                [ray_position] (Enemy* a, Enemy* b) {
-                    return a->get_distance_to_point(ray_position) > b->get_distance_to_point(ray_position);
-                }
-            );
-
-            for (Enemy* enemy : sorted_enemies) {
-                // translate sprite position to relative to camera
-                CoordinateDouble sprite_pos = {
-                    enemy->x_pos - ray_position.x, enemy->y_pos - ray_position.y
-                };
-
-                // transform sprite with the inverse camera matrix
-                // [ plane_x   dir_x ] -1                                       [ dir_y      -dir_x ]
-                // [               ]       =  1/(plane_x*dir_y-dir_x*plane_y) *   [                 ]
-                // [ plane_y   dir_y ]                                          [ -plane_y  plane_x ]
-
-                Direction& dir = this->_world->get_pov().get_direction();
-
-                RaycastingVector& PoV_plane = this->_world->get_pov().get_camera_plane();
-                double inv_det = 1.0 / (PoV_plane.x * dir.y - dir.x * PoV_plane.y); // required for correct matrix multiplication
-
-                CoordinateDouble transformed = {
-                    inv_det * (dir.y * sprite_pos.x - dir.x * sprite_pos.y),
-                    inv_det * (-PoV_plane.y * sprite_pos.x + PoV_plane.x * sprite_pos.y)
-                };
-
-                int w = this->_SDL_facade.get_width();
-                int h = this->_SDL_facade.get_height();
-
-                int sprite_screen_x = int((w / 2) * (1 + transformed.x / transformed.y));
-
-                // calculate height of the sprite on screen
-                int sprite_height = abs(int(h / (transformed.y))); //using "transform_y" instead of the real distance prevents fisheye
-                // calculate lowest and highest pixel to fill in current stripe
-                LineCords draw_coords = this->_get_line_measures(sprite_height);
-
-                // TODO: Make this work with _get_line_measures or something
-                // calculate width of the sprite
-                int sprite_width = abs(int(h / (transformed.y)));
-                LineCords sprite_x = this->_get_sprite_horizontal_measures(sprite_width, sprite_screen_x);
-
-                // loop through every vertical stripe of the sprite on screen
-                for (int stripe = sprite_x.draw_start; stripe < sprite_x.draw_end; stripe++) {
-                    int tex_x = int(256 * (stripe - (-sprite_width / 2 + sprite_screen_x)) * TEXTURE_WIDTH / sprite_width) / 256;
-                    // the conditions in the if are:
-                    // 1) it's in front of camera plane so you don't see things behind you
-                    // 2) it's on the screen (left)
-                    // 3) it's on the screen (right)
-                    // 4) ZBuffer, with perpendicular distance
-                    if (transformed.y > 0 && stripe > 0 && stripe < w && transformed.y < distance_buffer[stripe]) {
-                        for (int y = draw_coords.draw_start; y < draw_coords.draw_end; y++) {  // for every pixel of the current stripe
-                            int d = (y) * 256 - h * 128 + sprite_height * 128; // 256 and 128 factors to avoid floats
-                            int tex_y = ((d * TEXTURE_HEIGHT) / sprite_height) / 256;
-
-                            Uint32 pixel = enemy->texture[TEXTURE_WIDTH * tex_y + tex_x]; // get current pixel from the texture
-
-                            // TODO: Transparency is done here. pls fix
-                            if ((pixel & 0x000000FF) == 0xFF) {
-                                this->_SDL_facade.draw_pixel_screen_buffer({stripe, y}, pixel); // paint pixel if it isn't black, black is the invisible pixel
-                            }
-                        }
-                    }
-                }
-            }
-
+            this->_draw_walls(ray_position, distance_buffer);
+            this->_draw_entities(ray_position, distance_buffer);
 
             this->_SDL_facade.unlock_screen_buffer();
             this->_SDL_facade.update_screen_buffer();
         }
     }
 
+    void Raycasting::_draw_walls(CoordinateDouble ray_position, double distance_buffer[])
+    {
+        int screen_height_calc = this->_SDL_facade.get_height() * 128;
+        CoordinateInt map_coord = this->_get_map_coord(ray_position);
+
+        for (int ray_index = 0; ray_index < this->_SDL_facade.get_width(); ray_index++) {
+            Direction ray_dir = _calculate_ray_direction(ray_index);
+
+            DeltaDist delta_dist = _calculate_delta_distance(ray_dir);
+            RaySteps ray_steps = _calculate_ray_steps(ray_dir, ray_position, map_coord, delta_dist);
+
+            Wall wall = _search_wall(ray_steps, map_coord, delta_dist);
+            double perp_wall_dist = this->_calculate_wall_dist(wall, ray_position, ray_steps, ray_dir);
+            distance_buffer[ray_index] = perp_wall_dist;
+
+            int line_height = _get_wall_height(perp_wall_dist);
+            int line_height_calc = line_height * 128;
+            LineCords line_cords = _get_line_measures(line_height);
+
+            int tex_x = this->_get_texture_x_coord(wall, ray_position, ray_dir, perp_wall_dist);
+
+            ImageBuffer& tile_texture = *this->_world->get_tile(wall.cord)->get_texture();
+
+            // TODO: Maybe put this in a separate function
+            // Put pixels for a single vertical line on the screen
+            for (int y = line_cords.draw_start; y < line_cords.draw_end; y++) {
+                // The multiplication and division is done so that we don't have to work with floats here, resulting
+                // in much faster code. This is critical, since this tidbit of code is ran width * height times PER
+                // FRAME (640*480 equates to 307,200 times, which is a lot).
+                int d = y * 256 - screen_height_calc + line_height_calc;
+                int tex_y = ((d * TEXTURE_HEIGHT) / line_height) / 256;
+
+                Uint32 pixel = tile_texture[TEXTURE_HEIGHT * tex_y + tex_x];
+
+                this->_SDL_facade.draw_pixel_screen_buffer({ray_index, y}, pixel);
+            }
+        }
+    }
+
+
+    void Raycasting::_draw_entities(CoordinateDouble ray_position, double distance_buffer[])
+    {
+        // Draw drawables
+        // First sort the sprites by distance to the player
+        // TODO: This is copied, but we might not have to. Does order of enemies matter for anything else?
+        vector<Enemy*> sorted_enemies {this->test_enemies.begin(), this->test_enemies.end()};
+        std::sort(
+            sorted_enemies.begin(), sorted_enemies.end(),
+            [ray_position] (Enemy* a, Enemy* b) {
+                return a->get_distance_to_point(ray_position) > b->get_distance_to_point(ray_position);
+            }
+        );
+
+        for (Enemy* enemy : sorted_enemies) {
+            // translate sprite position to relative to camera
+            CoordinateDouble sprite_pos = {
+                enemy->x_pos - ray_position.x, enemy->y_pos - ray_position.y
+            };
+
+            // transform sprite with the inverse camera matrix
+            // [ plane_x   dir_x ] -1                                       [ dir_y      -dir_x ]
+            // [               ]       =  1/(plane_x*dir_y-dir_x*plane_y) *   [                 ]
+            // [ plane_y   dir_y ]                                          [ -plane_y  plane_x ]
+
+            Direction& dir = this->_world->get_pov().get_direction();
+
+            RaycastingVector& PoV_plane = this->_world->get_pov().get_camera_plane();
+            double inv_det = 1.0 / (PoV_plane.x * dir.y - dir.x * PoV_plane.y); // required for correct matrix multiplication
+
+            CoordinateDouble transformed = {
+                inv_det * (dir.y * sprite_pos.x - dir.x * sprite_pos.y),
+                inv_det * (-PoV_plane.y * sprite_pos.x + PoV_plane.x * sprite_pos.y)
+            };
+
+            int w = this->_SDL_facade.get_width();
+            int h = this->_SDL_facade.get_height();
+
+            int sprite_screen_x = int((w / 2) * (1 + transformed.x / transformed.y));
+
+            // calculate height of the sprite on screen
+            int sprite_height = abs(int(h / (transformed.y))); //using "transform_y" instead of the real distance prevents fisheye
+            // calculate lowest and highest pixel to fill in current stripe
+            LineCords draw_coords = this->_get_line_measures(sprite_height);
+
+            // TODO: Make this work with _get_line_measures or something
+            // calculate width of the sprite
+            int sprite_width = abs(int(h / (transformed.y)));
+            LineCords sprite_x = this->_get_sprite_horizontal_measures(sprite_width, sprite_screen_x);
+
+            // loop through every vertical stripe of the sprite on screen
+            for (int stripe = sprite_x.draw_start; stripe < sprite_x.draw_end; stripe++) {
+                int tex_x = int(256 * (stripe - (-sprite_width / 2 + sprite_screen_x)) * TEXTURE_WIDTH / sprite_width) / 256;
+                // the conditions in the if are:
+                // 1) it's in front of camera plane so you don't see things behind you
+                // 2) it's on the screen (left)
+                // 3) it's on the screen (right)
+                // 4) ZBuffer, with perpendicular distance
+                if (transformed.y > 0 && stripe > 0 && stripe < w && transformed.y < distance_buffer[stripe]) {
+                    for (int y = draw_coords.draw_start; y < draw_coords.draw_end; y++) {  // for every pixel of the current stripe
+                        int d = (y) * 256 - h * 128 + sprite_height * 128; // 256 and 128 factors to avoid floats
+                        int tex_y = ((d * TEXTURE_HEIGHT) / sprite_height) / 256;
+
+                        Uint32 pixel = enemy->texture[TEXTURE_WIDTH * tex_y + tex_x]; // get current pixel from the texture
+
+                        // TODO: Transparency is done here. pls fix
+                        if ((pixel & 0x000000FF) == 0xFF) {
+                            this->_SDL_facade.draw_pixel_screen_buffer({stripe, y}, pixel); // paint pixel if it isn't black, black is the invisible pixel
+                        }
+                    }
+                }
+            }
+        }
+    }
 
     /// \brief Calculates the distance until the next horizontal and vertical axis.
     ///
