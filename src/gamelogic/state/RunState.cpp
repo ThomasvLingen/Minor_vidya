@@ -10,7 +10,7 @@ namespace State {
     RunState::RunState(Game& context)
     : IGameState(context)
     , _fps(context.SDL_facade)
-    , _hud(context.SDL_facade)
+    , _hud(context.SDL_facade, *context.get_player())
     {
         this->_collection.add_drawable(&_fps);
         this->_collection.add_updatable(&_fps);

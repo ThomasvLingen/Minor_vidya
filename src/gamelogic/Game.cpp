@@ -49,6 +49,10 @@ namespace GameLogic {
         }
     }
 
+    SPTR_Player Game::get_player() {
+        return this->_player;
+    }
+
     void Game::set_new_state(SPTR_IGameState state)
     {
         this->_new_state = state;
