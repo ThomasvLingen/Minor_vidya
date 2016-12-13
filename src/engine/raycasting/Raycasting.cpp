@@ -89,23 +89,15 @@ namespace Engine {
     void Raycasting::_draw_entities(CoordinateDouble ray_position, double distance_buffer[])
     {
         // Draw drawables
-        // First sort the sprites by distance to the player
-        // TODO: This is copied, but we might not have to. Does order of enemies matter for anything else?
-        vector<Entity*> sorted_entities = this->_world->get_entities();
-        std::sort(
-            sorted_entities.begin(), sorted_entities.end(),
-            [ray_position, this] (Entity* a, Entity* b) {
-                return this->get_distance_to_ray(*a, ray_position) > this->get_distance_to_ray(*b, ray_position);
-            }
-        );
+        vector<Entity*> sorted_entities = this->_get_sorted_entities(ray_position);
+
+        int w = this->_SDL_facade.get_width();
+        int h = this->_SDL_facade.get_height();
 
         for (Entity* entity : sorted_entities) {
             // translate sprite position to relative to camera
             CoordinateDouble sprite_pos = entity->get_position() - ray_position;
             CoordinateDouble transformed = this->_transform_relative_to_camera_matrix(sprite_pos);
-
-            int w = this->_SDL_facade.get_width();
-            int h = this->_SDL_facade.get_height();
 
             int sprite_screen_x = int((w / 2) * (1 + transformed.x / transformed.y));
 
@@ -121,12 +113,8 @@ namespace Engine {
             // loop through every vertical stripe of the sprite on screen
             for (int stripe = sprite_x.draw_start; stripe < sprite_x.draw_end; stripe++) {
                 int tex_x = int(256 * (stripe - (-sprite_width / 2 + sprite_screen_x)) * TEXTURE_WIDTH / sprite_width) / 256;
-                // the conditions in the if are:
-                // 1) it's in front of camera plane so you don't see things behind you
-                // 2) it's on the screen (left)
-                // 3) it's on the screen (right)
-                // 4) ZBuffer, with perpendicular distance
-                if (transformed.y > 0 && stripe > 0 && stripe < w && transformed.y < distance_buffer[stripe]) {
+
+                if (this->_sprite_should_be_drawn(transformed, stripe, distance_buffer)) {
                     for (int y = draw_coords.draw_start; y < draw_coords.draw_end; y++) {  // for every pixel of the current stripe
                         int d = (y) * 256 - h * 128 + sprite_height * 128; // 256 and 128 factors to avoid floats
                         int tex_y = ((d * TEXTURE_HEIGHT) / sprite_height) / 256;
@@ -419,5 +407,29 @@ namespace Engine {
             inv_det * (dir.y * position.x - dir.x * position.y),
             inv_det * (-PoV_plane.y * position.x + PoV_plane.x * position.y)
         };
+    }
+
+    vector<Entity*> Raycasting::_get_sorted_entities(CoordinateDouble ray_position)
+    {
+        // TODO: This is copied, but we might not have to. Does order of enemies matter for anything else?
+        vector<Entity*> sorted_entities = this->_world->get_entities();
+
+        std::sort(
+            sorted_entities.begin(), sorted_entities.end(),
+            [ray_position, this] (Entity* a, Entity* b) {
+                return this->get_distance_to_ray(*a, ray_position) > this->get_distance_to_ray(*b, ray_position);
+            }
+        );
+
+        return sorted_entities;
+    }
+
+    bool Raycasting::_sprite_should_be_drawn(CoordinateDouble& sprite_coords, int sprite_ray_index, double* distance_buffer)
+    {
+        bool in_front_of_camera = sprite_coords.y > 0;
+        bool within_screen_bounds = sprite_ray_index > 0 && sprite_ray_index < this->_SDL_facade.get_width();
+        bool no_wall_between = sprite_coords.y < distance_buffer[sprite_ray_index];
+
+        return in_front_of_camera && within_screen_bounds && no_wall_between;
     }
 }
