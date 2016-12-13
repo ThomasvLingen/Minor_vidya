@@ -37,9 +37,6 @@ namespace GameLogic {
                 case Key::RIGHT :
                     this->_rot_right();
                     break;
-                case Key::E :
-                    this->_test_set_texture();
-                    break;
                 default:
                     break;
             }
@@ -134,12 +131,5 @@ namespace GameLogic {
     {
         this->_level = level;
         this->_position = level->get_spawnpoint();
-    }
-
-    void Player::_test_set_texture()
-    {
-        ImageBuffer* new_texture  = this->_level->assets->get_texture(2);
-        this->_level->get_tile({9,5})->set_texture(new_texture);
-
     }
 }
