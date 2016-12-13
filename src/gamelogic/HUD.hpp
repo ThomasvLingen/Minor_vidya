@@ -8,6 +8,7 @@
 #include "../engine/interface/Drawable.hpp"
 #include "../engine/interface/Updatable.hpp"
 #include "../engine/SDLFacade.hpp"
+#include "../engine/PathUtil.hpp"
 #include "Player.hpp"
 #include <string>
 
@@ -25,8 +26,7 @@ namespace GameLogic {
 
     class HUD : public Drawable, public Updatable {
     public:
-        HUD(SDLFacade& _SDL_facade, Player* player);
-        HUD(SDLFacade& _SDL_facade);
+        HUD(SDLFacade& _SDL_facade, Player& player);
 
         int get_current_time();
         void set_ticks_set_off(int ticks);
