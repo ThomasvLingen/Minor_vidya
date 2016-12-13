@@ -17,8 +17,9 @@ namespace State {
         MenuOption start_game {
             {150,100}, //coordinates
             "Start Game", //text
-            [] (Game& game) { //callback
+            [] (Game& game) { //callback.
                  game.set_new_state(std::make_shared<LoadState>(game));
+
             }
         };
 
