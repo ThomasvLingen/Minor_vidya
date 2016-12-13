@@ -13,7 +13,7 @@ namespace Engine {
 
     public:
         Entity(ImageBuffer& texture, CoordinateInt position);
-        ~Entity();
+        virtual ~Entity();
         CoordinateInt& get_position();
         ImageBuffer& get_texture();
 

@@ -25,13 +25,13 @@ namespace Engine{
     /// \return returns a CoordinateInt position
     CoordinateInt& Entity::get_position()
     {
-        return _position;
+        return this->_position;
     }
 
     /// \brief Getter for the image buffer of the entity
     /// \return returns an ImageBuffer
     ImageBuffer& Entity::get_texture()
     {
-        return _texture;
+        return this->_texture;
     }
 }

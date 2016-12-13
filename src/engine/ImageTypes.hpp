@@ -12,7 +12,7 @@ namespace Engine {
     using std::vector;
     using std::map;
 
-    typedef std::vector<uint32_t> ImageBuffer;
+    typedef vector<uint32_t> ImageBuffer;
     typedef map<int, ImageBuffer*> TextureMap;
 }
 
