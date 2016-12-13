@@ -14,7 +14,24 @@ namespace State {
     , _menu(this->_context.SDL_facade, this->_context)
     , _action_is_selected(false)
     {
-        this->_add_menu_options();
+        MenuOption resume_game {
+                {150,100},
+                "Resume gaem",
+                [] (GameLogic::Game& game) {
+                    game.set_new_state(std::make_shared<RunState>(game));
+                }
+        };
+
+        MenuOption quit_game {
+                {150,140},
+                "Quit to menutos",
+                [] (GameLogic::Game& game) {
+                    game.set_new_state(std::make_shared<MenuState>(game));
+                }
+        };
+
+        this->_menu.add_options({resume_game, quit_game});
+        this->_menu.set_escape_option(resume_game);
 
         this->_collection.add_drawable(&this->_menu);
         this->_collection.add_handleable(&this->_menu);

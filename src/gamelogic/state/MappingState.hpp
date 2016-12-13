@@ -32,7 +32,6 @@ namespace State {
 
             void update(int time_since_last_update) override;
 
-
         private:
             Menu _menu;
             Color _color{255,255,255};
