@@ -17,7 +17,7 @@ namespace State {
                 {150,100},
                 "Resume gaem",
                 [] (GameLogic::Game& game) {
-                    game.set_new_state(std::make_shared<RunState>(game));
+                    //game.set_new_state(std::make_shared<RunState>(game));
                 }
         };
 
@@ -25,7 +25,7 @@ namespace State {
                 {150,140},
                 "Quit to menutos",
                 [] (GameLogic::Game& game) {
-                    game.set_new_state(std::make_shared<MenuState>(game));
+                    //game.set_new_state(std::make_shared<MenuState>(game));
                 }
         };
 
