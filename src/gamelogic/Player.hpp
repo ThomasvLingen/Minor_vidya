@@ -53,6 +53,8 @@ namespace GameLogic {
 
         int _health;
 
+        int _health;
+
         void _move_player(int timeSinceLastUpdate);
         void _rotate_player(int timeSinceLastUpdate);
         void _mov_forward();

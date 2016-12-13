@@ -60,6 +60,7 @@ namespace State {
         this->_loading_screen_time = this->_loading_screen_time + 2; //TODO: To ticks
         if (this->_loading_screen_time > this->_wait_time) {
             this->_loading_screen_time = 0;
+
             this->_current_index++;
         }
 

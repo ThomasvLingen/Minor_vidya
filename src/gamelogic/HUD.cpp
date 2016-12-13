@@ -16,7 +16,7 @@ namespace GameLogic {
     int HUD::get_current_time() {
         return this->_current_time * 1000;
     }
-    
+
 
     void HUD::set_ticks_set_off(int ticks) {
         this->_start_time = ticks;
