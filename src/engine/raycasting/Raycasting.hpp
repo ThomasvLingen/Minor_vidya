@@ -66,6 +66,8 @@ namespace Engine {
         double get_distance_to_ray(Entity& entity, CoordinateDouble ray_pos);
 
         CoordinateDouble _transform_relative_to_camera_matrix(CoordinateDouble position);
+        vector<Entity*> _get_sorted_entities(CoordinateDouble ray_position);
+        bool _sprite_should_be_drawn(CoordinateDouble& sprite_coords, int sprite_ray_index, double distance_buffer[]);
     };
 }
 
