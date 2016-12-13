@@ -30,6 +30,8 @@ namespace GameLogic {
     public:
         Player(CoordinateDouble position);
 
+        int get_health();
+
         bool is_at(int x, int y);
         void set_level(SPTR_Level level);
         void handleInput(PressedKeys keys);
@@ -45,6 +47,8 @@ namespace GameLogic {
         double _xAccel = 0;
         double _rotation = 0;
 
+        int _health;
+
         void _move_player(int timeSinceLastUpdate);
         void _rotate_player(int timeSinceLastUpdate);
         void _mov_forward();
@@ -55,7 +59,6 @@ namespace GameLogic {
         void _rot_left();
 
         /*
-         * int health
          * obj Inventory -> vector<items>
          * GrabItem();
          * PlaceItem();
