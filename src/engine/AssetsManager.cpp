@@ -40,8 +40,8 @@ namespace Engine {
         return success;
     }
 
-    ImageBuffer& AssetsManager::get_texture(int id)
+    ImageBuffer* AssetsManager::get_texture(int id)
     {
-        return *this->_known_textures.at(id);
+        return this->_known_textures.at(id);
     }
 }
