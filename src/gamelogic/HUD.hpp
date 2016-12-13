@@ -8,10 +8,7 @@
 #include "../engine/interface/Drawable.hpp"
 #include "../engine/interface/Updatable.hpp"
 #include "../engine/SDLFacade.hpp"
-<<<<<<< 671caa415e08043430cd7096b0e6ee09a7994fd5
 #include "../engine/PathUtil.hpp"
-=======
->>>>>>> feat: startup of HUD
 #include "Player.hpp"
 #include <string>
 

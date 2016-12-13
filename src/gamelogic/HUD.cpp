@@ -12,7 +12,7 @@ namespace GameLogic {
     , _start_time(0)
     {
     }
-
+    
     int HUD::get_current_time() {
         return this->_current_time * 1000;
     }
