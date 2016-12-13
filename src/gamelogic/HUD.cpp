@@ -8,6 +8,7 @@ namespace GameLogic {
 
     HUD::HUD(SDLFacade& _SDL_facade, Player& player)
     : Drawable(_SDL_facade)
+    , _player(player)
     , _start_time(0)
     {
     }
@@ -20,15 +21,50 @@ namespace GameLogic {
         this->_start_time = ticks;
     }
 
+    void HUD::_draw_health(int health) {
+
+        // draw amount of health
+        string health_amount;
+        if(health < 10){
+            health_amount = "0";
+        }
+        health_amount += std::to_string(health);
+        _SDL_facade.draw_text(health_amount, FontType::alterebro_pixel, Color{255, 38, 70}, {222, 430});
+
+        // draw amount of blocks
+        int amount_of_blocks = 10;
+        int set_off = 62;
+        int health_not_round = 0;
+        if(health % 8 > 0) {
+            health_not_round = 1;
+        }
+
+
+        for (int j = 0; j < ((health / 8 ) + health_not_round); ++j) {        // round up
+            amount_of_blocks--;                   // for each lighter block we do not need an extra block
+            set_off = 62 + (j * 14);
+            _SDL_facade.draw_rect({set_off, 433}, 12, 24, {255, 38, 70});
+        }
+
+        if(set_off != 62){
+            set_off += 14;
+        }
+
+        for (int i = 10 - amount_of_blocks; i < 10; ++i) {
+            set_off = 62 + (i * 14);
+            _SDL_facade.draw_rect({set_off, 433}, 12, 24, {121, 41, 52});
+        }
+
+    }
+
     void HUD::draw(){
         _SDL_facade.draw_image(VIDYA_RUNPATH + "res/HUD.bmp", {0, 410});
 
         //draw HP
-        //TODO get hp from player
-        _SDL_facade.draw_text("80", FontType::alterebro_pixel, Color{0,0,0}, {222, 430});
+        this->_draw_health(_player.get_health());
 
         // draw time
-        _SDL_facade.draw_text(this->_time_to_string(this->_current_time), FontType::alterebro_pixel, Color{0,0,0}, {390, 430});
+        _SDL_facade.draw_text(this->_time_to_string(this->_current_time), FontType::alterebro_pixel, Color{53, 194, 222}, {390, 430});
 
         // draw items
         //TODO inplement items

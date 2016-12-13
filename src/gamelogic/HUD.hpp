@@ -35,7 +35,8 @@ namespace GameLogic {
         virtual void update(int delta_time) override;
 
     private:
-        Player* _player;
+        Player& _player;
+        void _draw_health(int health);
 
         int _health_points;
         int _current_time; // in sec
