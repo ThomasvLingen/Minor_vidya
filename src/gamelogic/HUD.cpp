@@ -6,18 +6,10 @@
 
 namespace GameLogic {
 
-    HUD::HUD(SDLFacade& _SDL_facade, Player* player)
+    HUD::HUD(SDLFacade& _SDL_facade, Player& player)
     : Drawable(_SDL_facade)
     , _start_time(0)
     {
-    }
-
-    //TODO remove
-    HUD::HUD(SDLFacade& _SDL_facade)
-    : Drawable(_SDL_facade)
-    , _start_time(0)
-    {
-
     }
 
     int HUD::get_current_time() {
@@ -29,19 +21,17 @@ namespace GameLogic {
     }
 
     void HUD::draw(){
-        _SDL_facade.draw_rect(CoordinateDouble{0,400}, 640, 80, Color{139,69,19}); //background
-        _SDL_facade.draw_rect(CoordinateDouble{0,400}, 640, 5, Color{160,82,45}); // upper boarder
-        _SDL_facade.draw_rect(CoordinateDouble{160,400}, 5, 80, Color{160,82,45}); // vertical table boarder
-        _SDL_facade.draw_rect(CoordinateDouble{320,400}, 5, 80, Color{160,82,45});
-        _SDL_facade.draw_rect(CoordinateDouble{480,400}, 5, 80, Color{160,82,45});
+        _SDL_facade.draw_image(VIDYA_RUNPATH + "res/HUD.bmp", {0, 410});
 
         //draw HP
-        _SDL_facade.draw_text("HP", FontType::alterebro_pixel, Color{0,0,0}, {60, 430});
-        _SDL_facade.draw_text("100", FontType::alterebro_pixel, Color{0,0,0}, {60, 450}); //TODO get hp from player
+        //TODO get hp from player
+        _SDL_facade.draw_text("80", FontType::alterebro_pixel, Color{0,0,0}, {222, 430});
 
         // draw time
-        _SDL_facade.draw_text("Time", FontType::alterebro_pixel, Color{0,0,0}, {220, 430});
-        _SDL_facade.draw_text(this->_time_to_string(this->_current_time), FontType::alterebro_pixel, Color{0,0,0}, {220, 450});
+        _SDL_facade.draw_text(this->_time_to_string(this->_current_time), FontType::alterebro_pixel, Color{0,0,0}, {390, 430});
+
+        // draw items
+        //TODO inplement items
     }
 
     void HUD::update(int delta_time){
