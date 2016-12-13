@@ -11,7 +11,7 @@ namespace Engine {
     {
     }
 
-    vector<Entity> World::get_entities()
+    vector<Entity>& World::get_entities()
     {
         return this->_entities;
     }

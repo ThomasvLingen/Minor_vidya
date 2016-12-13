@@ -27,7 +27,7 @@ namespace Engine {
         virtual TileObject* get_tile(CoordinateInt coordinate) = 0;
         virtual void handle_input(Input keys) = 0;
 
-        vector<Entity> get_entities();
+        vector<Entity>& get_entities();
 
     };
 }
