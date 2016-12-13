@@ -102,22 +102,21 @@ namespace Engine {
             int sprite_screen_x = int((w / 2) * (1 + transformed.x / transformed.y));
 
             // calculate height of the sprite on screen
-            int sprite_height = abs(int(h / (transformed.y))); //using "transform_y" instead of the real distance prevents fisheye
+            int sprite_length = abs(int(h / (transformed.y))); //using "transform_y" instead of the real distance prevents fisheye
             // calculate lowest and highest pixel to fill in current stripe
-            LineCords draw_coords = this->_get_line_measures(sprite_height);
+            LineCords draw_coords = this->_get_line_measures(sprite_length);
 
             // calculate width of the sprite
-            int sprite_width = abs(int(h / (transformed.y)));
-            LineCords sprite_x = this->_get_sprite_horizontal_measures(sprite_width, sprite_screen_x);
+            LineCords sprite_x = this->_get_sprite_horizontal_measures(sprite_length, sprite_screen_x);
 
             // loop through every vertical stripe of the sprite on screen
             for (int stripe = sprite_x.draw_start; stripe < sprite_x.draw_end; stripe++) {
-                int tex_x = int(256 * (stripe - (-sprite_width / 2 + sprite_screen_x)) * TEXTURE_WIDTH / sprite_width) / 256;
+                int tex_x = int(256 * (stripe - (-sprite_length / 2 + sprite_screen_x)) * TEXTURE_WIDTH / sprite_length) / 256;
 
                 if (this->_sprite_should_be_drawn(transformed, stripe, distance_buffer)) {
                     for (int y = draw_coords.draw_start; y < draw_coords.draw_end; y++) {  // for every pixel of the current stripe
-                        int d = (y) * 256 - h * 128 + sprite_height * 128; // 256 and 128 factors to avoid floats
-                        int tex_y = ((d * TEXTURE_HEIGHT) / sprite_height) / 256;
+                        int d = (y) * 256 - h * 128 + sprite_length * 128; // 256 and 128 factors to avoid floats
+                        int tex_y = ((d * TEXTURE_HEIGHT) / sprite_length) / 256;
 
                         Uint32 pixel = entity->get_texture()[TEXTURE_WIDTH * tex_y + tex_x]; // get current pixel from the texture
 
