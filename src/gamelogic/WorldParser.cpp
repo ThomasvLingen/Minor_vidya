@@ -1,10 +1,10 @@
 #include "WorldParser.hpp"
 #include <tuple>
 #include "exceptions/FileInvalidException.hpp"
-
+#include "../engine/domain/World.hpp"
 
 namespace GameLogic {
-
+    using Engine::World;
     using Exceptions::FileInvalidException;
     using std::tuple;
     using std::get;

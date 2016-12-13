@@ -45,6 +45,9 @@ namespace GameLogic {
         double _yAccel = 0;
         double _xAccel = 0;
         double _rotation = 0;
+        double _next_tile = 0.5;
+
+        TileObject* _current_tile;
 
         void _move_player(int timeSinceLastUpdate);
         void _rotate_player(int timeSinceLastUpdate);
@@ -54,6 +57,12 @@ namespace GameLogic {
         void _move_right();
         void _rot_right();
         void _rot_left();
+
+        bool _new_tile();
+
+        void _set_new_current_tile();
+        void _try_trigger();
+        void _do_action();
 
         /*
          * int health

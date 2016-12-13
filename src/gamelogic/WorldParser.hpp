@@ -7,6 +7,7 @@
 #include "Level.hpp"
 #include "Tile.hpp"
 #include "rapidXML/RapidXMLAdapter.hpp"
+#include "../engine/domain/TileTrigger.hpp"
 
 namespace GameLogic {
 

@@ -10,6 +10,7 @@ namespace GameLogic {
     : PointOfView(position, Engine::RaycastingVector{-1, 0}, Engine::RaycastingVector{0, 0.66})
     , _level(nullptr)
     {
+
     }
 
     /// \brief Handles the keys that were pressed during the last tick
@@ -36,6 +37,9 @@ namespace GameLogic {
                     break;
                 case Key::RIGHT :
                     this->_rot_right();
+                    break;
+                case Key::E :
+                    this->_do_action();
                     break;
                 default:
                     break;
@@ -75,7 +79,10 @@ namespace GameLogic {
         if (!this->_level->get_tile(CoordinateInt{(int) this->_position.x, (int) new_y})->is_wall()) {
             this->_position.y = new_y;
         }
-        
+        if (this->_new_tile()){
+            this->_set_new_current_tile();
+            this->_try_trigger();
+        }
         this->_yAccel = 0;
         this->_xAccel = 0;
     }
@@ -131,5 +138,39 @@ namespace GameLogic {
     {
         this->_level = level;
         this->_position = level->get_spawnpoint();
+        this->_current_tile = this->_level->get_tile({(int)this->_position.x, (int)this->_position.y});
+    }
+
+    /// \brief Checks if the player stepped in a new tile
+    bool Player::_new_tile()
+    {
+        return this->_level->get_tile({(int)this->_position.x, (int)this->_position.y}) != this->_current_tile;
+    }
+    void Player::_set_new_current_tile()
+    {
+        this->_current_tile = this->_level->get_tile({(int)this->_position.x, (int)this->_position.y});
+    }
+
+    /// \brief Applies action to the tile
+    void Player::_do_action() //TODO: Expand with maybe checking for items on ground etc.
+    {
+        CoordinateDouble new_position{this->_position.x + this->_direction.x * this->_next_tile, this->_position.y + this->_direction.y * this->_next_tile};
+        TileObject* tile = this->_level->get_tile({(int)new_position.x, (int)new_position.y});
+        for(auto tiletrigger : tile->get_action_tiletriggers()) {
+            if (tiletrigger != nullptr) {
+                tiletrigger->make_call(*this->_level);
+            }
+        }
+    }
+
+    /// \brief Checks if there is a trigger on the tile
+    void Player::_try_trigger()
+    {
+        TileObject* tile = this->_current_tile;
+        for(auto tiletrigger : tile->get_step_on_tiletriggers()) {
+            if (tiletrigger != nullptr) {
+                tiletrigger->make_call(*this->_level);
+            }
+        }
     }
 }
