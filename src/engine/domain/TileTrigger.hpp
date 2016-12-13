@@ -17,13 +17,14 @@ namespace Engine {
 
     public:
 
-        TileTrigger(function<void(World&)> event);
+        TileTrigger(bool step_on, function<void(World&)> event);
         virtual ~TileTrigger();
         void make_call(World& world);
+        bool is_step_on_trigger();
 
     private:
         function<void(World&)> _event;
-
+        bool _step_on;
     };
 }
 

@@ -45,6 +45,7 @@ namespace GameLogic {
         double _yAccel = 0;
         double _xAccel = 0;
         double _rotation = 0;
+        double _next_tile = 0.5;
 
         CoordinateInt _current_tile;
 
@@ -59,6 +60,7 @@ namespace GameLogic {
 
         bool _new_tile();
 
+        void _try_trigger();
         void _do_action();
 
         /*

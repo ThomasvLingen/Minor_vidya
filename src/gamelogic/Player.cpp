@@ -79,13 +79,8 @@ namespace GameLogic {
         if (!this->_level->get_tile(CoordinateInt{(int) this->_position.x, (int) new_y})->is_wall()) {
             this->_position.y = new_y;
         }
-        if(this->_new_tile()){ //TODO: make this better
-            _current_tile = {(int)_position.x , (int)_position.y};
-            TileObject* tile = this->_level->get_tile(_current_tile); //TODO: difference in walk action or press action
-            if(tile->_tiletrigger != nullptr){
-                std::cout << "you stepped on a trigger" << std::endl;
-                tile->_tiletrigger->make_call(*this->_level);
-            }
+        if(this->_new_tile()){
+            this->_try_trigger();
         }
         this->_yAccel = 0;
         this->_xAccel = 0;
@@ -144,6 +139,8 @@ namespace GameLogic {
         this->_position = level->get_spawnpoint();
     }
 
+
+    /// \brief Checks if the player stepped in a new tile
     bool Player::_new_tile()
     {
         if((int)_position.x != _current_tile.x || (int)_position.y != _current_tile.y){
@@ -152,12 +149,23 @@ namespace GameLogic {
         return false;
     }
 
-    void Player::_do_action()
+    /// \brief Applies action to the tile
+    void Player::_do_action() //TODO: Expand with maybe checking for items on ground etc.
     {
-        double new_x = this->_position.x + this->_direction.x * 0.5;
-        double new_y = this->_position.y + this->_direction.y * 0.5;
+        double new_x = this->_position.x + this->_direction.x * this->_next_tile;
+        double new_y = this->_position.y + this->_direction.y * this->_next_tile;
         TileObject* tile = this->_level->get_tile({(int)new_x, (int)new_y});
-        if(tile->_tiletrigger != nullptr){
+        if(tile->_tiletrigger != nullptr && !(tile->_tiletrigger->is_step_on_trigger())){
+            tile->_tiletrigger->make_call(*this->_level);
+        }
+    }
+
+    /// \brief Checks if there is a trigger on the tile
+    void Player::_try_trigger()
+    {
+        this->_current_tile = {(int)this->_position.x , (int)this->_position.y};
+        TileObject* tile = this->_level->get_tile(this->_current_tile); //TODO: difference in walk action or press action
+        if(tile->_tiletrigger != nullptr && tile->_tiletrigger->is_step_on_trigger()){
             tile->_tiletrigger->make_call(*this->_level);
         }
     }
