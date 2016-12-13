@@ -139,7 +139,6 @@ namespace GameLogic {
         this->_position = level->get_spawnpoint();
     }
 
-
     /// \brief Checks if the player stepped in a new tile
     bool Player::_new_tile()
     {

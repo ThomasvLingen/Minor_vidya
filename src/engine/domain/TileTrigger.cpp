@@ -27,6 +27,5 @@ namespace Engine {
     {
         return this->_step_on;
     }
-
 }
 

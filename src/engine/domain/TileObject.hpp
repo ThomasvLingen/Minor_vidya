@@ -21,7 +21,6 @@ namespace Engine {
 
         ImageBuffer* _texture;
 
-
     public:
         TileObject(ImageBuffer* texture);
         TileObject(const TileObject& obj) = delete;            // Copy constructor for a base class has to be deleted (slicing)
@@ -38,7 +37,7 @@ namespace Engine {
 
         ImageBuffer* get_texture();
 
-        TileTrigger* _tiletrigger = nullptr;
+        TileTrigger* _tiletrigger = nullptr;;
     };
 }
 
