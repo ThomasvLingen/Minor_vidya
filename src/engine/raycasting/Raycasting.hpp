@@ -64,6 +64,8 @@ namespace Engine {
         double _get_wall_x(Wall wall, CoordinateDouble ray_pos, Direction ray_dir, double perp_wall_dist);
 
         double get_distance_to_ray(Entity& entity, CoordinateDouble ray_pos);
+
+        CoordinateDouble _transform_relative_to_camera_matrix(CoordinateDouble position);
     };
 }
 
