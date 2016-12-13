@@ -101,10 +101,7 @@ namespace Engine {
 
         for (Entity* entity : sorted_entities) {
             // translate sprite position to relative to camera
-            // TODO: this could be done by overloading the - operator of CoordinateDouble
-            CoordinateDouble sprite_pos = {
-                entity->get_position().x - ray_position.x, entity->get_position().y - ray_position.y
-            };
+            CoordinateDouble sprite_pos = entity->get_position() - ray_position;
 
             // transform sprite with the inverse camera matrix
             // [ plane_x   dir_x ] -1                                       [ dir_y      -dir_x ]
