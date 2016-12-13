@@ -37,6 +37,7 @@ namespace GameLogic {
     private:
         Player& _player;
         void _draw_health(int health);
+        void _draw_face();
 
         int _health_points;
         int _current_time; // in sec

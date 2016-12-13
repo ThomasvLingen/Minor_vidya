@@ -58,14 +58,29 @@ namespace GameLogic {
 
     }
 
+    void HUD::_draw_face() {
+        if(this->_current_time % 4 > 1){
+            _SDL_facade.draw_image(VIDYA_RUNPATH + "res/look_front.bmp", {300, 410});
+        } else if(this->_current_time % 3 > 1){
+            _SDL_facade.draw_image(VIDYA_RUNPATH + "res/look_left.bmp", {300, 410});
+        } else if(this->_current_time % 2 > 1){
+            _SDL_facade.draw_image(VIDYA_RUNPATH + "res/look_front.bmp", {300, 410});
+        } else {
+            _SDL_facade.draw_image(VIDYA_RUNPATH + "res/look_right.bmp", {300, 410});
+        }
+    }
+
     void HUD::draw(){
-        _SDL_facade.draw_image(VIDYA_RUNPATH + "res/HUD.bmp", {0, 410});
+        _SDL_facade.draw_image(VIDYA_RUNPATH + "res/HUDv2.bmp", {0, 410});
 
         //draw HP
         this->_draw_health(_player.get_health());
 
         // draw time
         _SDL_facade.draw_text(this->_time_to_string(this->_current_time), FontType::alterebro_pixel, Color{53, 194, 222}, {390, 430});
+
+        // draw face
+        this->_draw_face();
 
         // draw items
         //TODO inplement items
