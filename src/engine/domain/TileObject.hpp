@@ -19,7 +19,6 @@ namespace Engine {
         const int _width = 1;        // TODO: implement width value
         const int _length = 1;        // TODO: implement height value
 
-        vector<TileObject*> _neighbour_tiles;
         ImageBuffer* _texture;
 
     public:
