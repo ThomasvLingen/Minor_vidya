@@ -32,7 +32,6 @@ namespace State {
 
     private:
         Menu _menu;
-        int _timeSinceLastPress = 0;
         Color _color{255,255,255};
     };
 }

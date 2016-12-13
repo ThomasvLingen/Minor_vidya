@@ -47,7 +47,7 @@ namespace GameLogic {
         double _rotation = 0;
         double _next_tile = 0.5;
 
-        CoordinateInt _current_tile;
+        TileObject* _current_tile;
 
         void _move_player(int timeSinceLastUpdate);
         void _rotate_player(int timeSinceLastUpdate);
@@ -60,6 +60,7 @@ namespace GameLogic {
 
         bool _new_tile();
 
+        void _set_new_current_tile();
         void _try_trigger();
         void _do_action();
 

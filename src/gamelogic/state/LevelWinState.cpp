@@ -10,8 +10,8 @@
 namespace State {
 
     LevelWinState::LevelWinState(Game& context)
-            : IGameState(context)
-            , _menu(this->_context.SDL_facade, this->_context)
+    : IGameState(context)
+    , _menu(this->_context.SDL_facade, this->_context)
     {
         MenuOption continue_game {
                 {150,100},
