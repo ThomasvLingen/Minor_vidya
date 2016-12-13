@@ -12,14 +12,14 @@ namespace Engine {
     class Entity {
 
     public:
-        Entity(ImageBuffer* image_buffer, CoordinateInt* position);
+        Entity(ImageBuffer& texture, CoordinateInt position);
         ~Entity();
         CoordinateInt& get_position();
-        ImageBuffer& get_image_buffer();
+        ImageBuffer& get_texture();
 
     private:
-        CoordinateInt* _position;
-        ImageBuffer* _image_buffer;
+        CoordinateInt _position;
+        ImageBuffer& _texture;
     };
 }
 

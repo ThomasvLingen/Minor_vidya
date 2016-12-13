@@ -10,4 +10,9 @@ namespace Engine {
     : assets(assets)
     {
     }
+
+    vector<Entity> World::get_entities()
+    {
+        return this->_entities;
+    }
 }
