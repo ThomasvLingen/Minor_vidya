@@ -12,7 +12,7 @@ namespace Engine {
     class World {
 
     protected:
-        vector<Entity> _entities;
+        vector<Entity*> _entities;
 
     public:
         World(SPTR_AssetsManager assets);                            // We now have to explicitly declare this since other def constructors are deleted
@@ -27,7 +27,7 @@ namespace Engine {
         virtual TileObject* get_tile(CoordinateInt coordinate) = 0;
         virtual void handle_input(Input keys) = 0;
 
-        vector<Entity>& get_entities();
+        vector<Entity*>& get_entities();
 
     };
 }

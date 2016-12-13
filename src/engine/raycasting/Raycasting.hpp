@@ -24,35 +24,9 @@ namespace Engine {
     const int TEXTURE_WIDTH = 64;
     const int TEXTURE_HEIGHT = 64;
 
-    // TODO: THIS IS TEMPORARY TESTING CODE
-    struct Enemy {
-        double x_pos;
-        double y_pos;
-        ImageBuffer texture;
-        Enemy(double newX, double newY, ImageBuffer newTexture){
-            this->x_pos = newX;
-            this->y_pos = newY;
-            this->texture = newTexture;
-        }
-
-        inline double get_distance_to_point(CoordinateDouble pos) const
-        {
-            double delta_x = pos.x - this->x_pos;
-            double delta_y = pos.y - this->y_pos;
-
-            // For some reason the sqrt is not needed. wut.
-            return pow(delta_x, 2) + pow(delta_y, 2);
-        };
-    };
-    // END TODO
-
     class Raycasting {
     public:
         Raycasting(SDLFacade& SDL_facade);
-
-        // TODO: THIS IS TEMPORARY TESTING CODE
-        vector<Enemy*> test_enemies;
-        // END TODO
 
         void handle_input(/* TODO:  Input data type from SDL facade */);
         void update(int delta_time);
@@ -88,6 +62,8 @@ namespace Engine {
 
         int _get_texture_x_coord(Wall wall, CoordinateDouble ray_pos, Direction ray_dir, double perp_wall_dist);
         double _get_wall_x(Wall wall, CoordinateDouble ray_pos, Direction ray_dir, double perp_wall_dist);
+
+        double get_distance_to_ray(Entity& entity, CoordinateDouble ray_pos);
     };
 }
 

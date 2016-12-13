@@ -91,18 +91,19 @@ namespace Engine {
         // Draw drawables
         // First sort the sprites by distance to the player
         // TODO: This is copied, but we might not have to. Does order of enemies matter for anything else?
-        vector<Enemy*> sorted_enemies {this->test_enemies.begin(), this->test_enemies.end()};
+        vector<Entity*> sorted_entities = this->_world->get_entities();
         std::sort(
-            sorted_enemies.begin(), sorted_enemies.end(),
-            [ray_position] (Enemy* a, Enemy* b) {
-                return a->get_distance_to_point(ray_position) > b->get_distance_to_point(ray_position);
+            sorted_entities.begin(), sorted_entities.end(),
+            [ray_position, this] (Entity* a, Entity* b) {
+                return this->get_distance_to_ray(*a, ray_position) > this->get_distance_to_ray(*b, ray_position);
             }
         );
 
-        for (Enemy* enemy : sorted_enemies) {
+        for (Entity* entity : sorted_entities) {
             // translate sprite position to relative to camera
+            // TODO: this could be done by overloading the - operator of CoordinateDouble
             CoordinateDouble sprite_pos = {
-                enemy->x_pos - ray_position.x, enemy->y_pos - ray_position.y
+                entity->get_position().x - ray_position.x, entity->get_position().y - ray_position.y
             };
 
             // transform sprite with the inverse camera matrix
@@ -147,7 +148,7 @@ namespace Engine {
                         int d = (y) * 256 - h * 128 + sprite_height * 128; // 256 and 128 factors to avoid floats
                         int tex_y = ((d * TEXTURE_HEIGHT) / sprite_height) / 256;
 
-                        Uint32 pixel = enemy->texture[TEXTURE_WIDTH * tex_y + tex_x]; // get current pixel from the texture
+                        Uint32 pixel = entity->get_texture()[TEXTURE_WIDTH * tex_y + tex_x]; // get current pixel from the texture
 
                         // TODO: Transparency is done here. pls fix
                         if ((pixel & 0x000000FF) == 0xFF) {
@@ -409,5 +410,14 @@ namespace Engine {
         this->_correct_line(line, this->_SDL_facade.get_width());
 
         return line;
+    }
+
+    double Raycasting::get_distance_to_ray(Entity& entity, CoordinateDouble ray_pos)
+    {
+        double delta_x = ray_pos.x - entity.get_position().x;
+        double delta_y = ray_pos.y - entity.get_position().y;
+
+        // For some reason, the sqrt is not needed. wut
+        return pow(delta_x, 2) + pow(delta_y, 2);
     }
 }
