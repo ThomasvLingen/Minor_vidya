@@ -34,7 +34,11 @@ namespace State {
             for (auto key : keys) {
                 switch (key) {
                     case Key::ESC:
-                        this->_context.set_new_state(std::make_shared<PauseState>(this->_context));
+                    {
+                        std::shared_ptr<PauseState> state = std::make_shared<PauseState>(this->_context);
+                        state->set_ticks_in_game(this->_hud.get_current_time());
+                        this->_context.set_new_state(state);
+                    }
                         break;
                     default:
                         break;
