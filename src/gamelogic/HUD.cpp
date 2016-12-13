@@ -60,13 +60,13 @@ namespace GameLogic {
 
     void HUD::_draw_face() {
         if(this->_current_time % 4 > 1){
-            _SDL_facade.draw_image(VIDYA_RUNPATH + "res/look_front.bmp", {300, 410});
+            _SDL_facade.draw_image(VIDYA_RUNPATH + "res/look_front.bmp", {290, 410});
         } else if(this->_current_time % 3 > 1){
-            _SDL_facade.draw_image(VIDYA_RUNPATH + "res/look_left.bmp", {300, 410});
+            _SDL_facade.draw_image(VIDYA_RUNPATH + "res/look_left.bmp", {290, 410});
         } else if(this->_current_time % 2 > 1){
-            _SDL_facade.draw_image(VIDYA_RUNPATH + "res/look_front.bmp", {300, 410});
+            _SDL_facade.draw_image(VIDYA_RUNPATH + "res/look_front.bmp", {290, 410});
         } else {
-            _SDL_facade.draw_image(VIDYA_RUNPATH + "res/look_right.bmp", {300, 410});
+            _SDL_facade.draw_image(VIDYA_RUNPATH + "res/look_right.bmp", {290, 410});
         }
     }
 
