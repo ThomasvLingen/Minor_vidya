@@ -102,21 +102,7 @@ namespace Engine {
         for (Entity* entity : sorted_entities) {
             // translate sprite position to relative to camera
             CoordinateDouble sprite_pos = entity->get_position() - ray_position;
-
-            // transform sprite with the inverse camera matrix
-            // [ plane_x   dir_x ] -1                                       [ dir_y      -dir_x ]
-            // [               ]       =  1/(plane_x*dir_y-dir_x*plane_y) *   [                 ]
-            // [ plane_y   dir_y ]                                          [ -plane_y  plane_x ]
-
-            Direction& dir = this->_world->get_pov().get_direction();
-
-            RaycastingVector& PoV_plane = this->_world->get_pov().get_camera_plane();
-            double inv_det = 1.0 / (PoV_plane.x * dir.y - dir.x * PoV_plane.y); // required for correct matrix multiplication
-
-            CoordinateDouble transformed = {
-                inv_det * (dir.y * sprite_pos.x - dir.x * sprite_pos.y),
-                inv_det * (-PoV_plane.y * sprite_pos.x + PoV_plane.x * sprite_pos.y)
-            };
+            CoordinateDouble transformed = this->_transform_relative_to_camera_matrix(sprite_pos);
 
             int w = this->_SDL_facade.get_width();
             int h = this->_SDL_facade.get_height();
@@ -416,5 +402,22 @@ namespace Engine {
 
         // For some reason, the sqrt is not needed. wut
         return pow(delta_x, 2) + pow(delta_y, 2);
+    }
+
+    CoordinateDouble Raycasting::_transform_relative_to_camera_matrix(CoordinateDouble position)
+    {
+        // transform sprite with the inverse camera matrix
+        // [ plane_x   dir_x ] -1                                       [ dir_y      -dir_x ]
+        // [                 ]   =  1/(plane_x*dir_y-dir_x*plane_y) *   [                   ]
+        // [ plane_y   dir_y ]                                          [ -plane_y  plane_x ]
+
+        Direction& dir = this->_world->get_pov().get_direction();
+        RaycastingVector& PoV_plane = this->_world->get_pov().get_camera_plane();
+
+        double inv_det = 1.0 / (PoV_plane.x * dir.y - dir.x * PoV_plane.y); // required for correct matrix multiplication
+        return CoordinateDouble {
+            inv_det * (dir.y * position.x - dir.x * position.y),
+            inv_det * (-PoV_plane.y * position.x + PoV_plane.x * position.y)
+        };
     }
 }
