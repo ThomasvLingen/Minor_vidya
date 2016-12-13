@@ -1,5 +1,6 @@
 #include "TileObject.hpp"
 #include "../../util/UnusedMacro.hpp"
+#include "../../gamelogic/exceptions/InvalidTextureException.hpp"
 
 
 namespace Engine {
@@ -31,7 +32,12 @@ namespace Engine {
 
     ImageBuffer* TileObject::get_texture()
     {
-        return this->_texture;
+        if(this->_texture == nullptr){
+            throw Exceptions::InvalidTextureException();
+        } else {
+            return this->_texture;
+        }
+
     }
 
     void TileObject::set_texture(ImageBuffer* texture)
