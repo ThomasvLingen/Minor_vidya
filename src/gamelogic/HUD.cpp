@@ -87,7 +87,6 @@ namespace GameLogic {
     }
 
     void HUD::update(int delta_time){
-        //TODO health reduce
         this->_current_time = this->_calculate_time(_SDL_facade.get_ticks() - _start_time);
     }
 
