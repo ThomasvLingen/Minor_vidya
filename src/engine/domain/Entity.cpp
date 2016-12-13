@@ -9,7 +9,7 @@ namespace Engine{
     /// \brief Constructor of the class
     ///
     /// \param image_buffer The texture of the entity which will be used to draw the entity
-    Entity::Entity(ImageBuffer& texture, CoordinateInt position)
+    Entity::Entity(ImageBuffer& texture, CoordinateDouble position)
     : _position(position)
     , _texture(texture)
     {
@@ -23,7 +23,7 @@ namespace Engine{
 
     /// \brief Getter for the position of the entity
     /// \return returns a CoordinateInt position
-    CoordinateInt& Entity::get_position()
+    CoordinateDouble& Entity::get_position()
     {
         return this->_position;
     }
