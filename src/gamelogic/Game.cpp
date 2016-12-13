@@ -87,12 +87,10 @@ namespace GameLogic {
         this->_player->set_level(this->_level);
         this->raycasting_engine.set_world( this->_level );
         // TODO: THIS IS TEMPORARY TESTING CODE
-        this->raycasting_engine.test_enemies = {
-            {new Engine::Enemy(12.0, 10.0, *this->_level->assets->get_texture(21))},
-            {new Engine::Enemy(7.2, 4.3, *this->_level->assets->get_texture(22))},
-            {new Engine::Enemy(14.5, 10.0, *this->_level->assets->get_texture(21))},
-            {new Engine::Enemy(12.0, 8.0, *this->_level->assets->get_texture(22))}
-        };
+        this->_level->get_entities().push_back(new Engine::Entity(*assets->get_texture(21), {12.0, 10.0}));
+        this->_level->get_entities().push_back(new Engine::Entity(*assets->get_texture(21), {7.2, 4.3}));
+        this->_level->get_entities().push_back(new Engine::Entity(*assets->get_texture(21), {14.5, 10.0}));
+        this->_level->get_entities().push_back(new Engine::Entity(*assets->get_texture(21), {12.0, 8.0}));
         // END TODO
 
         return true;
