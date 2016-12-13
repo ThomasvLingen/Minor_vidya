@@ -28,6 +28,7 @@ namespace GameLogic {
         HUD(SDLFacade& _SDL_facade, Player* player);
         HUD(SDLFacade& _SDL_facade);
 
+        int get_current_time();
         void set_ticks_set_off(int ticks);
         virtual void draw() override;
 
