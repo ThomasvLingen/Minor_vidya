@@ -35,6 +35,7 @@ namespace Engine {
         void set_texture(ImageBuffer* texture);
 
         bool is_wall();
+
         ImageBuffer* get_texture();
     };
 }
