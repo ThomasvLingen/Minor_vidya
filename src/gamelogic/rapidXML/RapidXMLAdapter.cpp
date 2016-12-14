@@ -157,5 +157,7 @@ namespace GameLogic {
                 return property_texture->first_attribute( "value" )->value();
             }
         }
+
+        // TODO: Add exception, since this point should not be reached
     }
 }
