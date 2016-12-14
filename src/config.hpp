@@ -10,6 +10,8 @@
 namespace Config {
     using std::string;
 
+    const int FPS = 60;
+
     const string GAME_WINDOW_TITLE = "Vidya Gaem";
     const string LOAD_AD_PATH = "res/advertisement.bmp";
 
