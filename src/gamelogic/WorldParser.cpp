@@ -31,8 +31,8 @@ namespace GameLogic {
         vector<tuple<size_t, size_t, char*>> object_list;
 
         rapid_adapter.setup_document( file_location );
-        string path = file_location.substr( 0, file_location.find_last_of( "\\/" ) ) + "/" + rapid_adapter.get_texture_source();
-        if ( !level.assets->init( path, rapid_adapter.get_tile_width(), rapid_adapter.get_tile_height(), rapid_adapter.get_tile_count() ) ) {
+        string path = file_location.substr( 0, file_location.find_last_of( "\\/" ) ) + "/";
+        if ( !level.assets->init( path + rapid_adapter.get_texture_source(), rapid_adapter.get_tile_width(), rapid_adapter.get_tile_height(), rapid_adapter.get_tile_count() ) ) {
             std::cout << "AssetsManager has not initted correctly." << std::endl;
         }
 
@@ -42,7 +42,7 @@ namespace GameLogic {
         );
 
         object_list = rapid_adapter.get_objects();
-        this->_set_objects( level, object_list, level.get_field(), level.assets, rapid_adapter, file_location );
+        this->_set_objects( level, object_list, level.get_field(), level.assets, rapid_adapter, path );
 
         level.set_spawnpoint(
             this->_get_spawnpoint(object_list, level.get_field())
@@ -109,14 +109,14 @@ namespace GameLogic {
     ///
     /// \param object_list the object list
     /// \param map the tilemap
-    void WorldParser::_set_objects( Level& level, vector<tuple<size_t, size_t, char*>> object_list, vector<vector<Tile*>> map, Engine::SPTR_AssetsManager assets, RapidXMLAdapter& rapid_adapter, string file_location )
+    void WorldParser::_set_objects( Level& level, vector<tuple<size_t, size_t, char*>> object_list, vector<vector<Tile*>> map, Engine::SPTR_AssetsManager assets, RapidXMLAdapter& rapid_adapter, string path )
     {
         for (auto object : object_list) {
             if ( std::strcmp( get<2>( object ), "Entity" ) == 0 ) {
                 size_t y = get<1>( object );
                 size_t x = get<0>( object );
                 if ( y < map.size() && x < map[y].size() ) {
-                    level.get_entities().push_back(new Engine::Entity(assets->get_entity_texture( file_location.substr( 0, file_location.find_last_of( "\\/" ) ) + "/" + rapid_adapter.get_entity_texture(x,y)),CoordinateDouble{ y + this->_spawn_tile_offset, x + this->_spawn_tile_offset }));
+                    level.get_entities().push_back(new Engine::Entity(assets->get_entity_texture( path + rapid_adapter.get_entity_texture(x,y)),CoordinateDouble{ y + this->_spawn_tile_offset, x + this->_spawn_tile_offset }));
                 }
             }
             else if ( std::strcmp( get<2>( object ), "DoorTrigger" ) == 0 ) {
