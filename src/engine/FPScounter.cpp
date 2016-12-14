@@ -11,6 +11,7 @@ namespace Engine {
     , _current_FPS(0)
     , _is_visible(true)
     {
+        _is_visible = true;
     }
 
     void FPScounter::draw()
