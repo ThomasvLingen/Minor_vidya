@@ -138,7 +138,7 @@ namespace GameLogic {
     {
         this->_level = level;
         this->_position = level->get_spawnpoint();
-        this->_current_tile = this->_level->get_tile({(int)this->_position.x, (int)this->_position.y});
+        this->_current_tile = this->_level->get_tile_in_level({(int)this->_position.x, (int)this->_position.y});
     }
 
     /// \brief Checks if the player stepped in a new tile
@@ -148,14 +148,14 @@ namespace GameLogic {
     }
     void Player::_set_new_current_tile()
     {
-        this->_current_tile = this->_level->get_tile({(int)this->_position.x, (int)this->_position.y});
+        this->_current_tile = this->_level->get_tile_in_level({(int)this->_position.x, (int)this->_position.y});
     }
 
     /// \brief Applies action to the tile
     void Player::_do_action() //TODO: Expand with maybe checking for items on ground etc.
     {
         CoordinateDouble new_position{this->_position.x + this->_direction.x * this->_next_tile, this->_position.y + this->_direction.y * this->_next_tile};
-        TileObject* tile = this->_level->get_tile({(int)new_position.x, (int)new_position.y});
+        Tile* tile = this->_level->get_tile_in_level({(int)new_position.x, (int)new_position.y});
         for(auto tiletrigger : tile->get_action_tiletriggers()) {
             if (tiletrigger != nullptr) {
                 tiletrigger->make_call(*this->_level);
@@ -166,7 +166,7 @@ namespace GameLogic {
     /// \brief Checks if there is a trigger on the tile
     void Player::_try_trigger()
     {
-        TileObject* tile = this->_current_tile;
+        Tile* tile = this->_current_tile;
         for(auto tiletrigger : tile->get_step_on_tiletriggers()) {
             if (tiletrigger != nullptr) {
                 tiletrigger->make_call(*this->_level);

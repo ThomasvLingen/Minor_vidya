@@ -47,6 +47,8 @@ namespace GameLogic {
 
         TileObject* get_tile(CoordinateInt coordinate) override;
 
+        Tile* get_tile_in_level(CoordinateInt coordinate);
+
         CoordinateDouble get_spawnpoint();
         void set_spawnpoint(CoordinateDouble coordinate);
 
@@ -54,6 +56,8 @@ namespace GameLogic {
         void set_field(vector<vector<Tile*>> field);
 
         PointOfView& get_pov() override;
+
+        Player& get_player();
 
         void handle_input(Engine::Input keys) override;
     };
