@@ -106,13 +106,11 @@ namespace GameLogic {
     }
 
     SPTR_Level Game::get_level() {
-        if(this->_level != nullptr){
+        if (this->_level != nullptr){
             return this->_level;
-        }
-        else {
+        } else {
             throw Exceptions::LevelIsNullptrException();
         }
-
     }
 }
 

@@ -104,7 +104,8 @@ namespace GameLogic {
         this->_level_won = true;
     }
 
-    bool Level::is_level_over() {
+    bool Level::is_level_over()
+    {
         return this->_level_won;
     }
 }
