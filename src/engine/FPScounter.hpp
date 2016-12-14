@@ -38,7 +38,7 @@ namespace Engine {
         int _calculate_FPS(int delta_time);
 
         string _get_FPS_string();
-        bool _is_visable;
+        bool _is_visible;
     };
 }
 #endif //MINOR_VIDYA_FPSCOUNTER_HPP

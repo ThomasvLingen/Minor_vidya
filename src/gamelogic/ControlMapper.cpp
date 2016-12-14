@@ -7,7 +7,6 @@
 namespace GameLogic{
 
     ControlMapper::ControlMapper()
-    : _input_actions(new InputActions())
     {
         this->_init_mapping_info();
         this->_init_key_descriptions();
@@ -16,30 +15,29 @@ namespace GameLogic{
 
     ControlMapper::~ControlMapper()
     {
-        delete this->_input_actions;
     }
 
     void ControlMapper::handle_input(Input input)
     {
-        delete this->_input_actions;
-        this->_input_actions = new InputActions();
-        for (auto const& action_key_pair : _mapping_info)
+        this->_input_actions.actions_off.clear();
+        this->_input_actions.actions_on.clear();
+        for (auto const& action_key_pair : this->_mapping_info)
         {
-            if(std::find(input.keys_down.begin(), input.keys_down.end(), action_key_pair.second) != input.keys_down.end()) {
+            if (std::find(input.keys_down.begin(), input.keys_down.end(), action_key_pair.second) != input.keys_down.end()) {
                 //action key found in keys_down
-                this->_input_actions->actions_on.push_back(action_key_pair.first);
+                this->_input_actions.actions_on.push_back(action_key_pair.first);
                 //input_actions.actions_on.push_back(action_key_pair.first);
             }
 
-            if(std::find(input.keys_released.begin(), input.keys_released.end(), action_key_pair.second) != input.keys_released.end()) {
+            if (std::find(input.keys_released.begin(), input.keys_released.end(), action_key_pair.second) != input.keys_released.end()) {
                 //action key found in keys_released
                 //input_actions.actions_off.push_back(action_key_pair.first);
-                this->_input_actions->actions_off.push_back(action_key_pair.first);
+                this->_input_actions.actions_off.push_back(action_key_pair.first);
             }
         }
     }
 
-    InputActions* ControlMapper::get_input_actions()
+    InputActions& ControlMapper::get_input_actions()
     {
         return this->_input_actions;
     }
@@ -63,7 +61,7 @@ namespace GameLogic{
 
     Key ControlMapper::get_key_by_action(Action action)
     {
-        return _mapping_info[action];
+        return this->_mapping_info[action];
     }
 
     void ControlMapper::set_new_combination(Action action, Key key)
@@ -142,11 +140,11 @@ namespace GameLogic{
 
     map<Key, string>& ControlMapper::get_key_descriptions()
     {
-        return _key_descriptions;
+        return this->_key_descriptions;
     }
 
     map<Action, string>& ControlMapper::get_action_descriptions()
     {
-        return _action_descriptions;
+        return this->_action_descriptions;
     }
 }
