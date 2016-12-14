@@ -114,7 +114,7 @@ namespace GameLogic {
                 int y = get<1>( object );
                 int x = get<0>( object );
                 if ( y < map.size() && x < map[y].size() ) {
-                    level.add_entity(Engine::Entity(assets->get_entity_texture( file_location.substr( 0, file_location.find_last_of( "\\/" ) ) + "/" + _rapid_adapter.get_entity_texture(x,y)),CoordinateDouble{ y + this->_spawn_tile_offset, x + this->_spawn_tile_offset }));
+                    level.get_entities().push_back(new Engine::Entity(assets->get_entity_texture( file_location.substr( 0, file_location.find_last_of( "\\/" ) ) + "/" + _rapid_adapter.get_entity_texture(x,y)),CoordinateDouble{ y + this->_spawn_tile_offset, x + this->_spawn_tile_offset }));
                 }
             }
             else if ( std::strcmp( get<2>( object ), "DoorTrigger" ) == 0 ) {
