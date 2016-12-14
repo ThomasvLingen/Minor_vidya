@@ -113,16 +113,23 @@ namespace GameLogic {
     void WorldParser::_set_objects( vector<tuple<size_t, size_t, char*>> object_list, vector<vector<Tile*>> map )
     {
         for ( auto object : object_list) {
-            if ( std::strcmp( get<2>( object ), "DoorTrigger" ) == 0 ) {
-                int y = get<1>( object );
-                int x = get<0>( object );
-                if ( y < map.size() && x < map[y].size() ) {
+            int y = get<1>( object );
+            int x = get<0>( object );
+            if ( y < map.size() && x < map[y].size() ) {
+                if ( std::strcmp( get<2>( object ), "DoorTrigger" ) == 0 ) {
                     std::function<void( Level& )> door = [y, x]( Level& level) {
                         level.get_tile_in_level({y, x})->set_wall(!level.get_tile_in_level({y, x })->is_wall());
                     };
-
                     TileTrigger* tileTrigger = new TileTrigger(door);
                     map[y][x]->add_action_tiletrigger(tileTrigger);
+                }
+                else if ( std::strcmp( get<2>( object ), "WinTrigger" ) == 0 ){
+                    std::function<void( Level& )> door = [y, x]( Level& level) {
+                        level.set_level_over();
+                    };
+                    TileTrigger* tileTrigger = new TileTrigger( door );
+                    map[y][x]->add_step_on_tiletrigger( tileTrigger );
+
                 }
             }
         }
