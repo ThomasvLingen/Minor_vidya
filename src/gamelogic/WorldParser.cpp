@@ -79,19 +79,22 @@ namespace GameLogic {
     void WorldParser::_set_objects( Level& level, vector<tuple<size_t, size_t, char*>> object_list, RapidXMLAdapter& rapid_adapter, string path )
     {
         int spawnpoint_count = 0;
-        for ( auto object : object_list) {
-            int y = get<1>( object );
-            int x = get<0>( object );
+        for ( auto object : object_list ) {
+            size_t y = get<1>( object );
+            size_t x = get<0>( object );
             if ( y < level.get_field().size() && x < level.get_field()[y].size() ) {
                 if ( std::strcmp( get<2>( object ), "PlayerSpawn" ) == 0 ) {
                     this->_set_spawnpoint(level, y, x);
                     spawnpoint_count++;
                 }
-                else if ( std::strcmp( get<2>( object ), "DoorTrigger" ) == 0 ) {
-                    this->_set_door_trigger(level, y, x);
+                else if ( std::strcmp( get<2>( object ), "Entity" ) == 0 ) {
+                    this->_set_entity(level, y, x, rapid_adapter, path);
                 }
-                else if ( std::strcmp( get<2>( object ), "WinTrigger" ) == 0 ){
-                    this->_set_win_trigger(level, y, x);
+                else if ( std::strcmp( get<2>( object ), "DoorTrigger" ) == 0 ) {
+                    this->_set_door_trigger( level, y, x);
+                }
+                else if ( std::strcmp( get<2>( object ), "WinTrigger" ) == 0 ) {
+                    this->_set_win_trigger( level, y, x );
                 }
             }
         }
@@ -100,15 +103,27 @@ namespace GameLogic {
         }
     }
 
-    void WorldParser::_set_spawnpoint( Level& level, int y, int x )
+    /// \brief Sets spawnpoint on tile
+    /// 
+    /// This function sets spawnpoint on tile on location y,x
+    ///
+    /// \param level reference to current level
+    /// \param y y position of the tile
+    /// \param x x position of the tile
+    void WorldParser::_set_spawnpoint( Level& level, size_t y, size_t x )
     {
         if ( level.get_field()[y][x]->is_wall() ) {
             throw FileInvalidException();
         }
         else {
             //our map is y,x based that's why spawn point is y,x
-            level.set_spawnpoint( CoordinateDouble { y + this->_spawn_tile_offset, x + this->_spawn_tile_offset });
+            level.set_spawnpoint( CoordinateDouble { y + this->_spawn_tile_offset, x + this->_spawn_tile_offset } );
         }
+    }
+
+    void WorldParser::_set_entity( Level & level, size_t y, size_t x, RapidXMLAdapter & rapid_adapter, string path )
+    {
+        level.get_entities().push_back( new Engine::Entity( level.assets->get_entity_texture( path + rapid_adapter.get_entity_texture( x, y ) ), CoordinateDouble { y + this->_spawn_tile_offset, x + this->_spawn_tile_offset } ) );
     }
 
     /// \brief Sets door trigger on tile
@@ -118,12 +133,12 @@ namespace GameLogic {
     /// \param level reference to current level
     /// \param y y position of the tile
     /// \param x x position of the tile
-    void WorldParser::_set_door_trigger( Level & level, int y, int x )
+    void WorldParser::_set_door_trigger( Level & level, size_t y, size_t x )
     {
-        std::function<void( Level& )> door = [y, x]( Level& level ) {
-            level.get_tile_in_level( { y, x } )->set_wall( !level.get_tile_in_level( { y, x } )->is_wall() );
+        std::function<void( Level& )> door = [y, x] ( Level& level ) {
+            level.get_field()[y][x]->set_wall( !level.get_field()[y][x]->is_wall() );
         };
-        level.get_field()[y][x]->add_action_tiletrigger(new TileTrigger(door));
+        level.get_field()[y][x]->add_action_tiletrigger( new TileTrigger( door ) );
     }
 
     /// \brief Sets win trigger on tile
@@ -135,10 +150,9 @@ namespace GameLogic {
     /// \param x x position of the tile
     void WorldParser::_set_win_trigger( Level & level, int y, int x )
     {
-        std::function<void( Level& )> win = []( Level& level ) {
+        std::function<void( Level& )> win = [] ( Level& level ) {
             level.set_level_over();
         };
-        level.get_field()[y][x]->add_step_on_tiletrigger( new TileTrigger( win ));
+        level.get_field()[y][x]->add_step_on_tiletrigger( new TileTrigger( win ) );
     }
-
 }
