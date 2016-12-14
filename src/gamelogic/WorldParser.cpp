@@ -112,10 +112,10 @@ namespace GameLogic {
     /// \param map the tilemap
     void WorldParser::_set_objects( vector<tuple<size_t, size_t, char*>> object_list, vector<vector<Tile*>> map )
     {
-        for ( int i = 0; i < object_list.size(); i++ ) {
-            if ( std::strcmp( get<2>( object_list[i] ), "DoorTrigger" ) == 0 ) {
-                int y = get<1>( object_list[i] );
-                int x = get<0>( object_list[i] );
+        for ( auto object : object_list) {
+            if ( std::strcmp( get<2>( object ), "DoorTrigger" ) == 0 ) {
+                int y = get<1>( object );
+                int x = get<0>( object );
                 if ( y < map.size() && x < map[y].size() ) {
                     std::function<void( World& )> door = [y, x]( World& level) {
                         level.get_tile({y, x})->set_wall(!level.get_tile({y, x })->is_wall());
