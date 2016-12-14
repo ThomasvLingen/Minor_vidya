@@ -16,7 +16,7 @@ namespace GameLogic {
     : SDL_facade([this](){ //lambda function, captures this (the game class) and sets running to false as quit callback
         this->running = false;
     })
-    , control_mapper(new ControlMapper())
+    , control_mapper(ControlMapper())
     , raycasting_engine(this->SDL_facade)
     , running(true)
     {
@@ -99,11 +99,6 @@ namespace GameLogic {
     void Game::_init_sound_effects() {
         this->SDL_facade.load_sound_effect("monsterkill", VIDYA_RUNPATH + "res/sound_effects/monsterkill.wav");
         this->SDL_facade.load_sound_effect("headshot", VIDYA_RUNPATH + "res/sound_effects/headshot.wav");
-    }
-
-    Game::~Game()
-    {
-        delete control_mapper;
     }
 }
 

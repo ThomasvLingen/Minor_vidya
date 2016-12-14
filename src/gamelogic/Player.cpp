@@ -6,7 +6,7 @@
 
 namespace GameLogic {
 
-    Player::Player(CoordinateDouble position, ControlMapper* control_mapper)
+    Player::Player(CoordinateDouble position, ControlMapper control_mapper)
     : PointOfView(position, Engine::RaycastingVector{-1, 0}, Engine::RaycastingVector{0, 0.66})
     , _level(nullptr)
     , _control_mapper(control_mapper)
@@ -19,10 +19,10 @@ namespace GameLogic {
     void Player::handleInput(Input keys)
     {
 
-        this->_control_mapper->handle_input(keys);
-        InputActions* input_actions = this->_control_mapper->get_input_actions();
+        this->_control_mapper.handle_input(keys);
+        InputActions input_actions = this->_control_mapper.get_input_actions();
 
-        for (auto action : input_actions->actions_on) {
+        for (auto action : input_actions.actions_on) {
             switch (action) {
                 case Action::MOVE_LEFT :
                     this->_move_left();

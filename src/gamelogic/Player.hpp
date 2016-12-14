@@ -30,7 +30,7 @@ namespace GameLogic {
     class Player : public PointOfView {
 
     public:
-        Player(CoordinateDouble position, ControlMapper* control_mapper);
+        Player(CoordinateDouble position, ControlMapper control_mapper);
 
         bool is_at(int x, int y);
         void set_level(SPTR_Level level);
@@ -40,7 +40,7 @@ namespace GameLogic {
     private:
         SPTR_Level _level;
 
-        ControlMapper* _control_mapper;
+        ControlMapper _control_mapper;
 
         const double _MOVE_SPEED = 0.003;
         const double _STRAFE_SPEED = 0.004;

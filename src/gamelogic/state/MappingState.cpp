@@ -10,11 +10,10 @@
 namespace State {
 
     MappingState::MappingState(Game& context)
-            : IGameState(context)
-            , _menu(this->_context.SDL_facade, this->_context)
+    : IGameState(context)
+    , _menu(this->_context.SDL_facade, this->_context)
+    , _action_is_selected(false)
     {
-        _action_is_selected = false;
-
         this->_add_menu_options();
 
         this->_collection.add_drawable(&this->_menu);
@@ -33,11 +32,11 @@ namespace State {
 
         Input keys = this->_context.SDL_facade.get_input();
 
-        if(_action_is_selected){
-            this->_context.control_mapper->handle_input(keys);
-            if(keys.keys_released.size() > 0) {
-                this->_context.control_mapper->set_new_combination(_selected_action, keys.keys_released.at(0));
-                _action_is_selected = false;
+        if (_action_is_selected) {
+            this->_context.control_mapper.handle_input(keys);
+            if (keys.keys_released.size() > 0) {
+                this->_context.control_mapper.set_new_combination(this->_selected_action, keys.keys_released.at(0));
+                this->_action_is_selected = false;
                 this->_menu.clear_options();
                 this->_add_menu_options();
             }
@@ -52,9 +51,9 @@ namespace State {
 
     void MappingState::_set_action(Action action)
     {
-        if(!_action_is_selected){
-            _selected_action = action;
-            _action_is_selected = true;
+        if (!this->_action_is_selected) {
+            this->_selected_action = action;
+            this->_action_is_selected = true;
         }
     }
 
@@ -63,20 +62,20 @@ namespace State {
         MenuOption quit_game {
                 {150,440},
                 "Quit to menu",
-                [=] (GameLogic::Game& game) {
+                [] (GameLogic::Game& game) {
                     game.set_new_state(std::make_shared<MenuState>(game));
                 }
         };
 
         int x = 150;
         int y = 70;
-        int row_height = 30;
-        for(auto action_description_pair : this->_context.control_mapper->get_action_descriptions()){
+        const int row_height = 30;
+        for (auto action_description_pair : this->_context.control_mapper.get_action_descriptions()) {
             MenuOption action_option = MenuOption(
                     {x,y},
-                    this->_context.control_mapper->get_action_description(action_description_pair.first)
+                    this->_context.control_mapper.get_action_description(action_description_pair.first)
                     + "   >   "
-                    +  this->_context.control_mapper->get_key_description(this->_context.control_mapper->get_key_by_action(action_description_pair.first)),
+                    +  this->_context.control_mapper.get_key_description(this->_context.control_mapper.get_key_by_action(action_description_pair.first)),
                     [=] (Game& game) {
                         UNUSED(game);
                         this->_set_action(action_description_pair.first);
@@ -86,7 +85,7 @@ namespace State {
             y+= row_height;
         }
 
-        this->_menu.add_options({quit_game});
+        this->_menu.add_option(quit_game);
         this->_menu.set_escape_option(quit_game);
     }
 }

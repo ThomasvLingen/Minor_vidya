@@ -35,7 +35,7 @@ namespace GameLogic {
 
         virtual ~ControlMapper();
 
-        InputActions* get_input_actions();
+        InputActions& get_input_actions();
         void handle_input(Input input);
 
         void set_new_combination(Action action, Key key);
@@ -50,7 +50,7 @@ namespace GameLogic {
 
     private:
         map<Action, Key> _mapping_info;
-        InputActions* _input_actions;
+        InputActions _input_actions;
         map<Key, string> _key_descriptions;
         map<Action, string> _action_descriptions;
 
