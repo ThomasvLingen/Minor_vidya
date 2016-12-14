@@ -125,10 +125,5 @@ namespace GameLogic {
             throw Exceptions::LevelIsNullptrException();
         }
     }
-
-    Game::~Game()
-    {
-        delete control_mapper;
-    }
 }
 

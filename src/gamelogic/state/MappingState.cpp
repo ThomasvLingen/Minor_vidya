@@ -14,8 +14,6 @@ namespace State {
     , _menu(this->_context.SDL_facade, this->_context)
     , _action_is_selected(false)
     {
-        _action_is_selected = false;
-
         this->_add_menu_options();
 
         this->_collection.add_drawable(&this->_menu);
@@ -53,9 +51,9 @@ namespace State {
 
     void MappingState::_set_action(Action action)
     {
-        if(!_action_is_selected){
-            _selected_action = action;
-            _action_is_selected = true;
+        if (!this->_action_is_selected) {
+            this->_selected_action = action;
+            this->_action_is_selected = true;
         }
     }
 
@@ -86,7 +84,7 @@ namespace State {
             this->_menu.add_option(action_option);
             y+= row_height;
         }
-        
+
         this->_menu.add_option(quit_game);
         this->_menu.set_escape_option(quit_game);
     }
