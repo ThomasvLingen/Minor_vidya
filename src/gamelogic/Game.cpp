@@ -46,8 +46,8 @@ namespace GameLogic {
             if (!Config::USE_VSYNC) {
                 int time_spent = this->SDL_facade.get_ticks() - current_frame_start_time;
 
-                if (FRAME_DURATION > time_spent) { //TODO use vsync instead of this
-                    this->SDL_facade.delay_millis(FRAME_DURATION - time_spent);
+                if (Config::FRAME_DURATION > time_spent) { //TODO use vsync instead of this
+                    this->SDL_facade.delay_millis(Config::FRAME_DURATION - time_spent);
                 }
             }
         }
