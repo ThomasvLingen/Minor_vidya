@@ -35,6 +35,10 @@ namespace Engine {
         Mix_CloseAudio();
         Mix_Quit();
 
+        for (auto image : this->_images) {
+            SDL_DestroyTexture(image);
+        }
+
         for (auto font : this->_fonts) {
             TTF_CloseFont(font.second);
         }
