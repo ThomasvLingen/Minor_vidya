@@ -50,7 +50,7 @@ namespace GameLogic {
                     this->_rot_right();
                     break;
                 case Key::E :
-                    if(this->_action_released){
+                    if (this->_action_released) {
                         this->_action_released = false;
                         this->_do_action();
                     }
