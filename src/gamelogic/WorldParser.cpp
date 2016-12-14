@@ -156,8 +156,8 @@ namespace GameLogic {
     /// \param x x position of the tile
     void WorldParser::_set_win_trigger( Level & level, int y, int x )
     {
-        level.get_field[y][x]->add_action_tiletrigger( new TileTrigger( {
-            [y, x]( Level& level ) {
+        level.get_field()[y][x]->add_step_on_tiletrigger( new TileTrigger( {
+            []( Level& level ) {
             level.set_level_over();
         } } ) );
     }
