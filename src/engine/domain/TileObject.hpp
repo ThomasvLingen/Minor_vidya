@@ -5,7 +5,6 @@
 #include <map>
 #include "Color.hpp"
 #include "../SDLFacade.hpp"
-#include "../../gamelogic/TileTrigger.hpp"
 
 namespace Engine {
     using std::vector;
