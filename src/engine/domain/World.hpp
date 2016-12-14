@@ -28,7 +28,6 @@ namespace Engine {
         virtual void handle_input(Input keys) = 0;
 
         vector<Entity*>& get_entities();
-
     };
 }
 
