@@ -35,7 +35,7 @@ namespace State {
             this->_text_pos
         );
         this->_context.SDL_facade.draw_image(
-            VIDYA_RUNPATH + this->_text_image[this->_current_index].second,
+            this->_text_image[this->_current_index].second,
             this->_loading_bar_pos
         );
 
@@ -46,9 +46,9 @@ namespace State {
             {500,15}
         );
 
-        int advertisement_x = this->_advertisement_pos.x - this->_context.SDL_facade.get_image_width(VIDYA_RUNPATH + Config::LOAD_AD_PATH) / 2;
+        int advertisement_x = this->_advertisement_pos.x - this->_context.SDL_facade.get_image_width(Config::LOAD_AD_PATH) / 2;
         this->_context.SDL_facade.draw_image(
-            VIDYA_RUNPATH + Config::LOAD_AD_PATH,
+            Config::LOAD_AD_PATH,
             CoordinateInt {
                 advertisement_x,
                 this->_advertisement_pos.y
@@ -64,7 +64,7 @@ namespace State {
         }
 
         if (this->_current_index >= (int)this->_text_image.size()) {
-            if ( this->_context.load_Level(VIDYA_RUNPATH + "res/TestMap.tmx") ) { //TODO needs to come from a level selecter or campaign level loading or something
+            if ( this->_context.load_Level("res/TestMap.tmx") ) { //TODO needs to come from a level selecter or campaign level loading or something
                 this->_context.set_new_state( std::make_shared<RunState>( this->_context ) );
             }
             else {

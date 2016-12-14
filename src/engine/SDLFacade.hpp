@@ -123,6 +123,8 @@ namespace Engine {
         bool _load_font(const string& path, const FontType& font_type, uint8_t size);
         ImageBuffer* get_image_buffer(SDL_Surface* tileset, const CoordinateInt& position, const int tile_width, const int tile_height);
 
+        string _get_absolute_path(const string path);
+
         static constexpr int _frequency = 22050;
         static constexpr Uint16 _audio_format = MIX_DEFAULT_FORMAT;
         static constexpr int _channels = 2;
