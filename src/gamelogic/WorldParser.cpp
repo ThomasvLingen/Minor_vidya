@@ -47,6 +47,8 @@ namespace GameLogic {
         level.set_spawnpoint(
             this->_get_spawnpoint(object_list, level.get_field())
         );
+
+        this->_set_objects(object_list, level.get_field());
     }
 
     /// \brief Generates a 2D Tile vector from the int_map
@@ -75,7 +77,7 @@ namespace GameLogic {
     /// 
     /// This function  Checks and gets the location of the spawnpoint object of the .tmx.
     ///
-    /// \param object_list the object list which contains a spwanpoint
+    /// \param object_list the object list which contains a spawnpoint
     /// \param map the tilemap
     /// \return returns a CoordinateDouble of the spawnlocation
     CoordinateDouble WorldParser::_get_spawnpoint( vector<tuple<size_t, size_t, char*>> object_list, vector<vector<Tile*>> map )
@@ -100,5 +102,29 @@ namespace GameLogic {
             }
         }
         throw FileInvalidException();
+    }
+
+    /// \brief Checks and sets the location of other object
+    /// 
+    /// This function  Checks and sets the location of other object of the .tmx.
+    ///
+    /// \param object_list the object list
+    /// \param map the tilemap
+    void WorldParser::_set_objects( vector<tuple<size_t, size_t, char*>> object_list, vector<vector<Tile*>> map )
+    {
+        for ( auto object : object_list) {
+            if ( std::strcmp( get<2>( object ), "DoorTrigger" ) == 0 ) {
+                int y = get<1>( object );
+                int x = get<0>( object );
+                if ( y < map.size() && x < map[y].size() ) {
+                    std::function<void( Level& )> door = [y, x]( Level& level) {
+                        level.get_tile_in_level({y, x})->set_wall(!level.get_tile_in_level({y, x })->is_wall());
+                    };
+
+                    TileTrigger* tileTrigger = new TileTrigger(door);
+                    map[y][x]->add_action_tiletrigger(tileTrigger);
+                }
+            }
+        }
     }
 }
