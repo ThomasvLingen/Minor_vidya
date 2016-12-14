@@ -46,7 +46,7 @@ namespace Engine {
         }
     }
 
-    void Raycasting::_draw_walls(CoordinateDouble ray_position, double distance_buffer[])
+    void Raycasting::_draw_walls(CoordinateDouble& ray_position, double distance_buffer[])
     {
         int screen_height_calc = this->_SDL_facade.get_height() * 128;
         CoordinateInt map_coord = this->_get_map_coord(ray_position);
@@ -86,7 +86,7 @@ namespace Engine {
     }
 
 
-    void Raycasting::_draw_entities(CoordinateDouble ray_position, double distance_buffer[])
+    void Raycasting::_draw_entities(CoordinateDouble& ray_position, double distance_buffer[])
     {
         // Draw drawables
         vector<Entity*> sorted_entities = this->_get_sorted_entities(ray_position);
@@ -111,12 +111,16 @@ namespace Engine {
 
             // loop through every vertical stripe of the sprite on screen
             for (int stripe = sprite_x.draw_start; stripe < sprite_x.draw_end; stripe++) {
-                int tex_x = int(256 * (stripe - (-sprite_length / 2 + sprite_screen_x)) * TEXTURE_WIDTH / sprite_length) / 256;
+                // TODO: there is quite a bit of room to be optimised here, certain calculations can be moved a scope higher
+                // The multiplication and division is done so that we don't have to work with floats here, resulting
+                // in much faster code. This is critical, since this tidbit of code is **potentially** ran width * height times PER
+                // FRAME (640*480 equates to 307,200 times, which is a lot).
+                int tex_x = int(this->_AVOID_FLOAT * (stripe - (-sprite_length / 2 + sprite_screen_x)) * TEXTURE_WIDTH / sprite_length) / this->_AVOID_FLOAT;
 
                 if (this->_sprite_should_be_drawn(transformed, stripe, distance_buffer)) {
                     for (int y = draw_coords.draw_start; y < draw_coords.draw_end; y++) {  // for every pixel of the current stripe
-                        int d = (y) * 256 - h * 128 + sprite_length * 128; // 256 and 128 factors to avoid floats
-                        int tex_y = ((d * TEXTURE_HEIGHT) / sprite_length) / 256;
+                        int unscaled_tex_y = (y) * this->_AVOID_FLOAT - h * 128 + sprite_length * 128; // 256 and 128 factors to avoid floats
+                        int tex_y = ((unscaled_tex_y * TEXTURE_HEIGHT) / sprite_length) / this->_AVOID_FLOAT;
 
                         Uint32 pixel = entity->get_texture()[TEXTURE_WIDTH * tex_y + tex_x]; // get current pixel from the texture
 
@@ -382,16 +386,15 @@ namespace Engine {
         return line;
     }
 
-    double Raycasting::get_distance_to_ray(Entity& entity, CoordinateDouble ray_pos)
+    double Raycasting::_get_distance_to_ray(Entity& entity, CoordinateDouble ray_pos)
     {
         double delta_x = ray_pos.x - entity.get_position().x;
         double delta_y = ray_pos.y - entity.get_position().y;
 
-        // For some reason, the sqrt is not needed. wut
         return pow(delta_x, 2) + pow(delta_y, 2);
     }
 
-    CoordinateDouble Raycasting::_transform_relative_to_camera_matrix(CoordinateDouble position)
+    CoordinateDouble Raycasting::_transform_relative_to_camera_matrix(CoordinateDouble& position)
     {
         // transform sprite with the inverse camera matrix
         // [ plane_x   dir_x ] -1                                       [ dir_y      -dir_x ]
@@ -408,7 +411,7 @@ namespace Engine {
         };
     }
 
-    vector<Entity*> Raycasting::_get_sorted_entities(CoordinateDouble ray_position)
+    vector<Entity*> Raycasting::_get_sorted_entities(CoordinateDouble& ray_position)
     {
         // TODO: This is copied, but we might not have to. Does order of enemies matter for anything else?
         vector<Entity*> sorted_entities = this->_world->get_entities();
@@ -416,7 +419,7 @@ namespace Engine {
         std::sort(
             sorted_entities.begin(), sorted_entities.end(),
             [ray_position, this] (Entity* a, Entity* b) {
-                return this->get_distance_to_ray(*a, ray_position) > this->get_distance_to_ray(*b, ray_position);
+                return this->_get_distance_to_ray(*a, ray_position) > this->_get_distance_to_ray(*b, ray_position);
             }
         );
 
