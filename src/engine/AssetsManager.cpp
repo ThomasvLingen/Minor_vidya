@@ -11,7 +11,7 @@ namespace Engine {
     {
     }
 
-    bool AssetsManager::init( string& texture_source, int tile_width, int tile_height, int tile_count )
+    bool AssetsManager::init( string texture_source, int tile_width, int tile_height, int tile_count )
     {
         bool success = true;
         success &= this->_init_texture_map( texture_source, tile_width, tile_height, tile_count );
@@ -19,7 +19,7 @@ namespace Engine {
         return success;
     }
 
-    bool AssetsManager::_init_texture_map( string& texture_source, int tile_width, int tile_height, int tile_count )
+    bool AssetsManager::_init_texture_map( string texture_source, int tile_width, int tile_height, int tile_count )
     {
         bool success = true;
 
@@ -44,7 +44,7 @@ namespace Engine {
     {
         return this->_known_textures.at(id);
     }
-    ImageBuffer& AssetsManager::get_entity_texture( string& texture_source )
+    ImageBuffer& AssetsManager::get_entity_texture( string texture_source )
     {
         return *this->_SDL_facade.load_image_buffer(texture_source);
     }

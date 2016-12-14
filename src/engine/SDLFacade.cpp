@@ -508,7 +508,7 @@ namespace Engine {
     /// \param amount_of_tiles Number of tiles that are stored within the tileset
     ///
     /// \return Returns a map with an Id as key and a vector<Uint32> as value. The list is empty when the image could not be loaded
-    TextureMap SDLFacade::get_tileset_buffers(const string &path, const int tile_width, const int tile_height,
+    TextureMap SDLFacade::get_tileset_buffers(const string path, const int tile_width, const int tile_height,
                                               const int amount_of_tiles)
     {
         TextureMap texture_map;
@@ -542,7 +542,7 @@ namespace Engine {
         return texture_map;
     }
 
-    ImageBuffer* SDLFacade::load_image_buffer( const string & path )
+    ImageBuffer* SDLFacade::load_image_buffer( const string path )
     {
         ImageBuffer pixels;
         SDL_Surface* texture = IMG_Load( path.c_str() );
