@@ -7,6 +7,7 @@
 
 #include <memory>
 #include "../../engine/interface/Collection.hpp"
+#include "../ControlMapper.hpp"
 
 namespace GameLogic {
     class Game;
@@ -16,6 +17,8 @@ namespace GameLogic {
 namespace State {
 
     using GameLogic::Game;
+    using GameLogic::Action;
+    using GameLogic::InputActions;
 
     class IGameState {
 

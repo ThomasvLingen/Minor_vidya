@@ -15,8 +15,6 @@ namespace GameLogic {
 }
 
 namespace State {
-    using Engine::Keys;
-    using Engine::Key;
     using GameLogic::Game;
 
     class RunState : public IGameState {

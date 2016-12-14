@@ -24,8 +24,6 @@ namespace State {
     using Engine::CoordinateDouble;
     using Engine::Color;
     using Engine::FontType;
-    using Engine::Keys;
-    using Engine::Key;
     using GameLogic::Game;
     using std::string;
     using std::vector;
