@@ -3,39 +3,48 @@
 //
 
 #include "HUD.hpp"
+#include "../util/UnusedMacro.hpp"
 
 namespace GameLogic {
 
     HUD::HUD(SDLFacade& _SDL_facade, Player& player)
     : Drawable(_SDL_facade)
     , _player(player)
-    , _start_time(0)
     {
     }
-    
-    int HUD::get_current_time() {
-        return this->_current_time * 1000;
+
+    int HUD::get_current_ticks()
+    {
+        return this->_current_ticks;
     }
 
-
-    void HUD::set_start_tick(int ticks) {
-        this->_start_time = ticks;
+    void HUD::set_start_tick(int ticks)
+    {
+        this->_start_ticks = ticks;
     }
 
-    int HUD::_calculate_health_blocks(int health) {
+    void HUD::set_current_tick(int ticks)
+    {
+        this->_current_ticks = ticks;;
+    }
+
+    int HUD::_calculate_health_blocks(int health)
+    {
         return (int) ceil((double)health / (this->_total_health / this->_amount_health_blocks));
     }
 
-    void HUD::_draw_health_text(int health) {
+    void HUD::_draw_health_text(int health)
+    {
         string health_amount;
-        if(health < this->_amount_health_blocks){
+        if (health < this->_amount_health_blocks) {
             health_amount = "0";
         }
         health_amount += std::to_string(health);
         _SDL_facade.draw_text(health_amount, FontType::alterebro_pixel, this->_health_text_color, this->_health_text_pos);
     }
 
-    void HUD::_draw_health_blocks(int health) {
+    void HUD::_draw_health_blocks(int health)
+    {
         int amount_of_blocks = this->_amount_health_blocks;
         int set_off = 62;
 
@@ -45,7 +54,7 @@ namespace GameLogic {
             _SDL_facade.draw_rect({set_off, 433}, this->_health_block_width, this->_health_block_height, this->_health_block_full);
         }
 
-        if(set_off != 62){
+        if (set_off != 62) {
             set_off += this->_health_block_width + 2;
         }
 
@@ -56,19 +65,21 @@ namespace GameLogic {
 
     }
 
-    void HUD::_draw_face() {
-        if(this->_current_time % 4 > 1){
+    void HUD::_draw_face()
+    {
+        if (this->_current_time % 4 > 1) {
             _SDL_facade.draw_image(VIDYA_RUNPATH + "res/look_front.bmp", this->_character_head_pos);
-        } else if(this->_current_time % 3 > 1){
+        } else if (this->_current_time % 3 > 1) {
             _SDL_facade.draw_image(VIDYA_RUNPATH + "res/look_left.bmp", this->_character_head_pos);
-        } else if(this->_current_time % 2 > 1){
+        } else if (this->_current_time % 2 > 1) {
             _SDL_facade.draw_image(VIDYA_RUNPATH + "res/look_front.bmp", this->_character_head_pos);
         } else {
             _SDL_facade.draw_image(VIDYA_RUNPATH + "res/look_right.bmp", this->_character_head_pos);
         }
     }
 
-    void HUD::draw(){
+    void HUD::draw()
+    {
         //draw HUD
         _SDL_facade.draw_image(VIDYA_RUNPATH + "res/HUDv2.bmp", this->_HUD_pos);
 
@@ -86,15 +97,20 @@ namespace GameLogic {
         //TODO inplement items
     }
 
-    void HUD::update(int delta_time){
-        this->_current_time = this->_calculate_time(_SDL_facade.get_ticks() - _start_time);
+    void HUD::update(int delta_time)
+    {
+        UNUSED(delta_time)
+        this->_current_ticks = _SDL_facade.get_ticks() - this->_start_ticks;
+        this->_current_time = this->_calculate_time(this->_current_ticks);
     }
 
-    int HUD::_calculate_time(int ticks){
+    int HUD::_calculate_time(int ticks)
+    {
         return (ticks / 1000);
     }
 
-    string HUD::_time_to_string(int current_time){
+    string HUD::_time_to_string(int current_time)
+    {
         int seconds = current_time % 60;
         int minutes = current_time / 60;
         string output;

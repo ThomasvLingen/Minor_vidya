@@ -26,10 +26,8 @@ namespace State {
     public:
         RunState(Game& context);
         void update(int time_since_last_update) override;
-        void set_ticks_set_off(int ticks);
 
     private:
-        int _timeSinceLastPress = 0;
         Engine::FPScounter _fps;
         HUD _hud;
     };

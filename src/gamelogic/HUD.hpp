@@ -25,7 +25,9 @@ namespace GameLogic {
         HUD(SDLFacade& _SDL_facade, Player& player);
 
         int get_current_time();
+        int get_current_ticks();
         void set_start_tick(int ticks);
+        void set_current_tick(int ticks);
         virtual void draw() override;
 
         virtual void update(int delta_time) override;
@@ -38,7 +40,8 @@ namespace GameLogic {
         int _calculate_health_blocks(int health);
 
         int _current_time; // in sec
-        int _start_time;
+        int _current_ticks;
+        int _start_ticks;
 
         int _calculate_time(int ticks); // mili seconds to seconds
         string _time_to_string(int current_time); // nice output 1:32

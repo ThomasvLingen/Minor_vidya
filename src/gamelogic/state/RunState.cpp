@@ -17,11 +17,9 @@ namespace State {
         this->_collection.add_updatable(&_fps);
         this->_collection.add_drawable(&_hud);
         this->_collection.add_updatable(&_hud);
+        this->_hud.set_start_tick(this->_context.SDL_facade.get_ticks() - this->_context.get_level()->in_game_ticks);
+        this->_hud.set_current_tick(this->_context.get_level()->in_game_ticks);
         context.SDL_facade.stop_music();
-    }
-
-    void RunState::set_ticks_set_off(int ticks) {
-        _hud.set_start_tick(ticks);
     }
 
     void RunState::update(int time_since_last_update) { //TODO: If called again, level has to reload
@@ -35,9 +33,8 @@ namespace State {
         for (auto key : keys.keys_released) {
             switch (key) {
                 case Key::ESC: {
-                    std::shared_ptr<PauseState> state = std::make_shared<PauseState>(this->_context);
-                    state->set_ticks_in_game(this->_hud.get_current_time());
-                    this->_context.set_new_state(state);
+                    this->_context.get_level()->in_game_ticks = this->_hud.get_current_ticks();
+                    this->_context.set_new_state(std::make_shared<PauseState>(this->_context));
             }
                     break;
                 default:

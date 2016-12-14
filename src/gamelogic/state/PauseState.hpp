@@ -28,14 +28,10 @@ namespace State {
     public:
         PauseState(Game& context);
 
-        void set_ticks_in_game(int ticks);
-
         void update(int time_since_last_update) override;
 
     private:
         Menu _menu;
-        int _ticks_in_game;
-        int _timeSinceLastPress = 0;
         Color _color{255,255,255};
     };
 }
