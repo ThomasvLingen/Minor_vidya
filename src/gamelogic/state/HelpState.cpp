@@ -5,8 +5,10 @@
 #include "HelpState.hpp"
 #include "MenuState.hpp"
 #include "../../util/UnusedMacro.hpp"
+#include "../ControlMapper.hpp"
 
 namespace State {
+    using GameLogic::ControlMapper;
 
     HelpState::HelpState(Game& context)
     : IGameState(context)
