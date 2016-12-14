@@ -38,8 +38,10 @@ namespace Engine {
         SDLFacade& _SDL_facade;
         WorldPTR _world;
 
-        void _draw_walls(CoordinateDouble ray_position, double distance_buffer[]);
-        void _draw_entities(CoordinateDouble ray_position, double distance_buffer[]);
+        const int _AVOID_FLOAT = 256;
+
+        void _draw_walls(CoordinateDouble& ray_position, double distance_buffer[]);
+        void _draw_entities(CoordinateDouble& ray_position, double distance_buffer[]);
 
         DeltaDist _calculate_delta_distance(Direction ray_dir);
         CoordinateDouble _get_ray_pos();
@@ -63,10 +65,10 @@ namespace Engine {
         int _get_texture_x_coord(Wall wall, CoordinateDouble ray_pos, Direction ray_dir, double perp_wall_dist);
         double _get_wall_x(Wall wall, CoordinateDouble ray_pos, Direction ray_dir, double perp_wall_dist);
 
-        double get_distance_to_ray(Entity& entity, CoordinateDouble ray_pos);
+        double _get_distance_to_ray(Entity& entity, CoordinateDouble ray_pos);
 
-        CoordinateDouble _transform_relative_to_camera_matrix(CoordinateDouble position);
-        vector<Entity*> _get_sorted_entities(CoordinateDouble ray_position);
+        CoordinateDouble _transform_relative_to_camera_matrix(CoordinateDouble& position);
+        vector<Entity*> _get_sorted_entities(CoordinateDouble& ray_position);
         bool _sprite_should_be_drawn(CoordinateDouble& sprite_coords, int sprite_ray_index, double distance_buffer[]);
     };
 }
