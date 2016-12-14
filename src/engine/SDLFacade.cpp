@@ -182,10 +182,10 @@ namespace Engine {
     }
 
     void SDLFacade::_add_image_in_map(string path) {
-        SDL_Surface* image = IMG_Load(path.c_str());
+        SDL_Surface* image = IMG_Load(this->_get_absolute_path(path).c_str());
         if (image == NULL) {    // TODO: exception
             cout << "FAILED TO FIND THE IMAGE" << endl;
-            cout << path.c_str() << endl;
+            cout << path << endl;
         } else {
             SDL_Texture* image_texture = SDL_CreateTextureFromSurface(this->_renderer, image);
             this->_images.insert(std::make_pair(path, image_texture));
@@ -388,9 +388,9 @@ namespace Engine {
     {
         bool success = true;
 
-        success &= _load_font(VIDYA_RUNPATH + "res/alterebro_pixel.ttf", FontType::alterebro_pixel, 30);
-        success &= _load_font(VIDYA_RUNPATH + "res/alterebro_pixel.ttf", FontType::alterebro_pixel_plus, 60);
-        success &= _load_font(VIDYA_RUNPATH + "res/alterebro_pixel.ttf", FontType::alterebro_pixel_medium, 45);
+        success &= _load_font("res/alterebro_pixel.ttf", FontType::alterebro_pixel, 30);
+        success &= _load_font("res/alterebro_pixel.ttf", FontType::alterebro_pixel_plus, 60);
+        success &= _load_font("res/alterebro_pixel.ttf", FontType::alterebro_pixel_medium, 45);
 
         return success;
     }
@@ -404,7 +404,7 @@ namespace Engine {
     /// \return This function returns True if the font is successfully initialized, ohterwise it returns False
     bool SDLFacade::_load_font(const string& path, const FontType& font_type, uint8_t size)
     {
-        TTF_Font* new_font = TTF_OpenFont(path.c_str(), size);
+        TTF_Font* new_font = TTF_OpenFont(this->_get_absolute_path(path).c_str(), size);
 
         if (new_font == nullptr) {
             cout << "Could not open " << path << " " << TTF_GetError() << endl;
@@ -533,8 +533,7 @@ namespace Engine {
     {
         TextureMap texture_map;
         // load image
-        // todo: change to IMG_Load from SDL_Image package
-        SDL_Surface* tileset = IMG_Load(path.c_str());
+        SDL_Surface* tileset = IMG_Load(this->_get_absolute_path(path).c_str());
         if (tileset == NULL) {
             // check of succeeded
             cout << "An error occurred while loading tileset " << path
@@ -571,7 +570,7 @@ namespace Engine {
     void SDLFacade::play_music(const string path)
     {
         this->stop_music();
-        this->_music = Mix_LoadMUS(path.c_str());
+        this->_music = Mix_LoadMUS(this->_get_absolute_path(path).c_str());
         if(this->_music == NULL) { //TODO exception{
             return;
         }
@@ -588,7 +587,7 @@ namespace Engine {
         if (this->_sound_effects.find(name) != this->_sound_effects.end()) { //key already exists
             return;
         }
-        Mix_Chunk* sound_effect = Mix_LoadWAV(path.c_str());
+        Mix_Chunk* sound_effect = Mix_LoadWAV(this->_get_absolute_path(path).c_str());
         if (sound_effect == NULL) { //TODO exception{
             return;
         }
@@ -620,7 +619,7 @@ namespace Engine {
     /// \brief get image width of path
     int SDLFacade::get_image_width(const std::string path)
     {
-        SDL_Surface* image = IMG_Load(path.c_str());
+        SDL_Surface* image = IMG_Load(this->_get_absolute_path(path).c_str());
         int size = 0;
 
         if (image == NULL) { //TODO: exception
@@ -632,6 +631,11 @@ namespace Engine {
         }
 
         return size;
+    }
+
+    string SDLFacade::_get_absolute_path(const string path)
+    {
+        return VIDYA_RUNPATH + path;
     }
 
 }

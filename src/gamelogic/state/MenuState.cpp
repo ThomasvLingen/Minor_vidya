@@ -63,7 +63,7 @@ namespace State {
         this->_menu.set_escape_option(back);
         this->_collection.add_drawable(&this->_menu);
         this->_collection.add_handleable(&this->_menu);
-        context.SDL_facade.play_music(VIDYA_RUNPATH + "res/music/mainmenu.wav");
+        context.SDL_facade.play_music("res/music/mainmenu.wav");
     }
 
     void MenuState::update(int time_since_last_update) {
@@ -71,7 +71,7 @@ namespace State {
         this->_context.SDL_facade.clear_screen();
 
         this->_context.SDL_facade.draw_image(
-            VIDYA_RUNPATH + "res/menuscreen.bmp",
+            "res/menuscreen.bmp",
             {0,0}
         );
 

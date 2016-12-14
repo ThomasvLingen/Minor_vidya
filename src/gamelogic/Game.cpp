@@ -98,8 +98,8 @@ namespace GameLogic {
     }
 
     void Game::_init_sound_effects() {
-        this->SDL_facade.load_sound_effect("monsterkill", VIDYA_RUNPATH + "res/sound_effects/monsterkill.wav");
-        this->SDL_facade.load_sound_effect("headshot", VIDYA_RUNPATH + "res/sound_effects/headshot.wav");
+        this->SDL_facade.load_sound_effect("monsterkill", "res/sound_effects/monsterkill.wav");
+        this->SDL_facade.load_sound_effect("headshot", "res/sound_effects/headshot.wav");
     }
 }
 
