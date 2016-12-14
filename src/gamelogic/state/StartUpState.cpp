@@ -11,7 +11,7 @@ namespace State {
     StartUpState::StartUpState(Game& context)
     : IGameState(context)
     {
-        context.SDL_facade.play_music(VIDYA_RUNPATH + "res/music/startup.wav");
+        context.SDL_facade.play_music("res/music/startup.wav");
     }
 
     void StartUpState::update(int time_since_last_update) {
@@ -31,7 +31,7 @@ namespace State {
         }
 
         this->_context.SDL_facade.clear_screen();
-        this->_context.SDL_facade.draw_image(VIDYA_RUNPATH + "res/startscreen.bmp", {0,0});
+        this->_context.SDL_facade.draw_image("res/startscreen.bmp", {0,0});
         this->_context.SDL_facade.render_buffer();
     }
 }
