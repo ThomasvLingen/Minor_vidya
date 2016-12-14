@@ -7,6 +7,7 @@
 #include "WorldParser.hpp"
 #include "../engine/PathUtil.hpp"
 #include "exceptions/FileInvalidException.hpp"
+#include "exceptions/LevelIsNullptrException.hpp"
 
 #include "state/StartUpState.hpp"
 #include "../config.hpp"
@@ -98,6 +99,14 @@ namespace GameLogic {
     void Game::_init_sound_effects() {
         this->SDL_facade.load_sound_effect("monsterkill", VIDYA_RUNPATH + "res/sound_effects/monsterkill.wav");
         this->SDL_facade.load_sound_effect("headshot", VIDYA_RUNPATH + "res/sound_effects/headshot.wav");
+    }
+
+    SPTR_Level Game::get_level() {
+        if (this->_level != nullptr) {
+            return this->_level;
+        } else {
+            throw Exceptions::LevelIsNullptrException();
+        }
     }
 }
 

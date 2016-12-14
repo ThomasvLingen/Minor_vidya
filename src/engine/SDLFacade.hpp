@@ -34,7 +34,7 @@ namespace Engine {
     using std::endl;
 
 
-    enum class FontType {alterebro_pixel, alterebro_pixel_plus};
+    enum class FontType {alterebro_pixel, alterebro_pixel_plus, alterebro_pixel_medium};
 
     class SDLFacade {
     private:
