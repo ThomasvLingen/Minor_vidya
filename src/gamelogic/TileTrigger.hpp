@@ -7,21 +7,21 @@
 
 #include <functional>
 
-namespace Engine {
+namespace GameLogic {
 
     using std::function;
 
-    class World;
+    class Level;
 
     class TileTrigger {
 
     public:
-        TileTrigger(function<void(World&)> event);
+        TileTrigger(function<void(Level&)> event);
         virtual ~TileTrigger();
-        void make_call(World& world);
+        void make_call(Level& world);
 
     private:
-        function<void(World&)> _event;
+        function<void(Level&)> _event;
     };
 }
 

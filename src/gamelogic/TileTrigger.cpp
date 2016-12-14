@@ -4,8 +4,8 @@
 
 #include "TileTrigger.hpp"
 
-namespace Engine {
-    TileTrigger::TileTrigger(function<void(World&)> event)
+namespace GameLogic {
+    TileTrigger::TileTrigger(function<void(Level&)> event)
     : _event(event)
     {
 
@@ -16,7 +16,7 @@ namespace Engine {
 
     }
 
-    void TileTrigger::make_call(World &world)
+    void TileTrigger::make_call(Level& world)
     {
         this->_event(world);
     }
