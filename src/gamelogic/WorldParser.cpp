@@ -48,7 +48,7 @@ namespace GameLogic {
             this->_get_spawnpoint(object_list, level.get_field())
         );
 
-        this->_set_objects(object_list, level.get_field());
+        this->_set_objects(level, object_list);
     }
 
     /// \brief Generates a 2D Tile vector from the int_map
