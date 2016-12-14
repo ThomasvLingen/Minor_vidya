@@ -38,8 +38,6 @@ namespace Engine {
         SDLFacade& _SDL_facade;
         WorldPTR _world;
 
-        const int _AVOID_FLOAT = 256;
-
         void _draw_walls(CoordinateDouble& ray_position, vector<double>& distance_buffer);
         void _draw_entities(CoordinateDouble& ray_position, vector<double>& distance_buffer);
 
