@@ -9,6 +9,8 @@ namespace Engine {
     struct CoordinateDouble {
         double x;
         double y;
+
+        CoordinateDouble operator-(const CoordinateDouble& other);
     };
 }
 

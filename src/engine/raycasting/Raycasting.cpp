@@ -30,49 +30,112 @@ namespace Engine {
     /// \brief Draws a single frame with raycasting using the world object and SDL facade
     void Raycasting::draw()
     {
-        int screen_height_calc = this->_SDL_facade.get_height() * 128;
         if (this->_world != nullptr) {
             this->_SDL_facade.lock_screen_buffer();
 
-            for (int ray_index = 0; ray_index < this->_SDL_facade.get_width(); ray_index++) {
-                CoordinateDouble ray_position = _get_ray_pos();
-                Direction ray_dir = _calculate_ray_direction(ray_index);
-                CoordinateInt map_coord = _get_map_coord(ray_position);
+            // This is the ZBuffer for the entities to draw
+            vector<double> distance_buffer((size_t)this->_SDL_facade.get_width());
+            // Things that don't change within a frame can be calculated here
+            CoordinateDouble ray_position = this->_get_ray_pos();
 
-                DeltaDist delta_dist = _calculate_delta_distance(ray_dir);
-                RaySteps ray_steps = _calculate_ray_steps(ray_dir, ray_position, map_coord, delta_dist);
-
-                Wall wall = _search_wall(ray_steps, map_coord, delta_dist);
-                double perp_wall_dist = this->_calculate_wall_dist(wall, ray_position, ray_steps, ray_dir);
-
-                int line_height = _get_wall_height(perp_wall_dist);
-                int line_height_calc = line_height * 128;
-                LineCords line_cords = _get_line_measures(line_height);
-
-                int tex_x = this->_get_texture_x_coord(wall, ray_position, ray_dir, perp_wall_dist);
-
-                ImageBuffer& tile_texture = *this->_world->get_tile(wall.cord)->get_texture();
-
-                // TODO: Maybe put this in a separate function
-                // Put pixels for a single vertical line on the screen
-                for (int y = line_cords.draw_start; y < line_cords.draw_end; y++) {
-                    // The multiplication and division is done so that we don't have to work with floats here, resulting
-                    // in much faster code. This is critical, since this tidbit of code is ran width * height times PER
-                    // FRAME (640*480 equates to 307,200 times, which is a lot).
-                    int d = y * 256 - screen_height_calc + line_height_calc;
-                    int tex_y = ((d * TEXTURE_HEIGHT) / line_height) / 256;
-
-                    Uint32 pixel = tile_texture[TEXTURE_HEIGHT * tex_y + tex_x];
-
-                    this->_SDL_facade.draw_pixel_screen_buffer({ray_index, y}, pixel);
-                }
-            }
+            this->_draw_walls(ray_position, distance_buffer);
+            this->_draw_entities(ray_position, distance_buffer);
 
             this->_SDL_facade.unlock_screen_buffer();
             this->_SDL_facade.update_screen_buffer();
         }
     }
 
+    void Raycasting::_draw_walls(CoordinateDouble& ray_position, vector<double>& distance_buffer)
+    {
+        int screen_height_calc = this->_SDL_facade.get_height() * 128;
+        CoordinateInt map_coord = this->_get_map_coord(ray_position);
+
+        for (int ray_index = 0; ray_index < this->_SDL_facade.get_width(); ray_index++) {
+            Direction ray_dir = _calculate_ray_direction(ray_index);
+
+            DeltaDist delta_dist = _calculate_delta_distance(ray_dir);
+            RaySteps ray_steps = _calculate_ray_steps(ray_dir, ray_position, map_coord, delta_dist);
+
+            Wall wall = _search_wall(ray_steps, map_coord, delta_dist);
+            double perp_wall_dist = this->_calculate_wall_dist(wall, ray_position, ray_steps, ray_dir);
+            distance_buffer[ray_index] = perp_wall_dist;
+
+            int line_height = _get_wall_height(perp_wall_dist);
+            int line_height_calc = line_height * 128;
+            LineCords line_cords = _get_line_measures(line_height);
+
+            int tex_x = this->_get_texture_x_coord(wall, ray_position, ray_dir, perp_wall_dist);
+
+            ImageBuffer& tile_texture = *this->_world->get_tile(wall.cord)->get_texture();
+
+            // TODO: Maybe put this in a separate function
+            // Put pixels for a single vertical line on the screen
+            for (int y = line_cords.draw_start; y < line_cords.draw_end; y++) {
+                // The multiplication and division is done so that we don't have to work with floats here, resulting
+                // in much faster code. This is critical, since this tidbit of code is ran width * height times PER
+                // FRAME (640*480 equates to 307,200 times, which is a lot).
+                int d = y * 256 - screen_height_calc + line_height_calc;
+                int tex_y = ((d * TEXTURE_HEIGHT) / line_height) / 256;
+
+                Uint32 pixel = tile_texture[TEXTURE_HEIGHT * tex_y + tex_x];
+
+                this->_SDL_facade.draw_pixel_screen_buffer({ray_index, y}, pixel);
+            }
+        }
+    }
+
+
+    void Raycasting::_draw_entities(CoordinateDouble& ray_position, vector<double>& distance_buffer)
+    {
+        // The multiplication and division with these factors is done so that we don't have to work with floats here,
+        // resulting in much faster code. This is critical, since this tidbit of code is **potentially** ran
+        // width * height times PER FRAME (640*480 equates to 307,200 times, which is a lot).
+        const int AVOID_FLOAT = 256;
+        const int AVOID_FLOAT_HALF = 128;
+
+        // Draw drawables
+        vector<Entity*> sorted_entities = this->_get_sorted_entities(ray_position);
+
+        int width = this->_SDL_facade.get_width();
+        int height = this->_SDL_facade.get_height();
+
+        for (Entity* entity : sorted_entities) {
+            // translate sprite position to relative to camera
+            CoordinateDouble sprite_pos = entity->get_position() - ray_position;
+            CoordinateDouble transformed = this->_transform_relative_to_camera_matrix(sprite_pos);
+
+            int sprite_screen_x = int((width / 2) * (1 + transformed.x / transformed.y));
+
+            // calculate height of the sprite on screen
+            int sprite_length = abs(int(height / (transformed.y))); //using "transform_y" instead of the real distance prevents fisheye
+            // calculate lowest and highest pixel to fill in current stripe
+            LineCords draw_coords = this->_get_line_measures(sprite_length);
+
+            // calculate width of the sprite
+            LineCords sprite_x = this->_get_sprite_horizontal_measures(sprite_length, sprite_screen_x);
+
+            // loop through every vertical stripe of the sprite on screen
+            for (int stripe = sprite_x.draw_start; stripe < sprite_x.draw_end; stripe++) {
+                // TODO: there is quite a bit of room to be optimised here, certain calculations can be moved a scope higher
+                int tex_x = int(AVOID_FLOAT * (stripe - (-sprite_length / 2 + sprite_screen_x)) * TEXTURE_WIDTH / sprite_length) / AVOID_FLOAT;
+
+                if (this->_sprite_should_be_drawn(transformed, stripe, distance_buffer)) {
+                    for (int y = draw_coords.draw_start; y < draw_coords.draw_end; y++) {  // for every pixel of the current stripe
+                        int unscaled_tex_y = (y) * AVOID_FLOAT - height * AVOID_FLOAT_HALF + sprite_length * AVOID_FLOAT_HALF; // 256 and 128 factors to avoid floats
+                        int tex_y = ((unscaled_tex_y * TEXTURE_HEIGHT) / sprite_length) / AVOID_FLOAT;
+
+                        Uint32 pixel = entity->get_texture()[TEXTURE_WIDTH * tex_y + tex_x]; // get current pixel from the texture
+
+                        // TODO: Transparency is done here. There is undoubtedly a better way to do this
+                        if ((pixel & 0x000000FF) == 0xFF) {
+                            this->_SDL_facade.draw_pixel_screen_buffer({stripe, y}, pixel); // paint pixel if it isn't black, black is the invisible pixel
+                        }
+                    }
+                }
+            }
+        }
+    }
 
     /// \brief Calculates the distance until the next horizontal and vertical axis.
     ///
@@ -250,29 +313,28 @@ namespace Engine {
         line.draw_start = -line_height / 2 + screen_height / 2;
         line.draw_end = line_height / 2 + screen_height / 2;
 
-        this->_correct_line(line);
+        this->_correct_line(line, screen_height);
 
         return line;
     }
 
     /// \brief Corrects lineCords if out if screen range
     /// \param LineCords containing the line coordinates
-    void Raycasting::_correct_line(LineCords& line)
+    /// \param max_axis_value max value for the corrected line
+    void Raycasting::_correct_line(LineCords& line, int max_axis_value)
     {
-        int screen_height = this->_SDL_facade.get_height();
-
         if (line.draw_end < 0) {
             line.draw_end = 0;
         }
-        if (line.draw_end >= screen_height) {
-            line.draw_end = screen_height - 1;
+        if (line.draw_end >= max_axis_value) {
+            line.draw_end = max_axis_value - 1;
         }
 
         if (line.draw_start < 0) {
             line.draw_start = 0;
         }
-        if (line.draw_start >= screen_height) {
-            line.draw_start = screen_height - 1;
+        if (line.draw_start >= max_axis_value) {
+            line.draw_start = max_axis_value - 1;
         }
     }
 
@@ -313,5 +375,66 @@ namespace Engine {
         wall_x -= floor(wall_x);
 
         return wall_x;
+    }
+
+    LineCords Raycasting::_get_sprite_horizontal_measures(int sprite_width, int sprite_screen_x)
+    {
+        LineCords line;
+
+        line.draw_start = -sprite_width / 2 + sprite_screen_x;
+        line.draw_end = sprite_width / 2 + sprite_screen_x;
+
+        this->_correct_line(line, this->_SDL_facade.get_width());
+
+        return line;
+    }
+
+    double Raycasting::_get_distance_to_ray(Entity& entity, CoordinateDouble ray_pos)
+    {
+        double delta_x = ray_pos.x - entity.get_position().x;
+        double delta_y = ray_pos.y - entity.get_position().y;
+
+        return pow(delta_x, 2) + pow(delta_y, 2);
+    }
+
+    CoordinateDouble Raycasting::_transform_relative_to_camera_matrix(CoordinateDouble& position)
+    {
+        // transform sprite with the inverse camera matrix
+        // [ plane_x   dir_x ] -1                                       [ dir_y      -dir_x ]
+        // [                 ]   =  1/(plane_x*dir_y-dir_x*plane_y) *   [                   ]
+        // [ plane_y   dir_y ]                                          [ -plane_y  plane_x ]
+
+        Direction& dir = this->_world->get_pov().get_direction();
+        RaycastingVector& PoV_plane = this->_world->get_pov().get_camera_plane();
+
+        double inv_det = 1.0 / (PoV_plane.x * dir.y - dir.x * PoV_plane.y); // required for correct matrix multiplication
+        return CoordinateDouble {
+            inv_det * (dir.y * position.x - dir.x * position.y),
+            inv_det * (-PoV_plane.y * position.x + PoV_plane.x * position.y)
+        };
+    }
+
+    vector<Entity*> Raycasting::_get_sorted_entities(CoordinateDouble& ray_position)
+    {
+        // TODO: This is copied, but we might not have to. Does order of enemies matter for anything else?
+        vector<Entity*> sorted_entities = this->_world->get_entities();
+
+        std::sort(
+            sorted_entities.begin(), sorted_entities.end(),
+            [ray_position, this] (Entity* a, Entity* b) {
+                return this->_get_distance_to_ray(*a, ray_position) > this->_get_distance_to_ray(*b, ray_position);
+            }
+        );
+
+        return sorted_entities;
+    }
+
+    bool Raycasting::_sprite_should_be_drawn(CoordinateDouble& sprite_coords, int sprite_ray_index, vector<double>& distance_buffer)
+    {
+        bool in_front_of_camera = sprite_coords.y > 0;
+        bool within_screen_bounds = sprite_ray_index > 0 && sprite_ray_index < this->_SDL_facade.get_width();
+        bool no_wall_between = sprite_coords.y < distance_buffer[sprite_ray_index];
+
+        return in_front_of_camera && within_screen_bounds && no_wall_between;
     }
 }

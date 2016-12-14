@@ -11,6 +11,8 @@
 #include "../SDLFacade.hpp"
 #include "../domain/World.hpp"
 #include "../domain/CoordinateDouble.hpp"
+#include <vector>
+#include <algorithm>
 
 namespace Engine {
     using std::shared_ptr;
@@ -36,6 +38,9 @@ namespace Engine {
         SDLFacade& _SDL_facade;
         WorldPTR _world;
 
+        void _draw_walls(CoordinateDouble& ray_position, vector<double>& distance_buffer);
+        void _draw_entities(CoordinateDouble& ray_position, vector<double>& distance_buffer);
+
         DeltaDist _calculate_delta_distance(Direction ray_dir);
         CoordinateDouble _get_ray_pos();
         Direction _calculate_ray_direction(int current_ray_index);
@@ -52,10 +57,17 @@ namespace Engine {
         double _calculate_wall_dist(Wall wall, CoordinateDouble ray_pos, RaySteps ray_steps, Direction ray_dir);
 
         LineCords _get_line_measures(int line_height);
-        void _correct_line(LineCords& line);
+        LineCords _get_sprite_horizontal_measures(int sprite_width, int sprite_screen_x);
+        void _correct_line(LineCords& line, int max_axis_value);
 
         int _get_texture_x_coord(Wall wall, CoordinateDouble ray_pos, Direction ray_dir, double perp_wall_dist);
         double _get_wall_x(Wall wall, CoordinateDouble ray_pos, Direction ray_dir, double perp_wall_dist);
+
+        double _get_distance_to_ray(Entity& entity, CoordinateDouble ray_pos);
+
+        CoordinateDouble _transform_relative_to_camera_matrix(CoordinateDouble& position);
+        vector<Entity*> _get_sorted_entities(CoordinateDouble& ray_position);
+        bool _sprite_should_be_drawn(CoordinateDouble& sprite_coords, int sprite_ray_index, vector<double>& distance_buffer);
     };
 }
 
