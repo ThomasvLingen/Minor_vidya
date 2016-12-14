@@ -117,7 +117,7 @@ namespace GameLogic {
                 int y = get<1>( object_list[i] );
                 int x = get<0>( object_list[i] );
                 if ( y < map.size() && x < map[y].size() ) {
-                    std::function<void( World& )> door = [=]( World& level) {
+                    std::function<void( World& )> door = [y, x]( World& level) {
                         level.get_tile({y, x})->set_wall(!level.get_tile({y, x })->is_wall());
                     };
 
