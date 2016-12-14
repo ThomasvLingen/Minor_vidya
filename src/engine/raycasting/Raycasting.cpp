@@ -104,6 +104,7 @@ namespace Engine {
             // translate sprite position to relative to camera
             CoordinateDouble sprite_pos = entity->get_position() - ray_position;
             CoordinateDouble transformed = this->_transform_relative_to_camera_matrix(sprite_pos);
+            ImageBuffer& entity_texture = *entity->get_texture(); // TODO: place this somewhere it should be (I don't know were and it was a raycasting engine mistake)
 
             int sprite_screen_x = int((width / 2) * (1 + transformed.x / transformed.y));
 
@@ -125,7 +126,7 @@ namespace Engine {
                         int unscaled_tex_y = (y) * AVOID_FLOAT - height * AVOID_FLOAT_HALF + sprite_length * AVOID_FLOAT_HALF; // 256 and 128 factors to avoid floats
                         int tex_y = ((unscaled_tex_y * TEXTURE_HEIGHT) / sprite_length) / AVOID_FLOAT;
 
-                        Uint32 pixel = entity->get_texture()[TEXTURE_WIDTH * tex_y + tex_x]; // get current pixel from the texture
+                        Uint32 pixel = entity_texture[TEXTURE_WIDTH * tex_y + tex_x]; // get current pixel from the texture
 
                         // TODO: Transparency is done here. There is undoubtedly a better way to do this
                         if ((pixel & 0x000000FF) == 0xFF) {
