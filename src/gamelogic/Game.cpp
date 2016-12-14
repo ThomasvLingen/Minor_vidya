@@ -46,15 +46,11 @@ namespace GameLogic {
             if (!Config::USE_VSYNC) {
                 int time_spent = this->SDL_facade.get_ticks() - current_frame_start_time;
 
-                if (Config::FRAME_DURATION > time_spent) { //TODO use vsync instead of this
-                    this->SDL_facade.delay_millis(Config::FRAME_DURATION - time_spent);
+                if (FRAME_DURATION > time_spent) { //TODO use vsync instead of this
+                    this->SDL_facade.delay_millis(FRAME_DURATION - time_spent);
                 }
             }
         }
-    }
-
-    SPTR_Player Game::get_player() {
-        return this->_player;
     }
 
     void Game::set_new_state(SPTR_IGameState state)
@@ -103,14 +99,6 @@ namespace GameLogic {
     void Game::_init_sound_effects() {
         this->SDL_facade.load_sound_effect("monsterkill", VIDYA_RUNPATH + "res/sound_effects/monsterkill.wav");
         this->SDL_facade.load_sound_effect("headshot", VIDYA_RUNPATH + "res/sound_effects/headshot.wav");
-    }
-
-    SPTR_Level Game::get_level() {
-        if (this->_level != nullptr) {
-            return this->_level;
-        } else {
-            throw Exceptions::LevelIsNullptrException();
-        }
     }
 }
 

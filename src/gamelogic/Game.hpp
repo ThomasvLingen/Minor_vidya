@@ -5,6 +5,10 @@
 #ifndef MINOR_VIDYA_GAME_HPP
 #define MINOR_VIDYA_GAME_HPP
 
+//TODO: set FPS in config file
+#define FPS 60
+#define FRAME_DURATION 1000/FPS
+
 #include "../engine/SDLFacade.hpp"
 #include "../engine/raycasting/Raycasting.hpp"
 #include "Level.hpp"
@@ -35,7 +39,6 @@ namespace GameLogic {
         void init_states();
         void set_new_state(SPTR_IGameState state);
         bool load_Level(std::string file_location);
-        SPTR_Player get_player();
         SPTR_Level get_level();
 
     private:
