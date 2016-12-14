@@ -19,6 +19,16 @@ namespace GameLogic {
     /// \param keys is a vector of Key enumerables that were pressed
     void Player::handleInput(Input keys)
     {
+        for (auto key : keys.keys_released) {
+            switch (key) {
+                case Key::E :
+                    this->_action_released = true;
+                    break;
+                default:
+                    break;
+            }
+        }
+
         for (auto key : keys.keys_down) {
             switch (key) {
                 case Key::A :
@@ -40,7 +50,10 @@ namespace GameLogic {
                     this->_rot_right();
                     break;
                 case Key::E :
-                    this->_do_action();
+                    if(this->_action_released){
+                        this->_action_released = false;
+                        this->_do_action();
+                    }
                     break;
                 default:
                     break;
