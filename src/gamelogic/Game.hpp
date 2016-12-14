@@ -27,6 +27,7 @@ namespace GameLogic {
     class Game {
     public:
         Game();
+        ~Game();
         void run();
 
         SDLFacade SDL_facade;
