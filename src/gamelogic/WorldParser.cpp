@@ -73,7 +73,7 @@ namespace GameLogic {
     ///
     /// \param object_list the object list
     /// \param map the tilemap
-    void WorldParser::_set_objects( Level& level, vector<tuple<size_t, size_t, char*>> object_list, RapidXMLAdapter& rapid_adapter, string file_location )
+    void WorldParser::_set_objects( Level& level, vector<tuple<size_t, size_t, char*>> object_list, RapidXMLAdapter& rapid_adapter, string path )
     {
         int spawnpoint_count = 0;
         for ( auto object : object_list) {
