@@ -19,10 +19,12 @@ namespace State {
         this->_context.SDL_facade.handle_sdl_events();
 
         Input keys = this->_context.SDL_facade.get_input();
+        this->_context.control_mapper->handle_input(keys);
+        InputActions* input_actions = this->_context.control_mapper->get_input_actions();
 
-        for (auto key : keys.keys_released) {
-            switch (key) {
-                case Key::MENU_ENTER:
+        for (auto action : input_actions->actions_off) {
+            switch (action) {
+                case Action::MENU_SELECT:
                     this->_context.set_new_state(std::make_shared<MenuState>(this->_context));
                     break;
                 default:

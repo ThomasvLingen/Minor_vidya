@@ -85,20 +85,22 @@ namespace State {
 
     void Menu::handle_input(Input& keys)
     {
-        for (auto key : keys.keys_released) {
-            switch (key) {
+        this->_context.control_mapper->handle_input(keys);
+        InputActions* input_actions = this->_context.control_mapper->get_input_actions();
+        for (auto action : input_actions->actions_off) {
+            switch (action) {
                 //case Key::W :
-                case Key::MENU_UP :
+                case Action::MENU_UP :
                     this->set_previous();
                     break;
                 //case Key::S :
-                case Key::MENU_DOWN :
+                case Action::MENU_DOWN :
                     this->set_next();
                     break;
-                case Key::PAUSE_GAME:
+                case Action::PAUSE_GAME:
                     this->_escape_option.callback(this->_context);
                     break;
-                case Key::MENU_ENTER:
+                case Action::MENU_SELECT:
                     this->get_selected()->callback(this->_context);
                     break;
                 default:
@@ -110,5 +112,10 @@ namespace State {
     void Menu::set_escape_option(MenuOption option)
     {
         this->_escape_option = option;
+    }
+
+    void Menu::clear_options()
+    {
+        this->_menu_options.clear();
     }
 }
