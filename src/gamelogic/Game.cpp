@@ -23,6 +23,7 @@ namespace GameLogic {
     })
     , raycasting_engine(this->SDL_facade)
     , running(true)
+    , control_mapper(new ControlMapper())
     {
         this->SDL_facade.init();
         this->_init_sound_effects();
@@ -72,8 +73,8 @@ namespace GameLogic {
     {
         WorldParser parser;
         Engine::SPTR_AssetsManager assets = std::make_shared<AssetsManager>( this->SDL_facade );
-
-        this->_player = std::make_shared<Player>(CoordinateDouble{0,0}, this->SDL_facade);
+        
+        this->_player = std::make_shared<Player>(CoordinateDouble{0,0}, control_mapper);
         this->_level = { std::make_shared<Level>(*this->_player, assets) };
 
         try {
@@ -123,6 +124,11 @@ namespace GameLogic {
         } else {
             throw Exceptions::LevelIsNullptrException();
         }
+    }
+
+    Game::~Game()
+    {
+        delete control_mapper;
     }
 }
 
