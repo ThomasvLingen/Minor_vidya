@@ -68,20 +68,20 @@ namespace GameLogic {
     void HUD::_draw_face()
     {
         if (this->_current_time % 4 > 1) {
-            _SDL_facade.draw_image(VIDYA_RUNPATH + "res/look_front.bmp", this->_character_head_pos);
+            _SDL_facade.draw_image("res/look_front.bmp", this->_character_head_pos);
         } else if (this->_current_time % 3 > 1) {
-            _SDL_facade.draw_image(VIDYA_RUNPATH + "res/look_left.bmp", this->_character_head_pos);
+            _SDL_facade.draw_image("res/look_left.bmp", this->_character_head_pos);
         } else if (this->_current_time % 2 > 1) {
-            _SDL_facade.draw_image(VIDYA_RUNPATH + "res/look_front.bmp", this->_character_head_pos);
+            _SDL_facade.draw_image("res/look_front.bmp", this->_character_head_pos);
         } else {
-            _SDL_facade.draw_image(VIDYA_RUNPATH + "res/look_right.bmp", this->_character_head_pos);
+            _SDL_facade.draw_image("res/look_right.bmp", this->_character_head_pos);
         }
     }
 
     void HUD::draw()
     {
         //draw HUD
-        _SDL_facade.draw_image(VIDYA_RUNPATH + "res/HUDv2.bmp", this->_HUD_pos);
+        _SDL_facade.draw_image("res/HUDv2.bmp", this->_HUD_pos);
 
         //draw HP
         this->_draw_health_text(_player.get_health());
