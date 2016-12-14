@@ -38,6 +38,7 @@ namespace State {
         virtual void draw() override;
         virtual void handle_input(Input& keys) override;
 
+        void clear_options();
         void set_previous();
         void add_option(MenuOption option);
         void add_options(vector<MenuOption> options);
