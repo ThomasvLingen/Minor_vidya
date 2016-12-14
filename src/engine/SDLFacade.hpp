@@ -84,6 +84,7 @@ namespace Engine {
             {Key::ESC,          SDLK_ESCAPE},
             {Key::ENTER,        SDLK_RETURN},
             {Key::SPACE,        SDLK_SPACE},
+            {Key::TAB,          SDLK_TAB},
             {Key::ARROW_UP,     SDLK_UP},
             {Key::ARROW_DOWN,   SDLK_DOWN},
             {Key::ARROW_LEFT,   SDLK_LEFT},
