@@ -13,6 +13,7 @@ namespace State {
     {
         this->_collection.add_drawable(&_fps);
         this->_collection.add_updatable(&_fps);
+        this->_collection.add_handleable(&_fps);
         context.SDL_facade.stop_music();
     }
 
@@ -21,6 +22,7 @@ namespace State {
         this->_context.raycasting_engine.handle_input();
 
         Input keys = this->_context.SDL_facade.get_input();
+        this->_collection.handle_input(keys);
         this->_context.control_mapper->handle_input(keys);
         InputActions* input_actions = this->_context.control_mapper->get_input_actions();
         for (auto action : input_actions->actions_off) {
