@@ -42,6 +42,8 @@ namespace Engine {
 
         map<FontType, TTF_Font*> _fonts;
 
+        map<string, SDL_Texture*> _images;
+
         map<SDL_Keycode, Key> _possible_keys = {
             {SDLK_w, Key::W},
             {SDLK_a, Key::A},
@@ -110,6 +112,9 @@ namespace Engine {
         void _handle_key_pressed_event(SDL_Keycode key);
         void _handle_key_released_event(SDL_Keycode key);
         void _handle_window_event(SDL_Event* event);
+
+        bool _is_image_in_map(string path);
+        void _add_image_in_map(string path);
 
         bool _init_window();
         bool _init_renderer();
