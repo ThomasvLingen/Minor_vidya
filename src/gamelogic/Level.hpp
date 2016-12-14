@@ -29,6 +29,7 @@ namespace GameLogic {
         vector<vector<Tile*>> _field; //TODO create a typedef for this
         CoordinateDouble _spawnpoint;
         Player& _player;
+        bool _level_won = false;
 
         /*
          * WorldParser
@@ -60,6 +61,10 @@ namespace GameLogic {
         Player& get_player();
 
         void handle_input(Engine::Input keys) override;
+
+        void set_level_over();
+
+        bool is_level_over();
     };
 
     typedef std::shared_ptr<Level> SPTR_Level;

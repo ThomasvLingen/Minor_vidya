@@ -76,7 +76,7 @@ namespace State {
         }
 
         this->_context.SDL_facade.draw_rect(
-            {120, this->get_selected()->coordinates.y + 6}, //todo delete this magic number
+            {this->get_selected()->coordinates.x - this->_selected_rect_diff_width, this->get_selected()->coordinates.y + this->_selected_rect_diff_height},
             15,
             15,
             _color
