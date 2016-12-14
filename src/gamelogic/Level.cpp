@@ -61,12 +61,12 @@ namespace GameLogic {
 
     TileObject* Level::get_tile(CoordinateInt coordinate)
     {
-        return _field[coordinate.x][coordinate.y];
+        return this->_field[coordinate.x][coordinate.y];
     }
 
     Tile* Level::get_tile_in_level(CoordinateInt coordinate)
     {
-        return _field[coordinate.x][coordinate.y];
+        return this->_field[coordinate.x][coordinate.y];
     }
 
     PointOfView& Level::get_pov()
