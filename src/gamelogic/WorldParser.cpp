@@ -122,7 +122,7 @@ namespace GameLogic {
                 size_t x = get<0>( object );
                 if ( y < map.size() && x < map[y].size() ) {
                     std::function<void( Level& )> door = [y, x] ( Level& level ) {
-                        level.get_tile_in_level( { y, x } )->set_wall( !level.get_tile_in_level( { y, x } )->is_wall() );
+                        level.get_field()[y][x]->set_wall( !level.get_field()[y][x]->is_wall() );
                     };
 
                     TileTrigger* tileTrigger = new TileTrigger( door );
