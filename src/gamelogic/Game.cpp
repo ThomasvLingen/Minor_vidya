@@ -16,9 +16,9 @@ namespace GameLogic {
     : SDL_facade([this](){ //lambda function, captures this (the game class) and sets running to false as quit callback
         this->running = false;
     })
+    , control_mapper(new ControlMapper())
     , raycasting_engine(this->SDL_facade)
     , running(true)
-    , control_mapper(new ControlMapper())
     {
         this->SDL_facade.init();
         this->_init_sound_effects();
