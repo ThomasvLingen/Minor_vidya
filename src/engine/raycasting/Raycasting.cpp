@@ -81,8 +81,8 @@ namespace Engine {
                 // The multiplication and division is done so that we don't have to work with floats here, resulting
                 // in much faster code. This is critical, since this tidbit of code is ran width * height times PER
                 // FRAME (640*480 equates to 307,200 times, which is a lot).
-                int d = y * AVOID_FLOAT - screen_height_calc + line_height_calc;
-                int tex_y = ((d * TEXTURE_HEIGHT) / line_height) / AVOID_FLOAT;
+                int unscaled_tex_y = y * AVOID_FLOAT - screen_height_calc + line_height_calc;
+                int tex_y = ((unscaled_tex_y * TEXTURE_HEIGHT) / line_height) / AVOID_FLOAT;
 
                 Uint32 pixel = tile_texture[TEXTURE_HEIGHT * tex_y + tex_x];
 
