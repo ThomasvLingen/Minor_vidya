@@ -26,7 +26,7 @@ namespace State {
 
         for (auto action : input_actions->actions_off) {
             switch (action) {
-                case Action::PAUSE_GAME:
+                case Action::MENU_BACK:
                     this->_context.set_new_state(std::make_shared<MenuState>(this->_context));
                     break;
                 default:

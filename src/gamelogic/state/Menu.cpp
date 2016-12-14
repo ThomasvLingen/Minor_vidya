@@ -97,7 +97,7 @@ namespace State {
                 case Action::MENU_DOWN :
                     this->set_next();
                     break;
-                case Action::PAUSE_GAME:
+                case Action::MENU_BACK:
                     this->_escape_option.callback(this->_context);
                     break;
                 case Action::MENU_SELECT:
