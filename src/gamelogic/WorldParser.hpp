@@ -26,6 +26,7 @@ namespace GameLogic {
         void _set_spawnpoint( Level& level, size_t y, size_t x);
         void _set_entity( Level& level, size_t y, size_t x, size_t id, RapidXMLAdapter& rapid_adapter, string path);
         void _set_door_trigger( Level& level, size_t y, size_t x);
+        void _set_win_trigger( Level& level, int y, int x );
         double _spawn_tile_offset = 0.5;
     };
 
