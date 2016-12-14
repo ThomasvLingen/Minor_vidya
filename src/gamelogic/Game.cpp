@@ -18,6 +18,7 @@ namespace GameLogic {
     })
     , raycasting_engine(this->SDL_facade)
     , running(true)
+    , control_mapper(new ControlMapper())
     {
         this->SDL_facade.init();
         this->_init_sound_effects();
@@ -67,7 +68,7 @@ namespace GameLogic {
         WorldParser parser;
         Engine::SPTR_AssetsManager assets = std::make_shared<AssetsManager>( this->SDL_facade );
 
-        this->_player = std::make_shared<Player>(CoordinateDouble{0,0});
+        this->_player = std::make_shared<Player>(CoordinateDouble{0,0}, control_mapper);
         this->_level = { std::make_shared<Level>(*this->_player, assets) };
 
         try {
@@ -98,6 +99,11 @@ namespace GameLogic {
     void Game::_init_sound_effects() {
         this->SDL_facade.load_sound_effect("monsterkill", VIDYA_RUNPATH + "res/sound_effects/monsterkill.wav");
         this->SDL_facade.load_sound_effect("headshot", VIDYA_RUNPATH + "res/sound_effects/headshot.wav");
+    }
+
+    Game::~Game()
+    {
+        delete control_mapper;
     }
 }
 
