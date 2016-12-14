@@ -36,7 +36,7 @@ namespace Engine {
         Mix_Quit();
 
         for (auto image : this->_images) {
-            SDL_DestroyTexture(image);
+            SDL_DestroyTexture(image.second);
         }
 
         for (auto font : this->_fonts) {
