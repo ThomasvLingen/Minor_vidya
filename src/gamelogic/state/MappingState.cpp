@@ -76,7 +76,7 @@ namespace State {
                     this->_context.control_mapper.get_action_description(action_description_pair.first)
                     + "   >   "
                     +  this->_context.control_mapper.get_key_description(this->_context.control_mapper.get_key_by_action(action_description_pair.first)),
-                    [=] (Game& game) {
+                    [this] (Game& game) {
                         UNUSED(game);
                         this->_set_action(action_description_pair.first);
                     }
