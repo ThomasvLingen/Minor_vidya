@@ -18,66 +18,66 @@ namespace GameLogic {
     }
 
 
-    void HUD::set_ticks_set_off(int ticks) {
+    void HUD::set_start_tick(int ticks) {
         this->_start_time = ticks;
     }
 
-    void HUD::_draw_health(int health) {
+    int HUD::_calculate_health_blocks(int health) {
+        return (int) ceil((double)health / (this->_total_health / this->_amount_health_blocks));
+    }
 
-        // draw amount of health
+    void HUD::_draw_health_text(int health) {
         string health_amount;
-        if(health < 10){
+        if(health < this->_amount_health_blocks){
             health_amount = "0";
         }
         health_amount += std::to_string(health);
-        _SDL_facade.draw_text(health_amount, FontType::alterebro_pixel, Color{255, 38, 70}, {222, 430});
+        _SDL_facade.draw_text(health_amount, FontType::alterebro_pixel, this->_health_text_color, this->_health_text_pos);
+    }
 
-        // draw amount of blocks
-        int amount_of_blocks = 10;
+    void HUD::_draw_health_blocks(int health) {
+        int amount_of_blocks = this->_amount_health_blocks;
         int set_off = 62;
-        int health_not_round = 0;
-        if(health % 8 > 0) {
-            health_not_round = 1;
-        }
 
-
-        for (int j = 0; j < ((health / 8 ) + health_not_round); ++j) {        // round up
+        for (int j = 0; j < this->_calculate_health_blocks(health); ++j) {
             amount_of_blocks--;                   // for each lighter block we do not need an extra block
-            set_off = 62 + (j * 14);
-            _SDL_facade.draw_rect({set_off, 433}, 12, 24, {255, 38, 70});
+            set_off = 62 + (j * (this->_health_block_width + 2)); // 2 is spacing
+            _SDL_facade.draw_rect({set_off, 433}, this->_health_block_width, this->_health_block_height, this->_health_block_full);
         }
 
         if(set_off != 62){
-            set_off += 14;
+            set_off += this->_health_block_width + 2;
         }
 
-        for (int i = 10 - amount_of_blocks; i < 10; ++i) {
-            set_off = 62 + (i * 14);
-            _SDL_facade.draw_rect({set_off, 433}, 12, 24, {121, 41, 52});
+        for (int i = this->_amount_health_blocks - amount_of_blocks; i < this->_amount_health_blocks; ++i) {
+            set_off = 62 + (i * (this->_health_block_width + 2)); // 2 is spacing
+            _SDL_facade.draw_rect({set_off, 433}, this->_health_block_width, this->_health_block_height, this->_health_block_empty);
         }
 
     }
 
     void HUD::_draw_face() {
         if(this->_current_time % 4 > 1){
-            _SDL_facade.draw_image(VIDYA_RUNPATH + "res/look_front.bmp", {290, 410});
+            _SDL_facade.draw_image(VIDYA_RUNPATH + "res/look_front.bmp", this->_character_head_pos);
         } else if(this->_current_time % 3 > 1){
-            _SDL_facade.draw_image(VIDYA_RUNPATH + "res/look_left.bmp", {290, 410});
+            _SDL_facade.draw_image(VIDYA_RUNPATH + "res/look_left.bmp", this->_character_head_pos);
         } else if(this->_current_time % 2 > 1){
-            _SDL_facade.draw_image(VIDYA_RUNPATH + "res/look_front.bmp", {290, 410});
+            _SDL_facade.draw_image(VIDYA_RUNPATH + "res/look_front.bmp", this->_character_head_pos);
         } else {
-            _SDL_facade.draw_image(VIDYA_RUNPATH + "res/look_right.bmp", {290, 410});
+            _SDL_facade.draw_image(VIDYA_RUNPATH + "res/look_right.bmp", this->_character_head_pos);
         }
     }
 
     void HUD::draw(){
-        _SDL_facade.draw_image(VIDYA_RUNPATH + "res/HUDv2.bmp", {0, 410});
+        //draw HUD
+        _SDL_facade.draw_image(VIDYA_RUNPATH + "res/HUDv2.bmp", this->_HUD_pos);
 
         //draw HP
-        this->_draw_health(_player.get_health());
+        this->_draw_health_text(_player.get_health());
+        this->_draw_health_blocks(_player.get_health());
 
         // draw time
-        _SDL_facade.draw_text(this->_time_to_string(this->_current_time), FontType::alterebro_pixel, Color{53, 194, 222}, {390, 430});
+        _SDL_facade.draw_text(this->_time_to_string(this->_current_time), FontType::alterebro_pixel, this->_time_color, this->_time_pos);
 
         // draw face
         this->_draw_face();

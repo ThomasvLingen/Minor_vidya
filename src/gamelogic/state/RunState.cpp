@@ -20,7 +20,7 @@ namespace State {
     }
 
     void RunState::set_ticks_set_off(int ticks) {
-        _hud.set_ticks_set_off(ticks);
+        _hud.set_start_tick(ticks);
     }
 
     void RunState::update(int time_since_last_update) { //TODO: If called again, level has to reload
