@@ -46,13 +46,13 @@ namespace State {
             current_y_pos += this->_step_size_y;
         }
 
-        //TODO: Mapping
-        this->_context.SDL_facade.draw_text("Up Arrow", FontType::alterebro_pixel, this->_color, {300, 80});
-        this->_context.SDL_facade.draw_text("Down Arrow", FontType::alterebro_pixel, this->_color, {300, 110});
-        this->_context.SDL_facade.draw_text("Left Arrow", FontType::alterebro_pixel, this->_color, {300, 140});
-        this->_context.SDL_facade.draw_text("Right Arrow", FontType::alterebro_pixel, this->_color, {300, 170});
-        this->_context.SDL_facade.draw_text("A", FontType::alterebro_pixel, this->_color, {300, 200});
-        this->_context.SDL_facade.draw_text("D", FontType::alterebro_pixel, this->_color, {300, 230});
+        ControlMapper* mapper = this->_context.control_mapper;
+        this->_context.SDL_facade.draw_text(mapper->get_key_description(mapper->get_key_by_action(Action::MOVE_FORWARD)), FontType::alterebro_pixel, this->_color, {300, 80});
+        this->_context.SDL_facade.draw_text(mapper->get_key_description(mapper->get_key_by_action(Action::MOVE_BACKWARD)), FontType::alterebro_pixel, this->_color, {300, 110});
+        this->_context.SDL_facade.draw_text(mapper->get_key_description(mapper->get_key_by_action(Action::ROTATE_LEFT)), FontType::alterebro_pixel, this->_color, {300, 140});
+        this->_context.SDL_facade.draw_text(mapper->get_key_description(mapper->get_key_by_action(Action::ROTATE_RIGHT)), FontType::alterebro_pixel, this->_color, {300, 170});
+        this->_context.SDL_facade.draw_text(mapper->get_key_description(mapper->get_key_by_action(Action::MOVE_LEFT)), FontType::alterebro_pixel, this->_color, {300, 200});
+        this->_context.SDL_facade.draw_text(mapper->get_key_description(mapper->get_key_by_action(Action::MOVE_RIGHT)), FontType::alterebro_pixel, this->_color, {300, 230});
         this->_context.SDL_facade.draw_text("Enter", FontType::alterebro_pixel, this->_color, {300, 260});
         this->_context.SDL_facade.draw_text("ESC", FontType::alterebro_pixel, this->_color, {300, 290});
 
