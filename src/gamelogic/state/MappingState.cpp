@@ -71,7 +71,7 @@ namespace State {
         };
 
         int x = 150;
-        int y = 100;
+        int y = 70;
         int row_height = 30;
         for(auto action_description_pair : _action_descriptions){
             MenuOption action_option = MenuOption(
