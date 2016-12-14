@@ -88,21 +88,27 @@ namespace Engine {
 
     void Raycasting::_draw_entities(CoordinateDouble& ray_position, vector<double>& distance_buffer)
     {
+        // The multiplication and division with these factors is done so that we don't have to work with floats here,
+        // resulting in much faster code. This is critical, since this tidbit of code is **potentially** ran
+        // width * height times PER FRAME (640*480 equates to 307,200 times, which is a lot).
+        const int AVOID_FLOAT = 256;
+        const int AVOID_FLOAT_HALF = 128;
+
         // Draw drawables
         vector<Entity*> sorted_entities = this->_get_sorted_entities(ray_position);
 
-        int w = this->_SDL_facade.get_width();
-        int h = this->_SDL_facade.get_height();
+        int width = this->_SDL_facade.get_width();
+        int height = this->_SDL_facade.get_height();
 
         for (Entity* entity : sorted_entities) {
             // translate sprite position to relative to camera
             CoordinateDouble sprite_pos = entity->get_position() - ray_position;
             CoordinateDouble transformed = this->_transform_relative_to_camera_matrix(sprite_pos);
 
-            int sprite_screen_x = int((w / 2) * (1 + transformed.x / transformed.y));
+            int sprite_screen_x = int((width / 2) * (1 + transformed.x / transformed.y));
 
             // calculate height of the sprite on screen
-            int sprite_length = abs(int(h / (transformed.y))); //using "transform_y" instead of the real distance prevents fisheye
+            int sprite_length = abs(int(height / (transformed.y))); //using "transform_y" instead of the real distance prevents fisheye
             // calculate lowest and highest pixel to fill in current stripe
             LineCords draw_coords = this->_get_line_measures(sprite_length);
 
@@ -112,15 +118,12 @@ namespace Engine {
             // loop through every vertical stripe of the sprite on screen
             for (int stripe = sprite_x.draw_start; stripe < sprite_x.draw_end; stripe++) {
                 // TODO: there is quite a bit of room to be optimised here, certain calculations can be moved a scope higher
-                // The multiplication and division is done so that we don't have to work with floats here, resulting
-                // in much faster code. This is critical, since this tidbit of code is **potentially** ran width * height times PER
-                // FRAME (640*480 equates to 307,200 times, which is a lot).
-                int tex_x = int(this->_AVOID_FLOAT * (stripe - (-sprite_length / 2 + sprite_screen_x)) * TEXTURE_WIDTH / sprite_length) / this->_AVOID_FLOAT;
+                int tex_x = int(AVOID_FLOAT * (stripe - (-sprite_length / 2 + sprite_screen_x)) * TEXTURE_WIDTH / sprite_length) / AVOID_FLOAT;
 
                 if (this->_sprite_should_be_drawn(transformed, stripe, distance_buffer)) {
                     for (int y = draw_coords.draw_start; y < draw_coords.draw_end; y++) {  // for every pixel of the current stripe
-                        int unscaled_tex_y = (y) * this->_AVOID_FLOAT - h * 128 + sprite_length * 128; // 256 and 128 factors to avoid floats
-                        int tex_y = ((unscaled_tex_y * TEXTURE_HEIGHT) / sprite_length) / this->_AVOID_FLOAT;
+                        int unscaled_tex_y = (y) * AVOID_FLOAT - height * AVOID_FLOAT_HALF + sprite_length * AVOID_FLOAT_HALF; // 256 and 128 factors to avoid floats
+                        int tex_y = ((unscaled_tex_y * TEXTURE_HEIGHT) / sprite_length) / AVOID_FLOAT;
 
                         Uint32 pixel = entity->get_texture()[TEXTURE_WIDTH * tex_y + tex_x]; // get current pixel from the texture
 
