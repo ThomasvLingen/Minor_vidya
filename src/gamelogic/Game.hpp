@@ -39,6 +39,8 @@ namespace GameLogic {
         void init_states();
         void set_new_state(SPTR_IGameState state);
         bool load_Level(std::string file_location);
+        SPTR_Player get_player();
+
 
     private:
         void _init_sound_effects();

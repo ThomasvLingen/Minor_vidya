@@ -16,8 +16,10 @@ namespace State {
         MenuOption resume_game {
             {150,100},
             "Resume game",
-            [] (GameLogic::Game& game) {
-                game.set_new_state(std::make_shared<RunState>(game));
+            [=] (GameLogic::Game& game) {
+                std::shared_ptr<RunState> state = std::make_shared<RunState>(game);
+                state->set_ticks_set_off(game.SDL_facade.get_ticks() - this->_ticks_in_game);
+                game.set_new_state(state);
             }
         };
 
@@ -34,6 +36,10 @@ namespace State {
 
         this->_collection.add_drawable(&this->_menu);
         this->_collection.add_handleable(&this->_menu);
+    }
+
+    void PauseState::set_ticks_in_game(int ticks) {
+        this->_ticks_in_game = ticks;
     }
 
     void PauseState::update(int time_since_last_update) {
