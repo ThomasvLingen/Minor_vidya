@@ -113,6 +113,9 @@ namespace Engine {
         void _handle_key_released_event(SDL_Keycode key);
         void _handle_window_event(SDL_Event* event);
 
+        bool _is_image_in_map(string path);
+        void _add_image_in_map(string path);
+
         bool _init_window();
         bool _init_renderer();
         bool _init_screen_buffer();
