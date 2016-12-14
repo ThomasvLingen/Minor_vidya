@@ -104,10 +104,6 @@ namespace State {
 
     void MappingState::_init_action_descriptions()
     {
-        this->_action_descriptions[Action::MENU_UP] = "Navigate up";
-        this->_action_descriptions[Action::MENU_DOWN] = "Navigate down";
-        this->_action_descriptions[Action::MENU_BACK] = "Navigate back";
-        this->_action_descriptions[Action::MENU_SELECT] = "Select option";
         this->_action_descriptions[Action::ACTION_INTERACT] = "Interact";
         this->_action_descriptions[Action::MOVE_BACKWARD] = "Move backward";
         this->_action_descriptions[Action::MOVE_FORWARD] = "Move forward";
