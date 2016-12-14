@@ -93,6 +93,9 @@ namespace GameLogic {
                 else if ( std::strcmp( get<3>( object ), "DoorTrigger" ) == 0 ) {
                     this->_set_door_trigger( level, y, x);
                 }
+                else if ( std::strcmp( get<2>( object ), "WinTrigger" ) == 0 ) {
+                    this->_set_win_trigger( level, y, x );
+                }
             }
         }
         if ( spawnpoint_count != 1 ) {
@@ -142,5 +145,20 @@ namespace GameLogic {
             level.get_field()[y][x]->set_wall( !level.get_field()[y][x]->is_wall() );
         };
         level.get_field()[y][x]->add_action_tiletrigger( new TileTrigger( door ) );
+    }
+
+    /// \brief Sets win trigger on tile
+    /// 
+    /// This function sets win trigger on tile on location y,x
+    ///
+    /// \param level reference to current level
+    /// \param y y position of the tile
+    /// \param x x position of the tile
+    void WorldParser::_set_win_trigger( Level & level, int y, int x )
+    {
+        level.get_field[y][x]->add_action_tiletrigger( new TileTrigger( {
+            [y, x]( Level& level ) {
+            level.set_level_over();
+        } } ) );
     }
 }
