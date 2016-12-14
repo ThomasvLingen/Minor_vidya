@@ -21,6 +21,8 @@ namespace State {
     using Engine::FontType;
     using Engine::Keys;
     using Engine::Key;
+    using std::map;
+    using std::string;
     using GameLogic::Game;
 
     class MappingState : public IGameState {
@@ -30,9 +32,22 @@ namespace State {
 
             void update(int time_since_last_update) override;
 
+
         private:
             Menu _menu;
             Color _color{255,255,255};
+            Action _selected_action;
+            bool _action_is_selected;
+            void _set_action(Action action);
+            void _init_key_descriptions();
+            void _init_action_descriptions();
+            void _add_menu_options();
+
+            map<Key, string> _key_descriptions;
+            string _get_key_description(Key key);
+
+            map<Action, string> _action_descriptions;
+            string _get_action_description(Action action);
     };
 }
 
