@@ -48,7 +48,13 @@ namespace Engine {
 
     void Raycasting::_draw_walls(CoordinateDouble& ray_position, vector<double>& distance_buffer)
     {
-        int screen_height_calc = this->_SDL_facade.get_height() * 128;
+        // The multiplication and division with these factors is done so that we don't have to work with floats here,
+        // resulting in much faster code. This is critical, since this tidbit of code is **potentially** ran
+        // width * height times PER FRAME (640*480 equates to 307,200 times, which is a lot).
+        const int AVOID_FLOAT = 256;
+        const int AVOID_FLOAT_HALF = 128;
+
+        int screen_height_calc = this->_SDL_facade.get_height() * AVOID_FLOAT_HALF;
         CoordinateInt map_coord = this->_get_map_coord(ray_position);
 
         for (int ray_index = 0; ray_index < this->_SDL_facade.get_width(); ray_index++) {
@@ -62,7 +68,7 @@ namespace Engine {
             distance_buffer[ray_index] = perp_wall_dist;
 
             int line_height = _get_wall_height(perp_wall_dist);
-            int line_height_calc = line_height * 128;
+            int line_height_calc = line_height * AVOID_FLOAT_HALF;
             LineCords line_cords = _get_line_measures(line_height);
 
             int tex_x = this->_get_texture_x_coord(wall, ray_position, ray_dir, perp_wall_dist);
@@ -75,8 +81,8 @@ namespace Engine {
                 // The multiplication and division is done so that we don't have to work with floats here, resulting
                 // in much faster code. This is critical, since this tidbit of code is ran width * height times PER
                 // FRAME (640*480 equates to 307,200 times, which is a lot).
-                int d = y * 256 - screen_height_calc + line_height_calc;
-                int tex_y = ((d * TEXTURE_HEIGHT) / line_height) / 256;
+                int d = y * AVOID_FLOAT - screen_height_calc + line_height_calc;
+                int tex_y = ((d * TEXTURE_HEIGHT) / line_height) / AVOID_FLOAT;
 
                 Uint32 pixel = tile_texture[TEXTURE_HEIGHT * tex_y + tex_x];
 
