@@ -28,11 +28,11 @@ namespace GameLogic {
         void setup_document( string file_location );
 
         string get_texture_source();
-        size_t get_tile_height();
-        size_t get_tile_width();
-        size_t get_tile_count();
-        vector<vector<size_t>> get_map();
-        vector<tuple<size_t, size_t, char*>> get_objects();
+        int get_tile_height();
+        int get_tile_width();
+        int get_tile_count();
+        vector<vector<int>> get_map();
+        vector<tuple<int, int, char*>> get_objects();
         string get_entity_texture(int x, int y);
     private:
         vector<char> _buffer;
@@ -43,8 +43,8 @@ namespace GameLogic {
         xml_node<>* _layer_node;
         xml_node<>* _data_node;
         xml_node<>* _object_group_node;
-        size_t _tile_width;
-        size_t _tile_height;
+        int _tile_width;
+        int _tile_height;
     };
 };
 #endif // !RAPIDXMLADAPTER_HPP

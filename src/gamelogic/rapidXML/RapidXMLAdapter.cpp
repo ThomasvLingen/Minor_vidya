@@ -80,7 +80,7 @@ namespace GameLogic {
     /// 
     /// This function returns the texture tile height of the texture that is used in this .tmx.
     /// RapidXMLAdapter::setup_document has to be called before using this 
-    size_t RapidXMLAdapter::get_tile_height()
+    int RapidXMLAdapter::get_tile_height()
     {
         this->_tile_height = std::stoi( this->_tileset_node->first_attribute( "tileheight" )->value() );
         return _tile_height;
@@ -90,7 +90,7 @@ namespace GameLogic {
     /// 
     /// This function returns the texture tile width of the texture that is used in this .tmx.
     /// RapidXMLAdapter::setup_document has to be called before using this 
-    size_t RapidXMLAdapter::get_tile_width()
+    int RapidXMLAdapter::get_tile_width()
     {
         this->_tile_width = std::stoi( this->_tileset_node->first_attribute( "tilewidth" )->value() );
         return _tile_width;
@@ -100,7 +100,7 @@ namespace GameLogic {
     /// 
     /// This function returns the texture tile count of the texture that is used in this .tmx.
     /// RapidXMLAdapter::setup_document has to be called before using this 
-    size_t RapidXMLAdapter::get_tile_count()
+    int RapidXMLAdapter::get_tile_count()
     {
         return std::stoi( this->_tileset_node->first_attribute( "tilecount" )->value() );
     }
@@ -109,15 +109,15 @@ namespace GameLogic {
     /// 
     /// This function returns the texture valued map that is used in this .tmx.
     /// RapidXMLAdapter::setup_document has to be called before using this 
-    vector<vector<size_t>> RapidXMLAdapter::get_map()
+    vector<vector<int>> RapidXMLAdapter::get_map()
     {
-        vector<vector<size_t>> map;
+        vector<vector<int>> map;
         char* data_value = this->_data_node->value();
         std::stringstream row_ss( data_value );
         string row_chars;
 
         while ( std::getline( row_ss, row_chars, '\n' ) ) {
-            vector<size_t> row_ints;
+            vector<int> row_ints;
             std::stringstream char_ss( row_chars );
             string x_y_char;
 
@@ -135,14 +135,14 @@ namespace GameLogic {
     /// This function returns the objects that is used in this .tmx.
     /// RapidXMLAdapter::setup_document has to be called before using this
     /// This should be called as the last step of parsing the .tmx
-    vector<tuple<size_t, size_t, char*>> RapidXMLAdapter::get_objects()
+    vector<tuple<int, int, char*>> RapidXMLAdapter::get_objects()
     {
-        vector<tuple<size_t, size_t, char*>> object_list;
+        vector<tuple<int, int, char*>> object_list;
         for ( xml_node<> * object_node = this->_object_group_node->first_node( "object" ); object_node; object_node = object_node->next_sibling() ) {
-            size_t x = std::stoi( object_node->first_attribute( "x" )->value() ) / this->_tile_width;
-            size_t y = std::stoi( object_node->first_attribute( "y" )->value() ) / this->_tile_height;
+            int x = std::stoi( object_node->first_attribute( "x" )->value() ) / this->_tile_width;
+            int y = std::stoi( object_node->first_attribute( "y" )->value() ) / this->_tile_height;
             char* type = object_node->first_attribute( "type" )->value();
-            tuple<size_t, size_t, char*> object( x, y, type );
+            tuple<int, int, char*> object( x, y, type );
             object_list.push_back( object );
         }
         return object_list;
