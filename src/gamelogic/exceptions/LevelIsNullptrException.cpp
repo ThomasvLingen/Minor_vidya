@@ -3,6 +3,6 @@
 namespace Exceptions {
     const char * LevelIsNullptrException::what() const throw( )
     {
-        return "Game._level was a nullptr";
+        return "Level was a nullptr";
     }
 }
