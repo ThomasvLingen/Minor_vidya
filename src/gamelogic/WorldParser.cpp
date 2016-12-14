@@ -42,12 +42,7 @@ namespace GameLogic {
         );
 
         object_list = rapid_adapter.get_objects();
-        this->_set_objects( level, object_list, level.get_field(), level.assets, rapid_adapter, path );
-
-        level.set_spawnpoint(
-            this->_get_spawnpoint(object_list, level.get_field())
-        );
-
+        this->_set_objects( level, object_list, rapid_adapter, path );
     }
 
     /// \brief Generates a 2D Tile vector from the int_map
@@ -76,16 +71,18 @@ namespace GameLogic {
     /// 
     /// This function  Checks and sets the location of other object of the .tmx.
     ///
-    /// \param object_list the object list
-    /// \param map the tilemap
-    void WorldParser::_set_objects( Level& level, vector<tuple<size_t, size_t, char*>> object_list, vector<vector<Tile*>> map, Engine::SPTR_AssetsManager assets, RapidXMLAdapter& rapid_adapter, string path )
+    /// \param level ref of level being made
+    /// \param object_list list of all the object needed to be set
+    /// \param rapid_adapter ref of current rapid_adapter
+    /// \param path path to .tmx folder
+    void WorldParser::_set_objects( Level& level, vector<tuple<size_t, size_t, char*>> object_list, RapidXMLAdapter& rapid_adapter, string path )
     {
         for (auto object : object_list) {
             if ( std::strcmp( get<2>( object ), "PlayerSpawn" ) == 0 ) {
                 size_t y = get<1>( object );
                 size_t x = get<0>( object );
-                if ( y < map.size() && x < map[y].size() ) {
-                    if ( map[y][x]->is_wall() ) {
+                if ( y < level.get_field().size() && x < level.get_field()[y].size() ) {
+                    if ( level.get_field()[y][x]->is_wall() ) {
                         throw FileInvalidException();
                     }
                     else {
@@ -100,20 +97,20 @@ namespace GameLogic {
             else if ( std::strcmp( get<2>( object ), "Entity" ) == 0 ) {
                 size_t y = get<1>( object );
                 size_t x = get<0>( object );
-                if ( y < map.size() && x < map[y].size() ) {
-                    level.get_entities().push_back(new Engine::Entity(assets->get_entity_texture( path + rapid_adapter.get_entity_texture(x,y)),CoordinateDouble{ y + this->_spawn_tile_offset, x + this->_spawn_tile_offset }));
+                if ( y < level.get_field().size() && x < level.get_field()[y].size() ) {
+                    level.get_entities().push_back(new Engine::Entity(level.assets->get_entity_texture( path + rapid_adapter.get_entity_texture(x,y)),CoordinateDouble{ y + this->_spawn_tile_offset, x + this->_spawn_tile_offset }));
                 }
             }
             else if ( std::strcmp( get<2>( object ), "DoorTrigger" ) == 0 ) {
                 size_t y = get<1>( object );
                 size_t x = get<0>( object );
-                if ( y < map.size() && x < map[y].size() ) {
+                if ( y < level.get_field().size() && x < level.get_field()[y].size() ) {
                     std::function<void( Level& )> door = [y, x] ( Level& level ) {
                         level.get_field()[y][x]->set_wall( !level.get_field()[y][x]->is_wall() );
                     };
 
                     TileTrigger* tileTrigger = new TileTrigger( door );
-                    map[y][x]->add_action_tiletrigger( tileTrigger );
+                    level.get_field()[y][x]->add_action_tiletrigger( tileTrigger );
                 }
             }
         }
