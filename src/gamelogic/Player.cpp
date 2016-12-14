@@ -6,9 +6,10 @@
 
 namespace GameLogic {
 
-    Player::Player(CoordinateDouble position)
+    Player::Player(CoordinateDouble position, ControlMapper* control_mapper)
     : PointOfView(position, Engine::RaycastingVector{-1, 0}, Engine::RaycastingVector{0, 0.66})
     , _level(nullptr)
+    , _control_mapper(control_mapper)
     {
     }
 
@@ -17,24 +18,28 @@ namespace GameLogic {
     /// \param keys is a vector of Key enumerables that were pressed
     void Player::handleInput(Input keys)
     {
-        for (auto key : keys.keys_down) {
-            switch (key) {
-                case Key::MOVE_LEFT :
+
+        this->_control_mapper->handle_input(keys);
+        InputActions* input_actions = this->_control_mapper->get_input_actions();
+
+        for (auto action : input_actions->actions_on) {
+            switch (action) {
+                case Action::MOVE_LEFT :
                     this->_move_left();
                     break;
-                case Key::MOVE_BACKWARDS :
+                case Action::MOVE_BACKWARD :
                     this->_mov_backward();
                     break;
-                case Key::MOVE_FORWARD :
+                case Action::MOVE_FORWARD :
                     this->_mov_forward();
                     break;
-                case Key::MOVE_RIGHT :
+                case Action::MOVE_RIGHT :
                     this->_move_right();
                     break;
-                case Key::ROTATE_LEFT :
+                case Action::ROTATE_LEFT :
                     this->_rot_left();
                     break;
-                case Key::ROTATE_RIGHT :
+                case Action::ROTATE_RIGHT :
                     this->_rot_right();
                     break;
                 default:

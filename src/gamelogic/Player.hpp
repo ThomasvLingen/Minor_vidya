@@ -13,6 +13,7 @@
 #include "VectorUtil.hpp"
 #include "Level.hpp"
 #include "../engine/KeyStrokes.hpp"
+#include "ControlMapper.hpp"
 
 namespace GameLogic {
 
@@ -29,7 +30,7 @@ namespace GameLogic {
     class Player : public PointOfView {
 
     public:
-        Player(CoordinateDouble position);
+        Player(CoordinateDouble position, ControlMapper* control_mapper);
 
         bool is_at(int x, int y);
         void set_level(SPTR_Level level);
@@ -38,6 +39,8 @@ namespace GameLogic {
 
     private:
         SPTR_Level _level;
+
+        ControlMapper* _control_mapper;
 
         const double _MOVE_SPEED = 0.003;
         const double _STRAFE_SPEED = 0.004;
