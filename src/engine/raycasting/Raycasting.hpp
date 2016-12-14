@@ -40,8 +40,8 @@ namespace Engine {
 
         const int _AVOID_FLOAT = 256;
 
-        void _draw_walls(CoordinateDouble& ray_position, double distance_buffer[]);
-        void _draw_entities(CoordinateDouble& ray_position, double distance_buffer[]);
+        void _draw_walls(CoordinateDouble& ray_position, vector<double>& distance_buffer);
+        void _draw_entities(CoordinateDouble& ray_position, vector<double>& distance_buffer);
 
         DeltaDist _calculate_delta_distance(Direction ray_dir);
         CoordinateDouble _get_ray_pos();
@@ -69,7 +69,7 @@ namespace Engine {
 
         CoordinateDouble _transform_relative_to_camera_matrix(CoordinateDouble& position);
         vector<Entity*> _get_sorted_entities(CoordinateDouble& ray_position);
-        bool _sprite_should_be_drawn(CoordinateDouble& sprite_coords, int sprite_ray_index, double distance_buffer[]);
+        bool _sprite_should_be_drawn(CoordinateDouble& sprite_coords, int sprite_ray_index, vector<double>& distance_buffer);
     };
 }
 
