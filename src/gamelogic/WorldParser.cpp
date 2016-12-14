@@ -110,28 +110,50 @@ namespace GameLogic {
     ///
     /// \param object_list the object list
     /// \param map the tilemap
-    void WorldParser::_set_objects( vector<tuple<size_t, size_t, char*>> object_list, vector<vector<Tile*>> map )
+    void WorldParser::_set_objects( Level& level, vector<tuple<size_t, size_t, char*>> object_list )
     {
         for ( auto object : object_list) {
             int y = get<1>( object );
             int x = get<0>( object );
-            if ( y < map.size() && x < map[y].size() ) {
+            if ( y < level.get_field.size() && x < level.get_field[y].size() ) {
                 if ( std::strcmp( get<2>( object ), "DoorTrigger" ) == 0 ) {
-                    std::function<void( Level& )> door = [y, x]( Level& level) {
-                        level.get_tile_in_level({y, x})->set_wall(!level.get_tile_in_level({y, x })->is_wall());
-                    };
-                    TileTrigger* tileTrigger = new TileTrigger(door);
-                    map[y][x]->add_action_tiletrigger(tileTrigger);
+                    this->_set_door_trigger(level, y, x);
                 }
                 else if ( std::strcmp( get<2>( object ), "WinTrigger" ) == 0 ){
-                    std::function<void( Level& )> door = [y, x]( Level& level) {
-                        level.set_level_over();
-                    };
-                    TileTrigger* tileTrigger = new TileTrigger( door );
-                    map[y][x]->add_step_on_tiletrigger( tileTrigger );
-
+                    this->_set_win_trigger(level, y, x);
                 }
             }
         }
     }
+
+    /// \brief Sets door trigger on tile
+    /// 
+    /// This function sets door trigger on tile on location y,x
+    ///
+    /// \param level reference to current level
+    /// \param y y position of the tile
+    /// \param x x position of the tile
+    void WorldParser::_set_door_trigger( Level & level, int y, int x )
+    {
+        level.get_field[y][x]->add_action_tiletrigger( new TileTrigger( {
+            [y, x]( Level& level ) {
+            level.get_tile_in_level( { y, x } )->set_wall( !level.get_tile_in_level( { y, x } )->is_wall() );
+        }}));
+    }
+
+    /// \brief Sets win trigger on tile
+    /// 
+    /// This function sets win trigger on tile on location y,x
+    ///
+    /// \param level reference to current level
+    /// \param y y position of the tile
+    /// \param x x position of the tile
+    void WorldParser::_set_win_trigger( Level & level, int y, int x )
+    {
+        level.get_field[y][x]->add_action_tiletrigger( new TileTrigger( {
+            [y, x]( Level& level ) {
+            level.set_level_over();
+        }}));
+    }
+
 }
