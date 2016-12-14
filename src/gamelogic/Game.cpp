@@ -21,7 +21,7 @@ namespace GameLogic {
     : SDL_facade([this](){ //lambda function, captures this (the game class) and sets running to false as quit callback
         this->running = false;
     })
-    , control_mapper(new ControlMapper())
+    , control_mapper(ControlMapper())
     , raycasting_engine(this->SDL_facade)
     , running(true)
     {
@@ -124,11 +124,6 @@ namespace GameLogic {
         } else {
             throw Exceptions::LevelIsNullptrException();
         }
-    }
-
-    Game::~Game()
-    {
-        delete control_mapper;
     }
 }
 

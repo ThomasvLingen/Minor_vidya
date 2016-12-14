@@ -7,7 +7,7 @@
 
 namespace GameLogic {
 
-    Player::Player(CoordinateDouble position, SDLFacade& SDL_facade, ControlMapper* control_mapper)
+    Player::Player(CoordinateDouble position, SDLFacade& SDL_facade, ControlMapper control_mapper)
     : PointOfView(position, Engine::RaycastingVector{-1, 0}, Engine::RaycastingVector{0, 0.66})
     , Drawable(SDL_facade)
     , _level(nullptr)
@@ -29,10 +29,10 @@ namespace GameLogic {
     /// \param keys is a vector of Key enumerables that were pressed
     void Player::handleInput(Input keys)
     {
-        this->_control_mapper->handle_input(keys);
-        InputActions* input_actions = this->_control_mapper->get_input_actions();
+        this->_control_mapper.handle_input(keys);
+        InputActions input_actions = this->_control_mapper.get_input_actions();
 
-        for (auto action : input_actions->actions_off) {
+        for (auto action : input_actions.actions_off) {
             switch (action) {
                 case Action::ACTION_INTERACT :
                     this->_action_released = true;
@@ -42,7 +42,7 @@ namespace GameLogic {
             }
         }
 
-        for (auto action : input_actions->actions_on) {
+        for (auto action : input_actions.actions_on) {
             switch (action) {
                 case Action::MOVE_LEFT :
                     this->_move_left();
