@@ -42,13 +42,7 @@ namespace GameLogic {
             this->_generate_tilemap(int_map, level.assets)
         );
 
-        object_list = rapid_adapter.get_objects();
-
-        level.set_spawnpoint(
-            this->_get_spawnpoint(object_list, level.get_field())
-        );
-
-        this->_set_objects(level, object_list);
+        this->_set_objects(level, rapid_adapter.get_objects() );
     }
 
     /// \brief Generates a 2D Tile vector from the int_map
@@ -73,37 +67,6 @@ namespace GameLogic {
         return map;
     }
 
-    /// \brief Checks and gets the location of the spawnpoint object
-    /// 
-    /// This function  Checks and gets the location of the spawnpoint object of the .tmx.
-    ///
-    /// \param object_list the object list which contains a spawnpoint
-    /// \param map the tilemap
-    /// \return returns a CoordinateDouble of the spawnlocation
-    CoordinateDouble WorldParser::_get_spawnpoint( vector<tuple<size_t, size_t, char*>> object_list, vector<vector<Tile*>> map )
-    {
-        for ( size_t i = 0; i < object_list.size(); i++ ) {
-            if ( std::strcmp( get<2>( object_list[i] ), "PlayerSpawn" ) == 0 ) {
-                size_t y = get<1>( object_list[i] );
-                size_t x = get<0>( object_list[i] );
-                if ( y < map.size() && x < map[y].size() ) {
-                    if ( map[y][x]->is_wall() ) {
-                        throw FileInvalidException();
-                    }
-                    else {
-                        //our map is y,x based that's why spawn point is y,x
-                        return CoordinateDouble { y + this->_spawn_tile_offset, x + this->_spawn_tile_offset };
-                    }
-                }
-                else {
-                    throw FileInvalidException();
-                }
-
-            }
-        }
-        throw FileInvalidException();
-    }
-
     /// \brief Checks and sets the location of other object
     /// 
     /// This function  Checks and sets the location of other object of the .tmx.
@@ -112,17 +75,36 @@ namespace GameLogic {
     /// \param map the tilemap
     void WorldParser::_set_objects( Level& level, vector<tuple<size_t, size_t, char*>> object_list )
     {
+        int spawnpoint_count = 0;
         for ( auto object : object_list) {
             int y = get<1>( object );
             int x = get<0>( object );
-            if ( y < level.get_field.size() && x < level.get_field[y].size() ) {
-                if ( std::strcmp( get<2>( object ), "DoorTrigger" ) == 0 ) {
+            if ( y < level.get_field().size() && x < level.get_field()[y].size() ) {
+                if ( std::strcmp( get<2>( object ), "PlayerSpawn" ) == 0 ) {
+                    this->_set_spawnpoint(level, y, x);
+                    spawnpoint_count++;
+                }
+                else if ( std::strcmp( get<2>( object ), "DoorTrigger" ) == 0 ) {
                     this->_set_door_trigger(level, y, x);
                 }
                 else if ( std::strcmp( get<2>( object ), "WinTrigger" ) == 0 ){
                     this->_set_win_trigger(level, y, x);
                 }
             }
+        }
+        if ( spawnpoint_count != 1 ) {
+            throw FileInvalidException();
+        }
+    }
+
+    void WorldParser::_set_spawnpoint( Level& level, int y, int x )
+    {
+        if ( level.get_field()[y][x]->is_wall() ) {
+            throw FileInvalidException();
+        }
+        else {
+            //our map is y,x based that's why spawn point is y,x
+            level.set_spawnpoint( CoordinateDouble { y + this->_spawn_tile_offset, x + this->_spawn_tile_offset });
         }
     }
 
