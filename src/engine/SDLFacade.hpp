@@ -42,6 +42,8 @@ namespace Engine {
 
         map<FontType, TTF_Font*> _fonts;
 
+        map<string, SDL_Texture*> _images;
+
         map<SDL_Keycode, Key> _possible_keys = {
             {SDLK_w, Key::W},
             {SDLK_a, Key::A},
