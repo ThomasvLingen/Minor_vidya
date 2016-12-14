@@ -34,7 +34,7 @@ namespace Engine {
             this->_SDL_facade.lock_screen_buffer();
 
             // This is the ZBuffer for the entities to draw
-            double distance_buffer[_SDL_facade.get_width()];
+            vector<double> distance_buffer((size_t)this->_SDL_facade.get_width());
             // Things that don't change within a frame can be calculated here
             CoordinateDouble ray_position = this->_get_ray_pos();
 
@@ -46,7 +46,7 @@ namespace Engine {
         }
     }
 
-    void Raycasting::_draw_walls(CoordinateDouble& ray_position, double distance_buffer[])
+    void Raycasting::_draw_walls(CoordinateDouble& ray_position, vector<double>& distance_buffer)
     {
         int screen_height_calc = this->_SDL_facade.get_height() * 128;
         CoordinateInt map_coord = this->_get_map_coord(ray_position);
@@ -86,7 +86,7 @@ namespace Engine {
     }
 
 
-    void Raycasting::_draw_entities(CoordinateDouble& ray_position, double distance_buffer[])
+    void Raycasting::_draw_entities(CoordinateDouble& ray_position, vector<double>& distance_buffer)
     {
         // Draw drawables
         vector<Entity*> sorted_entities = this->_get_sorted_entities(ray_position);
@@ -426,7 +426,7 @@ namespace Engine {
         return sorted_entities;
     }
 
-    bool Raycasting::_sprite_should_be_drawn(CoordinateDouble& sprite_coords, int sprite_ray_index, double* distance_buffer)
+    bool Raycasting::_sprite_should_be_drawn(CoordinateDouble& sprite_coords, int sprite_ray_index, vector<double>& distance_buffer)
     {
         bool in_front_of_camera = sprite_coords.y > 0;
         bool within_screen_bounds = sprite_ray_index > 0 && sprite_ray_index < this->_SDL_facade.get_width();
