@@ -176,25 +176,6 @@ namespace Engine {
         SDL_RenderFillRect(this->_renderer, &r);
     }
 
-    bool SDLFacade::_is_image_in_map(string path) {
-        auto search_image = this->_images.find(path);
-        return search_image != this->_images.end();
-    }
-
-    void SDLFacade::_add_image_in_map(string path) {
-        SDL_Surface* image = IMG_Load(this->_get_absolute_path(path).c_str());
-        if (image == NULL) {    // TODO: exception
-            cout << "FAILED TO FIND THE IMAGE" << endl;
-            cout << path << endl;
-        } else {
-            SDL_Texture* image_texture = SDL_CreateTextureFromSurface(this->_renderer, image);
-            this->_images.insert(std::make_pair(path, image_texture));
-
-            SDL_FreeSurface(image);
-        }
-    }
-
-
     /// \brief Draws an image
     ///
     /// An image will be drawn on the coordinates (Accepts only bmp files)
@@ -203,16 +184,20 @@ namespace Engine {
     /// \param coordinates Coordinates of where the image has to be drawn
     void SDLFacade::draw_image(const std::string path, const CoordinateInt& coordinates)
     {
-        if (!this->_is_image_in_map(path)) {
-            this->_add_image_in_map(path);
+        SDL_Surface* image = IMG_Load(path.c_str());
+        if (image == NULL) { //TODO: exception
+            cout << "FAILED TO FIND THE IMAGE" << endl;
+            cout << path.c_str() << endl;
+        } else {
+            SDL_Rect src_r = {0, 0, image->w, image->h};
+            SDL_Rect dest_r = {(int)coordinates.x, (int)coordinates.y, image->w, image->h};
+
+            SDL_Texture* image_texture = SDL_CreateTextureFromSurface(this->_renderer, image);
+            SDL_FreeSurface(image);
+
+            SDL_RenderCopy(this->_renderer, image_texture, &src_r, &dest_r);
+            SDL_DestroyTexture(image_texture);
         }
-        int w, h;
-        SDL_QueryTexture(this->_images[path], NULL, NULL, &w, &h); // get width en height from texture
-
-        SDL_Rect src_r = {0, 0, w, h};
-        SDL_Rect dest_r = {(int)coordinates.x, (int)coordinates.y, w, h};
-
-        SDL_RenderCopy(this->_renderer, this->_images[path], &src_r, &dest_r);
     }
 
     /// \brief Draws a rectangle on the whole screen

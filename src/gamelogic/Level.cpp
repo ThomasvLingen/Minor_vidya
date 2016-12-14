@@ -109,8 +109,12 @@ namespace GameLogic {
         this->_level_won = true;
     }
 
+<<<<<<< 4aa2cf676ddca3a3a5fb895e7682f5d030340762
     bool Level::is_level_over()
     {
+=======
+    bool Level::is_level_over() {
+>>>>>>> feat: made it so a level can now be finished + deleted some magic numbers
         return this->_level_won;
     }
 }
