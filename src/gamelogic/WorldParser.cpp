@@ -42,7 +42,7 @@ namespace GameLogic {
             this->_generate_tilemap(int_map, level.assets)
         );
 
-        this->_set_objects(level, rapid_adapter.get_objects() );
+        this->_set_objects(level, rapid_adapter.get_objects() rapid_adapter, file_location );
     }
 
     /// \brief Generates a 2D Tile vector from the int_map
@@ -73,7 +73,7 @@ namespace GameLogic {
     ///
     /// \param object_list the object list
     /// \param map the tilemap
-    void WorldParser::_set_objects( Level& level, vector<tuple<size_t, size_t, char*>> object_list )
+    void WorldParser::_set_objects( Level& level, vector<tuple<size_t, size_t, char*>> object_list, RapidXMLAdapter& rapid_adapter, string file_location )
     {
         int spawnpoint_count = 0;
         for ( auto object : object_list) {
