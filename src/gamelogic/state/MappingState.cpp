@@ -37,7 +37,6 @@ namespace State {
 
         if(_action_is_selected){
             this->_context.control_mapper->handle_input(keys);
-            InputActions* actions = this->_context.control_mapper->get_input_actions();
             if(keys.keys_released.size() > 0) {
                 this->_context.control_mapper->set_new_combination(_selected_action, keys.keys_released.at(0));
                 _action_is_selected = false;
@@ -81,6 +80,7 @@ namespace State {
                     + "   >   "
                     +  this->_get_key_description(this->_context.control_mapper->get_key_by_action(action_description_pair.first)),
                     [=] (Game& game) {
+                        UNUSED(game);
                         this->_set_action(action_description_pair.first);
                     }
             );
