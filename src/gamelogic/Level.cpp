@@ -69,11 +69,6 @@ namespace GameLogic {
         return this->_field[coordinate.x][coordinate.y];
     }
 
-    Tile* Level::get_tile_in_level(CoordinateInt coordinate)
-    {
-        return _field[coordinate.x][coordinate.y];
-    }
-
     PointOfView& Level::get_pov()
     {
         return this->_player;
@@ -109,12 +104,8 @@ namespace GameLogic {
         this->_level_won = true;
     }
 
-<<<<<<< 4aa2cf676ddca3a3a5fb895e7682f5d030340762
     bool Level::is_level_over()
     {
-=======
-    bool Level::is_level_over() {
->>>>>>> feat: made it so a level can now be finished + deleted some magic numbers
         return this->_level_won;
     }
 }

@@ -102,22 +102,13 @@ namespace GameLogic {
         this->SDL_facade.load_sound_effect("headshot", "res/sound_effects/headshot.wav");
     }
 
-    SPTR_Level Game::get_level() {
+    SPTR_Level Game::get_level()
+    {
         if (this->_level != nullptr) {
             return this->_level;
         } else {
             throw Exceptions::LevelIsNullptrException();
         }
-    }
-
-    SPTR_Level Game::get_level() {
-        if(this->_level != nullptr){
-            return this->_level;
-        }
-        else {
-            throw Exceptions::LevelIsNullptrException();
-        }
-
     }
 }
 
