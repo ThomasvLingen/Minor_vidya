@@ -70,6 +70,7 @@ namespace GameLogic {
         void _do_action();
 
         /*
+         * int health
          * obj Inventory -> vector<items>
          * GrabItem();
          * PlaceItem();
