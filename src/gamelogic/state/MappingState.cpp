@@ -88,7 +88,7 @@ namespace State {
             y+= row_height;
         }
 
-        this->_menu.add_options({resume_game, quit_game});
+        this->_menu.add_options({quit_game});
         this->_menu.set_escape_option(quit_game);
     }
 
