@@ -81,8 +81,8 @@ namespace GameLogic {
     {
         for ( int i = 0; i < object_list.size(); i++ ) {
             if ( std::strcmp( get<2>( object_list[i] ), "PlayerSpawn" ) == 0 ) {
-                int y = get<1>( object_list[i] );
-                int x = get<0>( object_list[i] );
+                size_t y = get<1>( object_list[i] );
+                size_t x = get<0>( object_list[i] );
                 if ( y < map.size() && x < map[y].size() ) {
                     if ( map[y][x]->is_wall() ) {
                         throw FileInvalidException();
@@ -111,15 +111,15 @@ namespace GameLogic {
     {
         for (auto object : object_list) {
             if ( std::strcmp( get<2>( object ), "Entity" ) == 0 ) {
-                int y = get<1>( object );
-                int x = get<0>( object );
+                size_t y = get<1>( object );
+                size_t x = get<0>( object );
                 if ( y < map.size() && x < map[y].size() ) {
                     level.get_entities().push_back(new Engine::Entity(assets->get_entity_texture( file_location.substr( 0, file_location.find_last_of( "\\/" ) ) + "/" + _rapid_adapter.get_entity_texture(x,y)),CoordinateDouble{ y + this->_spawn_tile_offset, x + this->_spawn_tile_offset }));
                 }
             }
             else if ( std::strcmp( get<2>( object ), "DoorTrigger" ) == 0 ) {
-                int y = get<1>( object );
-                int x = get<0>( object );
+                size_t y = get<1>( object );
+                size_t x = get<0>( object );
                 if ( y < map.size() && x < map[y].size() ) {
                     std::function<void( Level& )> door = [y, x] ( Level& level ) {
                         level.get_tile_in_level( { y, x } )->set_wall( !level.get_tile_in_level( { y, x } )->is_wall() );
