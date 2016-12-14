@@ -52,7 +52,7 @@ namespace GameLogic {
 
     private:
         SPTR_Level _level;
-
+        
         ControlMapper& _control_mapper;
 
         const double _MOVE_SPEED = 0.003;
