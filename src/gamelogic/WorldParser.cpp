@@ -123,7 +123,13 @@ namespace GameLogic {
 
     void WorldParser::_set_entity( Level & level, size_t y, size_t x, RapidXMLAdapter & rapid_adapter, string path )
     {
-        level.get_entities().push_back( new Engine::Entity( level.assets->get_entity_texture( path + rapid_adapter.get_entity_texture( x, y ) ), CoordinateDouble { y + this->_spawn_tile_offset, x + this->_spawn_tile_offset } ) );
+        CoordinateDouble entity_spawn = { y + this->_spawn_tile_offset, x + this->_spawn_tile_offset };
+        Engine::ImageBuffer* entitybuffer = level.assets->get_entity_texture( path + rapid_adapter.get_entity_texture( x, y ) );
+        if ( entitybuffer == nullptr ) {
+            throw FileInvalidException();
+        }
+        Engine::Entity* new_entity = new Engine::Entity( entitybuffer, entity_spawn );
+        level.get_entities().push_back( new_entity );
     }
 
     /// \brief Sets door trigger on tile
