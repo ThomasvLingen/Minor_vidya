@@ -109,15 +109,15 @@ namespace GameLogic {
     /// 
     /// This function returns the texture valued map that is used in this .tmx.
     /// RapidXMLAdapter::setup_document has to be called before using this 
-    vector<vector<int>> RapidXMLAdapter::get_map()
+    vector<vector<size_t>> RapidXMLAdapter::get_map()
     {
-        vector<vector<int>> map;
+        vector<vector<size_t>> map;
         char* data_value = this->_data_node->value();
         std::stringstream row_ss( data_value );
         string row_chars;
 
         while ( std::getline( row_ss, row_chars, '\n' ) ) {
-            vector<int> row_ints;
+            vector<size_t> row_ints;
             std::stringstream char_ss( row_chars );
             string x_y_char;
 

@@ -31,7 +31,7 @@ namespace GameLogic {
         int get_tile_height();
         int get_tile_width();
         int get_tile_count();
-        vector<vector<int>> get_map();
+        vector<vector<size_t>> get_map();
         vector<tuple<size_t, size_t, char*>> get_objects();
         string get_entity_texture( size_t x, size_t y);
     private:

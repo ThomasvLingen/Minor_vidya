@@ -26,26 +26,28 @@ namespace GameLogic {
     /// \param file_location location of the file to be used
     void WorldParser::fill_level(Level& level, string file_location)
     {
-        vector<vector<int>> int_map;
+        RapidXMLAdapter rapid_adapter;
+        vector<vector<size_t>> int_map;
         vector<tuple<size_t, size_t, char*>> object_list;
 
-        _rapid_adapter.setup_document( file_location );
-        if ( !level.assets->init( file_location.substr( 0, file_location.find_last_of( "\\/" ) ) + "/" + _rapid_adapter.get_texture_source(), _rapid_adapter.get_tile_width(), _rapid_adapter.get_tile_height(), _rapid_adapter.get_tile_count() ) ) {
+        rapid_adapter.setup_document( file_location );
+        string path = file_location.substr( 0, file_location.find_last_of( "\\/" ) ) + "/" + rapid_adapter.get_texture_source();
+        if ( !level.assets->init( path, rapid_adapter.get_tile_width(), rapid_adapter.get_tile_height(), rapid_adapter.get_tile_count() ) ) {
             std::cout << "AssetsManager has not initted correctly." << std::endl;
         }
 
-        int_map = _rapid_adapter.get_map();
+        int_map = rapid_adapter.get_map();
         level.set_field(
             this->_generate_tilemap(int_map, level.assets)
         );
 
-        object_list = _rapid_adapter.get_objects();
+        object_list = rapid_adapter.get_objects();
+        this->_set_objects( level, object_list, level.get_field(), level.assets, rapid_adapter, file_location );
 
         level.set_spawnpoint(
             this->_get_spawnpoint(object_list, level.get_field())
         );
 
-        this->_set_objects(level, object_list, level.get_field(), level.assets, file_location );
     }
 
     /// \brief Generates a 2D Tile vector from the int_map
@@ -55,7 +57,7 @@ namespace GameLogic {
     /// \param int_map the integer valued that the tilemap needs to be generated from
     /// \param assets the assets manager of this .tmx
     /// \return returns a 2D Tile vector
-    vector<vector<Tile*>> WorldParser::_generate_tilemap( vector<vector<int>> int_map, Engine::SPTR_AssetsManager assets )
+    vector<vector<Tile*>> WorldParser::_generate_tilemap( vector<vector<size_t>> int_map, Engine::SPTR_AssetsManager assets )
     {
         vector<vector<Tile*>> map;
         map.resize( int_map.size());
@@ -107,14 +109,14 @@ namespace GameLogic {
     ///
     /// \param object_list the object list
     /// \param map the tilemap
-    void WorldParser::_set_objects( Level& level, vector<tuple<size_t, size_t, char*>> object_list, vector<vector<Tile*>> map, Engine::SPTR_AssetsManager assets, string file_location )
+    void WorldParser::_set_objects( Level& level, vector<tuple<size_t, size_t, char*>> object_list, vector<vector<Tile*>> map, Engine::SPTR_AssetsManager assets, RapidXMLAdapter& rapid_adapter, string file_location )
     {
         for (auto object : object_list) {
             if ( std::strcmp( get<2>( object ), "Entity" ) == 0 ) {
                 size_t y = get<1>( object );
                 size_t x = get<0>( object );
                 if ( y < map.size() && x < map[y].size() ) {
-                    level.get_entities().push_back(new Engine::Entity(assets->get_entity_texture( file_location.substr( 0, file_location.find_last_of( "\\/" ) ) + "/" + _rapid_adapter.get_entity_texture(x,y)),CoordinateDouble{ y + this->_spawn_tile_offset, x + this->_spawn_tile_offset }));
+                    level.get_entities().push_back(new Engine::Entity(assets->get_entity_texture( file_location.substr( 0, file_location.find_last_of( "\\/" ) ) + "/" + rapid_adapter.get_entity_texture(x,y)),CoordinateDouble{ y + this->_spawn_tile_offset, x + this->_spawn_tile_offset }));
                 }
             }
             else if ( std::strcmp( get<2>( object ), "DoorTrigger" ) == 0 ) {
