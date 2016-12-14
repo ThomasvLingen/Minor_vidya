@@ -67,6 +67,7 @@ namespace GameLogic {
         bool is_level_over();
 
         int in_game_ticks = 0;
+
     };
 
     typedef std::shared_ptr<Level> SPTR_Level;
