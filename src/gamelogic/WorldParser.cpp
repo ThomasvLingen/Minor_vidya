@@ -117,10 +117,10 @@ namespace GameLogic {
     /// \param x x position of the tile
     void WorldParser::_set_door_trigger( Level & level, int y, int x )
     {
-        level.get_field()[y][x]->add_action_tiletrigger( new TileTrigger( {
-            [y, x]( Level& level ) {
+        std::function<void( Level& )> door = [y, x]( Level& level ) {
             level.get_tile_in_level( { y, x } )->set_wall( !level.get_tile_in_level( { y, x } )->is_wall() );
-        }}));
+        };
+        level.get_field()[y][x]->add_action_tiletrigger(new TileTrigger(door));
     }
 
     /// \brief Sets win trigger on tile
@@ -132,10 +132,10 @@ namespace GameLogic {
     /// \param x x position of the tile
     void WorldParser::_set_win_trigger( Level & level, int y, int x )
     {
-        level.get_field()[y][x]->add_step_on_tiletrigger( new TileTrigger( {
-            []( Level& level ) {
+        std::function<void( Level& )> win = []( Level& level ) {
             level.set_level_over();
-        }}));
+        };
+        level.get_field()[y][x]->add_step_on_tiletrigger( new TileTrigger( win ));
     }
 
 }
