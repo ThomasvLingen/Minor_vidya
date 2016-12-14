@@ -24,7 +24,6 @@ namespace GameLogic {
     , control_mapper(ControlMapper())
     , raycasting_engine(this->SDL_facade)
     , running(true)
-    , control_mapper(new ControlMapper())
     {
         this->SDL_facade.init();
         this->_init_sound_effects();
