@@ -32,8 +32,8 @@ namespace GameLogic {
         vector<tuple<size_t, size_t, char*>> object_list;
 
         rapid_adapter.setup_document( file_location );
-        string path = file_location.substr( 0, file_location.find_last_of( "\\/" ) ) + "/" + rapid_adapter.get_texture_source();
-        if ( !level.assets->init( path, rapid_adapter.get_tile_width(), rapid_adapter.get_tile_height(), rapid_adapter.get_tile_count() ) ) {
+        string path = file_location.substr( 0, file_location.find_last_of( "\\/" ) ) + "/";
+        if ( !level.assets->init( path + rapid_adapter.get_texture_source(), rapid_adapter.get_tile_width(), rapid_adapter.get_tile_height(), rapid_adapter.get_tile_count() ) ) {
             std::cout << "AssetsManager has not initted correctly." << std::endl;
         }
 
@@ -42,7 +42,7 @@ namespace GameLogic {
             this->_generate_tilemap(int_map, level.assets)
         );
 
-        this->_set_objects(level, rapid_adapter.get_objects() rapid_adapter, file_location );
+        this->_set_objects(level, rapid_adapter.get_objects(), rapid_adapter, file_location );
     }
 
     /// \brief Generates a 2D Tile vector from the int_map
