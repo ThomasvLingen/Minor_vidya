@@ -17,7 +17,6 @@ namespace GameLogic{
     {
 
     }
-    }
 
     void ControlMapper::handle_input(Input input)
     {
