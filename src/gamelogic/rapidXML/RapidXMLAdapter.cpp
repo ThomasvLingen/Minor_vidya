@@ -135,24 +135,25 @@ namespace GameLogic {
     /// This function returns the objects that is used in this .tmx.
     /// RapidXMLAdapter::setup_document has to be called before using this
     /// This should be called as the last step of parsing the .tmx
-    vector<tuple<size_t, size_t, char*>> RapidXMLAdapter::get_objects()
+    vector<tuple<size_t, size_t, size_t, char*>> RapidXMLAdapter::get_objects()
     {
-        vector<tuple<size_t, size_t, char*>> object_list;
+        vector<tuple<size_t, size_t, size_t, char*>> object_list;
         for ( xml_node<> * object_node = this->_object_group_node->first_node( "object" ); object_node; object_node = object_node->next_sibling() ) {
+            size_t id = std::stoi( object_node->first_attribute( "id" )->value() );
             size_t x = std::stoi( object_node->first_attribute( "x" )->value() ) / this->_tile_width;
             size_t y = std::stoi( object_node->first_attribute( "y" )->value() ) / this->_tile_height;
             char* type = object_node->first_attribute( "type" )->value();
-            tuple<size_t, size_t, char*> object( x, y, type );
+            tuple<size_t, size_t, size_t, char*> object(id, x, y, type );
             object_list.push_back( object );
         }
         return object_list;
     }
 
 
-    string RapidXMLAdapter::get_entity_texture( size_t x, size_t y )
+    string RapidXMLAdapter::get_entity_texture( size_t id )
     {
         for ( xml_node<> * object_node = this->_object_group_node->first_node( "object" ); object_node; object_node = object_node->next_sibling() ) {
-            if ( std::stoi( object_node->first_attribute( "x" )->value() ) / this->_tile_width == x &&  std::stoi( object_node->first_attribute( "y" )->value() ) / this->_tile_height == y) {
+            if ( std::stoi( object_node->first_attribute( "id" )->value() ) == id) {
                 xml_node<> * property_texture = object_node->first_node( "properties" )->first_node( "property" );
                 return property_texture->first_attribute( "value" )->value();
             }
