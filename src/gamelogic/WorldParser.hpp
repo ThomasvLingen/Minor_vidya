@@ -22,7 +22,7 @@ namespace GameLogic {
         void fill_level(Level& level, std::string file_location);
     private:
         vector<vector<Tile*>> _generate_tilemap( vector<vector<size_t>> int_map, Engine::SPTR_AssetsManager assets );
-        void _set_objects( Level& level, vector<tuple<size_t, size_t, char*>> object_list, RapidXMLAdapter& rapid_adapter, string file_location );
+        void _set_objects( Level& level, vector<tuple<size_t, size_t, char*>> object_list, RapidXMLAdapter& rapid_adapter, string path );
         void _set_spawnpoint( Level& level, int y, int x);
         void _set_door_trigger( Level& level, int y, int x );
         void _set_win_trigger( Level& level, int y, int x );

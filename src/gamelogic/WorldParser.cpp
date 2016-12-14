@@ -42,7 +42,8 @@ namespace GameLogic {
             this->_generate_tilemap(int_map, level.assets)
         );
 
-        this->_set_objects(level, rapid_adapter.get_objects(), rapid_adapter, file_location );
+        object_list = rapid_adapter.get_objects();
+        this->_set_objects( level, object_list, rapid_adapter, path );
     }
 
     /// \brief Generates a 2D Tile vector from the int_map
@@ -71,8 +72,10 @@ namespace GameLogic {
     /// 
     /// This function  Checks and sets the location of other object of the .tmx.
     ///
-    /// \param object_list the object list
-    /// \param map the tilemap
+    /// \param level ref of level being made
+    /// \param object_list list of all the object needed to be set
+    /// \param rapid_adapter ref of current rapid_adapter
+    /// \param path path to .tmx folder
     void WorldParser::_set_objects( Level& level, vector<tuple<size_t, size_t, char*>> object_list, RapidXMLAdapter& rapid_adapter, string path )
     {
         int spawnpoint_count = 0;
