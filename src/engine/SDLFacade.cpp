@@ -184,19 +184,31 @@ namespace Engine {
     /// \param coordinates Coordinates of where the image has to be drawn
     void SDLFacade::draw_image(const std::string path, const CoordinateInt& coordinates)
     {
-        SDL_Surface* image = IMG_Load(path.c_str());
-        if (image == NULL) { //TODO: exception
-            cout << "FAILED TO FIND THE IMAGE" << endl;
-            cout << path.c_str() << endl;
+        auto search_image = this->_images.find(path);
+        if(search_image != this->_images.end()) {
+            int w, h;
+            SDL_QueryTexture(search_image->second, NULL, NULL, &w, &h); // get width en height from texture
+
+            SDL_Rect src_r = {0, 0, w, h};
+            SDL_Rect dest_r = {(int)coordinates.x, (int)coordinates.y, w, h};
+
+            SDL_RenderCopy(this->_renderer, search_image->second, &src_r, &dest_r);
         } else {
-            SDL_Rect src_r = {0, 0, image->w, image->h};
-            SDL_Rect dest_r = {(int)coordinates.x, (int)coordinates.y, image->w, image->h};
+            SDL_Surface* image = IMG_Load(path.c_str());
+            if (image == NULL) { //TODO: exception
+                cout << "FAILED TO FIND THE IMAGE" << endl;
+                cout << path.c_str() << endl;
+            } else {
+                SDL_Rect src_r = {0, 0, image->w, image->h};
+                SDL_Rect dest_r = {(int)coordinates.x, (int)coordinates.y, image->w, image->h};
 
-            SDL_Texture* image_texture = SDL_CreateTextureFromSurface(this->_renderer, image);
-            SDL_FreeSurface(image);
+                SDL_Texture* image_texture = SDL_CreateTextureFromSurface(this->_renderer, image);
+                SDL_FreeSurface(image);
 
-            SDL_RenderCopy(this->_renderer, image_texture, &src_r, &dest_r);
-            SDL_DestroyTexture(image_texture);
+                SDL_RenderCopy(this->_renderer, image_texture, &src_r, &dest_r);
+
+                this->_images.insert(std::make_pair(path, image_texture));
+            }
         }
     }
 
