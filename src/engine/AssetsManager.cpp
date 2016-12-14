@@ -11,7 +11,7 @@ namespace Engine {
     {
     }
 
-    bool AssetsManager::init( string& texture_source, size_t tile_width, size_t tile_height, size_t tile_count )
+    bool AssetsManager::init( string texture_source, size_t tile_width, size_t tile_height, size_t tile_count )
     {
         bool success = true;
         success &= this->_init_texture_map( texture_source, tile_width, tile_height, tile_count );
@@ -19,7 +19,7 @@ namespace Engine {
         return success;
     }
 
-    bool AssetsManager::_init_texture_map( string& texture_source, size_t tile_width, size_t tile_height, size_t tile_count )
+    bool AssetsManager::_init_texture_map( string texture_source, size_t tile_width, size_t tile_height, size_t tile_count )
     {
         bool success = true;
 

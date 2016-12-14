@@ -18,12 +18,12 @@ namespace Engine {
     public:
         AssetsManager(SDLFacade& SDL_facade);
 
-        bool init( string& texture_source, size_t tile_width, size_t tile_height, size_t tile_count);
+        bool init( string texture_source, size_t tile_width, size_t tile_height, size_t tile_count);
         ImageBuffer* get_texture(int id);
     private:
         TextureMap _known_textures;
 
-        bool _init_texture_map( string& texture_source, size_t tile_width, size_t tile_height, size_t tile_count );
+        bool _init_texture_map( string texture_source, size_t tile_width, size_t tile_height, size_t tile_count );
         SDLFacade& _SDL_facade;
 
         // TODO: This can be removed since it's unused.
