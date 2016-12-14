@@ -98,4 +98,13 @@ namespace GameLogic {
     {
         return this->_field;
     }
+
+    void Level::set_level_over()
+    {
+        this->_level_won = true;
+    }
+
+    bool Level::is_level_over() {
+        return this->_level_won;
+    }
 }

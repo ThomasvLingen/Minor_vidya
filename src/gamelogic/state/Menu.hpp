@@ -53,6 +53,8 @@ namespace State {
         MenuOption _escape_option;
 
         int _selected_index = 0;
+        static constexpr int _selected_rect_diff_width = 30;
+        static constexpr int _selected_rect_diff_height = 6;
         const FontType _font = FontType::alterebro_pixel;
         const Color _color = {255,255,255};
         Game& _context;

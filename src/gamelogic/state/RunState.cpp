@@ -4,6 +4,7 @@
 
 #include "RunState.hpp"
 #include "PauseState.hpp"
+#include "LevelWinState.hpp"
 
 namespace State {
 
@@ -24,6 +25,9 @@ namespace State {
     }
 
     void RunState::update(int time_since_last_update) { //TODO: If called again, level has to reload
+        if (this->_context.get_level()->is_level_over()) {
+            this->_context.set_new_state(std::make_shared<LevelWinState>(this->_context));
+        }
         this->_context.SDL_facade.handle_sdl_events();
         this->_context.raycasting_engine.handle_input();
 
