@@ -5,10 +5,6 @@
 #ifndef MINOR_VIDYA_GAME_HPP
 #define MINOR_VIDYA_GAME_HPP
 
-//TODO: set FPS in config file
-#define FPS 60
-#define FRAME_DURATION 1000/FPS
-
 #include "../engine/SDLFacade.hpp"
 #include "../engine/raycasting/Raycasting.hpp"
 #include "Level.hpp"
