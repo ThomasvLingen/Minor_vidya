@@ -15,4 +15,9 @@ namespace Engine {
     {
         return this->_entities;
     }
+
+    void World::add_entity( Entity entity )
+    {
+        this->_entities.push_back(new Entity(entity));
+    }
 }

@@ -542,6 +542,33 @@ namespace Engine {
         return texture_map;
     }
 
+    ImageBuffer* SDLFacade::load_image_buffer( const string & path )
+    {
+        ImageBuffer pixels;
+        SDL_Surface* texture = IMG_Load( path.c_str() );
+        if ( texture == NULL ) {
+            // check of succeeded
+            cout << "An error occurred while loading tileset " << path
+                << ". This occurred while trying to convert an image to pixels for a texture." << endl;
+        }
+        else {
+            SDL_LockSurface( texture );
+
+            int bytes_per_pixel = texture->format->BytesPerPixel;
+
+            for ( int current_y = 0; current_y < texture->h; current_y++ ) {
+                for ( int current_x = 0; current_x < texture->w; current_x++ ) {
+                    Uint8* pixel = ( Uint8* ) texture->pixels + current_y * texture->pitch + current_x * bytes_per_pixel;
+                    pixels.push_back( *( Uint32* ) pixel );
+                }
+            }
+
+            SDL_FreeSurface( texture );
+        }
+
+        return new ImageBuffer( pixels );
+    }
+
     /// \brief Plays a music file
     ///
     /// Music will be played if the path is correct. Supports: WAVE, MP3, MIDI etc. Be sure to call when you want the music to stop.

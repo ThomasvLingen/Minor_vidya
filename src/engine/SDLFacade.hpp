@@ -106,6 +106,8 @@ namespace Engine {
 
         TextureMap get_tileset_buffers(const string& path, const int tile_width, const int tile_height, const int amount_of_tiles);
 
+        ImageBuffer* load_image_buffer(const string& path);
+
     private:
         void _handle_key_pressed_event(SDL_Keycode key);
         void _handle_key_released_event(SDL_Keycode key);

@@ -20,6 +20,7 @@ namespace Engine {
 
         bool init( string& texture_source, size_t tile_width, size_t tile_height, size_t tile_count);
         ImageBuffer* get_texture(int id);
+        ImageBuffer& get_entity_texture(string& texture_source);
     private:
         TextureMap _known_textures;
 

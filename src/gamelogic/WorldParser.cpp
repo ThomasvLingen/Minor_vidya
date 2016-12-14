@@ -1,7 +1,6 @@
 #include "WorldParser.hpp"
 #include <tuple>
 #include "exceptions/FileInvalidException.hpp"
-#include "Player.hpp"
 
 namespace GameLogic {
     using Exceptions::FileInvalidException;
@@ -10,6 +9,7 @@ namespace GameLogic {
 
     WorldParser::WorldParser()
     {
+        this->_rapid_adapter;
     }
 
     WorldParser::~WorldParser()
@@ -27,28 +27,28 @@ namespace GameLogic {
     /// \param file_location location of the file to be used
     void WorldParser::fill_level(Level& level, std::string file_location)
     {
-        RapidXMLAdapter rapid_adapter;
+        this->_file_location = file_location;
         vector<vector<size_t>> int_map;
         vector<tuple<size_t, size_t, char*>> object_list;
 
-        rapid_adapter.setup_document( file_location );
-        string path = file_location.substr( 0, file_location.find_last_of( "\\/" ) ) + "/" + rapid_adapter.get_texture_source();
-        if ( !level.assets->init( path, rapid_adapter.get_tile_width(), rapid_adapter.get_tile_height(), rapid_adapter.get_tile_count() ) ) {
+        _rapid_adapter.setup_document( _file_location );
+        string path = _file_location.substr( 0, _file_location.find_last_of( "\\/" ) ) + "/" + _rapid_adapter.get_texture_source();
+        if ( !level.assets->init( path, _rapid_adapter.get_tile_width(), _rapid_adapter.get_tile_height(), _rapid_adapter.get_tile_count() ) ) {
             std::cout << "AssetsManager has not initted correctly." << std::endl;
         }
 
-        int_map = rapid_adapter.get_map();
+        int_map = _rapid_adapter.get_map();
         level.set_field(
             this->_generate_tilemap(int_map, level.assets)
         );
 
-        object_list = rapid_adapter.get_objects();
+        object_list = _rapid_adapter.get_objects();
 
         level.set_spawnpoint(
             this->_get_spawnpoint(object_list, level.get_field())
         );
 
-        this->_set_objects(object_list, level.get_field());
+        this->_set_objects(level, object_list, level.get_field(), level.assets);
     }
 
     /// \brief Generates a 2D Tile vector from the int_map
@@ -110,19 +110,27 @@ namespace GameLogic {
     ///
     /// \param object_list the object list
     /// \param map the tilemap
-    void WorldParser::_set_objects( vector<tuple<size_t, size_t, char*>> object_list, vector<vector<Tile*>> map )
+    void WorldParser::_set_objects( Level& level, vector<tuple<size_t, size_t, char*>> object_list, vector<vector<Tile*>> map, Engine::SPTR_AssetsManager assets )
     {
-        for ( auto object : object_list) {
-            if ( std::strcmp( get<2>( object ), "DoorTrigger" ) == 0 ) {
+        for (auto object : object_list) {
+            if ( std::strcmp( get<2>( object ), "Entity" ) == 0 ) {
                 int y = get<1>( object );
                 int x = get<0>( object );
                 if ( y < map.size() && x < map[y].size() ) {
-                    std::function<void( Level& )> door = [y, x]( Level& level) {
-                        level.get_tile_in_level({y, x})->set_wall(!level.get_tile_in_level({y, x })->is_wall());
+
+                    level.add_entity(Engine::Entity(assets->get_entity_texture( _file_location.substr( 0, _file_location.find_last_of( "\\/" ) ) + "/" + _rapid_adapter.get_entity_texture(x,y)),CoordinateDouble{ y + this->_spawn_tile_offset, x + this->_spawn_tile_offset }));
+                }
+            }
+            else if ( std::strcmp( get<2>( object ), "DoorTrigger" ) == 0 ) {
+                int y = get<1>( object );
+                int x = get<0>( object );
+                if ( y < map.size() && x < map[y].size() ) {
+                    std::function<void( Level& )> door = [y, x] ( Level& level ) {
+                        level.get_tile_in_level( { y, x } )->set_wall( !level.get_tile_in_level( { y, x } )->is_wall() );
                     };
 
-                    TileTrigger* tileTrigger = new TileTrigger(door);
-                    map[y][x]->add_action_tiletrigger(tileTrigger);
+                    TileTrigger* tileTrigger = new TileTrigger( door );
+                    map[y][x]->add_action_tiletrigger( tileTrigger );
                 }
             }
         }

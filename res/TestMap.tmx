@@ -42,7 +42,7 @@
   <object id="2" type="DoorTrigger" x="576" y="320" width="64" height="64"/>
   <object id="19" type="Entity" x="512" y="384" width="64" height="64">
    <properties>
-    <property name="Texture" type="file" value="advertisement.bmp"/>
+    <property name="Texture" type="file" value="charizard.bmp"/>
    </properties>
   </object>
  </objectgroup>

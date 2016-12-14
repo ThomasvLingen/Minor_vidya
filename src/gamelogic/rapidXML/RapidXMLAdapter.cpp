@@ -147,4 +147,15 @@ namespace GameLogic {
         }
         return object_list;
     }
+
+
+    string RapidXMLAdapter::get_entity_texture( int x, int y )
+    {
+        for ( xml_node<> * object_node = this->_object_group_node->first_node( "object" ); object_node; object_node = object_node->next_sibling() ) {
+            if ( std::stoi( object_node->first_attribute( "x" )->value() ) / this->_tile_width == x &&  std::stoi( object_node->first_attribute( "y" )->value() ) / this->_tile_height == y) {
+                xml_node<> * property_texture = object_node->first_node( "properties" )->first_node( "property" );
+                return property_texture->first_attribute( "value" )->value();
+            }
+        }
+    }
 }
