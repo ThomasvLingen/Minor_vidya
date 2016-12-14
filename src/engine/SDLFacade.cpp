@@ -24,6 +24,10 @@ namespace Engine {
     /// \brief Destructor of the class
     SDLFacade::~SDLFacade()
     {
+        for (auto image : this->_images) {
+            SDL_DestroyTexture(image.second);
+        }
+
         SDL_DestroyRenderer(this->_renderer);
         SDL_DestroyWindow(this->_window);
 
@@ -34,10 +38,6 @@ namespace Engine {
         this->stop_music();
         Mix_CloseAudio();
         Mix_Quit();
-
-        for (auto image : this->_images) {
-            SDL_DestroyTexture(image.second);
-        }
 
         for (auto font : this->_fonts) {
             TTF_CloseFont(font.second);
