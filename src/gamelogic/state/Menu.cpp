@@ -79,7 +79,7 @@ namespace State {
             {this->get_selected()->coordinates.x - this->_selected_rect_diff_width, this->get_selected()->coordinates.y + this->_selected_rect_diff_height},
             15,
             15,
-            _color
+            this->_color
         );
     }
 
