@@ -27,13 +27,12 @@ namespace GameLogic {
     /// \param file_location location of the file to be used
     void WorldParser::fill_level(Level& level, std::string file_location)
     {
-        this->_file_location = file_location;
         vector<vector<size_t>> int_map;
         vector<tuple<size_t, size_t, char*>> object_list;
 
-        _rapid_adapter.setup_document( _file_location );
-        string path = _file_location.substr( 0, _file_location.find_last_of( "\\/" ) ) + "/" + _rapid_adapter.get_texture_source();
-        if ( !level.assets->init( path, _rapid_adapter.get_tile_width(), _rapid_adapter.get_tile_height(), _rapid_adapter.get_tile_count() ) ) {
+        _rapid_adapter.setup_document( file_location );
+        this->_path = file_location.substr( 0, file_location.find_last_of( "\\/" ) ) + "/";
+        if ( !level.assets->init( _path + _rapid_adapter.get_texture_source(), _rapid_adapter.get_tile_width(), _rapid_adapter.get_tile_height(), _rapid_adapter.get_tile_count() ) ) {
             std::cout << "AssetsManager has not initted correctly." << std::endl;
         }
 
@@ -118,7 +117,7 @@ namespace GameLogic {
                 int x = get<0>( object );
                 if ( y < map.size() && x < map[y].size() ) {
 
-                    level.add_entity(Engine::Entity(assets->get_entity_texture( _file_location.substr( 0, _file_location.find_last_of( "\\/" ) ) + "/" + _rapid_adapter.get_entity_texture(x,y)),CoordinateDouble{ y + this->_spawn_tile_offset, x + this->_spawn_tile_offset }));
+                    level.add_entity(Engine::Entity(assets->get_entity_texture( _path + _rapid_adapter.get_entity_texture(x,y)),CoordinateDouble{ y + this->_spawn_tile_offset, x + this->_spawn_tile_offset }));
                 }
             }
             else if ( std::strcmp( get<2>( object ), "DoorTrigger" ) == 0 ) {

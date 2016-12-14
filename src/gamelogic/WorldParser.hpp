@@ -26,7 +26,7 @@ namespace GameLogic {
         CoordinateDouble _get_spawnpoint( vector<tuple<size_t, size_t, char*>> object_list, vector<vector<Tile*>> map );
         void _set_objects( Level& level, vector<tuple<size_t, size_t, char*>> object_list, vector<vector<Tile*>> map, Engine::SPTR_AssetsManager assets );
         double _spawn_tile_offset = 0.5;
-        string _file_location;
+        string _path;
     };
 
 };
