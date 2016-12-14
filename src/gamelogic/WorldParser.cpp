@@ -117,11 +117,11 @@ namespace GameLogic {
                 int y = get<1>( object );
                 int x = get<0>( object );
                 if ( y < map.size() && x < map[y].size() ) {
-                    std::function<void( World& )> door = [y, x]( World& level) {
-                        level.get_tile({y, x})->set_wall(!level.get_tile({y, x })->is_wall());
+                    std::function<void( Level& )> door = [y, x]( Level& level) {
+                        level.get_tile_in_level({y, x})->set_wall(!level.get_tile_in_level({y, x })->is_wall());
                     };
 
-                    Engine::TileTrigger* tileTrigger = new Engine::TileTrigger(door);
+                    TileTrigger* tileTrigger = new TileTrigger(door);
                     map[y][x]->add_action_tiletrigger(tileTrigger);
                 }
             }
