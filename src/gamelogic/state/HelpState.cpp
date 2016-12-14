@@ -47,7 +47,7 @@ namespace State {
             this->_context.SDL_facade.draw_text(mapper.get_key_description(editable_action.second), FontType::alterebro_pixel, this->_color, {_key_start_pos_x, current_y_pos});
             current_y_pos += this->_step_size_y;
         }
-
+        
         this->_context.SDL_facade.render_buffer();
     }
 }
