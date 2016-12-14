@@ -72,37 +72,6 @@ namespace GameLogic {
         return map;
     }
 
-    /// \brief Checks and gets the location of the spawnpoint object
-    /// 
-    /// This function  Checks and gets the location of the spawnpoint object of the .tmx.
-    ///
-    /// \param object_list the object list which contains a spawnpoint
-    /// \param map the tilemap
-    /// \return returns a CoordinateDouble of the spawnlocation
-    CoordinateDouble WorldParser::_get_spawnpoint( vector<tuple<size_t, size_t, char*>> object_list, vector<vector<Tile*>> map )
-    {
-        for ( int i = 0; i < object_list.size(); i++ ) {
-            if ( std::strcmp( get<2>( object_list[i] ), "PlayerSpawn" ) == 0 ) {
-                size_t y = get<1>( object_list[i] );
-                size_t x = get<0>( object_list[i] );
-                if ( y < map.size() && x < map[y].size() ) {
-                    if ( map[y][x]->is_wall() ) {
-                        throw FileInvalidException();
-                    }
-                    else {
-                        //our map is y,x based that's why spawn point is y,x
-                        return CoordinateDouble { y + this->_spawn_tile_offset, x + this->_spawn_tile_offset };
-                    }
-                }
-                else {
-                    throw FileInvalidException();
-                }
-
-            }
-        }
-        throw FileInvalidException();
-    }
-
     /// \brief Checks and sets the location of other object
     /// 
     /// This function  Checks and sets the location of other object of the .tmx.
@@ -112,7 +81,23 @@ namespace GameLogic {
     void WorldParser::_set_objects( Level& level, vector<tuple<size_t, size_t, char*>> object_list, vector<vector<Tile*>> map, Engine::SPTR_AssetsManager assets, RapidXMLAdapter& rapid_adapter, string path )
     {
         for (auto object : object_list) {
-            if ( std::strcmp( get<2>( object ), "Entity" ) == 0 ) {
+            if ( std::strcmp( get<2>( object ), "PlayerSpawn" ) == 0 ) {
+                size_t y = get<1>( object );
+                size_t x = get<0>( object );
+                if ( y < map.size() && x < map[y].size() ) {
+                    if ( map[y][x]->is_wall() ) {
+                        throw FileInvalidException();
+                    }
+                    else {
+                        //our map is y,x based that's why spawn point is y,x
+                        level.set_spawnpoint(CoordinateDouble { y + this->_spawn_tile_offset, x + this->_spawn_tile_offset });
+                    }
+                }
+                else {
+                    throw FileInvalidException();
+                }
+            }
+            else if ( std::strcmp( get<2>( object ), "Entity" ) == 0 ) {
                 size_t y = get<1>( object );
                 size_t x = get<0>( object );
                 if ( y < map.size() && x < map[y].size() ) {
