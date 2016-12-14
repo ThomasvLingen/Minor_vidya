@@ -27,7 +27,7 @@ namespace GameLogic {
     void WorldParser::fill_level(Level& level, string file_location)
     {
         vector<vector<int>> int_map;
-        vector<tuple<int, int, char*>> object_list;
+        vector<tuple<size_t, size_t, char*>> object_list;
 
         _rapid_adapter.setup_document( file_location );
         if ( !level.assets->init( file_location.substr( 0, file_location.find_last_of( "\\/" ) ) + "/" + _rapid_adapter.get_texture_source(), _rapid_adapter.get_tile_width(), _rapid_adapter.get_tile_height(), _rapid_adapter.get_tile_count() ) ) {
@@ -77,7 +77,7 @@ namespace GameLogic {
     /// \param object_list the object list which contains a spawnpoint
     /// \param map the tilemap
     /// \return returns a CoordinateDouble of the spawnlocation
-    CoordinateDouble WorldParser::_get_spawnpoint( vector<tuple<int, int, char*>> object_list, vector<vector<Tile*>> map )
+    CoordinateDouble WorldParser::_get_spawnpoint( vector<tuple<size_t, size_t, char*>> object_list, vector<vector<Tile*>> map )
     {
         for ( int i = 0; i < object_list.size(); i++ ) {
             if ( std::strcmp( get<2>( object_list[i] ), "PlayerSpawn" ) == 0 ) {
@@ -107,7 +107,7 @@ namespace GameLogic {
     ///
     /// \param object_list the object list
     /// \param map the tilemap
-    void WorldParser::_set_objects( Level& level, vector<tuple<int, int, char*>> object_list, vector<vector<Tile*>> map, Engine::SPTR_AssetsManager assets, string file_location )
+    void WorldParser::_set_objects( Level& level, vector<tuple<size_t, size_t, char*>> object_list, vector<vector<Tile*>> map, Engine::SPTR_AssetsManager assets, string file_location )
     {
         for (auto object : object_list) {
             if ( std::strcmp( get<2>( object ), "Entity" ) == 0 ) {
