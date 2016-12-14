@@ -39,15 +39,7 @@ namespace State {
             Action _selected_action;
             bool _action_is_selected;
             void _set_action(Action action);
-            void _init_key_descriptions();
-            void _init_action_descriptions();
             void _add_menu_options();
-
-            map<Key, string> _key_descriptions;
-            string _get_key_description(Key key);
-
-            map<Action, string> _action_descriptions;
-            string _get_action_description(Action action);
     };
 }
 
