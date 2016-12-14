@@ -28,7 +28,7 @@ namespace GameLogic {
     {
         RapidXMLAdapter rapid_adapter;
         vector<vector<size_t>> int_map;
-        vector<tuple<size_t, size_t, char*>> object_list;
+        vector<tuple<size_t, size_t, size_t, char*>> object_list;
 
         rapid_adapter.setup_document( file_location );
         string path = file_location.substr( 0, file_location.find_last_of( "\\/" ) ) + "/";
@@ -75,21 +75,22 @@ namespace GameLogic {
     /// \param object_list list of all the object needed to be set
     /// \param rapid_adapter ref of current rapid_adapter
     /// \param path path to .tmx folder
-    void WorldParser::_set_objects( Level& level, vector<tuple<size_t, size_t, char*>> object_list, RapidXMLAdapter& rapid_adapter, string path )
+    void WorldParser::_set_objects( Level& level, vector<tuple<size_t, size_t, size_t, char*>> object_list, RapidXMLAdapter& rapid_adapter, string path )
     {
         int spawnpoint_count = 0;
         for ( auto object : object_list ) {
-            size_t y = get<1>( object );
-            size_t x = get<0>( object );
+            size_t y = get<2>( object );
+            size_t x = get<1>( object );
             if ( y < level.get_field().size() && x < level.get_field()[y].size() ) {
-                if ( std::strcmp( get<2>( object ), "PlayerSpawn" ) == 0 ) {
+                if ( std::strcmp( get<3>( object ), "PlayerSpawn" ) == 0 ) {
                     this->_set_spawnpoint(level, y, x);
                     spawnpoint_count++;
                 }
-                else if ( std::strcmp( get<2>( object ), "Entity" ) == 0 ) {
-                    this->_set_entity(level, y, x, rapid_adapter, path);
+                else if ( std::strcmp( get<3>( object ), "Entity" ) == 0 ) {
+                    size_t id = get<0>( object );
+                    this->_set_entity(level, y, x, id, rapid_adapter, path);
                 }
-                else if ( std::strcmp( get<2>( object ), "DoorTrigger" ) == 0 ) {
+                else if ( std::strcmp( get<3>( object ), "DoorTrigger" ) == 0 ) {
                     this->_set_door_trigger( level, y, x);
                 }
             }
@@ -117,10 +118,10 @@ namespace GameLogic {
         }
     }
 
-    void WorldParser::_set_entity( Level & level, size_t y, size_t x, RapidXMLAdapter & rapid_adapter, string path )
+    void WorldParser::_set_entity( Level & level, size_t y, size_t x, size_t id, RapidXMLAdapter & rapid_adapter, string path )
     {
         CoordinateDouble entity_spawn = { y + this->_spawn_tile_offset, x + this->_spawn_tile_offset };
-        Engine::ImageBuffer* entitybuffer = level.assets->get_entity_texture( path + rapid_adapter.get_entity_texture( x, y ) );
+        Engine::ImageBuffer* entitybuffer = level.assets->get_entity_texture( path + rapid_adapter.get_entity_texture( id ) );
         if ( entitybuffer == nullptr ) {
             throw FileInvalidException();
         }
