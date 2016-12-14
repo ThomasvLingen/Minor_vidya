@@ -44,10 +44,11 @@ namespace GameLogic {
 
             // We only have to wait if VSync is disabled. Otherwise it's done for us.
             if (!Config::USE_VSYNC) {
+                const int frame_duration = 1000 / Config::FPS;
                 int time_spent = this->SDL_facade.get_ticks() - current_frame_start_time;
 
-                if (FRAME_DURATION > time_spent) { //TODO use vsync instead of this
-                    this->SDL_facade.delay_millis(FRAME_DURATION - time_spent);
+                if (frame_duration > time_spent) { //TODO use vsync instead of this
+                    this->SDL_facade.delay_millis(frame_duration - time_spent);
                 }
             }
         }
