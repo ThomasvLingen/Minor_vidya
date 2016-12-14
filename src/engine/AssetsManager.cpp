@@ -44,4 +44,8 @@ namespace Engine {
     {
         return this->_known_textures.at(id);
     }
+    ImageBuffer* AssetsManager::get_entity_texture( string texture_source )
+    {
+        return this->_SDL_facade.load_image_buffer(texture_source);
+    }
 }
