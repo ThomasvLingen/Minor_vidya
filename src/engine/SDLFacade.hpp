@@ -106,8 +106,9 @@ namespace Engine {
         void play_sound_effect(const string name);
         void stop_music();
 
-        TextureMap get_tileset_buffers(const string& path, const int tile_width, const int tile_height, const int amount_of_tiles);
-
+        TextureMap get_tileset_buffers( const string path, const size_t tile_width, const size_t tile_height, const size_t amount_of_tiles );
+        
+        ImageBuffer* load_image_buffer( const string path );
     private:
         void _handle_key_pressed_event(SDL_Keycode key);
         void _handle_key_released_event(SDL_Keycode key);
