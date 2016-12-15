@@ -9,8 +9,8 @@ namespace GameLogic {
     Player::Player(CoordinateDouble position, ControlMapper control_mapper)
     : PointOfView(position, Engine::RaycastingVector{-1, 0}, Engine::RaycastingVector{0, 0.66})
     , _level(nullptr)
-    , _health(60)
     , _control_mapper(control_mapper)
+    , _health(60)
     {
 
     }
