@@ -24,6 +24,7 @@ namespace State {
     }
 
     void RunState::update(int time_since_last_update) { //TODO: If called again, level has to reload
+        this->_context.get_level()->in_game_ticks = this->_hud.get_current_ticks();
         if (this->_context.get_level()->is_level_over()) {
             this->_context.set_new_state(std::make_shared<LevelWinState>(this->_context));
         }
@@ -37,6 +38,7 @@ namespace State {
         for (auto action : input_actions.actions_off) {
             switch (action) {
                 case Action::PAUSE_GAME:
+                    //githis->_context.get_level()->in_game_ticks = this->_hud.get_current_ticks();
                     this->_context.set_new_state(std::make_shared<PauseState>(this->_context));
                     break;
                 default:

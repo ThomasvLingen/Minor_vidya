@@ -51,7 +51,7 @@
     <property name="Texture" type="file" value="charizard.bmp"/>
    </properties>
   </object>
-  <object id="23" type="Entity" x="640" y="704" width="64" height="64">
+  <object id="23" type="Entity" x="768" y="768" width="64" height="64">
    <properties>
     <property name="Texture" type="file" value="charizard.bmp"/>
    </properties>
