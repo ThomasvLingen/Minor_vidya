@@ -13,6 +13,7 @@
 #include "VectorUtil.hpp"
 #include "Level.hpp"
 #include "../engine/KeyStrokes.hpp"
+#include "Weapon.hpp"
 
 namespace GameLogic {
 
@@ -35,6 +36,9 @@ namespace GameLogic {
         void set_level(SPTR_Level level);
         void handleInput(Input keys);
         virtual void update(int timeSinceLastUpdate);
+
+        Weapon* get_weapon();
+        void give_weapon(Weapon* weapon);
 
     private:
         SPTR_Level _level;
@@ -64,6 +68,8 @@ namespace GameLogic {
         void _set_new_current_tile();
         void _try_trigger();
         void _do_action();
+
+        Weapon* _weapon;
 
         /*
          * int health

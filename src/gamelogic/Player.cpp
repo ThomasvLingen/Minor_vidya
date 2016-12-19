@@ -186,4 +186,20 @@ namespace GameLogic {
             }
         }
     }
+
+    Weapon *Player::get_weapon() {
+        if(_weapon != nullptr){
+            return this->_weapon;
+        } else {
+            //Throw Exception
+        }
+    }
+
+    void Player::give_weapon(Weapon* weapon) {
+        if(weapon != nullptr){
+            this->_weapon = weapon;
+        } else {
+            //Throw Exception
+        }
+    }
 }
