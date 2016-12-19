@@ -14,6 +14,7 @@
 #include "Level.hpp"
 #include "../engine/KeyStrokes.hpp"
 #include "Weapon.hpp"
+#include "exceptions/WeaponIsNullptrException.hpp"
 
 namespace GameLogic {
 

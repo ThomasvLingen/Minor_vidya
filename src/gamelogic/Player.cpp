@@ -191,7 +191,7 @@ namespace GameLogic {
         if(_weapon != nullptr){
             return this->_weapon;
         } else {
-            //Throw Exception
+            throw Exceptions::WeaponIsNullptrException();
         }
     }
 
@@ -199,7 +199,7 @@ namespace GameLogic {
         if(weapon != nullptr){
             this->_weapon = weapon;
         } else {
-            //Throw Exception
+            throw Exceptions::WeaponIsNullptrException();
         }
     }
 }
