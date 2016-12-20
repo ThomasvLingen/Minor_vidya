@@ -30,15 +30,14 @@ namespace Engine {
     {
         bool success = true;
 
-        // We put an empty texture at index 0, since an empty space should not have an index
-        // We can now directly map tile IDs to textures!
-        this->_known_textures[0] = new ImageBuffer();
-
         TextureMap texture_map = this->_SDL_facade.get_tileset_buffers( texture_source, tile_width, tile_height, tile_count );
         if (texture_map.size() == 0) {
             success = false;
         } else {
+            // We put an empty texture at index 0, since an empty space should not have an index
+            // We can now directly map tile IDs to textures!
             this->_known_textures[0] = new ImageBuffer();
+
             for (auto tile_pair : texture_map) {
                 this->_known_textures[tile_pair.first] = tile_pair.second;
             }
