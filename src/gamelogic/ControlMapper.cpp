@@ -21,17 +21,14 @@ namespace GameLogic{
     {
         this->_input_actions.actions_off.clear();
         this->_input_actions.actions_on.clear();
-        for (auto const& action_key_pair : this->_mapping_info)
-        {
+        for (auto const& action_key_pair : this->_mapping_info) {
             if (std::find(input.keys_down.begin(), input.keys_down.end(), action_key_pair.second) != input.keys_down.end()) {
                 //action key found in keys_down
                 this->_input_actions.actions_on.push_back(action_key_pair.first);
-                //input_actions.actions_on.push_back(action_key_pair.first);
             }
 
             if (std::find(input.keys_released.begin(), input.keys_released.end(), action_key_pair.second) != input.keys_released.end()) {
                 //action key found in keys_released
-                //input_actions.actions_off.push_back(action_key_pair.first);
                 this->_input_actions.actions_off.push_back(action_key_pair.first);
             }
         }
