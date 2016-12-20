@@ -80,7 +80,7 @@ namespace GameLogic {
     /// 
     /// This function returns the texture tile height of the texture that is used in this .tmx.
     /// RapidXMLAdapter::setup_document has to be called before using this 
-    int RapidXMLAdapter::get_tile_height()
+    size_t RapidXMLAdapter::get_tile_height()
     {
         this->_tile_height = std::stoi( this->_tileset_node->first_attribute( "tileheight" )->value() );
         return _tile_height;
@@ -90,7 +90,7 @@ namespace GameLogic {
     /// 
     /// This function returns the texture tile width of the texture that is used in this .tmx.
     /// RapidXMLAdapter::setup_document has to be called before using this 
-    int RapidXMLAdapter::get_tile_width()
+    size_t RapidXMLAdapter::get_tile_width()
     {
         this->_tile_width = std::stoi( this->_tileset_node->first_attribute( "tilewidth" )->value() );
         return _tile_width;
@@ -100,7 +100,7 @@ namespace GameLogic {
     /// 
     /// This function returns the texture tile count of the texture that is used in this .tmx.
     /// RapidXMLAdapter::setup_document has to be called before using this 
-    int RapidXMLAdapter::get_tile_count()
+    size_t RapidXMLAdapter::get_tile_count()
     {
         return std::stoi( this->_tileset_node->first_attribute( "tilecount" )->value() );
     }
