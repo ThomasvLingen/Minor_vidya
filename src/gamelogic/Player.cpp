@@ -32,13 +32,10 @@ namespace GameLogic {
         this->_control_mapper.handle_input(keys);
         InputActions input_actions = this->_control_mapper.get_input_actions();
 
-        for (auto action : input_actions.actions_off) {
-            switch (action) {
-                case Action::ACTION_INTERACT :
-                    this->_action_released = true;
-                    break;
-                default:
-                    break;
+
+        for(auto action : input_actions.actions_off){
+            if(action == Action::ACTION_INTERACT){
+                this->_action_released = true;
             }
         }
 
