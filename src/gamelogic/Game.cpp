@@ -113,7 +113,8 @@ namespace GameLogic {
         this->_player->give_weapon(new ChainGun(this->SDL_facade));
     }
 
-    SPTR_Level Game::get_level() {
+    SPTR_Level Game::get_level()
+    {
         if (this->_level != nullptr) {
             return this->_level;
         } else {

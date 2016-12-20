@@ -11,6 +11,13 @@ namespace Engine {
     {
     }
 
+    World::~World()
+    {
+        for ( auto entity : this->_entities ) {
+            delete entity;
+        }
+    }
+
     vector<Entity*>& World::get_entities()
     {
         return this->_entities;

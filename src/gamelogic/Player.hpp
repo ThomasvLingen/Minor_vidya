@@ -34,6 +34,9 @@ namespace GameLogic {
         Player(CoordinateDouble position);
         ~Player();
 
+        int get_health();
+        int get_total_health();
+
         bool is_at(int x, int y);
         void set_level(SPTR_Level level);
         void handleInput(Input keys);
@@ -55,6 +58,9 @@ namespace GameLogic {
         bool _action_released = true;
 
         Tile* _current_tile;
+
+        int _total_health = 80;
+        int _health;
 
         void _move_player(int timeSinceLastUpdate);
         void _rotate_player(int timeSinceLastUpdate);

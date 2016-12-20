@@ -528,7 +528,7 @@ namespace Engine {
     /// \param amount_of_tiles Number of tiles that are stored within the tileset
     ///
     /// \return Returns a map with an Id as key and a vector<Uint32> as value. The list is empty when the image could not be loaded
-    TextureMap SDLFacade::get_tileset_buffers(const string &path, const int tile_width, const int tile_height,
+    TextureMap SDLFacade::get_tileset_buffers(const string path, const int tile_width, const int tile_height,
                                               const int amount_of_tiles)
     {
         TextureMap texture_map;
@@ -559,6 +559,33 @@ namespace Engine {
         }
 
         return texture_map;
+    }
+
+    ImageBuffer* SDLFacade::load_image_buffer( const string path )
+    {
+        ImageBuffer pixels;
+        SDL_Surface* texture = IMG_Load( path.c_str() );
+        if ( texture == NULL ) {
+            // check of succeeded
+            cout << "An error occurred while loading tileset " << path
+                << ". This occurred while trying to convert an image to pixels for a texture." << endl;
+        }
+        else {
+            SDL_LockSurface( texture );
+
+            int bytes_per_pixel = texture->format->BytesPerPixel;
+
+            for ( int current_y = 0; current_y < texture->h; current_y++ ) {
+                for ( int current_x = 0; current_x < texture->w; current_x++ ) {
+                    Uint8* pixel = ( Uint8* ) texture->pixels + current_y * texture->pitch + current_x * bytes_per_pixel;
+                    pixels.push_back( *( Uint32* ) pixel );
+                }
+            }
+
+            SDL_FreeSurface( texture );
+        }
+
+        return new ImageBuffer( pixels );
     }
 
     /// \brief Plays a music file
