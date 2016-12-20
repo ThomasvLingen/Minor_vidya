@@ -7,7 +7,7 @@
 
 namespace GameLogic {
 
-    Player::Player(CoordinateDouble position, SDLFacade& SDL_facade, ControlMapper control_mapper)
+    Player::Player(CoordinateDouble position, SDLFacade& SDL_facade, ControlMapper& control_mapper)
     : PointOfView(position, Engine::RaycastingVector{-1, 0}, Engine::RaycastingVector{0, 0.66})
     , Drawable(SDL_facade)
     , _level(nullptr)
