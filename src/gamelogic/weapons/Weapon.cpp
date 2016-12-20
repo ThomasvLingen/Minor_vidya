@@ -6,18 +6,8 @@
 
 namespace GameLogic {
 
-    Weapon::Weapon(SDLFacade& SDL_Facade, CoordinateInt draw_coordinates
-    , int animation_start_image, std::string sound_effect, int image_interval
-    , std::vector<std::string> images, int amount_of_shots, int damage_per_shot)
+    Weapon::Weapon(SDLFacade &SDL_Facade)
     : Drawable(SDL_Facade)
-    , _draw_coordinates(draw_coordinates)
-    , _current_image(animation_start_image)
-    , _animation_start_image(animation_start_image)
-    , _sound_effect(sound_effect)
-    , _image_interval(image_interval)
-    , _images(images)
-    , _amount_of_shots(amount_of_shots)
-    , _damage_per_shot(damage_per_shot)
     {
     }
 

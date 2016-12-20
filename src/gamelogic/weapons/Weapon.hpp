@@ -5,7 +5,7 @@
 #ifndef MINOR_VIDYA_GUN_HPP
 #define MINOR_VIDYA_GUN_HPP
 
-#include "../engine/interface/Drawable.hpp"
+#include "../../engine/interface/Drawable.hpp"
 
 namespace GameLogic {
 
@@ -16,9 +16,8 @@ namespace GameLogic {
     class Weapon : public Drawable {
 
     public:
-        Weapon(SDLFacade& SDL_Facade, CoordinateInt draw_coordinates
-        , int animation_start_image, std::string sound_effect, int image_interval
-        , std::vector<std::string> images, int amount_of_shots, int damage_per_shot);
+        Weapon(SDLFacade& SDL_Facade);
+
         virtual ~Weapon();
 
         void draw() override;
@@ -30,10 +29,12 @@ namespace GameLogic {
         int get_damage_per_shot();
 
     private:
-        CoordinateInt _draw_coordinates;
         bool _shoot = false;
         int _previous_ticks;
         int _ticks_on_shoot;
+
+    protected:
+        CoordinateInt _draw_coordinates;
         int _current_image;
         int _animation_start_image;
         std::string _sound_effect;
