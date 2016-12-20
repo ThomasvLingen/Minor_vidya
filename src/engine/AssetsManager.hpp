@@ -17,6 +17,7 @@ namespace Engine {
     class AssetsManager {
     public:
         AssetsManager(SDLFacade& SDL_facade);
+        virtual ~AssetsManager();
 
         bool init( string texture_source, size_t tile_width, size_t tile_height, size_t tile_count);
         ImageBuffer* get_texture(int id);
