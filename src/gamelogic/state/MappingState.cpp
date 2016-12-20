@@ -70,15 +70,15 @@ namespace State {
         int x = 150;
         int y = 70;
         const int row_height = 30;
-        for (auto action_description_pair : this->_context.control_mapper.get_action_descriptions()) {
+        for (auto action : this->_context.control_mapper.get_editable_actions()) {
             MenuOption action_option = MenuOption(
                     {x,y},
-                    this->_context.control_mapper.get_action_description(action_description_pair.first)
+                    this->_context.control_mapper.get_action_description(action)
                     + "   >   "
-                    +  this->_context.control_mapper.get_key_description(this->_context.control_mapper.get_key_by_action(action_description_pair.first)),
-                    [this, action_description_pair] (Game& game) {
+                    +  this->_context.control_mapper.get_key_description(this->_context.control_mapper.get_key_by_action(action)),
+                    [this, action] (Game& game) {
                         UNUSED(game);
-                        this->_set_action(action_description_pair.first);
+                        this->_set_action(action);
                     }
             );
             this->_menu.add_option(action_option);

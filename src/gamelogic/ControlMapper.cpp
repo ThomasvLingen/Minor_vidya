@@ -58,6 +58,17 @@ namespace GameLogic{
             {Action::ROTATE_RIGHT, Key::ARROW_RIGHT},
             {Action::PAUSE_GAME, Key::ESC}
         };
+
+        this->_editable_actions = {
+            {Action::ACTION_INTERACT},
+            {Action::MOVE_BACKWARD},
+            {Action::MOVE_FORWARD},
+            {Action::MOVE_LEFT},
+            {Action::MOVE_RIGHT},
+            {Action::ROTATE_LEFT},
+            {Action::ROTATE_RIGHT},
+            {Action::PAUSE_GAME}
+        };
     }
 
     Key ControlMapper::get_key_by_action(Action action)
@@ -90,7 +101,12 @@ namespace GameLogic{
             {Action::MOVE_RIGHT, "Move right"},
             {Action::ROTATE_LEFT, "Rotate left"},
             {Action::ROTATE_RIGHT, "Rotate right"},
-            {Action::PAUSE_GAME, "Pause game"}
+            {Action::PAUSE_GAME, "Pause game"},
+            {Action::ACTION_USE, "Use item"},
+            {Action::MENU_BACK, "Go back in menu"},
+            {Action::MENU_SELECT, "Select menu option"},
+            {Action::MENU_UP, "Go up in menu"},
+            {Action::MENU_DOWN, "Go down in menu"}
         };
     }
 
@@ -143,13 +159,18 @@ namespace GameLogic{
         };
     }
 
-    map<Key, string>& ControlMapper::get_key_descriptions()
-    {
-        return this->_key_descriptions;
-    }
-
     map<Action, string>& ControlMapper::get_action_descriptions()
     {
         return this->_action_descriptions;
+    }
+
+    vector<Action>& ControlMapper::get_editable_actions()
+    {
+        return this->_editable_actions;
+    }
+
+    map<Action, Key>& ControlMapper::get_all_actions()
+    {
+        return this->_mapping_info;
     }
 }

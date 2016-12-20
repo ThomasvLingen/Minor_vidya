@@ -40,22 +40,14 @@ namespace State {
         this->_context.SDL_facade.draw_image("res/helpscreen.bmp" , {0,0});
         this->_context.SDL_facade.draw_text("Controls for Vidya Game", FontType::alterebro_pixel, this->_color, {120, 50});
 
+        ControlMapper mapper = this->_context.control_mapper;
+
         int current_y_pos = this->_start_pos_y;
-        for (auto& line : this->_text) {
-            this->_context.SDL_facade.draw_text(line, this->_font, this->_color, {this->_start_pos_x, current_y_pos});
+        for (auto& editable_action : mapper.get_all_actions()) {
+            this->_context.SDL_facade.draw_text(mapper.get_action_description(editable_action.first), this->_font, this->_color, {this->_action_start_pos_x, current_y_pos});
+            this->_context.SDL_facade.draw_text(mapper.get_key_description(editable_action.second), FontType::alterebro_pixel, this->_color, {_key_start_pos_x, current_y_pos});
             current_y_pos += this->_step_size_y;
         }
-
-        ControlMapper mapper = this->_context.control_mapper;
-        this->_context.SDL_facade.draw_text(mapper.get_key_description(mapper.get_key_by_action(Action::MOVE_FORWARD)), FontType::alterebro_pixel, this->_color, {300, 80});
-        this->_context.SDL_facade.draw_text(mapper.get_key_description(mapper.get_key_by_action(Action::MOVE_BACKWARD)), FontType::alterebro_pixel, this->_color, {300, 110});
-        this->_context.SDL_facade.draw_text(mapper.get_key_description(mapper.get_key_by_action(Action::ROTATE_LEFT)), FontType::alterebro_pixel, this->_color, {300, 140});
-        this->_context.SDL_facade.draw_text(mapper.get_key_description(mapper.get_key_by_action(Action::ROTATE_RIGHT)), FontType::alterebro_pixel, this->_color, {300, 170});
-        this->_context.SDL_facade.draw_text(mapper.get_key_description(mapper.get_key_by_action(Action::MOVE_LEFT)), FontType::alterebro_pixel, this->_color, {300, 200});
-        this->_context.SDL_facade.draw_text(mapper.get_key_description(mapper.get_key_by_action(Action::MOVE_RIGHT)), FontType::alterebro_pixel, this->_color, {300, 230});
-        this->_context.SDL_facade.draw_text("Enter", FontType::alterebro_pixel, this->_color, {300, 260});
-        this->_context.SDL_facade.draw_text("ESC", FontType::alterebro_pixel, this->_color, {300, 290});
-
 
         this->_context.SDL_facade.render_buffer();
     }

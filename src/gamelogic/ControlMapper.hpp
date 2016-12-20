@@ -45,11 +45,14 @@ namespace GameLogic {
         string get_key_description(Key key);
         string get_action_description(Action action);
 
-        map<Key, string>& get_key_descriptions();
         map<Action, string>& get_action_descriptions();
+
+        vector<Action>& get_editable_actions();
+        map<Action, Key>& get_all_actions();
 
     private:
         map<Action, Key> _mapping_info;
+        vector<Action> _editable_actions;
         InputActions _input_actions;
         map<Key, string> _key_descriptions;
         map<Action, string> _action_descriptions;
