@@ -19,6 +19,7 @@ namespace GameLogic {
         Weapon(SDLFacade& SDL_Facade, CoordinateInt draw_coordinates
         , int animation_start_image, std::string sound_effect, int image_interval
         , std::vector<std::string> images, int amount_of_shots, int damage_per_shot);
+        virtual ~Weapon();
 
         void draw() override;
 

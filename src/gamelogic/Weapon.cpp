@@ -21,6 +21,10 @@ namespace GameLogic {
     {
     }
 
+    Weapon::~Weapon()
+    {
+    }
+
     void Weapon::draw()
     {
         if (_shoot == true) {
