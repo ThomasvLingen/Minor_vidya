@@ -9,6 +9,7 @@ namespace GameLogic {
     Pistol::Pistol(SDLFacade& SDL_Facade)
     : Weapon(SDL_Facade)
     {
+        SDL_Facade.load_sound_effect("pistolshot", "res/sound_effects/pistolshot.wav");
         this->_draw_coordinates = {120,26};
         this->_animation_start_image = 1;
         this->_current_image = 1;

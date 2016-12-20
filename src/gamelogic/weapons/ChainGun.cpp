@@ -9,6 +9,7 @@ namespace GameLogic {
     ChainGun::ChainGun(SDLFacade& SDL_Facade)
             : Weapon(SDL_Facade)
     {
+        SDL_Facade.load_sound_effect("chaingunshot", "res/sound_effects/chaingunshot.wav");
         this->_draw_coordinates = {120,26};
         this->_animation_start_image = 1;
         this->_current_image = 1;
