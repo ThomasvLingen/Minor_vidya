@@ -93,6 +93,19 @@ namespace GameLogic {
         this->_init_weapons();
         this->raycasting_engine.set_world( this->_level );
 
+        // TEST CODE, DELETE THIS
+        this->_level->get_entities().push_back(
+            new Engine::Entity(
+                new Engine::AnimatedTexture(
+                    assets->get_animation("soldier_idle"),
+                    {250, 250, 250, 250},
+                    16, 16
+                ),
+                {6.1, 9.5}
+            )
+        );
+        // END OF TEST CODE
+
         return true;
     }
 

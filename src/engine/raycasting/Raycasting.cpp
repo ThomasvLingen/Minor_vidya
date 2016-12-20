@@ -110,7 +110,10 @@ namespace Engine {
             // translate sprite position to relative to camera
             CoordinateDouble sprite_pos = entity->get_position() - ray_position;
             CoordinateDouble transformed = this->_transform_relative_to_camera_matrix(sprite_pos);
-            ImageBuffer& entity_texture = *entity->get_texture(); 
+
+            int texture_width = entity->get_texture_width();
+            int texture_height = entity->get_texture_height();
+            ImageBuffer& entity_texture = entity->get_texture();
 
             int sprite_screen_x = int((width / 2) * (1 + transformed.x / transformed.y));
 
@@ -125,14 +128,14 @@ namespace Engine {
             // loop through every vertical stripe of the sprite on screen
             for (int stripe = sprite_x.draw_start; stripe < sprite_x.draw_end; stripe++) {
                 // TODO: there is quite a bit of room to be optimised here, certain calculations can be moved a scope higher
-                int tex_x = int(AVOID_FLOAT * (stripe - (-sprite_length / 2 + sprite_screen_x)) * TEXTURE_WIDTH / sprite_length) / AVOID_FLOAT;
+                int tex_x = int(AVOID_FLOAT * (stripe - (-sprite_length / 2 + sprite_screen_x)) * texture_width / sprite_length) / AVOID_FLOAT;
 
                 if (this->_sprite_should_be_drawn(transformed, stripe, distance_buffer)) {
                     for (int y = draw_coords.draw_start; y < draw_coords.draw_end; y++) {  // for every pixel of the current stripe
                         int unscaled_tex_y = (y) * AVOID_FLOAT - height * AVOID_FLOAT_HALF + sprite_length * AVOID_FLOAT_HALF; // 256 and 128 factors to avoid floats
-                        int tex_y = ((unscaled_tex_y * TEXTURE_HEIGHT) / sprite_length) / AVOID_FLOAT;
+                        int tex_y = ((unscaled_tex_y * texture_height) / sprite_length) / AVOID_FLOAT;
 
-                        Uint32 pixel = entity_texture[TEXTURE_WIDTH * tex_y + tex_x]; // get current pixel from the texture
+                        Uint32 pixel = entity_texture[texture_width * tex_y + tex_x]; // get current pixel from the texture
 
                         // TODO: Transparency is done here. There is undoubtedly a better way to do this
                         if ((pixel & 0x000000FF) == 0xFF) {

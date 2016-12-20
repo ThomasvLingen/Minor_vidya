@@ -128,8 +128,9 @@ namespace GameLogic {
         if ( entitybuffer == nullptr ) {
             throw FileInvalidException();
         }
-        Engine::Entity* new_entity = new Engine::Entity( entitybuffer, entity_spawn );
-        level.get_entities().push_back( new_entity );
+        // TODO: Adapt this to new Entity constructor (with an AnimatedSprite!)
+        // Engine::Entity* new_entity = new Engine::Entity( entitybuffer, entity_spawn );
+        // level.get_entities().push_back( new_entity );
     }
 
     /// \brief Sets door trigger on tile

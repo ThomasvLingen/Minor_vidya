@@ -7,12 +7,9 @@
 
 namespace Engine{
 
-    /// \brief Constructor of the class
-    ///
-    /// \param image_buffer The texture of the entity which will be used to draw the entity
-    Entity::Entity(ImageBuffer* texture, CoordinateDouble position)
+    Entity::Entity(AnimatedTexture* animated_texture, CoordinateDouble position)
     : _position(position)
-    , _texture(texture)
+    , _animated_texture(animated_texture)
     {
 
     }
@@ -20,7 +17,14 @@ namespace Engine{
     /// \brief Destructor of the class
     Entity::~Entity()
     {
-        delete this->_texture;
+        delete this->_animated_texture;
+    }
+
+    void Entity::update(int delta_time)
+    {
+        if (this->_animated_texture != nullptr) {
+            this->_animated_texture->update(delta_time);
+        }
     }
 
     /// \brief Getter for the position of the entity
@@ -32,13 +36,18 @@ namespace Engine{
 
     /// \brief Getter for the image buffer of the entity
     /// \return returns an ImageBuffer
-    ImageBuffer* Entity::get_texture()
+    ImageBuffer& Entity::get_texture()
     {
-        if ( this->_texture == nullptr ) {
-            throw Exceptions::InvalidTextureException();
-        }
-        else {
-            return this->_texture;
-        }
+        return this->_animated_texture->get_texture();
+    }
+
+    int Entity::get_texture_width()
+    {
+        return (int)this->_animated_texture->get_texture_width();
+    }
+
+    int Entity::get_texture_height()
+    {
+        return (int)this->_animated_texture->get_texture_height();
     }
 }

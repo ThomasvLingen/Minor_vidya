@@ -22,10 +22,16 @@ namespace Engine {
         bool init( string texture_source, size_t tile_width, size_t tile_height, size_t tile_count);
         ImageBuffer* get_texture(int id);
         ImageBuffer* get_entity_texture(string texture_source);
+        vector<ImageBuffer*> get_animation(string name);
     private:
         TextureMap _known_textures;
+        AnimationTextureMap _known_animations;
 
         bool _init_texture_map( string texture_source, size_t tile_width, size_t tile_height, size_t tile_count );
+        bool _init_animation_map();
+        bool _load_animation(string animation_name, string animation_source, size_t row, size_t width, size_t height, size_t animation_frames);
+
+        vector<ImageBuffer*> _get_animation(string sprite_sheet, size_t row, size_t width, size_t height, size_t animation_frames);
         SDLFacade& _SDL_facade;
 
         // TODO: This can be removed since it's unused.

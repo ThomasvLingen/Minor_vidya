@@ -51,6 +51,10 @@ namespace GameLogic {
             }
         }
 
+        for (auto& entity : this->get_entities()) {
+            entity->update(delta_time);
+        }
+
         this->_player.update(delta_time);
     }
 

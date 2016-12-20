@@ -665,4 +665,28 @@ namespace Engine {
         return VIDYA_RUNPATH + path;
     }
 
+    vector<ImageBuffer*> SDLFacade::load_animation(const string path, const size_t row, const size_t width,
+                                                   const size_t height, const size_t animation_frames)
+    {
+        vector<ImageBuffer*> animation_textures;
+
+        SDL_Surface* animation_source = IMG_Load(this->_get_absolute_path(path).c_str());
+
+        if (animation_source == NULL) {
+            cout << "An error occurred while loading animation " << path << endl;
+        } else {
+            SDL_LockSurface(animation_source);
+
+            for (int animation_frame = 0; animation_frame < animation_frames; animation_frame++) {
+                animation_textures.push_back(
+                    this->get_image_buffer(animation_source, CoordinateInt {animation_frame, row}, width, height)
+                );
+            }
+
+            SDL_FreeSurface(animation_source);
+        }
+
+        return animation_textures;
+    }
+
 }
