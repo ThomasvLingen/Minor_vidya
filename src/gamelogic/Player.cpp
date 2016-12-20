@@ -194,15 +194,17 @@ namespace GameLogic {
         }
     }
 
-    Weapon *Player::get_weapon() {
-        if(this->_weapons[this->_current_weapon] != nullptr){
+    Weapon* Player::get_weapon()
+    {
+        if (this->_weapons[this->_current_weapon] != nullptr) {
             return this->_weapons[this->_current_weapon];
         } else {
             throw Exceptions::WeaponIsNullptrException();
         }
     }
 
-    void Player::give_weapon(Weapon* weapon) {
+    void Player::give_weapon(Weapon* weapon)
+    {
         if (weapon != nullptr) {
             this->_weapons.push_back(weapon);
         } else {
@@ -231,6 +233,5 @@ namespace GameLogic {
             }
         }
     }
-
 
 }
