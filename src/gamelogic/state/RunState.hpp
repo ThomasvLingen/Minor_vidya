@@ -9,6 +9,7 @@
 #include "../Game.hpp"
 #include "../../engine/SDLFacade.hpp"
 #include "../../engine/FPScounter.hpp"
+#include "../HUD.hpp"
 
 namespace GameLogic {
     class Game;
@@ -18,6 +19,7 @@ namespace State {
     using Engine::Keys;
     using Engine::Key;
     using GameLogic::Game;
+    using GameLogic::HUD;
 
     class RunState : public IGameState {
 
@@ -26,8 +28,8 @@ namespace State {
         void update(int time_since_last_update) override;
 
     private:
-        int _timeSinceLastPress = 0;
         Engine::FPScounter _fps;
+        HUD _hud;
     };
 }
 
