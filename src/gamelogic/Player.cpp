@@ -196,8 +196,8 @@ namespace GameLogic {
 
     Weapon* Player::get_weapon()
     {
-        if (this->_weapons[this->_current_weapon] != nullptr) {
-            return this->_weapons[this->_current_weapon];
+        if (this->_weapons[this->_current_weapon_index] != nullptr) {
+            return this->_weapons[this->_current_weapon_index];
         } else {
             throw Exceptions::WeaponIsNullptrException();
         }
@@ -215,16 +215,16 @@ namespace GameLogic {
     void Player::_next_weapon()
     {
         if (!(this->get_weapon()->being_shot())) {
-            this->_current_weapon++;
-            this->_current_weapon = this->_current_weapon % (int) this->_weapons.size();
+            this->_current_weapon_index++;
+            this->_current_weapon_index = this->_current_weapon_index % (int) this->_weapons.size();
         }
     }
 
     void Player::_previous_weapon()
     {
         if (!(this->get_weapon()->being_shot())) {
-            this->_current_weapon--;
-            this->_current_weapon = this->_current_weapon % (int) this->_weapons.size();
+            this->_current_weapon_index--;
+            this->_current_weapon_index = this->_current_weapon_index % (int) this->_weapons.size();
         }
     }
 

@@ -74,7 +74,7 @@ namespace GameLogic {
         void _previous_weapon();
 
         vector<Weapon*> _weapons;
-        int _current_weapon = 0;
+        int _current_weapon_index = 0;
 
         /*
          * int health
