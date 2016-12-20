@@ -45,5 +45,4 @@ namespace GameLogic {
     };
 }
 
-
 #endif //MINOR_VIDYA_GUN_HPP
