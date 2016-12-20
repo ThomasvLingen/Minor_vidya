@@ -32,6 +32,8 @@ PROGRAM_NAME = vidya
 EXEC = $(BUILD_PATH)$(PROGRAM_NAME)
 
 # Compile stuff
+all : $(EXEC) resources
+
 %.o : %.cpp
 	@echo CC $<
 	$(SILENT) $(CC) -c $< $(COMPILER_FLAGS) -o $@
@@ -41,25 +43,25 @@ $(EXEC) : $(OBJ_FILES)
 	mkdir -p $(BUILD_PATH)
 	@echo LD $@
 	$(SILENT) $(LD) $(COMPILER_FLAGS) $(OBJ_FILES) $(LINKER_FLAGS) $(LIBS) -o $(EXEC)
+
+resources :
 	@echo
 	@echo "Moving resources to build"
 	cp -r $(RES_PATH) $(BUILD_PATH)
 	@echo
 
-all : $(EXEC)
-
-run : $(EXEC)
+run : $(EXEC) resources
 	$(EXEC)
 
 libs : $(FMT_TARGET_PATH)
 
-debug: $(EXEC)
+debug: $(EXEC) resources
 	gdb $(EXEC)
 
-memory_leaks: $(EXEC)
+memory_leaks: $(EXEC) resources
 	valgrind --tool=memcheck --leak-check=full $(EXEC)
 
-profiler: $(EXEC)
+profiler: $(EXEC) resources
 	valgrind --tool=callgrind $(EXEC)
 
 search_for_tabs: $(SRC_PATH)
