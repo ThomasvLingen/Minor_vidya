@@ -13,6 +13,13 @@ namespace GameLogic {
 
     }
 
+    Player::~Player()
+    {
+        for (auto weapon : this->_weapons) {
+            delete weapon;
+        }
+    }
+
     /// \brief Handles the keys that were pressed during the last tick
     ///
     /// \param keys is a vector of Key enumerables that were pressed
@@ -188,18 +195,42 @@ namespace GameLogic {
     }
 
     Weapon *Player::get_weapon() {
-        if(_weapon != nullptr){
-            return this->_weapon;
+        if(this->_weapons[this->_current_weapon] != nullptr){
+            return this->_weapons[this->_current_weapon];
         } else {
             throw Exceptions::WeaponIsNullptrException();
         }
     }
 
     void Player::give_weapon(Weapon* weapon) {
-        if(weapon != nullptr){
-            this->_weapon = weapon;
+        if (weapon != nullptr) {
+            this->_weapons.push_back(weapon);
         } else {
             throw Exceptions::WeaponIsNullptrException();
         }
     }
+
+    void Player::_next_weapon()
+    {
+        if (!(this->get_weapon()->being_shot())) {
+            if (this->_current_weapon + 1 < (int) this->_weapons.size()) {
+                this->_current_weapon++;
+            } else {
+                this->_current_weapon = 0;
+            }
+        }
+    }
+
+    void Player::_previous_weapon()
+    {
+        if (!(this->get_weapon()->being_shot())) {
+            if (this->_current_weapon - 1 < 0) {
+                this->_current_weapon = (int)this->_weapons.size()-1;
+            } else {
+                this->_current_weapon--;
+            }
+        }
+    }
+
+
 }

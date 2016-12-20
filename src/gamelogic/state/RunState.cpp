@@ -14,7 +14,6 @@ namespace State {
     {
         this->_collection.add_drawable(&_fps);
         this->_collection.add_updatable(&_fps);
-        this->_collection.add_drawable(this->_context.get_level()->get_player().get_weapon());
         context.SDL_facade.stop_music();
     }
 
@@ -43,6 +42,7 @@ namespace State {
 
         this->_context.raycasting_engine.draw();
         this->_collection.draw();
+        this->_context.get_level()->get_player().get_weapon()->draw();
 
         this->_context.SDL_facade.render_buffer();
     }

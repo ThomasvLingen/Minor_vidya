@@ -32,6 +32,7 @@ namespace GameLogic {
 
     public:
         Player(CoordinateDouble position);
+        ~Player();
 
         bool is_at(int x, int y);
         void set_level(SPTR_Level level);
@@ -69,8 +70,11 @@ namespace GameLogic {
         void _set_new_current_tile();
         void _try_trigger();
         void _do_action();
+        void _next_weapon();
+        void _previous_weapon();
 
-        Weapon* _weapon;
+        vector<Weapon*> _weapons;
+        int _current_weapon = 0;
 
         /*
          * int health
