@@ -18,7 +18,7 @@ namespace GameLogic {
     void Weapon::draw()
     {
         if (_shoot == true) {
-            this->_SDL_facade.draw_image(this->_images[this->_current_image], _draw_coordinates);
+            this->_SDL_facade.draw_image(this->_images[this->_current_image], this->_draw_coordinates);
             if (this->_previous_ticks - this->_ticks_on_shoot >= this->_image_interval) {
                 this->_current_image++;
                 this->_ticks_on_shoot = this->_previous_ticks;
@@ -30,7 +30,7 @@ namespace GameLogic {
         } else {
             this->_SDL_facade.draw_image(this->_images[0], this->_draw_coordinates);
         }
-        _previous_ticks = this->_SDL_facade.get_ticks();
+        this->_previous_ticks = this->_SDL_facade.get_ticks();
 
     }
 
@@ -39,7 +39,7 @@ namespace GameLogic {
         if(!this->_shoot){
             this->_shoot = true;
             this->_SDL_facade.play_sound_effect(this->_sound_effect);
-            this->_ticks_on_shoot = _SDL_facade.get_ticks();
+            this->_ticks_on_shoot = this->_SDL_facade.get_ticks();
         }
     }
 
