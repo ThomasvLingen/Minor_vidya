@@ -45,8 +45,6 @@ namespace GameLogic {
         string get_key_description(Key key);
         string get_action_description(Action action);
 
-        map<Action, string>& get_action_descriptions();
-
         vector<Action>& get_editable_actions();
         map<Action, Key>& get_all_actions();
 
