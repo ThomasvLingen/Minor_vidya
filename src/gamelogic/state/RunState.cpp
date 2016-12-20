@@ -58,7 +58,6 @@ namespace State {
             this->_context.set_new_state(std::make_shared<MenuState>(this->_context));
         }
 
-
         this->_context.SDL_facade.render_buffer();
     }
 }
