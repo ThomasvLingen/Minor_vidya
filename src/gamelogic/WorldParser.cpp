@@ -1,6 +1,7 @@
 #include "WorldParser.hpp"
 #include <tuple>
 #include "exceptions/FileInvalidException.hpp"
+#include "Enemy.hpp"
 
 namespace GameLogic {
     using Exceptions::FileInvalidException;
