@@ -18,6 +18,7 @@ namespace Engine {
         World(SPTR_AssetsManager assets);                            // We now have to explicitly declare this since other def constructors are deleted
         World(const World& obj) = delete;            // Copy constructor for a base class has to be deleted (slicing)
         World& operator=(const World& obj) = delete; // Copy assignment for a base class has to be deleted (slicing)
+        ~World();
 
         SPTR_AssetsManager assets;
 
@@ -28,7 +29,6 @@ namespace Engine {
         virtual void handle_input(Input keys) = 0;
 
         vector<Entity*>& get_entities();
-
     };
 }
 

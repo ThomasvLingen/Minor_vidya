@@ -3,13 +3,14 @@
 //
 
 #include "Entity.hpp"
+#include "../../gamelogic/exceptions/InvalidTextureException.hpp"
 
 namespace Engine{
 
     /// \brief Constructor of the class
     ///
     /// \param image_buffer The texture of the entity which will be used to draw the entity
-    Entity::Entity(ImageBuffer& texture, CoordinateDouble position)
+    Entity::Entity(ImageBuffer* texture, CoordinateDouble position)
     : _position(position)
     , _texture(texture)
     {
@@ -19,6 +20,7 @@ namespace Engine{
     /// \brief Destructor of the class
     Entity::~Entity()
     {
+        delete this->_texture;
     }
 
     /// \brief Getter for the position of the entity
@@ -30,8 +32,13 @@ namespace Engine{
 
     /// \brief Getter for the image buffer of the entity
     /// \return returns an ImageBuffer
-    ImageBuffer& Entity::get_texture()
+    ImageBuffer* Entity::get_texture()
     {
-        return this->_texture;
+        if ( this->_texture == nullptr ) {
+            throw Exceptions::InvalidTextureException();
+        }
+        else {
+            return this->_texture;
+        }
     }
 }
