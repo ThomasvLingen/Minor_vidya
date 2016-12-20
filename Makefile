@@ -53,8 +53,6 @@ resources :
 run : $(EXEC) resources
 	$(EXEC)
 
-libs : $(FMT_TARGET_PATH)
-
 debug: $(EXEC) resources
 	gdb $(EXEC)
 
