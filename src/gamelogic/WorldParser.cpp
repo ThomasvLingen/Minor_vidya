@@ -93,7 +93,7 @@ namespace GameLogic {
                 else if ( std::strcmp( get<3>( object ), "DoorTrigger" ) == 0 ) {
                     this->_set_door_trigger( level, y, x);
                 }
-                else if ( std::strcmp( get<2>( object ), "WinTrigger" ) == 0 ) {
+                else if ( std::strcmp( get<3>( object ), "WinTrigger" ) == 0 ) {
                     this->_set_win_trigger( level, y, x );
                 }
             }
@@ -154,7 +154,7 @@ namespace GameLogic {
     /// \param level reference to current level
     /// \param y y position of the tile
     /// \param x x position of the tile
-    void WorldParser::_set_win_trigger( Level & level, int y, int x )
+    void WorldParser::_set_win_trigger( Level & level, size_t y, size_t x )
     {
         std::function<void( Level& )> win = []( Level& level ) {
             level.set_level_over();
