@@ -32,7 +32,7 @@ namespace State {
 
         Input keys = this->_context.SDL_facade.get_input();
 
-        if (_action_is_selected) {
+        if (this->_action_is_selected) {
             this->_context.control_mapper.handle_input(keys);
             if (keys.keys_released.size() > 0) {
                 this->_context.control_mapper.set_new_combination(this->_selected_action, keys.keys_released.at(0));
