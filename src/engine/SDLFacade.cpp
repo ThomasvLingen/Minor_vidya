@@ -7,6 +7,11 @@
 #include "PathUtil.hpp"
 #include <SDL2/SDL_image.h>
 
+#include "exceptions/InvalidImageException.hpp"
+#include "exceptions/InvalidSoundFileException.hpp"
+#include "exceptions/InvalidWavFileException.hpp"
+#include "exceptions/SoundeffectNotLoadedException.hpp"
+
 namespace Engine {
 
     /// \brief Constructor of the class
@@ -183,9 +188,9 @@ namespace Engine {
 
     void SDLFacade::_add_image_in_map(string path) {
         SDL_Surface* image = IMG_Load(this->_get_absolute_path(path).c_str());
-        if (image == NULL) {    // TODO: exception
-            cout << "FAILED TO FIND THE IMAGE" << endl;
-            cout << path << endl;
+        if (image == NULL) {
+            cout << "IMG_Load: " << IMG_GetError() << endl;
+            throw Exceptions::InvalidImageException();
         } else {
             SDL_Texture* image_texture = SDL_CreateTextureFromSurface(this->_renderer, image);
             this->_images.insert(std::make_pair(path, image_texture));
@@ -207,7 +212,10 @@ namespace Engine {
             this->_add_image_in_map(path);
         }
         int w, h;
-        SDL_QueryTexture(this->_images[path], NULL, NULL, &w, &h); // get width en height from texture
+
+        if(SDL_QueryTexture(this->_images[path], NULL, NULL, &w, &h) == 0){ // get width en height from texture
+            cout << "Draw_image: "  << SDL_GetError() << endl;
+        }
 
         SDL_Rect src_r = {0, 0, w, h};
         SDL_Rect dest_r = {(int)coordinates.x, (int)coordinates.y, w, h};
@@ -571,8 +579,8 @@ namespace Engine {
     {
         this->stop_music();
         this->_music = Mix_LoadMUS(this->_get_absolute_path(path).c_str());
-        if(this->_music == NULL) { //TODO exception{
-            return;
+        if(this->_music == NULL) {
+            throw Exceptions::InvalidSoundFileException();
         }
         Mix_FadeInMusic(this->_music, this->_loop_forever, this->_fade_in_time);
     }
@@ -588,8 +596,8 @@ namespace Engine {
             return;
         }
         Mix_Chunk* sound_effect = Mix_LoadWAV(this->_get_absolute_path(path).c_str());
-        if (sound_effect == NULL) { //TODO exception{
-            return;
+        if (sound_effect == NULL) {
+            throw Exceptions::InvalidWavFileException();
         }
         this->_sound_effects[name] = sound_effect;
     }
@@ -602,7 +610,7 @@ namespace Engine {
     void SDLFacade::play_sound_effect(const string name)
     {
         if (this->_sound_effects.find(name) == this->_sound_effects.end()) { //if sound_effect is not loaded
-            return; //TODO exception{
+            throw Exceptions::SoundeffectNotLoadedException();
         }
         Mix_PlayChannel(this->_next_available_channel, this->_sound_effects.at(name), this->_play_once);
     }
@@ -622,9 +630,10 @@ namespace Engine {
         SDL_Surface* image = IMG_Load(this->_get_absolute_path(path).c_str());
         int size = 0;
 
-        if (image == NULL) { //TODO: exception
+        if (image == NULL) {
             cout << "FAILED TO FIND THE IMAGE" << endl;
             cout << path.c_str() << endl;
+            throw Exceptions::InvalidImageException();
         } else {
             size = image->w;
             SDL_FreeSurface(image);
