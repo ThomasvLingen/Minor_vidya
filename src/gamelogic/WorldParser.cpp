@@ -87,7 +87,7 @@ namespace GameLogic {
                     this->_set_spawnpoint(level, y, x);
                     spawnpoint_count++;
                 }
-                else if ( std::strcmp( get<3>( object ), "Entity" ) == 0 ) {
+                else if ( std::strcmp( get<3>( object ), "Enemy" ) == 0 ) {
                     size_t id = get<0>( object );
                     this->_set_entity(level, y, x, id, rapid_adapter);
                 }
