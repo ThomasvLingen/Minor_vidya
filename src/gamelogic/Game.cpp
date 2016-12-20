@@ -87,6 +87,7 @@ namespace GameLogic {
         }
 
         this->_player->set_level(this->_level);
+        this->_init_weapons();
         this->raycasting_engine.set_world( this->_level );
 
         return true;
@@ -100,6 +101,58 @@ namespace GameLogic {
     void Game::_init_sound_effects() {
         this->SDL_facade.load_sound_effect("monsterkill", "res/sound_effects/monsterkill.wav");
         this->SDL_facade.load_sound_effect("headshot", "res/sound_effects/headshot.wav");
+        this->SDL_facade.load_sound_effect("pistolshot", "res/sound_effects/pistolshot.wav");
+        this->SDL_facade.load_sound_effect("machinegunshot", "res/sound_effects/machinegunshot.wav");
+        this->SDL_facade.load_sound_effect("chaingunshot", "res/sound_effects/chaingunshot.wav");
+    }
+
+    void Game::_init_weapons()
+    {
+        //pistol
+        vector<string> pistol_images = {
+                "res/gun/pistol1.bmp",
+                "res/gun/pistol2.bmp",
+                "res/gun/pistol3.bmp",
+                "res/gun/pistol4.bmp",
+                "res/gun/pistol5.bmp"
+        };
+
+        this->_player->give_weapon(new Weapon(this->SDL_facade, {120,26}, 1, "pistolshot", 150, pistol_images, 1, 10));
+        //machine gun
+        vector<string> machinegun_images = {
+                "res/gun/machine_gun1.bmp",
+                "res/gun/machine_gun2.bmp",
+                "res/gun/machine_gun3.bmp",
+                "res/gun/machine_gun4.bmp",
+                "res/gun/machine_gun5.bmp",
+                "res/gun/machine_gun6.bmp",
+                "res/gun/machine_gun7.bmp",
+                "res/gun/machine_gun8.bmp",
+                "res/gun/machine_gun9.bmp",
+                "res/gun/machine_gun10.bmp",
+                "res/gun/machine_gun11.bmp",
+                "res/gun/machine_gun12.bmp",
+                "res/gun/machine_gun13.bmp"
+        };
+        this->_player->give_weapon(new Weapon(this->SDL_facade, {120,26}, 1, "machinegunshot", 75, machinegun_images, 5, 3));
+        //chain gun
+        vector<string> chaingun_images = {
+                "res/gun/chain_gun1.bmp",
+                "res/gun/chain_gun2.bmp",
+                "res/gun/chain_gun3.bmp",
+                "res/gun/chain_gun4.bmp",
+                "res/gun/chain_gun5.bmp",
+                "res/gun/chain_gun6.bmp",
+                "res/gun/chain_gun7.bmp",
+                "res/gun/chain_gun8.bmp",
+                "res/gun/chain_gun9.bmp",
+                "res/gun/chain_gun10.bmp",
+                "res/gun/chain_gun11.bmp",
+                "res/gun/chain_gun12.bmp",
+                "res/gun/chain_gun13.bmp",
+                "res/gun/chain_gun14.bmp"
+        };
+        this->_player->give_weapon(new Weapon(this->SDL_facade, {120,26}, 1, "chaingunshot", 70, chaingun_images, 8, 2));
     }
 
     SPTR_Level Game::get_level() {

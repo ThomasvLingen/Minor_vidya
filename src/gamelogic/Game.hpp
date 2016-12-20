@@ -39,6 +39,7 @@ namespace GameLogic {
 
     private:
         void _init_sound_effects();
+        void _init_weapons();
 
         SPTR_IGameState _current_state;
         SPTR_IGameState _new_state;
