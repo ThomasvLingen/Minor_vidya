@@ -40,10 +40,10 @@ namespace State {
                 this->_menu.clear_options();
                 this->_add_menu_options();
             }
+        } else {
+            this->_collection.handle_input(keys);
         }
 
-
-        this->_collection.handle_input(keys);
         this->_collection.draw();
 
         this->_context.SDL_facade.render_buffer();
