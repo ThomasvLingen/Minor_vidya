@@ -39,7 +39,7 @@ namespace State {
         this->_context.SDL_facade.draw_image("res/helpscreen.bmp" , {0,0});
         this->_context.SDL_facade.draw_text("Controls for Vidya Game", FontType::alterebro_pixel, this->_color, {120, 50});
 
-        ControlMapper& mapper = this->_context.control_mapper;
+        ControlMapper mapper = this->_context.control_mapper;
 
         int current_y_pos = this->_start_pos_y;
         for (auto& editable_action : mapper.get_all_actions()) {

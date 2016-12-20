@@ -157,6 +157,11 @@ namespace GameLogic{
         };
     }
 
+    map<Action, string>& ControlMapper::get_action_descriptions()
+    {
+        return this->_action_descriptions;
+    }
+
     vector<Action>& ControlMapper::get_editable_actions()
     {
         return this->_editable_actions;
