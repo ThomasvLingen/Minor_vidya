@@ -14,11 +14,6 @@
 #include <iomanip>
 #include <sstream>
 
-#define HUD_PATH "res/HUDv2.bmp"
-#define HUD_FACE_FRONT "res/look_front.bmp"
-#define HUD_FACE_LEFT "res/look_left.bmp"
-#define HUD_FACE_RIGHT "res/look_right.bmp"
-
 namespace GameLogic {
     using std::string;
     using Engine::Drawable;
@@ -50,7 +45,7 @@ namespace GameLogic {
         int _start_ticks;
 
         int _calculate_time(int ticks); // mili seconds to seconds
-        string _time_to_string(int current_time); // nice output 1:32
+        string _time_to_string(int current_time); // nice output 01:32
 
         //HUD health related
         Color _health_text_color = {255, 38, 70};
@@ -60,9 +55,9 @@ namespace GameLogic {
         Color _health_block_full = {255, 38, 70};
         Color _health_block_empty = {121, 41, 52};
         int _amount_health_blocks = 10;
-        int _total_health = 80;
         int _set_off_health_bar = 62;
         int _spacing_blocks = 2;
+        int _ypos_draw_block = 433;
 
         //HUD character related
         CoordinateInt _character_head_pos = {290, 410};
@@ -71,6 +66,11 @@ namespace GameLogic {
         //HUD time related
         Color _time_color = {53, 194, 222};
         CoordinateInt _time_pos = {382, 430};
+
+        string HUD_PATH = "res/HUDv2.bmp";
+        string HUD_FACE_FRONT = "res/look_front.bmp";
+        string HUD_FACE_LEFT = "res/look_left.bmp";
+        string HUD_FACE_RIGHT = "res/look_right.bmp";
 
     };
 }

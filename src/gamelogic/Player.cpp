@@ -9,7 +9,7 @@ namespace GameLogic {
     Player::Player(CoordinateDouble position)
     : PointOfView(position, Engine::RaycastingVector{-1, 0}, Engine::RaycastingVector{0, 0.66})
     , _level(nullptr)
-    , _health(80)
+    , _health(_total_health)
     {
 
     }
@@ -63,6 +63,10 @@ namespace GameLogic {
 
     int Player::get_health() {
         return this->_health;
+    }
+
+    int Player::get_total_health() {
+        return this->_total_health;
     }
 
     void Player::update(int timeSinceLastUpdate)

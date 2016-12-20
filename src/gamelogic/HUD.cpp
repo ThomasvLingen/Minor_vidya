@@ -30,7 +30,7 @@ namespace GameLogic {
 
     int HUD::_calculate_health_blocks()
     {
-        double health_per_block = this->_total_health / this->_amount_health_blocks;
+        double health_per_block = this->_player.get_total_health() / this->_amount_health_blocks;
         return (int) ceil((double)this->_player.get_health() / health_per_block);
     }
 
@@ -52,12 +52,12 @@ namespace GameLogic {
         for (int j = 0; j < this->_calculate_health_blocks(); ++j) {
             amount_of_blocks--;                   // for each lighter block we do not need an extra block
             xpos_draw_block = this->_set_off_health_bar + (j * (this->_health_block_width + this->_spacing_blocks));
-            this->_SDL_facade.draw_rect({xpos_draw_block, 433}, this->_health_block_width, this->_health_block_height, this->_health_block_full);
+            this->_SDL_facade.draw_rect({xpos_draw_block, this->_ypos_draw_block}, this->_health_block_width, this->_health_block_height, this->_health_block_full);
         }
 
         for (int i = this->_amount_health_blocks - amount_of_blocks; i < this->_amount_health_blocks; ++i) {
             xpos_draw_block = this->_set_off_health_bar + (i * (this->_health_block_width + this->_spacing_blocks)); // 2 is spacing
-            this->_SDL_facade.draw_rect({xpos_draw_block, 433}, this->_health_block_width, this->_health_block_height, this->_health_block_empty);
+            this->_SDL_facade.draw_rect({xpos_draw_block, this->_ypos_draw_block}, this->_health_block_width, this->_health_block_height, this->_health_block_empty);
         }
 
     }
