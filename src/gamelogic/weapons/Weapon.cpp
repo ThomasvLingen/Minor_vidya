@@ -48,9 +48,9 @@ namespace GameLogic {
         return this->_shoot;
     }
 
-    int Weapon::get_amount_of_shots()
+    int Weapon::get_bullets_per_shot()
     {
-        return this->_amount_of_shots;
+        return this->_bullets_per_shot;
     }
 
     int Weapon::get_damage_per_shot()

@@ -31,7 +31,7 @@ namespace GameLogic {
                 "res/gun/chain_gun13.bmp",
                 "res/gun/chain_gun14.bmp"
         };
-        this->_amount_of_shots = 2;
+        this->_bullets_per_shot = 2;
         this->_damage_per_shot = 8;
     }
 }

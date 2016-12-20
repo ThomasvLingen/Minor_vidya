@@ -25,7 +25,7 @@ namespace GameLogic {
         void shoot();
         bool being_shot();
 
-        int get_amount_of_shots();
+        int get_bullets_per_shot();
         int get_damage_per_shot();
 
     private:
@@ -40,7 +40,7 @@ namespace GameLogic {
         std::string _sound_effect;
         int _image_interval;
         std::vector<std::string> _images;
-        int _amount_of_shots;
+        int _bullets_per_shot;
         int _damage_per_shot;
 
     };

@@ -22,7 +22,7 @@ namespace GameLogic {
                 "res/gun/pistol4.bmp",
                 "res/gun/pistol5.bmp"
         };
-        this->_amount_of_shots = 1;
+        this->_bullets_per_shot = 1;
         this->_damage_per_shot = 10;
     }
 }

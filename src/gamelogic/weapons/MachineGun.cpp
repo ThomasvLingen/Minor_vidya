@@ -30,7 +30,7 @@ namespace GameLogic {
                 "res/gun/machine_gun12.bmp",
                 "res/gun/machine_gun13.bmp"
         };
-        this->_amount_of_shots = 5;
+        this->_bullets_per_shot = 5;
         this->_damage_per_shot = 3;
     }
 }
