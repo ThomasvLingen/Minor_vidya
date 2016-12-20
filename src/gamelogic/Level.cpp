@@ -9,7 +9,7 @@ namespace GameLogic {
 
     using std::vector;
 
-    Level::Level(Player& player, tilemap field, CoordinateDouble spawnpoint, Engine::SPTR_AssetsManager assets)
+    Level::Level(Player& player, TileMap field, CoordinateDouble spawnpoint, Engine::SPTR_AssetsManager assets)
     : World(assets)
     , _field(field)
     , _spawnpoint(spawnpoint)
@@ -89,12 +89,12 @@ namespace GameLogic {
         this->_spawnpoint = coordinate;
     }
 
-    void Level::set_field( tilemap field)
+    void Level::set_field( TileMap field)
     {
         this->_field = field;
     }
 
-    tilemap Level::get_field()
+    TileMap Level::get_field()
     {
         return this->_field;
     }

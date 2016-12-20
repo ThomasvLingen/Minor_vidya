@@ -22,12 +22,12 @@ namespace GameLogic {
     using Engine::AssetsManager;
 
     class Player;
-    typedef vector<vector<Tile*>> tilemap;
+    typedef vector<vector<Tile*>> TileMap;
 
     class Level : public Engine::World {
 
     private:
-        tilemap _field;
+        TileMap _field;
         CoordinateDouble _spawnpoint;
         Player& _player;
         bool _level_won = false;
@@ -40,7 +40,7 @@ namespace GameLogic {
          */
 
     public:
-        Level(Player& player, tilemap field, CoordinateDouble spawnpoint, Engine::SPTR_AssetsManager assets);
+        Level(Player& player, TileMap field, CoordinateDouble spawnpoint, Engine::SPTR_AssetsManager assets);
         Level(Player& player, Engine::SPTR_AssetsManager assets);
         Level(const Level& obj);
         virtual ~Level();
@@ -54,8 +54,8 @@ namespace GameLogic {
         CoordinateDouble get_spawnpoint();
         void set_spawnpoint(CoordinateDouble coordinate);
 
-        tilemap get_field();
-        void set_field( tilemap field);
+        TileMap get_field();
+        void set_field( TileMap field);
 
         PointOfView& get_pov() override;
 
