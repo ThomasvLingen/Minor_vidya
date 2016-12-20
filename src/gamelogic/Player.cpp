@@ -215,22 +215,16 @@ namespace GameLogic {
     void Player::_next_weapon()
     {
         if (!(this->get_weapon()->being_shot())) {
-            if (this->_current_weapon + 1 < (int) this->_weapons.size()) {
-                this->_current_weapon++;
-            } else {
-                this->_current_weapon = 0;
-            }
+            this->_current_weapon++;
+            this->_current_weapon = this->_current_weapon % (int) this->_weapons.size();
         }
     }
 
     void Player::_previous_weapon()
     {
         if (!(this->get_weapon()->being_shot())) {
-            if (this->_current_weapon - 1 < 0) {
-                this->_current_weapon = (int)this->_weapons.size()-1;
-            } else {
-                this->_current_weapon--;
-            }
+            this->_current_weapon--;
+            this->_current_weapon = this->_current_weapon % (int) this->_weapons.size();
         }
     }
 
