@@ -16,7 +16,7 @@ namespace State {
         MenuOption resume_game {
             {150,100},
             "Resume game",
-            [=] (GameLogic::Game& game) {
+            [] (GameLogic::Game& game) {
                 game.set_new_state(std::make_shared<RunState>(game));
             }
         };

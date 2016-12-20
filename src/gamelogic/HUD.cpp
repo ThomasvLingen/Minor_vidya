@@ -25,42 +25,39 @@ namespace GameLogic {
 
     void HUD::set_current_tick(int ticks)
     {
-        this->_current_ticks = ticks;;
+        this->_current_ticks = ticks;
     }
 
-    int HUD::_calculate_health_blocks(int health)
+    int HUD::_calculate_health_blocks()
     {
-        return (int) ceil((double)health / (this->_total_health / this->_amount_health_blocks));
+        double health_per_block = this->_total_health / this->_amount_health_blocks;
+        return (int) ceil((double)this->_player.get_health() / health_per_block);
     }
 
-    void HUD::_draw_health_text(int health)
+    void HUD::_draw_health_text()
     {
-        string health_amount;
-        if (health < this->_amount_health_blocks) {
-            health_amount = "0";
-        }
-        health_amount += std::to_string(health);
-        _SDL_facade.draw_text(health_amount, FontType::alterebro_pixel, this->_health_text_color, this->_health_text_pos);
+        std::stringstream health_to_string_stream;
+        health_to_string_stream << std::setfill('0') << std::setw(2) << this->_player.get_health(); // 2 is size of total health (string size)
+        string health_to_string;
+        health_to_string_stream >> health_to_string;
+
+        this->_SDL_facade.draw_text(health_to_string, FontType::alterebro_pixel, this->_health_text_color, this->_health_text_pos);
     }
 
-    void HUD::_draw_health_blocks(int health)
+    void HUD::_draw_health_blocks()
     {
         int amount_of_blocks = this->_amount_health_blocks;
-        int set_off = 62;
+        int xpos_draw_block;
 
-        for (int j = 0; j < this->_calculate_health_blocks(health); ++j) {
+        for (int j = 0; j < this->_calculate_health_blocks(); ++j) {
             amount_of_blocks--;                   // for each lighter block we do not need an extra block
-            set_off = 62 + (j * (this->_health_block_width + 2)); // 2 is spacing
-            _SDL_facade.draw_rect({set_off, 433}, this->_health_block_width, this->_health_block_height, this->_health_block_full);
-        }
-
-        if (set_off != 62) {
-            set_off += this->_health_block_width + 2;
+            xpos_draw_block = this->_set_off_health_bar + (j * (this->_health_block_width + this->_spacing_blocks));
+            this->_SDL_facade.draw_rect({xpos_draw_block, 433}, this->_health_block_width, this->_health_block_height, this->_health_block_full);
         }
 
         for (int i = this->_amount_health_blocks - amount_of_blocks; i < this->_amount_health_blocks; ++i) {
-            set_off = 62 + (i * (this->_health_block_width + 2)); // 2 is spacing
-            _SDL_facade.draw_rect({set_off, 433}, this->_health_block_width, this->_health_block_height, this->_health_block_empty);
+            xpos_draw_block = this->_set_off_health_bar + (i * (this->_health_block_width + this->_spacing_blocks)); // 2 is spacing
+            this->_SDL_facade.draw_rect({xpos_draw_block, 433}, this->_health_block_width, this->_health_block_height, this->_health_block_empty);
         }
 
     }
@@ -68,27 +65,25 @@ namespace GameLogic {
     void HUD::_draw_face()
     {
         if (this->_current_time % 4 > 1) {
-            _SDL_facade.draw_image("res/look_front.bmp", this->_character_head_pos);
+            this->_SDL_facade.draw_image(HUD_FACE_FRONT, this->_character_head_pos);
         } else if (this->_current_time % 3 > 1) {
-            _SDL_facade.draw_image("res/look_left.bmp", this->_character_head_pos);
-        } else if (this->_current_time % 2 > 1) {
-            _SDL_facade.draw_image("res/look_front.bmp", this->_character_head_pos);
+            this->_SDL_facade.draw_image(HUD_FACE_LEFT, this->_character_head_pos);
         } else {
-            _SDL_facade.draw_image("res/look_right.bmp", this->_character_head_pos);
+            this->_SDL_facade.draw_image(HUD_FACE_RIGHT, this->_character_head_pos);
         }
     }
 
     void HUD::draw()
     {
         //draw HUD
-        _SDL_facade.draw_image("res/HUDv2.bmp", this->_HUD_pos);
+        this->_SDL_facade.draw_image(HUD_PATH, this->_HUD_pos);
 
         //draw HP
-        this->_draw_health_text(_player.get_health());
-        this->_draw_health_blocks(_player.get_health());
+        this->_draw_health_text();
+        this->_draw_health_blocks();
 
         // draw time
-        _SDL_facade.draw_text(this->_time_to_string(this->_current_time), FontType::alterebro_pixel, this->_time_color, this->_time_pos);
+        this->_SDL_facade.draw_text(this->_time_to_string(this->_current_time), FontType::alterebro_pixel, this->_time_color, this->_time_pos);
 
         // draw face
         this->_draw_face();
@@ -111,15 +106,20 @@ namespace GameLogic {
 
     string HUD::_time_to_string(int current_time)
     {
+        std::stringstream health_min_ss;
+        std::stringstream health_sec_ss;
+
         int seconds = current_time % 60;
         int minutes = current_time / 60;
+        health_min_ss << std::setfill('0') << std::setw(2) << minutes; // 2 is size of total health (string size)
+        health_sec_ss << std::setfill('0') << std::setw(2) << seconds; // 2 is size of total health (string size)<
+
+        string min;
+        string sec;
         string output;
-        output += std::to_string(minutes);
-        output += " : ";
-        if(seconds < 10){
-            output += "0";
-        }
-        output += std::to_string(seconds);
+        health_min_ss >> min;
+        health_sec_ss >> sec;
+        output = min + " : " + sec;
         return output;
     }
 }

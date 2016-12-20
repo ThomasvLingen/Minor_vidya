@@ -32,10 +32,9 @@ namespace State {
         Input keys = this->_context.SDL_facade.get_input();
         for (auto key : keys.keys_released) {
             switch (key) {
-                case Key::ESC: {
+                case Key::ESC:
                     this->_context.get_level()->in_game_ticks = this->_hud.get_current_ticks();
                     this->_context.set_new_state(std::make_shared<PauseState>(this->_context));
-            }
                     break;
                 default:
                     break;

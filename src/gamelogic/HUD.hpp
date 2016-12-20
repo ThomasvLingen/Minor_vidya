@@ -11,6 +11,13 @@
 #include "../engine/PathUtil.hpp"
 #include "Player.hpp"
 #include <string>
+#include <iomanip>
+#include <sstream>
+
+#define HUD_PATH "res/HUDv2.bmp"
+#define HUD_FACE_FRONT "res/look_front.bmp"
+#define HUD_FACE_LEFT "res/look_left.bmp"
+#define HUD_FACE_RIGHT "res/look_right.bmp"
 
 namespace GameLogic {
     using std::string;
@@ -24,7 +31,6 @@ namespace GameLogic {
     public:
         HUD(SDLFacade& _SDL_facade, Player& player);
 
-        int get_current_time();
         int get_current_ticks();
         void set_start_tick(int ticks);
         void set_current_tick(int ticks);
@@ -34,10 +40,10 @@ namespace GameLogic {
 
     private:
         Player& _player;
-        void _draw_health_blocks(int health);
-        void _draw_health_text(int health);
+        void _draw_health_blocks();
+        void _draw_health_text();
         void _draw_face();
-        int _calculate_health_blocks(int health);
+        int _calculate_health_blocks();
 
         int _current_time; // in sec
         int _current_ticks;
@@ -55,6 +61,8 @@ namespace GameLogic {
         Color _health_block_empty = {121, 41, 52};
         int _amount_health_blocks = 10;
         int _total_health = 80;
+        int _set_off_health_bar = 62;
+        int _spacing_blocks = 2;
 
         //HUD character related
         CoordinateInt _character_head_pos = {290, 410};
@@ -62,7 +70,7 @@ namespace GameLogic {
 
         //HUD time related
         Color _time_color = {53, 194, 222};
-        CoordinateInt _time_pos = {390, 430};
+        CoordinateInt _time_pos = {382, 430};
 
     };
 }

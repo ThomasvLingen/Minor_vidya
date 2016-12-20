@@ -49,7 +49,7 @@ namespace GameLogic {
         double _rotation = 0;
         double _next_tile = 0.5;
         bool _action_released = true;
-      
+
         Tile* _current_tile;
 
         int _health;
