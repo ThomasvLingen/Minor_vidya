@@ -20,6 +20,7 @@ namespace Engine{
     /// \brief Destructor of the class
     Entity::~Entity()
     {
+        delete this->_texture;
     }
 
     /// \brief Getter for the position of the entity
