@@ -65,18 +65,18 @@ namespace GameLogic {
     void HUD::_draw_face()
     {
         if (this->_current_time % 4 > 1) {
-            this->_SDL_facade.draw_image(HUD_FACE_FRONT, this->_character_head_pos);
+            this->_SDL_facade.draw_image(this->HUD_FACE_FRONT, this->_character_head_pos);
         } else if (this->_current_time % 3 > 1) {
-            this->_SDL_facade.draw_image(HUD_FACE_LEFT, this->_character_head_pos);
+            this->_SDL_facade.draw_image(this->HUD_FACE_LEFT, this->_character_head_pos);
         } else {
-            this->_SDL_facade.draw_image(HUD_FACE_RIGHT, this->_character_head_pos);
+            this->_SDL_facade.draw_image(this->HUD_FACE_RIGHT, this->_character_head_pos);
         }
     }
 
     void HUD::draw()
     {
         //draw HUD
-        this->_SDL_facade.draw_image(HUD_PATH, this->_HUD_pos);
+        this->_SDL_facade.draw_image(this->HUD_PATH, this->_HUD_pos);
 
         //draw HP
         this->_draw_health_text();
