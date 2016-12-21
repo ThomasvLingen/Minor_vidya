@@ -51,7 +51,7 @@ namespace Engine {
     /// \brief This initialises the animation map, which contains all ImageBuffers for animations
     /// This is all hardcoded until a better solution is found
     ///
-    /// \return
+    /// \return Whether or not initialising the animation map has succeeded
     bool AssetsManager::_init_animation_map()
     {
         bool success = true;
@@ -62,6 +62,14 @@ namespace Engine {
         return success;
     }
 
+    /// \brief Loads an animation, and puts is in the _known_animations map
+    /// \param animation_name Name of the animation, which can later be used to retrieve it
+    /// \param animation_source Relative path to the .bmp file in which the animation frames can be found
+    /// \param row Row at which the animation can be found
+    /// \param width Width of one animation frame in pixels
+    /// \param height Height of one animation frame in pixels
+    /// \param animation_frames Number of frames this animation has
+    /// \return Whether or not the animation was successfully loaded
     bool AssetsManager::_load_animation(string animation_name, string animation_source, size_t row, size_t width,
                                         size_t height, size_t animation_frames)
     {
@@ -75,7 +83,11 @@ namespace Engine {
 
         return false;
     }
-
+    /// \brief Wrapper method for the SDLFacade::load_animation method
+    ///
+    /// Made purely so that the implementation of this method can be easily replaced
+    ///
+    /// \return
     vector<ImageBuffer*> AssetsManager::_get_animation(string sprite_sheet, size_t row, size_t width, size_t height,
                                                        size_t animation_frames)
     {
@@ -91,6 +103,10 @@ namespace Engine {
         return this->_SDL_facade.load_image_buffer(texture_source);
     }
 
+    /// \brief Fetches the animation from the known animations.
+    /// Throws an exception if the animation is not found
+    /// \param name Name of the animation to fetch
+    /// \return Vector of images which make up the animation (animation frames)
     vector<ImageBuffer*> AssetsManager::get_animation(string name)
     {
         return this->_known_animations.at(name);

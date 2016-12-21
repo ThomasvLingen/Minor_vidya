@@ -665,6 +665,13 @@ namespace Engine {
         return VIDYA_RUNPATH + path;
     }
 
+    /// \brief Load an animation from a .bmp file and return it
+    /// \param path Path of the .bmp which contains the animation
+    /// \param row Row at which the animation can be found (0 indexed)
+    /// \param width Width of one animation frame in pixels
+    /// \param height Height of one animation frame in pixels
+    /// \param animation_frames Number of frames the animation contains
+    /// \return A vector of images, which make up the frames of the animation
     vector<ImageBuffer*> SDLFacade::load_animation(const string path, const size_t row, const size_t width,
                                                    const size_t height, const size_t animation_frames)
     {
