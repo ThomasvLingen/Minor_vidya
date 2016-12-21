@@ -677,7 +677,7 @@ namespace Engine {
         } else {
             SDL_LockSurface(animation_source);
 
-            for (int animation_frame = 0; animation_frame < animation_frames; animation_frame++) {
+            for (size_t animation_frame = 0; animation_frame < animation_frames; animation_frame++) {
                 animation_textures.push_back(
                     this->get_image_buffer(animation_source, CoordinateInt {animation_frame, row}, width, height)
                 );
