@@ -12,4 +12,12 @@ namespace Engine {
             this->y - other.y
         };
     }
+
+    CoordinateDouble CoordinateDouble::operator+( const CoordinateDouble& other )
+    {
+        return CoordinateDouble {
+            this->x + other.x,
+            this->y + other.y
+        };
+    }
 }
