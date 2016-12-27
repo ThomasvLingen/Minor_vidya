@@ -17,7 +17,7 @@ namespace GameLogic {
 
     void Weapon::draw()
     {
-        if (_shoot == true) {
+        if (this->_shoot == true) {
             this->_SDL_facade.draw_image(this->_images[this->_current_image], this->_draw_coordinates);
             if (this->_previous_ticks - this->_ticks_on_shoot >= this->_image_interval) {
                 this->_current_image++;

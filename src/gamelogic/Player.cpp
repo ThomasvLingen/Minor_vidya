@@ -226,6 +226,8 @@ namespace GameLogic {
         if (!(this->get_weapon()->being_shot())) {
             this->_current_weapon_index++;
             this->_current_weapon_index = this->_current_weapon_index % (int) this->_weapons.size();
+            this->_current_weapon_index = (this->_current_weapon_index < 0) ? this->_current_weapon_index
+              + this->_weapons.size() : this->_current_weapon_index;
         }
     }
 
@@ -234,6 +236,8 @@ namespace GameLogic {
         if (!(this->get_weapon()->being_shot())) {
             this->_current_weapon_index--;
             this->_current_weapon_index = this->_current_weapon_index % (int) this->_weapons.size();
+            this->_current_weapon_index = (this->_current_weapon_index < 0) ? this->_current_weapon_index
+              + this->_weapons.size() : this->_current_weapon_index;
         }
     }
 

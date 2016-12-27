@@ -7,7 +7,7 @@
 namespace GameLogic {
 
     MachineGun::MachineGun(SDLFacade& SDL_Facade)
-            : Weapon(SDL_Facade)
+    : Weapon(SDL_Facade)
     {
         SDL_Facade.load_sound_effect("machinegunshot", "res/sound_effects/machinegunshot.wav");
         this->_draw_coordinates = {120,26};
