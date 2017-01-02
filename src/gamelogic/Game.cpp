@@ -11,7 +11,7 @@
 
 #include "state/StartUpState.hpp"
 #include "../config.hpp"
-#include "../engine/domain/entities/Soldier.hpp"
+#include "entities/Soldier.hpp"
 #include "weapons/Pistol.hpp"
 #include "weapons/MachineGun.hpp"
 #include "weapons/ChainGun.hpp"
@@ -96,7 +96,7 @@ namespace GameLogic {
 
         // TEST CODE, DELETE THIS
         this->_level->get_entities().push_back(
-            new Engine::Soldier(*assets, {6.1, 9.5})
+            this->_level->entity_factory.create_entity("soldier", {6.1, 9.5})
         );
         // END OF TEST CODE
 

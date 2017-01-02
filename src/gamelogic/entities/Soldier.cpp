@@ -4,7 +4,7 @@
 
 #include "Soldier.hpp"
 
-namespace Engine {
+namespace GameLogic {
 
     Soldier::Soldier(AssetsManager& assets, CoordinateDouble position)
     : Entity(

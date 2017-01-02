@@ -5,10 +5,15 @@
 #ifndef MINOR_VIDYA_SOLDIER_HPP
 #define MINOR_VIDYA_SOLDIER_HPP
 
-#include "../Entity.hpp"
-#include "../../AssetsManager.hpp"
+#include "../../engine/domain/Entity.hpp"
+#include "../../engine/AssetsManager.hpp"
 
-namespace Engine {
+namespace GameLogic {
+
+    using Engine::Entity;
+    using Engine::CoordinateDouble;
+    using Engine::AssetsManager;
+
     class Soldier : public Entity {
     public:
         Soldier(AssetsManager& assets, CoordinateDouble position);

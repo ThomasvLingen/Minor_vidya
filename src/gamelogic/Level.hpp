@@ -9,6 +9,7 @@
 #include "../engine/domain/TileObject.hpp"
 #include "Tile.hpp"
 #include "../engine/domain/PointOfView.hpp"
+#include "entities/EntityFactory.hpp"
 #include <vector>
 #include <memory>
 
@@ -44,6 +45,8 @@ namespace GameLogic {
         Level(Player& player, Engine::SPTR_AssetsManager assets);
         Level(const Level& obj);
         virtual ~Level();
+
+        EntityFactory entity_factory;
 
         void update(int delta_time) override;
 
