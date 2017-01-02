@@ -5,6 +5,7 @@
 #include "RunState.hpp"
 #include "PauseState.hpp"
 #include "LevelWinState.hpp"
+#include "MenuState.hpp"
 
 namespace State {
 
@@ -48,6 +49,14 @@ namespace State {
 
         this->_context.raycasting_engine.draw();
         this->_collection.draw();
+        try {
+            this->_context.get_level()->get_player().get_weapon()->draw();
+        }
+        catch ( const Exceptions::WeaponIsNullptrException e ) {
+            std::cout << e.what() << std::endl;
+            std::cout << "Quiting game" << std::endl;
+            this->_context.set_new_state(std::make_shared<MenuState>(this->_context));
+        }
 
         this->_context.SDL_facade.render_buffer();
     }

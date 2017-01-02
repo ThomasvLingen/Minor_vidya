@@ -13,6 +13,8 @@
 #include "VectorUtil.hpp"
 #include "Level.hpp"
 #include "../engine/KeyStrokes.hpp"
+#include "weapons/Weapon.hpp"
+#include "exceptions/WeaponIsNullptrException.hpp"
 
 namespace GameLogic {
 
@@ -30,6 +32,7 @@ namespace GameLogic {
 
     public:
         Player(CoordinateDouble position);
+        ~Player();
 
         int get_health();
         int get_total_health();
@@ -38,6 +41,9 @@ namespace GameLogic {
         void set_level(SPTR_Level level);
         void handleInput(Input keys);
         virtual void update(int timeSinceLastUpdate);
+
+        Weapon* get_weapon();
+        void give_weapon(Weapon* weapon);
 
     private:
         SPTR_Level _level;
@@ -70,6 +76,11 @@ namespace GameLogic {
         void _set_new_current_tile();
         void _try_trigger();
         void _do_action();
+        void _next_weapon();
+        void _previous_weapon();
+
+        vector<Weapon*> _weapons;
+        int _current_weapon_index = 0;
 
         /*
          * int health

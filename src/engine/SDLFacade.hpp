@@ -127,10 +127,10 @@ namespace Engine {
 
         string _get_absolute_path(const string path);
 
-        static constexpr int _frequency = 22050;
+        static constexpr int _frequency = 44100;
         static constexpr Uint16 _audio_format = MIX_DEFAULT_FORMAT;
         static constexpr int _channels = 2;
-        static constexpr int _chunksize = 4096;
+        static constexpr int _chunksize = 1024;
         static constexpr int _fade_in_time = 750;
         static constexpr int _loop_forever = -1;
         static constexpr int _play_once = 0;

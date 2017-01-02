@@ -11,6 +11,9 @@
 
 #include "state/StartUpState.hpp"
 #include "../config.hpp"
+#include "weapons/Pistol.hpp"
+#include "weapons/MachineGun.hpp"
+#include "weapons/ChainGun.hpp"
 
 namespace GameLogic {
     Game::Game()
@@ -87,6 +90,7 @@ namespace GameLogic {
         }
 
         this->_player->set_level(this->_level);
+        this->_init_weapons();
         this->raycasting_engine.set_world( this->_level );
 
         return true;
@@ -100,6 +104,13 @@ namespace GameLogic {
     void Game::_init_sound_effects() {
         this->SDL_facade.load_sound_effect("monsterkill", "res/sound_effects/monsterkill.wav");
         this->SDL_facade.load_sound_effect("headshot", "res/sound_effects/headshot.wav");
+    }
+
+    void Game::_init_weapons()
+    {
+        this->_player->give_weapon(new Pistol(this->SDL_facade));
+        this->_player->give_weapon(new MachineGun(this->SDL_facade));
+        this->_player->give_weapon(new ChainGun(this->SDL_facade));
     }
 
     SPTR_Level Game::get_level()
