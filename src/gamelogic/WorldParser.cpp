@@ -42,7 +42,7 @@ namespace GameLogic {
         );
 
         object_list = rapid_adapter.get_objects();
-        this->_set_objects( level, object_list, rapid_adapter, path );
+        this->_set_objects( level, object_list, rapid_adapter );
     }
 
     /// \brief Generates a 2D Tile vector from the int_map
@@ -75,7 +75,7 @@ namespace GameLogic {
     /// \param object_list list of all the object needed to be set
     /// \param rapid_adapter ref of current rapid_adapter
     /// \param path path to .tmx folder
-    void WorldParser::_set_objects( Level& level, vector<tuple<size_t, size_t, size_t, char*>> object_list, RapidXMLAdapter& rapid_adapter, string path )
+    void WorldParser::_set_objects( Level& level, vector<tuple<size_t, size_t, size_t, char*>> object_list, RapidXMLAdapter& rapid_adapter )
     {
         int spawnpoint_count = 0;
         for ( auto object : object_list ) {
@@ -88,7 +88,7 @@ namespace GameLogic {
                 }
                 else if ( std::strcmp( get<3>( object ), "Entity" ) == 0 ) {
                     size_t id = get<0>( object );
-                    this->_set_entity(level, y, x, id, rapid_adapter, path);
+                    this->_set_entity(level, y, x, id, rapid_adapter);
                 }
                 else if ( std::strcmp( get<3>( object ), "DoorTrigger" ) == 0 ) {
                     this->_set_door_trigger( level, y, x);
@@ -121,16 +121,16 @@ namespace GameLogic {
         }
     }
 
-    void WorldParser::_set_entity( Level & level, size_t y, size_t x, size_t id, RapidXMLAdapter & rapid_adapter, string path )
+    void WorldParser::_set_entity( Level & level, size_t y, size_t x, size_t id, RapidXMLAdapter & rapid_adapter )
     {
         CoordinateDouble entity_spawn = { y + this->_spawn_tile_offset, x + this->_spawn_tile_offset };
-        Engine::ImageBuffer* entitybuffer = level.assets->get_entity_texture( path + rapid_adapter.get_entity_texture( id ) );
-        if ( entitybuffer == nullptr ) {
-            throw FileInvalidException();
+        string entity_type = rapid_adapter.get_entity_type(id);
+
+        // If an unknown entity_type is encountered, it is ignored
+        if (level.entity_factory.knows_entity(entity_type)) {
+            Engine::Entity* new_entity = level.entity_factory.create_entity(entity_type, entity_spawn);
+            level.get_entities().push_back( new_entity );
         }
-        // TODO: Adapt this to new Entity constructor (with an AnimatedSprite!)
-        // Engine::Entity* new_entity = new Engine::Entity( entitybuffer, entity_spawn );
-        // level.get_entities().push_back( new_entity );
     }
 
     /// \brief Sets door trigger on tile

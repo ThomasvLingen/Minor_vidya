@@ -18,4 +18,9 @@ namespace GameLogic {
         // Throws an exception if the name cannot be found
         return this->_map.at(name)(position);
     }
+
+    bool EntityFactory::knows_entity(string name)
+    {
+        return this->_map.find(name) != this->_map.end();
+    }
 }

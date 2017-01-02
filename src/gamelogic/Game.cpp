@@ -94,12 +94,6 @@ namespace GameLogic {
         this->_init_weapons();
         this->raycasting_engine.set_world( this->_level );
 
-        // TEST CODE, DELETE THIS
-        this->_level->get_entities().push_back(
-            this->_level->entity_factory.create_entity("soldier", {6.1, 9.5})
-        );
-        // END OF TEST CODE
-
         return true;
     }
 

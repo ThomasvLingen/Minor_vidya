@@ -29,6 +29,7 @@ namespace GameLogic {
         EntityFactory(AssetsManager& assets);
 
         Entity* create_entity(string name, CoordinateDouble position);
+        bool knows_entity(string name);
 
         template <class T>
         void register_entity(string name)
