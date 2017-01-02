@@ -16,6 +16,12 @@ namespace Engine {
         for (auto& texture_map_pair : this->_known_textures) {
             delete texture_map_pair.second;
         }
+
+        for (auto& animation_map_pair : this->_known_animations) {
+            for (auto animation_frame : animation_map_pair.second) {
+                delete animation_frame;
+            }
+        }
     }
 
     bool AssetsManager::init( string texture_source, size_t tile_width, size_t tile_height, size_t tile_count )
