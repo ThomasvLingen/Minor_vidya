@@ -14,21 +14,6 @@ namespace GameLogic {
     {
     }
 
-    int HUD::get_current_ticks()
-    {
-        return this->_current_ticks;
-    }
-
-    void HUD::set_start_tick(int ticks)
-    {
-        this->_start_ticks = ticks;
-    }
-
-    void HUD::set_current_tick(int ticks)
-    {
-        this->_current_ticks = ticks;
-    }
-
     int HUD::_calculate_health_blocks()
     {
         double health_per_block = this->_player.get_total_health() / this->_amount_health_blocks;
@@ -65,9 +50,9 @@ namespace GameLogic {
 
     void HUD::_draw_face()
     {
-        if (this->_current_time % 4 > 1) {
+        if (this->_get_current_time() % 4 > 1) {
             this->_SDL_facade.draw_image(this->HUD_FACE_FRONT, this->_character_head_pos);
-        } else if (this->_current_time % 3 > 1) {
+        } else if (this->_get_current_time() % 3 > 1) {
             this->_SDL_facade.draw_image(this->HUD_FACE_LEFT, this->_character_head_pos);
         } else {
             this->_SDL_facade.draw_image(this->HUD_FACE_RIGHT, this->_character_head_pos);

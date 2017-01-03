@@ -71,6 +71,7 @@ namespace GameLogic {
         bool is_level_over();
 
         int in_game_ticks = 0;
+        int start_ticks;
 
     };
 

@@ -19,8 +19,7 @@ namespace State {
         this->_collection.add_drawable(&_hud);
         this->_collection.add_updatable(&_hud);
         this->_collection.add_drawable(&context.get_level()->get_player());
-        this->_hud.set_start_tick(this->_context.SDL_facade.get_ticks() - this->_context.get_level()->in_game_ticks);
-        this->_hud.set_current_tick(this->_context.get_level()->in_game_ticks);
+        this->_context.get_level()->start_ticks = this->_context.SDL_facade.get_ticks() - this->_context.get_level()->in_game_ticks;
         context.SDL_facade.stop_music();
     }
 
@@ -35,7 +34,6 @@ namespace State {
         for (auto key : keys.keys_released) {
             switch (key) {
                 case Key::ESC:
-                    this->_context.get_level()->in_game_ticks = this->_hud.get_current_ticks();
                     this->_context.set_new_state(std::make_shared<PauseState>(this->_context));
                     break;
                 default:
