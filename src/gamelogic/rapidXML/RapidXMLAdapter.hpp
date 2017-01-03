@@ -33,6 +33,7 @@ namespace GameLogic {
         size_t get_tile_count();
         vector<vector<size_t>> get_map();
         vector<tuple<size_t, size_t, size_t, char*>> get_objects();
+        string get_map_name();
         string get_entity_type(size_t id);
     private:
         vector<char> _buffer;
