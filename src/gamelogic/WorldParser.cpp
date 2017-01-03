@@ -128,8 +128,12 @@ namespace GameLogic {
 
         // If an unknown entity_type is encountered, it is ignored
         if (level.entity_factory.knows_entity(entity_type)) {
-            Engine::Entity* new_entity = level.entity_factory.create_entity(entity_type, entity_spawn);
-            level.get_entities().push_back( new_entity );
+            try {
+                Engine::Entity* new_entity = level.entity_factory.create_entity(entity_type, entity_spawn);
+                level.get_entities().push_back( new_entity );
+            } catch (std::exception e) {
+                throw FileInvalidException();
+            }
         }
     }
 
