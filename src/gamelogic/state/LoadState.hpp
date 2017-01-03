@@ -27,6 +27,7 @@ namespace State {
     using Engine::Keys;
     using Engine::Key;
     using GameLogic::Game;
+    using GameLogic::CampaignMap;
     using std::string;
     using std::vector;
     using Engine::CoordinateInt;
@@ -35,10 +36,12 @@ namespace State {
     class LoadState : public IGameState {
 
     public:
-        LoadState(Game& context);
+        LoadState(Game& context, CampaignMap& map_to_load);
         void update(int time_since_last_update) override ;
 
     private:
+        CampaignMap& map_to_load;
+
         int _loading_screen_time = 0;
         Color _color{255,255,255};
 

@@ -12,6 +12,7 @@
 #include "state/IGameState.hpp"
 #include "../engine/PathUtil.hpp"
 #include "Player.hpp"
+#include "campaign/Campaign.hpp"
 
 namespace GameLogic {
 
@@ -30,6 +31,7 @@ namespace GameLogic {
 
         SDLFacade SDL_facade;
         Raycasting raycasting_engine;
+        Campaign campaign;
         bool running;
 
         void init_states();
