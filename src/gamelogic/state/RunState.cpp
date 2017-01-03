@@ -18,6 +18,7 @@ namespace State {
         this->_collection.add_updatable(&_fps);
         this->_collection.add_drawable(&_hud);
         this->_collection.add_updatable(&_hud);
+        this->_collection.add_drawable(&context.get_level()->get_player());
         this->_hud.set_start_tick(this->_context.SDL_facade.get_ticks() - this->_context.get_level()->in_game_ticks);
         this->_hud.set_current_tick(this->_context.get_level()->in_game_ticks);
         context.SDL_facade.stop_music();
