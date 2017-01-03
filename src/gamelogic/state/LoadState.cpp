@@ -9,8 +9,9 @@
 
 namespace State {
 
-    LoadState::LoadState(Game& context)
+    LoadState::LoadState(Game& context, CampaignMap& map)
     : IGameState(context)
+    , map_to_load(map)
     {
 
     }
@@ -40,10 +41,10 @@ namespace State {
         );
 
         this->_context.SDL_facade.draw_text(
-            "Level Name Here",
+            this->map_to_load.name,
             this->_text_font,
             this->_color,
-            {500,15}
+            {30,15}
         );
 
         int advertisement_x = this->_advertisement_pos.x - this->_context.SDL_facade.get_image_width(Config::LOAD_AD_PATH) / 2;
@@ -64,7 +65,7 @@ namespace State {
         }
 
         if (this->_current_index >= (int)this->_text_image.size()) {
-            if ( this->_context.load_Level("res/TestMap.tmx") ) { //TODO needs to come from a level selecter or campaign level loading or something
+            if ( this->_context.load_Level(this->map_to_load.tmx_source_path) ) {
                 this->_context.set_new_state( std::make_shared<RunState>( this->_context ) );
             }
             else {

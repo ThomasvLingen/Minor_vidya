@@ -9,6 +9,7 @@
 #include "HelpState.hpp"
 #include "CreditState.hpp"
 #include "../../util/UnusedMacro.hpp"
+#include "LevelSelectState.hpp"
 
 namespace State {
 
@@ -20,7 +21,7 @@ namespace State {
             {150,100}, //coordinates
             "Start Game", //text
             [] (Game& game) { //callback
-                 game.set_new_state(std::make_shared<LoadState>(game));
+                 game.set_new_state(std::make_shared<LevelSelectState>(game));
             }
         };
 
