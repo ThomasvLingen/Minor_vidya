@@ -48,11 +48,12 @@ namespace Engine {
 
     void AnimatedTexture::update(int delta_time)
     {
+        size_t texture_active_time = this->_get_current_texture_active_time();
         this->_time_since_last_texture_switch += delta_time;
 
-        if (this->_time_since_last_texture_switch >= this->_get_current_texture_active_time()) {
+        if (this->_time_since_last_texture_switch >= texture_active_time) {
             this->_select_next_texture();
-            this->_time_since_last_texture_switch = 0;
+            this->_time_since_last_texture_switch -= texture_active_time;
         }
     }
 

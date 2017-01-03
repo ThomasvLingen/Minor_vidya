@@ -93,7 +93,7 @@ namespace Engine {
     ///
     /// Made purely so that the implementation of this method can be easily replaced
     ///
-    /// \return
+    /// \return Vector of images which make up the animation (animation frames) retrieved from SDLFacade
     vector<ImageBuffer*> AssetsManager::_get_animation(string sprite_sheet, size_t row, size_t width, size_t height,
                                                        size_t animation_frames)
     {
