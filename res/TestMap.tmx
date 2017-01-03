@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="left-down" width="30" height="30" tilewidth="64" tileheight="64" nextobjectid="21">
- <tileset firstgid="1" name="WolfBobe" tilewidth="64" tileheight="64" tilecount="108" columns="6">
+<map version="1.0" orientation="orthogonal" renderorder="left-down" width="30" height="30" tilewidth="64" tileheight="64" nextobjectid="24">
+ <tileset firstgid="1" name="WolfBobe" tilewidth="64" tileheight="64" tilecount="108">
   <image source="Wolfswapebobpepper.bmp" width="384" height="1152"/>
  </tileset>
  <layer name="Tile Layer 1" width="30" height="30">
@@ -40,11 +40,21 @@
  <objectgroup name="Object Layer 1">
   <object id="1" type="PlayerSpawn" x="576" y="576" width="64" height="64"/>
   <object id="2" type="DoorTrigger" x="576" y="320" width="64" height="64"/>
-  <object id="19" type="Entity" x="512" y="384" width="64" height="64">
+  <object id="20" type="WinTrigger" x="576" y="256" width="64" height="64"/>
+  <object id="21" type="Entity" x="576" y="384" width="64" height="64">
    <properties>
-    <property name="Texture" type="file" value="charizard.bmp"/>
+    <property name="entity_name" value="soldier"/>
    </properties>
   </object>
-  <object id="20" type="WinTrigger" x="576" y="256" width="64" height="64"/>
+  <object id="22" type="Entity" x="704" y="384" width="64" height="64">
+   <properties>
+    <property name="entity_name" value="soldier"/>
+   </properties>
+  </object>
+  <object id="23" type="Entity" x="448" y="384" width="64" height="64">
+   <properties>
+    <property name="entity_name" value="soldier"/>
+   </properties>
+  </object>
  </objectgroup>
 </map>

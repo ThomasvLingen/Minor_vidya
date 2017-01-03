@@ -7,19 +7,27 @@
 
 #include "CoordinateDouble.hpp"
 #include "../ImageTypes.hpp"
+#include "../interface/Updatable.hpp"
+#include "../raycasting/AnimatedTexture.hpp"
 
 namespace Engine {
-    class Entity {
+    class Entity : public Updatable {
 
     public:
-        Entity(ImageBuffer* texture, CoordinateDouble position);
+        // TODO: Currently an Entity supports one animation, we might want to support multiple animations.
+        Entity(AnimatedTexture* animated_texture, CoordinateDouble position);
         virtual ~Entity();
+
+        virtual void update(int delta_time) override;
+
         CoordinateDouble& get_position();
-        ImageBuffer* get_texture();
+        ImageBuffer& get_texture();
+        int get_texture_width();
+        int get_texture_height();
 
     private:
         CoordinateDouble _position;
-        ImageBuffer* _texture;
+        AnimatedTexture* _animated_texture;
     };
 }
 

@@ -107,7 +107,7 @@ namespace Engine {
         void stop_music();
 
         TextureMap get_tileset_buffers(const string path, const int tile_width, const int tile_height, const int amount_of_tiles);
-
+        vector<ImageBuffer*> load_animation(const string path, const size_t row, const size_t width, const size_t height, const size_t animation_frames);
         ImageBuffer* load_image_buffer(const string path);
 
     private:

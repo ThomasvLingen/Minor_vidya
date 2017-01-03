@@ -11,6 +11,7 @@
 
 #include "state/StartUpState.hpp"
 #include "../config.hpp"
+#include "entities/Soldier.hpp"
 #include "weapons/Pistol.hpp"
 #include "weapons/MachineGun.hpp"
 #include "weapons/ChainGun.hpp"

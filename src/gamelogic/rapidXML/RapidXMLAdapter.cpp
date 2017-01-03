@@ -150,7 +150,7 @@ namespace GameLogic {
     }
 
 
-    string RapidXMLAdapter::get_entity_texture( size_t id )
+    string RapidXMLAdapter::get_entity_type(size_t id)
     {
         for ( xml_node<> * object_node = this->_object_group_node->first_node( "object" ); object_node; object_node = object_node->next_sibling() ) {
             if ( (size_t)std::stoi( object_node->first_attribute( "id" )->value() ) == id) {
