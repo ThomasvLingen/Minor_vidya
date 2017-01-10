@@ -25,13 +25,14 @@ namespace GameLogic {
     using Engine::Keys;
     using Engine::Input;
     using Engine::Key;
+    using std::string;
 
     class Level;
 
-    class Player : public PointOfView {
+    class Player : public PointOfView, public Drawable {
 
     public:
-        Player(CoordinateDouble position);
+        Player(CoordinateDouble position, SDLFacade& SDL_facade);
         ~Player();
 
         int get_health();
@@ -44,6 +45,8 @@ namespace GameLogic {
 
         Weapon* get_weapon();
         void give_weapon(Weapon* weapon);
+
+        virtual void draw() override;
 
     private:
         SPTR_Level _level;
@@ -76,11 +79,15 @@ namespace GameLogic {
         void _set_new_current_tile();
         void _try_trigger();
         void _do_action();
+        Tile* _get_facing_tile();
+        void _draw_tile_usage();
         void _next_weapon();
         void _previous_weapon();
 
         vector<Weapon*> _weapons;
         int _current_weapon_index = 0;
+
+        const string _action_hand_path {"res/hand.png"};
 
         /*
          * int health

@@ -3,11 +3,13 @@
 //
 
 #include "Player.hpp"
+#include "../engine/SDLFacade.hpp"
 
 namespace GameLogic {
 
-    Player::Player(CoordinateDouble position)
+    Player::Player(CoordinateDouble position, SDLFacade& SDL_facade)
     : PointOfView(position, Engine::RaycastingVector{-1, 0}, Engine::RaycastingVector{0, 0.66})
+    , Drawable(SDL_facade)
     , _level(nullptr)
     , _health(_total_health)
     {
@@ -183,8 +185,7 @@ namespace GameLogic {
     /// \brief Applies action to the tile
     void Player::_do_action() //TODO: Expand with maybe checking for items on ground etc.
     {
-        CoordinateDouble new_position{this->_position.x + this->_direction.x * this->_next_tile, this->_position.y + this->_direction.y * this->_next_tile};
-        Tile* tile = this->_level->get_tile_in_level({(int)new_position.x, (int)new_position.y});
+        Tile* tile = this->_get_facing_tile();
         for(auto tiletrigger : tile->get_action_tiletriggers()) {
             if (tiletrigger != nullptr) {
                 tiletrigger->make_call(*this->_level);
@@ -238,6 +239,28 @@ namespace GameLogic {
             this->_current_weapon_index = this->_current_weapon_index % (int) this->_weapons.size();
             this->_current_weapon_index = (this->_current_weapon_index < 0) ? this->_current_weapon_index
               + this->_weapons.size() : this->_current_weapon_index;
+        }
+    }
+
+    void Player::draw()
+    {
+        this->_draw_tile_usage();
+    }
+
+    Tile* Player::_get_facing_tile()
+    {
+        CoordinateDouble new_position{this->_position.x + this->_direction.x * this->_next_tile, this->_position.y + this->_direction.y * this->_next_tile};
+        return this->_level->get_tile_in_level({(int)new_position.x, (int)new_position.y});
+    }
+
+    void Player::_draw_tile_usage()
+    {
+        if (this->_get_facing_tile()->get_action_tiletriggers().size() > 0) {
+            this->_SDL_facade.draw_image(
+                this->_action_hand_path,
+                {this->_SDL_facade.get_width() / 2 - this->_SDL_facade.get_image_width(this->_action_hand_path) / 2,
+                 this->_SDL_facade.get_height() / 2}
+            );
         }
     }
 
