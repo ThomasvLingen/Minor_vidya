@@ -32,7 +32,7 @@ namespace GameLogic {
     class Player : public PointOfView, public Drawable {
 
     public:
-        Player(CoordinateDouble position, SDLFacade& _SDL_facade);
+        Player(CoordinateDouble position, SDLFacade& SDL_facade);
         ~Player();
 
         int get_health();
@@ -87,7 +87,7 @@ namespace GameLogic {
         vector<Weapon*> _weapons;
         int _current_weapon_index = 0;
 
-        string _action_hand_path {"res/hand.png"};
+        const string _action_hand_path {"res/hand.png"};
 
         /*
          * int health

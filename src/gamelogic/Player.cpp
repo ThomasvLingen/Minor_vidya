@@ -7,9 +7,9 @@
 
 namespace GameLogic {
 
-    Player::Player(CoordinateDouble position, SDLFacade& _SDL_facade)
+    Player::Player(CoordinateDouble position, SDLFacade& SDL_facade)
     : PointOfView(position, Engine::RaycastingVector{-1, 0}, Engine::RaycastingVector{0, 0.66})
-    , Drawable(_SDL_facade)
+    , Drawable(SDL_facade)
     , _level(nullptr)
     , _health(_total_health)
     {
