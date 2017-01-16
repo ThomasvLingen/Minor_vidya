@@ -23,7 +23,7 @@ namespace State {
         this->_context.get_level()->start_ticks = this->_context.SDL_facade.get_ticks() - this->_context.get_level()->in_game_ticks;
         this->_collection.add_handleable(&_fps);
         context.SDL_facade.stop_music();
-        context.SDL_facade.play_music("res/music/music_basic.mp3");
+        context.SDL_facade.play_music("res/music/music_basic.wav");
     }
 
     void RunState::update(int time_since_last_update) { //TODO: If called again, level has to reload
@@ -38,11 +38,11 @@ namespace State {
         if (!_is_half_hp && this->_context.get_level()->get_player().get_health() < 50) {
             this->_is_half_hp = true;
             this->_context.SDL_facade.stop_music();
-            this->_context.SDL_facade.play_music("res/music/music_spedup.mp3");
+            this->_context.SDL_facade.play_music("res/music/music_spedup.wav");
         } else if (_is_half_hp && this->_context.get_level()->get_player().get_health() >= 50) {
             this->_is_half_hp = false;
             this->_context.SDL_facade.stop_music();
-            this->_context.SDL_facade.play_music("res/music/music_basic.mp3");
+            this->_context.SDL_facade.play_music("res/music/music_basic.wav");
         }
         this->_context.SDL_facade.handle_sdl_events();
         this->_context.raycasting_engine.handle_input();
