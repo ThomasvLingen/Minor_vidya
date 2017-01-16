@@ -187,17 +187,19 @@ namespace Engine {
     }
 
     void SDLFacade::_add_image_in_map(string path) {
-        SDL_Surface* image = IMG_Load(this->_get_absolute_path(path).c_str());
-        if (image == NULL) {
+        SDL_Surface* image;
+        try{
+             image = IMG_Load(this->_get_absolute_path(path).c_str());
+        }catch (const Exceptions::InvalidImageException& e){
             cout << "IMG_Load: " << IMG_GetError() << endl;
-            throw Exceptions::InvalidImageException();
-        } else {
-            SDL_Texture* image_texture = SDL_CreateTextureFromSurface(this->_renderer, image);
-            this->_images.insert(std::make_pair(path, image_texture));
-
-            SDL_FreeSurface(image);
+            cout << e.what() << endl;
         }
+        SDL_Texture* image_texture = SDL_CreateTextureFromSurface(this->_renderer, image);
+        this->_images.insert(std::make_pair(path, image_texture));
+
+        SDL_FreeSurface(image);
     }
+
 
 
     /// \brief Draws an image
@@ -211,9 +213,9 @@ namespace Engine {
         if (!this->_is_image_in_map(path)) {
             this->_add_image_in_map(path);
         }
-        int w, h;
+        int w = 0, h = 0;
 
-        if(SDL_QueryTexture(this->_images[path], NULL, NULL, &w, &h) == 0){ // get width en height from texture
+        if(SDL_QueryTexture(this->_images[path], NULL, NULL, &w, &h) != 0){ // get width en height from texture
             cout << "Draw_image: "  << SDL_GetError() << endl;
         }
 
@@ -605,10 +607,12 @@ namespace Engine {
     void SDLFacade::play_music(const string path)
     {
         this->stop_music();
-        this->_music = Mix_LoadMUS(this->_get_absolute_path(path).c_str());
-        if(this->_music == NULL) {
-            throw Exceptions::InvalidSoundFileException();
+        try {
+            this->_music = Mix_LoadMUS(this->_get_absolute_path(path).c_str());
+        } catch (const Exceptions::InvalidSoundFileException& e){
+            cout << e.what() << endl;
         }
+
         Mix_FadeInMusic(this->_music, this->_loop_forever, this->_fade_in_time);
     }
 
@@ -622,10 +626,13 @@ namespace Engine {
         if (this->_sound_effects.find(name) != this->_sound_effects.end()) { //key already exists
             return;
         }
-        Mix_Chunk* sound_effect = Mix_LoadWAV(this->_get_absolute_path(path).c_str());
-        if (sound_effect == NULL) {
-            throw Exceptions::InvalidWavFileException();
+        Mix_Chunk* sound_effect;
+        try{
+            sound_effect = Mix_LoadWAV(this->_get_absolute_path(path).c_str());
+        }catch (const Exceptions::InvalidWavFileException& e){
+            cout << e.what() << endl;
         }
+
         this->_sound_effects[name] = sound_effect;
     }
 
@@ -636,8 +643,11 @@ namespace Engine {
     /// \param name of the key that the sound_effect is linked to
     void SDLFacade::play_sound_effect(const string name)
     {
-        if (this->_sound_effects.find(name) == this->_sound_effects.end()) { //if sound_effect is not loaded
-            throw Exceptions::SoundeffectNotLoadedException();
+        try {
+            if (this->_sound_effects.find(name) == this->_sound_effects.end()) { //if sound_effect is not loaded
+            }
+        } catch (const Exceptions::SoundeffectNotLoadedException& e){
+            cout << e.what() << endl;
         }
         Mix_PlayChannel(this->_next_available_channel, this->_sound_effects.at(name), this->_play_once);
     }
@@ -654,17 +664,17 @@ namespace Engine {
     /// \brief get image width of path
     int SDLFacade::get_image_width(const std::string path)
     {
-        SDL_Surface* image = IMG_Load(this->_get_absolute_path(path).c_str());
+        SDL_Surface* image;
         int size = 0;
 
-        if (image == NULL) {
-            cout << "FAILED TO FIND THE IMAGE" << endl;
-            cout << path.c_str() << endl;
-            throw Exceptions::InvalidImageException();
-        } else {
-            size = image->w;
-            SDL_FreeSurface(image);
+        try {
+            image = IMG_Load(this->_get_absolute_path(path).c_str());
+        } catch (const Exceptions::InvalidImageException& e){
+            cout << e.what() << endl;
         }
+
+        size = image->w;
+        SDL_FreeSurface(image);
 
         return size;
     }
