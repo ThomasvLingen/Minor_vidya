@@ -38,6 +38,8 @@ namespace Engine {
 
     class SDLFacade {
     private:
+        string _icon_path = "res/astronaut_bob.png";
+
         Input _input;
 
         map<FontType, TTF_Font*> _fonts;
@@ -159,6 +161,7 @@ namespace Engine {
         ImageBuffer* get_image_buffer(SDL_Surface* tileset, const CoordinateInt& position, const int tile_width, const int tile_height);
 
         string _get_absolute_path(const string path);
+        bool _set_window_icon();
 
         static constexpr int _frequency = 44100;
         static constexpr Uint16 _audio_format = MIX_DEFAULT_FORMAT;
