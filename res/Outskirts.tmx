@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="left-down" width="30" height="30" tilewidth="64" tileheight="64" nextobjectid="62">
+ <properties>
+  <property name="name" value="The hideout"/>
+ </properties>
+ <tileset firstgid="1" name="WolfBobe" tilewidth="64" tileheight="64" tilecount="108">
+  <image source="Wolfswapebobpepper.bmp" width="384" height="1152"/>
+ </tileset>
+ <layer name="Tile Layer 1" width="30" height="30">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,31,31,31,31,31,53,53,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,31,31,31,31,0,0,0,51,51,53,51,53,51,53,51,53,53,53,53,53,53,0,
+0,0,0,0,0,0,31,31,31,0,0,0,0,0,0,0,0,0,0,0,0,0,0,51,53,53,0,0,0,0,
+0,0,0,0,0,0,31,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,51,53,0,0,0,
+0,0,0,0,53,51,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,51,53,0,0,
+0,0,0,53,51,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,51,0,0,
+0,0,53,51,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,53,0,
+0,53,51,0,0,0,0,0,0,0,0,0,79,79,79,79,79,0,0,0,0,0,0,0,0,0,0,0,51,0,
+0,53,0,0,0,0,0,0,0,0,0,79,0,0,0,0,79,79,0,0,0,0,0,0,0,0,0,0,53,0,
+0,53,53,0,0,0,0,0,0,0,79,0,0,0,0,0,0,79,79,0,0,0,0,0,0,0,0,51,53,0,
+0,0,53,51,0,0,0,0,0,0,79,0,0,79,0,0,0,0,79,0,0,0,0,0,0,0,0,51,0,0,
+0,0,0,53,53,0,0,0,0,0,79,0,0,79,79,79,79,66,79,0,0,0,0,0,0,0,0,51,0,0,
+0,0,0,53,51,0,0,0,0,0,79,0,0,0,0,0,79,0,79,0,0,0,0,0,0,0,0,51,0,0,
+0,0,0,53,0,0,0,0,0,0,0,79,0,0,0,0,67,25,79,0,0,0,0,0,0,0,53,53,0,0,
+0,0,0,51,0,0,0,0,0,0,0,0,79,79,66,79,79,79,79,0,0,0,0,0,0,0,53,0,0,0,
+0,0,53,53,0,0,0,0,0,0,0,0,0,0,0,0,53,0,0,0,0,0,0,0,0,0,51,0,0,0,
+0,0,53,0,0,0,0,0,0,0,0,0,0,0,0,51,53,0,0,0,0,0,0,0,0,0,53,0,0,0,
+0,0,51,0,0,0,0,0,0,0,0,0,0,0,0,51,53,0,0,0,0,0,0,0,0,0,51,53,0,0,
+0,0,53,53,0,0,0,0,0,0,0,0,0,0,0,53,51,0,0,0,0,0,0,0,0,0,0,51,53,0,
+0,0,0,53,51,53,53,0,0,0,0,0,0,0,0,53,51,0,0,0,0,0,0,0,0,0,0,0,51,0,
+0,0,0,0,0,0,53,51,51,53,0,0,0,0,51,53,53,0,0,0,0,0,0,0,0,0,0,0,53,51,
+0,0,0,0,0,0,0,0,0,53,51,53,53,53,53,0,53,69,66,69,0,0,0,0,0,0,0,0,0,53,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,69,0,69,0,0,0,0,0,0,0,0,0,53,
+0,0,0,0,0,33,33,7,106,107,108,33,33,0,0,0,0,69,0,69,53,0,0,0,0,0,0,0,51,53,
+0,0,0,0,0,33,0,0,0,0,0,0,33,69,69,69,69,69,0,69,53,51,53,51,0,0,51,51,53,0,
+0,0,0,0,0,33,0,0,0,0,0,0,66,0,0,0,0,0,0,69,53,53,53,53,51,53,53,53,53,53,
+0,0,0,0,0,33,0,0,0,0,0,0,33,69,69,69,73,69,69,69,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,33,33,33,33,33,33,33,33,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <objectgroup name="Object Layer 1">
+  <object id="1" type="PlayerSpawn" x="576" y="1664" width="64" height="64"/>
+  <object id="2" type="DoorTrigger" x="768" y="1600" width="64" height="64"/>
+  <object id="20" type="WinTrigger" x="1088" y="768" width="64" height="64"/>
+  <object id="36" type="Entity" x="1472" y="256">
+   <properties>
+    <property name="entity_name" value="soldier"/>
+   </properties>
+   <polyline points="0,0 -64,384 0,640 -256,832 -256,960"/>
+  </object>
+  <object id="37" type="Entity" x="1408" y="1408">
+   <properties>
+    <property name="entity_name" value="soldier"/>
+   </properties>
+   <polyline points="0,0 128,64 256,64 384,0 320,-64 256,-128 192,-128 128,-128 64,-64"/>
+  </object>
+  <object id="39" type="Entity" x="1280" y="896">
+   <properties>
+    <property name="entity_name" value="soldier"/>
+   </properties>
+   <polyline points="0,0 320,-128 384,-192 384,-320"/>
+  </object>
+  <object id="41" type="Entity" x="1728" y="448">
+   <properties>
+    <property name="entity_name" value="soldier"/>
+   </properties>
+   <polyline points="0,0 -192,64 -448,64 -576,0"/>
+  </object>
+  <object id="44" type="Entity" x="896" y="128">
+   <properties>
+    <property name="entity_name" value="soldier"/>
+   </properties>
+   <polyline points="0,0 0,256"/>
+  </object>
+  <object id="45" type="DoorTrigger" x="1152" y="1344" width="64" height="64"/>
+  <object id="47" type="DoorTrigger" x="896" y="896" width="64" height="64"/>
+  <object id="48" type="DoorTrigger" x="1088" y="704" width="64" height="64"/>
+  <object id="50" type="Entity" x="832" y="128">
+   <properties>
+    <property name="entity_name" value="soldier"/>
+   </properties>
+   <polyline points="0,0 0,192"/>
+  </object>
+  <object id="52" type="Entity" x="896" y="1152">
+   <properties>
+    <property name="entity_name" value="soldier"/>
+   </properties>
+   <polyline points="0,0 -192,64 -384,0 -512,-128 -448,-320 -448,-512 -512,-640 -384,-768 -256,-896 0,-896 192,-896 448,-832 704,-640 704,-448 640,-320 640,-128 704,0 832,192 704,256 512,128 512,-64 576,-256 640,-512 576,-640 384,-768 192,-832 0,-832 -192,-768 -320,-704 -384,-576 -384,-320 -448,-192 -384,-64 -256,64 0,64"/>
+  </object>
+  <object id="53" type="Entity" x="768" y="1024">
+   <properties>
+    <property name="entity_name" value="soldier"/>
+   </properties>
+   <polyline points="0,0 -128,64 -320,64 -448,128"/>
+  </object>
+  <object id="54" type="Entity" x="704" y="448">
+   <properties>
+    <property name="entity_name" value="soldier"/>
+   </properties>
+   <polyline points="0,0 -192,64 -384,128 -448,128"/>
+  </object>
+  <object id="55" type="Entity" x="576" y="896">
+   <properties>
+    <property name="entity_name" value="soldier"/>
+   </properties>
+   <polyline points="0,0 -64,-64 -192,-64 -256,0 -256,64 -256,128"/>
+  </object>
+  <object id="56" type="Entity" x="768" y="384">
+   <properties>
+    <property name="entity_name" value="soldier"/>
+   </properties>
+   <polyline points="0,0 -256,-64 -384,0"/>
+  </object>
+  <object id="57" type="Entity" x="1024" y="192">
+   <properties>
+    <property name="entity_name" value="soldier"/>
+   </properties>
+   <polyline points="0,0 192,128 192,256 256,384 320,448 320,512"/>
+  </object>
+  <object id="59" type="Entity" x="768" y="768">
+   <properties>
+    <property name="entity_name" value="soldier"/>
+   </properties>
+   <polyline points="0,0 64,64 128,64"/>
+  </object>
+  <object id="60" type="Entity" x="960" y="576">
+   <properties>
+    <property name="entity_name" value="soldier"/>
+   </properties>
+   <polyline points="0,0 -64,0 -128,0 -192,64 -192,128"/>
+  </object>
+ </objectgroup>
+</map>
