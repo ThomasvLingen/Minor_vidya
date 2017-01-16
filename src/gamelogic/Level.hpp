@@ -70,6 +70,12 @@ namespace GameLogic {
 
         bool is_level_over();
 
+        Entity* get_entity(int x, int y);
+
+        bool has_entity(int x, int y);
+
+        void kill_entity(int x, int y);
+
         int in_game_ticks = 0;
 
     };

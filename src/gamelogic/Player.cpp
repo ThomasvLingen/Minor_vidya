@@ -204,6 +204,15 @@ namespace GameLogic {
         }
     }
 
+    void Player::_shoot()
+    {
+        CoordinateDouble new_position{this->_position.x + this->_direction.x * (this->_next_tile + 1), this->_position.y + this->_direction.y * (this->_next_tile + 1)};
+        if (this->_level->has_entity((int)new_position.x , (int)new_position.y) && !this->_get_facing_tile()->is_wall()) {
+            this->_level->kill_entity((int) new_position.x, (int) new_position.y);
+        }
+        this->get_weapon()->shoot();
+    }
+
     Weapon* Player::get_weapon()
     {
         if (this->_weapons[this->_current_weapon_index] != nullptr) {
@@ -245,6 +254,8 @@ namespace GameLogic {
     void Player::draw()
     {
         this->_draw_tile_usage();
+        this->_draw_punch_usage();
+        this->_draw_crosshair_usage();
     }
 
     Tile* Player::_get_facing_tile()
@@ -261,6 +272,41 @@ namespace GameLogic {
                 {this->_SDL_facade.get_width() / 2 - this->_SDL_facade.get_image_width(this->_action_hand_path) / 2,
                  this->_SDL_facade.get_height() / 2}
             );
+        }
+    }
+
+    void Player::_draw_punch_usage()
+    {
+        CoordinateDouble new_position{this->_position.x + this->_direction.x * this->_next_tile, this->_position.y + this->_direction.y * this->_next_tile};
+        if (this->_level->has_entity((int)new_position.x , (int)new_position.y)) {
+            this->_SDL_facade.draw_image(
+                    this->_action_punch_path,
+                    {295,
+                      200}
+            );
+        }
+    }
+
+    void Player::_draw_crosshair_usage()
+    {
+        CoordinateDouble new_position{this->_position.x + this->_direction.x * (this->_next_tile + 1), this->_position.y + this->_direction.y * (this->_next_tile + 1)};
+        if (this->_level->has_entity((int)new_position.x , (int)new_position.y) && !this->_get_facing_tile()->is_wall()) {
+            this->_SDL_facade.draw_image(
+                    this->_crosshair_path,
+                    {295,
+                     200}
+            );
+        }
+    }
+
+    void Player::_melee()
+    {
+        CoordinateDouble new_position{this->_position.x + this->_direction.x * this->_next_tile, this->_position.y + this->_direction.y * this->_next_tile};
+        if (this->_level->has_entity((int)new_position.x , (int)new_position.y)) {
+            this->_level->kill_entity((int)new_position.x , (int)new_position.y);
+            this->_SDL_facade.play_sound_effect("punch");
+        } else {
+            this->_SDL_facade.play_sound_effect("air");
         }
     }
 
