@@ -5,8 +5,8 @@ namespace GameLogic {
 
     Enemy::Enemy( AnimatedTexture* animated_texture, CoordinateDouble position, vector<CoordinateDouble> idle_route )
     :Entity( animated_texture, position )
-    , _idle_route(idle_route)
     , _original_position(position)
+    , _idle_route(idle_route)
     {
     }
 
@@ -17,7 +17,7 @@ namespace GameLogic {
     void Enemy::update( int delta_time )
     {
         Entity::update(delta_time);
-        if ( _positionindex == _idle_route.size() ) {
+        if ( (size_t)_positionindex == _idle_route.size() ) {
             _positionindex = 0;
         }
         this->_step_towards(delta_time);

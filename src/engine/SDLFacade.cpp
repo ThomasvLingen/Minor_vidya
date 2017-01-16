@@ -688,11 +688,11 @@ namespace Engine {
             size = image->w;
             SDL_FreeSurface( image );
 
-            return size;
         } catch (const Exceptions::InvalidImageException& e){
             cout << e.what() << endl;
         }
 
+        return size;
     }
 
     string SDLFacade::_get_absolute_path(const string path)
