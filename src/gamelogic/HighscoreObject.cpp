@@ -25,7 +25,7 @@ namespace GameLogic {
                 tempvec.push_back({time, "xxxx"});
                 this->_scores.insert(std::pair<string, vector<highscore>>(level_name, tempvec));
             }
-            if (this->_scores.find(level_name)->second.size() == 10) {
+            else if (this->_scores.find(level_name)->second.size() == 10) {
                 int highest_number = time;
                 int index = 20;
 
