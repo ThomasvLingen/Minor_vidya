@@ -33,10 +33,13 @@ namespace State {
         Input keys = this->_context.SDL_facade.get_input();
 
         if (this->_action_is_selected) {
+            this->_menu.clear_options();
+            this->_add_menu_options();
             this->_context.control_mapper.handle_input(keys);
             if (keys.keys_released.size() > 0) {
                 this->_context.control_mapper.set_new_combination(this->_selected_action, keys.keys_released.at(0));
                 this->_action_is_selected = false;
+                this->_selected_action = Action::ACTION_TEMP;
                 this->_menu.clear_options();
                 this->_add_menu_options();
             }
@@ -70,7 +73,12 @@ namespace State {
         int x = 150;
         int y = 35;
         const int row_height = 30;
+        Color action_color;
         for (auto action : this->_context.control_mapper.get_editable_actions()) {
+            action_color = this->_normal_color;
+            if (this->_selected_action == action) {
+                action_color = this->_selected_color;
+            }
             MenuOption action_option = MenuOption(
                     {x,y},
                     this->_context.control_mapper.get_action_description(action)
@@ -79,7 +87,8 @@ namespace State {
                     [this, action] (Game& game) {
                         UNUSED(game);
                         this->_set_action(action);
-                    }
+                    },
+                    action_color
             );
             this->_menu.add_option(action_option);
             y+= row_height;

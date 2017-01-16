@@ -36,10 +36,12 @@ namespace State {
         private:
             Menu _menu;
             Color _color{255,255,255};
-            Action _selected_action;
+            Action _selected_action = Action::ACTION_TEMP;
             bool _action_is_selected;
             void _set_action(Action action);
             void _add_menu_options();
+            Color _normal_color = {255,255,255};
+            Color _selected_color = {255,0,0};
     };
 }
 
