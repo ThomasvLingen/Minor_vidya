@@ -38,6 +38,8 @@ namespace Engine {
             // Things that don't change within a frame can be calculated here
             CoordinateDouble ray_position = this->_get_ray_pos();
 
+            this->_SDL_facade.draw_background(this->_top_background_color, this->_bottom_background_color);
+
             this->_draw_walls(ray_position, distance_buffer);
             this->_draw_entities(ray_position, distance_buffer);
 
