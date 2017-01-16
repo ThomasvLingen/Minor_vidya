@@ -3,7 +3,7 @@
  <properties>
   <property name="name" value="The fields of bobe"/>
  </properties>
- <tileset firstgid="1" name="WolfBobe" tilewidth="64" tileheight="64" tilecount="108" columns="6">
+ <tileset firstgid="1" name="WolfBobe" tilewidth="64" tileheight="64" tilecount="108">
   <image source="Wolfswapebobpepper.bmp" width="384" height="1152"/>
  </tileset>
  <layer name="Tile Layer 1" width="30" height="30">
@@ -44,16 +44,6 @@
   <object id="1" type="PlayerSpawn" x="576" y="640" width="64" height="64"/>
   <object id="2" type="DoorTrigger" x="704" y="320" width="64" height="64"/>
   <object id="20" type="WinTrigger" x="192" y="448" width="64" height="64"/>
-  <object id="23" type="Entity" x="448" y="384" width="64" height="64">
-   <properties>
-    <property name="entity_name" value="soldier"/>
-   </properties>
-  </object>
-  <object id="29" type="Entity" x="960" y="576" width="64" height="64">
-   <properties>
-    <property name="entity_name" value="soldier"/>
-   </properties>
-  </object>
   <object id="35" type="Entity" x="640" y="128">
    <properties>
     <property name="entity_name" value="soldier"/>
