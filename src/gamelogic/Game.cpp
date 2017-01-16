@@ -10,6 +10,7 @@
 #include "exceptions/LevelIsNullptrException.hpp"
 
 #include "state/StartUpState.hpp"
+#include "state/HighscoreState.hpp"
 #include "../config.hpp"
 #include "entities/Soldier.hpp"
 #include "weapons/Pistol.hpp"
@@ -31,6 +32,11 @@ namespace GameLogic {
         this->_init_sound_effects();
         this->init_states();
     }
+
+    Game::~Game()
+    {
+    }
+
 
     /// \brief The main game loop
     ///
@@ -98,6 +104,10 @@ namespace GameLogic {
         this->raycasting_engine.set_world( this->_level );
 
         return true;
+    }
+
+    HighscoreObject* Game::get_highscore_object() {
+        return &this->_highscore_object;
     }
 
     void Game::init_states()

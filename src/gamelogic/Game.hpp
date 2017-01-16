@@ -9,6 +9,7 @@
 #include "../engine/raycasting/Raycasting.hpp"
 #include "Level.hpp"
 #include "Tile.hpp"
+#include "HighscoreObject.hpp"
 #include "state/IGameState.hpp"
 #include "../engine/PathUtil.hpp"
 #include "Player.hpp"
@@ -28,6 +29,7 @@ namespace GameLogic {
     class Game {
     public:
         Game();
+        ~Game();
         void run();
 
         SDLFacade SDL_facade;
@@ -44,6 +46,7 @@ namespace GameLogic {
         void set_current_map(CampaignMap* new_map);
         CampaignMap* get_current_map();
         void reset_map();
+        HighscoreObject* get_highscore_object();
 
     private:
         void _init_sound_effects();
@@ -53,6 +56,7 @@ namespace GameLogic {
         SPTR_IGameState _new_state;
 
         CampaignMap* _current_map;
+        HighscoreObject _highscore_object;
 
         SPTR_Level _level;
         SPTR_Player _player;
