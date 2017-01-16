@@ -259,8 +259,10 @@ namespace Engine {
 
     void SDLFacade::draw_background(Uint32 color1, Uint32 color2)
     {
-        memset(this->_screen_buffer_pixels, color1 , 640*240);
-        //memset(this->_screen_buffer_pixels[640*240], color2, 640*240);
+        int w = this->_width;
+        int h = this->_height;
+        memset(this->_screen_buffer_pixels, color1, w*(h/2)*sizeof(Uint32));
+        memset(&this->_screen_buffer_pixels[w*(h/2)], color2, w*(h/2)*sizeof(Uint32));
     }
 
     /// \brief Lock the screen buffer for pixel manipulating
