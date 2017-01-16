@@ -172,6 +172,11 @@ namespace GameLogic {
         this->_current_tile = this->_level->get_tile_in_level({(int)this->_position.x, (int)this->_position.y});
     }
 
+    SPTR_Level Player::get_level()
+    {
+        return this->_level;
+    }
+
     /// \brief Checks if the player stepped in a new tile
     bool Player::_new_tile()
     {

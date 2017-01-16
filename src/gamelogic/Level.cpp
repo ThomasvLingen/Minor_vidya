@@ -59,6 +59,8 @@ namespace GameLogic {
         }
 
         this->_player.update(delta_time);
+
+        this->in_game_ticks += delta_time;
     }
 
     CoordinateDouble Level::get_spawnpoint()

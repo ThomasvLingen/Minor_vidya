@@ -6,6 +6,7 @@
 #include "MenuState.hpp"
 #include "RunState.hpp"
 #include "../../util/UnusedMacro.hpp"
+#include "../../util/StringUtil.hpp"
 
 namespace State {
 
@@ -43,7 +44,11 @@ namespace State {
         this->_context.SDL_facade.draw_image("res/levelwin.bmp" , {0,0});
         this->_context.SDL_facade.draw_text("Completed level + [Level Name]", FontType::alterebro_pixel_medium, this->_color, {225, 15});
 
-        this->_context.SDL_facade.draw_text("Time : [00:00]", FontType::alterebro_pixel_medium, this->_color, {225, 200}); //TODO: change this to real time
+        this->_context.SDL_facade.draw_text(StringUtil::time_to_string(
+            this->_context.get_level()->in_game_ticks / 1000),
+            FontType::alterebro_pixel_medium, this->_color,
+            {225, 200}
+        );
 
         this->_context.SDL_facade.handle_sdl_events();
 
