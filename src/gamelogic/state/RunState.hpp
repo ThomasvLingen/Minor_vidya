@@ -10,6 +10,7 @@
 #include "../../engine/SDLFacade.hpp"
 #include "../../engine/FPScounter.hpp"
 #include "../HUD.hpp"
+#include "../Cheats.hpp"
 
 namespace GameLogic {
     class Game;
@@ -18,6 +19,7 @@ namespace GameLogic {
 namespace State {
     using GameLogic::Game;
     using GameLogic::HUD;
+    using GameLogic::Cheats;
 
     class RunState : public IGameState {
 
@@ -29,6 +31,7 @@ namespace State {
         bool _is_game_over();
         Engine::FPScounter _fps;
         HUD _hud;
+        Cheats _cheats;
     };
 }
 

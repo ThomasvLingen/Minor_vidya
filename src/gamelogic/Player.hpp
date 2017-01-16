@@ -36,6 +36,9 @@ namespace GameLogic {
         Player(CoordinateDouble position, SDLFacade& SDL_facade, ControlMapper& control_mapper);
         ~Player();
 
+        int total_health = 80;
+        int current_health;
+
         int get_health();
         int get_total_health();
 
@@ -69,9 +72,6 @@ namespace GameLogic {
 
         Tile* _current_tile;
 
-        int _total_health = 80;
-        int _health;
-
         void _move_player(int timeSinceLastUpdate);
         void _rotate_player(int timeSinceLastUpdate);
         void _mov_forward();
@@ -82,7 +82,6 @@ namespace GameLogic {
         void _rot_left();
 
         bool _new_tile();
-        void _hurt_self();
 
         void _set_new_current_tile();
         void _try_trigger();

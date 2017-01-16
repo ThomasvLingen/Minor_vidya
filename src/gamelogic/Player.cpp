@@ -10,8 +10,8 @@ namespace GameLogic {
     Player::Player(CoordinateDouble position, SDLFacade& SDL_facade, ControlMapper& control_mapper)
     : PointOfView(position, Engine::RaycastingVector{-1, 0}, Engine::RaycastingVector{0, 0.66})
     , Drawable(SDL_facade)
+    , current_health(total_health)
     , _level(nullptr)
-    , _health(_total_health)
     , _control_mapper(control_mapper)
     {
 
@@ -88,8 +88,6 @@ namespace GameLogic {
                         this->_melee();
                     }
                     break;
-                case Action::ACTION_HURT :
-                    this->_hurt_self();
                 default:
                     break;
             }
@@ -97,11 +95,11 @@ namespace GameLogic {
     }
 
     int Player::get_health() {
-        return this->_health;
+        return this->current_health;
     }
 
     int Player::get_total_health() {
-        return this->_total_health;
+        return this->total_health;
     }
 
     void Player::update(int timeSinceLastUpdate)
@@ -339,11 +337,6 @@ namespace GameLogic {
         } else {
             this->_SDL_facade.play_sound_effect("air");
         }
-    }
-
-    void Player::_hurt_self()
-    {
-        this->_health -= 2;
     }
 
 }
