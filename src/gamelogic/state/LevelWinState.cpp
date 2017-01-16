@@ -18,6 +18,7 @@ namespace State {
     {
         this->_level_completed_text = "Completed ";
         this->_level_time_text = "Time taken: " + StringUtil::time_to_string(this->_context.get_level()->in_game_ticks / 1000);
+        this->_context.get_highscore_object()->add_score(this->_context.get_level()->in_game_ticks / 1000, "xxxx");
         vector<MenuOption> menu_options;
 
         try {
