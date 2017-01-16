@@ -105,6 +105,8 @@ namespace GameLogic {
     void Game::_init_sound_effects() {
         this->SDL_facade.load_sound_effect("monsterkill", "res/sound_effects/monsterkill.wav");
         this->SDL_facade.load_sound_effect("headshot", "res/sound_effects/headshot.wav");
+        this->SDL_facade.load_sound_effect("punch", "res/sound_effects/punch.wav");
+        this->SDL_facade.load_sound_effect("air", "res/sound_effects/air.wav");
     }
 
     void Game::_init_weapons()

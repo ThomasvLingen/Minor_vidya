@@ -83,6 +83,9 @@ namespace GameLogic {
         void _do_action();
         Tile* _get_facing_tile();
         void _draw_tile_usage();
+        void _draw_punch_usage();
+        void _draw_crosshair_usage();
+        void _shoot();
         void _next_weapon();
         void _previous_weapon();
 
@@ -90,6 +93,10 @@ namespace GameLogic {
         int _current_weapon_index = 0;
 
         const string _action_hand_path {"res/hand.png"};
+        const string _action_punch_path {"res/punch.png"};
+        const string _crosshair_path {"res/crosshair.png"};
+
+        void _melee();
 
         /*
          * int health
