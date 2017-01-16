@@ -28,10 +28,17 @@ namespace GameLogic {
     , running(true)
     , _current_map(nullptr)
     {
+        this->_highscore_object = new HighscoreObject();
         this->SDL_facade.init();
         this->_init_sound_effects();
         this->init_states();
     }
+
+    Game::~Game()
+    {
+        delete this->_highscore_object;
+    }
+
 
     /// \brief The main game loop
     ///
@@ -99,6 +106,10 @@ namespace GameLogic {
         this->raycasting_engine.set_world( this->_level );
 
         return true;
+    }
+
+    HighscoreObject* Game::get_highscore_object() {
+        return this->_highscore_object;
     }
 
     void Game::init_states()
