@@ -55,7 +55,6 @@ namespace State {
         for ( auto entity : this->_context.get_level()->get_entities() ) {
             entity->update( time_since_last_update );
         }
-        //this->_context.get_level()->get_entities()[0]->update( time_since_last_update );
 
         this->_context.SDL_facade.clear_screen();
 

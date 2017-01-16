@@ -35,7 +35,7 @@ namespace GameLogic {
         double length = sqrt( pow( next_point.x, 2 ) + pow( next_point.y, 2 ) );
         CoordinateDouble next_distance = { (next_point.x / length) * this->_speed * delta_time, (next_point.y / length) * this->_speed * delta_time };
 
-        if ( next_point.x >= next_distance.x && next_point.y >= next_distance.y ) {
+        if ( abs(next_point.x) >= abs(next_distance.x) && abs(next_point.y) >= abs(next_distance.y) ) {
             return next_distance;
         }
         else {

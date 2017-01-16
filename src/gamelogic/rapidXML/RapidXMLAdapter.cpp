@@ -172,7 +172,7 @@ namespace GameLogic {
                 string coordinate_delimeter = " ";
                 size_t coordinate_pos;
                 string coordinate_token;
-                while ( ( coordinate_pos = poly_string.find( coordinate_delimeter ) ) != string::npos ){
+                while ( ( coordinate_pos = poly_string.find( coordinate_delimeter ) )){
                     coordinate_token = poly_string.substr( 0, coordinate_pos );
                     poly_string.erase( 0, coordinate_pos + coordinate_delimeter.length());
 
@@ -184,10 +184,14 @@ namespace GameLogic {
                     string token;
 
                     while ( std::getline( ss, token, xy_delimiter ) ) {
-                        tokens.push_back( std::stoi(token) / this->_tile_height );
+                        tokens.push_back( ( double ) ( ( double ) std::stoi( token ) / ( double )this->_tile_height ) );
                     }
 
                     poly_points.push_back(CoordinateDouble{tokens[1], tokens[0]});
+
+                    if ( coordinate_pos == string::npos ) {
+                        break;
+                    }
                 }
                 return poly_points;
             }
