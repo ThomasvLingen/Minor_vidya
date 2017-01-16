@@ -40,7 +40,7 @@ namespace State {
         int _start_pos_y {50};
         int _step_size_y {30};
         vector<string> _text {
-            "Vidya Game is made by:",
+            "Vidya Gaem is made by:",
             "- Thomas van Lingen:",
             "- Jorg de Bont",
             "- Wouter van Geel",

@@ -37,7 +37,7 @@ namespace State {
 
         this->_context.SDL_facade.clear_screen();
         this->_context.SDL_facade.draw_image("res/helpscreen.bmp" , {0,0});
-        this->_context.SDL_facade.draw_text("Controls for Vidya Game", FontType::alterebro_pixel, this->_color, {120, 50});
+        this->_context.SDL_facade.draw_text("Controls for Vidya Gaem", FontType::alterebro_pixel, this->_color, {120, 50});
 
         ControlMapper& mapper = this->_context.control_mapper;
 
