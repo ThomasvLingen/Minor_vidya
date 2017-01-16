@@ -56,7 +56,7 @@ namespace GameLogic {
         SPTR_IGameState _new_state;
 
         CampaignMap* _current_map;
-        HighscoreObject* _highscore_object;
+        HighscoreObject _highscore_object;
 
         SPTR_Level _level;
         SPTR_Player _player;

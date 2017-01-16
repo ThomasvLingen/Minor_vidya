@@ -8,6 +8,7 @@
 #include "../../util/UnusedMacro.hpp"
 #include "../../util/StringUtil.hpp"
 #include "../exceptions/MapExceptions.hpp"
+#include "../HighscoreObject.hpp" // -----------------------------------------------
 #include "LoadState.hpp"
 
 namespace State {
@@ -18,12 +19,19 @@ namespace State {
     {
         this->_level_completed_text = "Completed ";
         this->_level_time_text = "Time taken: " + StringUtil::time_to_string(this->_context.get_level()->in_game_ticks / 1000);
-        this->_context.get_highscore_object()->add_score(this->_context.get_level()->in_game_ticks / 1000, "xxxx");
         vector<MenuOption> menu_options;
 
         try {
             this->_completed_map = this->_context.get_current_map();
             this->_level_completed_text += this->_completed_map->name;
+            //---------------------------
+            GameLogic::HighscoreObject* temp = this->_context.get_highscore_object();
+            GameLogic::SPTR_Level temp_level = this->_context.get_level();
+            int temp_score = temp_level->in_game_ticks / 1000;
+            string name = this->_completed_map->name;
+            temp->add_score(temp_score, name);
+            //---------------------
+            //this->_context.get_highscore_object()->add_score(this->_context.get_level()->in_game_ticks / 1000, this->_completed_map->name);
 
             try {
                 CampaignMap& next_map = this->_context.campaign.get_next_level(*this->_completed_map);

@@ -9,6 +9,7 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <map>
 
 using std::string;
 using std::vector;
@@ -17,6 +18,7 @@ using std::to_string;
 using std::ifstream;
 using std::ofstream;
 using std::remove;
+using std::map;
 
 
 struct highscore {
@@ -31,10 +33,11 @@ namespace GameLogic {
         HighscoreObject();
         ~HighscoreObject();
         void add_score(int time, string name);
-        vector<highscore> get_scores();
+        vector<highscore> get_scores(string level_name);
+        map<string, vector<highscore>> get_all_scores();
 
     private:
-        vector<highscore> _scores;
+        map<string, vector<highscore>> _scores;
         void _read_from_file();
         void _write_to_file();
         void _sort_list();
