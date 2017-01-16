@@ -261,8 +261,8 @@ namespace Engine {
     {
         int w = this->_width;
         int h = this->_height;
-        wmemset((wchar_t*)this->_screen_buffer_pixels, color1, w*(h/2));
-        wmemset((wchar_t*)&this->_screen_buffer_pixels[w*(h/2)], color2, w*(h/2));
+        wmemset((wchar_t*)this->_screen_buffer_pixels, top_color, w*(h/2));
+        wmemset((wchar_t*)&this->_screen_buffer_pixels[w*(h/2)], bottom_color, w*(h/2));
     }
 
     /// \brief Lock the screen buffer for pixel manipulating
