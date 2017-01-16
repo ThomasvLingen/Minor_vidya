@@ -25,6 +25,7 @@ namespace State {
             {150,140},
             "Quit to menu",
             [] (GameLogic::Game& game) {
+                game.reset_map();
                 game.set_new_state(std::make_shared<MenuState>(game));
             }
         };

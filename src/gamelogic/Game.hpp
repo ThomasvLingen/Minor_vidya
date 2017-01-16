@@ -39,12 +39,18 @@ namespace GameLogic {
         bool load_Level(std::string file_location);
         SPTR_Level get_level();
 
+        void set_current_map(CampaignMap* new_map);
+        CampaignMap* get_current_map();
+        void reset_map();
+
     private:
         void _init_sound_effects();
         void _init_weapons();
 
         SPTR_IGameState _current_state;
         SPTR_IGameState _new_state;
+
+        CampaignMap* _current_map;
 
         SPTR_Level _level;
         SPTR_Player _player;
