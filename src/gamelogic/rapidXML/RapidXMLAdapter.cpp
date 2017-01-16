@@ -174,4 +174,43 @@ namespace GameLogic {
 
         return "";
     }
+
+    vector<CoordinateDouble> RapidXMLAdapter::get_entity_idle_line( size_t id )
+    {
+        for ( xml_node<> * object_node = this->_object_group_node->first_node( "object" ); object_node; object_node = object_node->next_sibling() ) {
+            if ( ( size_t ) std::stoi( object_node->first_attribute( "id" )->value() ) == id ) {
+                xml_node<> * polyline_node = object_node->first_node( "polyline" );
+                string poly_string = polyline_node->first_attribute( "points" )->value();
+                vector<CoordinateDouble> poly_points;
+
+                string coordinate_delimeter = " ";
+                size_t coordinate_pos;
+                string coordinate_token;
+                while ( ( coordinate_pos = poly_string.find( coordinate_delimeter ) ) ) {
+                    coordinate_token = poly_string.substr( 0, coordinate_pos );
+                    poly_string.erase( 0, coordinate_pos + coordinate_delimeter.length() );
+
+                    vector<double> tokens;
+                    char xy_delimiter = ',';
+
+                    std::stringstream ss;
+                    ss.str( coordinate_token );
+                    string token;
+
+                    while ( std::getline( ss, token, xy_delimiter ) ) {
+                        tokens.push_back( ( double ) ( ( double ) std::stoi( token ) / ( double )this->_tile_height ) );
+                    }
+
+                    poly_points.push_back( CoordinateDouble { tokens[1], tokens[0] } );
+
+                    if ( coordinate_pos == string::npos ) {
+                        break;
+                    }
+                }
+                return poly_points;
+            }
+        }
+        throw FileInvalidException();
+    }
+
 }

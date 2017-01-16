@@ -711,7 +711,7 @@ namespace Engine {
 
             for (size_t animation_frame = 0; animation_frame < animation_frames; animation_frame++) {
                 animation_textures.push_back(
-                    this->get_image_buffer(animation_source, CoordinateInt {animation_frame, row}, width, height)
+                    this->get_image_buffer(animation_source, CoordinateInt {(int)animation_frame, (int)row}, (int)width, (int)height)
                 );
             }
 
