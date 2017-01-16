@@ -306,16 +306,17 @@ namespace GameLogic {
         }
     }
 
-    void Player::_melee()
-    {
-        CoordinateDouble new_position{this->_position.x + this->_direction.x * this->_next_tile, this->_position.y + this->_direction.y * this->_next_tile};
-        if (this->_level->has_entity((int)new_position.x , (int)new_position.y)) {
-            this->_level->kill_entity((int)new_position.x , (int)new_position.y);
+    void Player::_melee() {
+        CoordinateDouble new_position{this->_position.x + this->_direction.x * this->_next_tile,
+                                      this->_position.y + this->_direction.y * this->_next_tile};
+        if (this->_level->has_entity((int) new_position.x, (int) new_position.y)) {
+            this->_level->kill_entity((int) new_position.x, (int) new_position.y);
             this->_SDL_facade.play_sound_effect("punch");
         } else {
             this->_SDL_facade.play_sound_effect("air");
         }
-      
+    }
+
     void Player::_hurt_self()
     {
         this->_health -= 2;
