@@ -37,6 +37,19 @@ namespace Engine {
             vector<double> distance_buffer((size_t)this->_SDL_facade.get_width());
             // Things that don't change within a frame can be calculated here
             CoordinateDouble ray_position = this->_get_ray_pos();
+            Uint32 pixel1 = 0x66656400;
+            Uint32 pixel2 = 0xadbed300;
+            this->_SDL_facade.draw_background(pixel1, pixel2);
+//            for (int ray_index = 0; ray_index < this->_SDL_facade.get_width(); ray_index++) {
+//                Uint32 pixel1 = 0x66656400;
+//                Uint32 pixel2 = 0xadbed300;
+//                for(int y_index = 0; y_index < this->_SDL_facade.get_height() / 2; y_index++) {
+//                    this->_SDL_facade.draw_pixel_screen_buffer({ray_index, y_index}, pixel1);
+//                }
+//                for(int y_index = this->_SDL_facade.get_height() / 2; y_index < this->_SDL_facade.get_height(); y_index++) {
+//                    this->_SDL_facade.draw_pixel_screen_buffer({ray_index, y_index}, pixel2);
+//                }
+//            }
 
             this->_draw_walls(ray_position, distance_buffer);
             this->_draw_entities(ray_position, distance_buffer);

@@ -118,6 +118,7 @@ namespace Engine {
         void draw_rect(const CoordinateInt& rect_start, const int width, const int height, const Color& color);
         void update_screen_buffer();
         void render_buffer() const;
+        void draw_background(Uint32 color1, Uint32 color2);
 
         int get_image_width(const std::string path);
 
