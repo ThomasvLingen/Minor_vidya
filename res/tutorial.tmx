@@ -4,7 +4,7 @@
   <property name="name" value="Tutorial"/>
  </properties>
  <tileset firstgid="1" name="tutorial_sheet" tilewidth="64" tileheight="64" tilecount="24">
-  <image source="Minor_vidya/res/tutorial_sheet.bmp" width="384" height="256"/>
+  <image source="tutorial_sheet.bmp" width="384" height="256"/>
  </tileset>
  <layer name="Tutorial" width="30" height="30">
   <data encoding="csv">
