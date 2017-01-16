@@ -50,9 +50,9 @@ namespace State {
     private:
         Color _color{255,255,255};
         FontType _font{FontType::alterebro_pixel};
-        int _start_pos_x_names {200};
-        int _start_pos_x_scores {400};
-        int _start_pos_y {50};
+        int _start_pos_x_names {150};
+        int _start_pos_x_scores {300};
+        int _start_pos_y {100};
         int _step_size_y {30};
         vector<highscore> _scores;
 

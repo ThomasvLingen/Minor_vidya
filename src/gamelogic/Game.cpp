@@ -103,7 +103,7 @@ namespace GameLogic {
 
     void Game::init_states()
     {
-        this->_new_state = std::make_shared<State::HighscoreState>(*this);
+        this->_new_state = std::make_shared<State::StartUpState>(*this);
     }
 
     void Game::_init_sound_effects() {

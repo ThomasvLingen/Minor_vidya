@@ -33,6 +33,7 @@ namespace State {
         this->_context.SDL_facade.draw_image("res/helpscreen.bmp" , CoordinateInt{0,0});
 
         int current_y_pos = this->_start_pos_y;
+        this->_context.SDL_facade.draw_text("Highscores:", this->_font, this->_color, {150, 80});
         for (int i = 0; i < this->_scores.size(); i++) {
             this->_context.SDL_facade.draw_text(this->_scores[i].name, this->_font, this->_color, {this->_start_pos_x_names, current_y_pos});
             this->_context.SDL_facade.draw_text(to_string(this->_scores[i].score), this->_font, this->_color, {this->_start_pos_x_scores, current_y_pos});
