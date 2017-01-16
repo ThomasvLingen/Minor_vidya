@@ -64,7 +64,7 @@ namespace GameLogic {
                         this->_do_action();
                     }
                     break;
-                case Key::K :
+                case Action::ACTION_HURT :
                     this->_hurt_self();
                 default:
                     break;

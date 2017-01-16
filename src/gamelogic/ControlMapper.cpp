@@ -54,7 +54,8 @@ namespace GameLogic{
             {Action::MOVE_RIGHT, Key::D},
             {Action::ROTATE_LEFT, Key::ARROW_LEFT},
             {Action::ROTATE_RIGHT, Key::ARROW_RIGHT},
-            {Action::PAUSE_GAME, Key::ESC}
+            {Action::PAUSE_GAME, Key::ESC},
+            {Action::ACTION_HURT, Key::K}
         };
 
         this->_editable_actions = {
@@ -65,7 +66,8 @@ namespace GameLogic{
             {Action::MOVE_RIGHT},
             {Action::ROTATE_LEFT},
             {Action::ROTATE_RIGHT},
-            {Action::PAUSE_GAME}
+            {Action::PAUSE_GAME},
+            {Action::ACTION_HURT}
         };
     }
 
@@ -104,7 +106,8 @@ namespace GameLogic{
             {Action::MENU_BACK, "Go back in menu"},
             {Action::MENU_SELECT, "Select menu option"},
             {Action::MENU_UP, "Go up in menu"},
-            {Action::MENU_DOWN, "Go down in menu"}
+            {Action::MENU_DOWN, "Go down in menu"},
+            {Action::ACTION_HURT, "Hurt yourself"}
         };
     }
 
