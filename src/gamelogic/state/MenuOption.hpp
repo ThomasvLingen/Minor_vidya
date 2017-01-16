@@ -8,22 +8,25 @@
 #include <functional>
 #include "../Game.hpp"
 #include "../../engine/domain/CoordinateDouble.hpp"
+#include "../../engine/domain/Color.hpp"
 
 namespace State {
 
     using GameLogic::Game;
     using Engine::CoordinateInt;
+    using Engine::Color;
 
     class MenuOption {
 
     public:
         MenuOption();
-        MenuOption(CoordinateInt coordinates, std::string name, std::function<void(Game&)> callback);
+        // Default text color is white
+        MenuOption(CoordinateInt coordinates, std::string name, std::function<void(Game&)> callback, Color color={255, 255, 255});
 
         CoordinateInt coordinates;
         std::string text;
         std::function<void(Game&)> callback;
-
+        Color color;
     };
 
 }

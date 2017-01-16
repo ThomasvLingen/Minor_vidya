@@ -5,10 +5,14 @@
 #ifndef MINOR_VIDYA_LEVELSELECTSTATE_HPP
 #define MINOR_VIDYA_LEVELSELECTSTATE_HPP
 
+#include <functional>
+
 #include "IGameState.hpp"
 #include "Menu.hpp"
 
 namespace State {
+    using GameLogic::CampaignMap;
+
     class LevelSelectState : public IGameState {
     public:
         LevelSelectState(Game& context);
@@ -19,7 +23,12 @@ namespace State {
         Engine::Collection _collection;
         Menu _menu;
 
-        Color _title_text_color {255,255,255};
+        Color _title_text_color {0xFF,0xFF,0xFF};
+        Color _unlocked_color {0xFF, 0xFF, 0xFF};
+        Color _locked_color {0xFF, 0, 0};
+
+        Color _get_map_option_color(CampaignMap& map);
+        std::function<void(GameLogic::Game&)> _get_map_option_callback(CampaignMap& map);
 
         void _init_menu();
     };
