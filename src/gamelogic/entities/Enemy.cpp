@@ -1,4 +1,5 @@
 #include "Enemy.hpp"
+#include <cmath>
 
 namespace GameLogic {
 
