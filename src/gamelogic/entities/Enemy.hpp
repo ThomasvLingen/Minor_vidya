@@ -2,18 +2,19 @@
 #define MINOR_VIDYA_ENEMY_HPP
 
 #include <vector>
-#include "../engine/domain/Entity.hpp"
-#include "../engine/interface/Updatable.hpp"
+#include "../../engine/domain/Entity.hpp"
+#include "../../engine/raycasting/AnimatedTexture.hpp"
 
 namespace GameLogic {
     
     using std::vector;
     using Engine::ImageBuffer;
     using Engine::CoordinateDouble;
+    using Engine::AnimatedTexture;
 
     class Enemy : public Engine::Entity{
     public:
-        Enemy( ImageBuffer* texture, CoordinateDouble position, int hp, vector<CoordinateDouble> idle_route);
+        Enemy( AnimatedTexture* animated_texture, CoordinateDouble position, vector<CoordinateDouble> idle_route);
         ~Enemy();
 
         void update( int delta_time );
@@ -21,7 +22,6 @@ namespace GameLogic {
     private:
         double _speed = 0.00075;
         int _positionindex = 0;
-        int _hp;
         CoordinateDouble _original_position;
         vector<CoordinateDouble> _idle_route;
         void _step_towards( int delta_time );

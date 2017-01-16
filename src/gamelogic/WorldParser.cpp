@@ -1,7 +1,7 @@
 #include "WorldParser.hpp"
 #include <tuple>
 #include "exceptions/FileInvalidException.hpp"
-#include "Enemy.hpp"
+#include "entities/Enemy.hpp"
 
 namespace GameLogic {
     using Exceptions::FileInvalidException;
@@ -87,7 +87,7 @@ namespace GameLogic {
                     this->_set_spawnpoint(level, y, x);
                     spawnpoint_count++;
                 }
-                else if ( std::strcmp( get<3>( object ), "Enemy" ) == 0 ) {
+                else if ( std::strcmp( get<3>( object ), "Entity" ) == 0 ) {
                     size_t id = get<0>( object );
                     this->_set_entity(level, y, x, id, rapid_adapter);
                 }
@@ -128,10 +128,10 @@ namespace GameLogic {
         string entity_type = rapid_adapter.get_entity_type(id);
 
         // If an unknown entity_type is encountered, it is ignored
-        if (level.entity_factory.knows_entity(entity_type)) {
+        if (level.enemy_factory.knows_enemy(entity_type)) {
             try {
-                Engine::Entity* new_entity = level.entity_factory.create_entity(entity_type, entity_spawn);
-                level.get_entities().push_back( new_entity );
+                Enemy* new_enemy = level.enemy_factory.create_enemy(entity_type, entity_spawn, rapid_adapter.get_entity_idle_line(id));
+                level.get_entities().push_back( new_enemy );
             } catch (std::exception e) {
                 throw FileInvalidException();
             }

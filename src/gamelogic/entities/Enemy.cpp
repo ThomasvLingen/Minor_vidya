@@ -2,9 +2,8 @@
 
 namespace GameLogic {
 
-    Enemy::Enemy( ImageBuffer* texture, CoordinateDouble position, int hp, vector<CoordinateDouble> idle_route )
-    :Entity( texture, position )
-    , _hp(hp)
+    Enemy::Enemy( AnimatedTexture* animated_texture, CoordinateDouble position, vector<CoordinateDouble> idle_route )
+    :Entity( animated_texture, position )
     , _idle_route(idle_route)
     , _original_position(position)
     {
@@ -16,6 +15,7 @@ namespace GameLogic {
 
     void Enemy::update( int delta_time )
     {
+        Entity::update(delta_time);
         if ( _positionindex == _idle_route.size() ) {
             _positionindex = 0;
         }

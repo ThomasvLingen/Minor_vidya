@@ -7,6 +7,7 @@
 
 #include "../../engine/domain/Entity.hpp"
 #include "../../engine/AssetsManager.hpp"
+#include "Enemy.hpp"
 
 namespace GameLogic {
 
@@ -14,9 +15,9 @@ namespace GameLogic {
     using Engine::CoordinateDouble;
     using Engine::AssetsManager;
 
-    class Soldier : public Entity {
+    class Soldier : public Enemy {
     public:
-        Soldier(AssetsManager& assets, CoordinateDouble position);
+        Soldier(AssetsManager& assets, CoordinateDouble position, vector<CoordinateDouble> idle_route );
     private:
     };
 }

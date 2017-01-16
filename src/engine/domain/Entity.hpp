@@ -25,8 +25,10 @@ namespace Engine {
         int get_texture_width();
         int get_texture_height();
 
-    private:
+    protected:
         CoordinateDouble _position;
+
+    private:
         AnimatedTexture* _animated_texture;
     };
 }
