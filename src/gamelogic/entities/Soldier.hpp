@@ -5,18 +5,17 @@
 #ifndef MINOR_VIDYA_SOLDIER_HPP
 #define MINOR_VIDYA_SOLDIER_HPP
 
-#include "../../engine/domain/Entity.hpp"
+#include "Enemy.hpp"
 #include "../../engine/AssetsManager.hpp"
 
 namespace GameLogic {
 
-    using Engine::Entity;
     using Engine::CoordinateDouble;
     using Engine::AssetsManager;
 
-    class Soldier : public Entity {
+    class Soldier : public Enemy {
     public:
-        Soldier(AssetsManager& assets, CoordinateDouble position);
+        Soldier(AssetsManager& assets, CoordinateDouble position, vector<CoordinateDouble> idle_route );
     private:
     };
 }

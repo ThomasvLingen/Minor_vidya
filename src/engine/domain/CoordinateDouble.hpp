@@ -10,7 +10,8 @@ namespace Engine {
         double x;
         double y;
 
-        CoordinateDouble operator-(const CoordinateDouble& other);
+        CoordinateDouble operator-( const CoordinateDouble& other );
+        CoordinateDouble operator+( const CoordinateDouble& other );
     };
 }
 
