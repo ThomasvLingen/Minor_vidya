@@ -14,6 +14,7 @@ namespace State {
     : IGameState(context)
     , _fps(context.SDL_facade)
     , _hud(context.SDL_facade, context.get_level()->get_player())
+    , _cheats(context)
     {
         this->_collection.add_drawable(&_fps);
         this->_collection.add_updatable(&_fps);
@@ -22,6 +23,7 @@ namespace State {
         this->_collection.add_drawable(&context.get_level()->get_player());
         this->_context.get_level()->start_ticks = this->_context.SDL_facade.get_ticks() - this->_context.get_level()->in_game_ticks;
         this->_collection.add_handleable(&_fps);
+        this->_collection.add_handleable(&this->_cheats);
         context.SDL_facade.stop_music();
     }
 

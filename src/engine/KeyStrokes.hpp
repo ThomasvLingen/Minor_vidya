@@ -6,6 +6,7 @@
 #define MINOR_VIDYA_KEYSTROKES_HPP
 
 #include <vector>
+#include <string>
 
 namespace Engine {
     using std::vector;
