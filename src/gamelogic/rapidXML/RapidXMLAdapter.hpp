@@ -9,7 +9,6 @@
 #include <cstring>
 #include <tuple>
 #include "../../../libs/RapidXML/rapidxml.hpp"
-#include "../../engine/domain/CoordinateDouble.hpp"
 
 namespace GameLogic {
     using std::string;
@@ -18,7 +17,6 @@ namespace GameLogic {
     using std::stringstream;
     using std::tuple;
 
-    using Engine::CoordinateDouble;
     using rapidxml::xml_node;
     using rapidxml::xml_document;
 
@@ -37,7 +35,6 @@ namespace GameLogic {
         vector<tuple<size_t, size_t, size_t, char*>> get_objects();
         string get_map_name();
         string get_entity_type(size_t id);
-        vector<CoordinateDouble> get_entity_idle_line( size_t id );
     private:
         vector<char> _buffer;
         xml_document<>* _doc;

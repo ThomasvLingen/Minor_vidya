@@ -6,15 +6,14 @@
 
 namespace GameLogic {
 
-    Soldier::Soldier(AssetsManager& assets, CoordinateDouble position, vector<CoordinateDouble> idle_route )
-    : Enemy(
+    Soldier::Soldier(AssetsManager& assets, CoordinateDouble position)
+    : Entity(
         new Engine::AnimatedTexture(
             assets.get_animation("soldier_idle"),
             {250, 250, 250, 250},
             16, 16
         ),
-        position,
-        idle_route
+        position
     )
     {
 
