@@ -16,15 +16,37 @@ namespace GameLogic {
 
     void Enemy::update( int delta_time )
     {
-        if ( positionindex == _idle_route.size() ) {
-            positionindex = 0;
+        if ( _positionindex == _idle_route.size() ) {
+            _positionindex = 0;
         }
-        if ( ticks > 10 ) {
-            this->_position = _original_position + _idle_route[positionindex];
-            positionindex++;
-            ticks = 0;
+        this->_step_towards(delta_time);
+    }
+
+    void Enemy::_step_towards( int delta_time )
+    {
+        CoordinateDouble step = this->_get_step(delta_time);
+        CoordinateDouble to_apply = step;
+        this->_apply_step(to_apply);
+    }
+
+    CoordinateDouble Enemy::_get_step( int delta_time )
+    {
+        CoordinateDouble next_point( this->_original_position - _idle_route[_positionindex] );
+        double length = sqrt( pow( next_point.x, 2 ) + pow( next_point.y, 2 ) );
+        CoordinateDouble next_distance = { (next_point.x / length) * this->_speed * delta_time, (next_point.y / length) * this->_speed * delta_time };
+
+        if ( next_point.x > next_distance.x && next_point.y > next_distance.y ) {
+            return next_distance;
         }
-        ticks++;
+        else {
+            this->_positionindex++;
+            return next_point;
+        }
+    }
+
+    void Enemy::_apply_step( CoordinateDouble to_apply )
+    {
+        this->_position = this->_position - to_apply;
     }
 
 }
