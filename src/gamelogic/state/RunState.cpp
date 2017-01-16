@@ -52,10 +52,6 @@ namespace State {
         this->_context.raycasting_engine.update(time_since_last_update);
         this->_collection.update(time_since_last_update);
 
-        for ( auto entity : this->_context.get_level()->get_entities() ) {
-            entity->update( time_since_last_update );
-        }
-
         this->_context.SDL_facade.clear_screen();
 
         this->_context.raycasting_engine.draw();

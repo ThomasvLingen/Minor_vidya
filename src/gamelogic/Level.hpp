@@ -9,7 +9,7 @@
 #include "../engine/domain/TileObject.hpp"
 #include "Tile.hpp"
 #include "../engine/domain/PointOfView.hpp"
-#include "entities/EnemyFactory.hpp"
+#include "entities/EntityFactory.hpp"
 #include <vector>
 #include <memory>
 
@@ -46,7 +46,7 @@ namespace GameLogic {
         Level(const Level& obj);
         virtual ~Level();
 
-        EnemyFactory enemy_factory;
+        EntityFactory entity_factory;
 
         void update(int delta_time) override;
 
