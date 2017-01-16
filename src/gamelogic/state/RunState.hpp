@@ -29,6 +29,7 @@ namespace State {
 
     private:
         bool _is_game_over();
+        bool _is_half_hp = false;
         Engine::FPScounter _fps;
         HUD _hud;
         Cheats _cheats;

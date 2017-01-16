@@ -25,14 +25,26 @@ namespace State {
         this->_collection.add_handleable(&_fps);
         this->_collection.add_handleable(&this->_cheats);
         context.SDL_facade.stop_music();
+        context.SDL_facade.play_music("res/music/music_basic.wav");
     }
 
     void RunState::update(int time_since_last_update) { //TODO: If called again, level has to reload
         if (this->_is_game_over()) {
+            this->_context.SDL_facade.stop_music();
             this->_context.set_new_state(std::make_shared<GameOverState>(this->_context));
         }
         else if (this->_context.get_level()->is_level_over()) {
+            this->_context.SDL_facade.stop_music();
             this->_context.set_new_state(std::make_shared<LevelWinState>(this->_context));
+        }
+        if (!_is_half_hp && this->_context.get_level()->get_player().get_health() < 50) {
+            this->_is_half_hp = true;
+            this->_context.SDL_facade.stop_music();
+            this->_context.SDL_facade.play_music("res/music/music_spedup.wav");
+        } else if (_is_half_hp && this->_context.get_level()->get_player().get_health() >= 50) {
+            this->_is_half_hp = false;
+            this->_context.SDL_facade.stop_music();
+            this->_context.SDL_facade.play_music("res/music/music_basic.wav");
         }
         this->_context.SDL_facade.handle_sdl_events();
         this->_context.raycasting_engine.handle_input();
