@@ -12,6 +12,11 @@ namespace Exceptions {
     public:
         virtual const char* what() const throw();
     };
+
+    class NoNextMapExcepion : public std::exception {
+    public:
+        virtual const char* what() const throw();
+    };
 }
 
 #endif //MINOR_VIDYA_CANNOTSETMAPEXCEPTION_HPP

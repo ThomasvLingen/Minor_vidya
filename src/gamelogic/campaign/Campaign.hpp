@@ -17,6 +17,7 @@ namespace GameLogic {
         Campaign();
 
         vector<CampaignMap>& get_levels();
+        CampaignMap& get_next_level(CampaignMap& map_to_find_next_of);
     private:
         vector<CampaignMap> _levels;
         void _init_maps();

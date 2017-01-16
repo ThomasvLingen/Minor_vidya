@@ -9,4 +9,9 @@ namespace Exceptions {
     {
         return "map is a nullptr, which means it wasn't set";
     }
+
+    const char* NoNextMapExcepion::what() const throw()
+    {
+        return "cannot get next map, since there is no next map";
+    }
 }

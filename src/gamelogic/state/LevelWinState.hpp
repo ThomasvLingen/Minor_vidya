@@ -38,7 +38,6 @@ namespace State {
         Color _color{255,255,255};
 
         CampaignMap* _completed_map;
-        bool _could_get_map = false;
         string _level_completed_text;
         string _level_time_text;
     };

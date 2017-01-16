@@ -18,6 +18,8 @@ namespace GameLogic {
         string name;
         string tmx_source_path;
         bool unlocked;
+
+        bool operator==(const CampaignMap& other);
     private:
     };
 }
