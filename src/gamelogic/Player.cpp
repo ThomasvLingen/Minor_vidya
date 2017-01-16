@@ -64,6 +64,8 @@ namespace GameLogic {
                         this->_do_action();
                     }
                     break;
+                case Key::K :
+                    this->_hurt_self();
                 default:
                     break;
             }
@@ -170,6 +172,11 @@ namespace GameLogic {
         this->_level = level;
         this->_position = level->get_spawnpoint();
         this->_current_tile = this->_level->get_tile_in_level({(int)this->_position.x, (int)this->_position.y});
+    }
+
+    SPTR_Level Player::get_level()
+    {
+        return this->_level;
     }
 
     /// \brief Checks if the player stepped in a new tile
@@ -308,6 +315,10 @@ namespace GameLogic {
         } else {
             this->_SDL_facade.play_sound_effect("air");
         }
+      
+    void Player::_hurt_self()
+    {
+        this->_health -= 2;
     }
 
 }

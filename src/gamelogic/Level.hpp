@@ -77,6 +77,7 @@ namespace GameLogic {
         void kill_entity(int x, int y);
 
         int in_game_ticks = 0;
+        int start_ticks;
 
     };
 

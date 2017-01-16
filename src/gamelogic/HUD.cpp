@@ -4,6 +4,7 @@
 
 #include "HUD.hpp"
 #include "../util/UnusedMacro.hpp"
+#include "../util/StringUtil.hpp"
 
 namespace GameLogic {
 
@@ -11,21 +12,6 @@ namespace GameLogic {
     : Drawable(_SDL_facade)
     , _player(player)
     {
-    }
-
-    int HUD::get_current_ticks()
-    {
-        return this->_current_ticks;
-    }
-
-    void HUD::set_start_tick(int ticks)
-    {
-        this->_start_ticks = ticks;
-    }
-
-    void HUD::set_current_tick(int ticks)
-    {
-        this->_current_ticks = ticks;
     }
 
     int HUD::_calculate_health_blocks()
@@ -64,9 +50,9 @@ namespace GameLogic {
 
     void HUD::_draw_face()
     {
-        if (this->_current_time % 4 > 1) {
+        if (this->_get_current_time() % 4 > 1) {
             this->_SDL_facade.draw_image(this->HUD_FACE_FRONT, this->_character_head_pos);
-        } else if (this->_current_time % 3 > 1) {
+        } else if (this->_get_current_time() % 3 > 1) {
             this->_SDL_facade.draw_image(this->HUD_FACE_LEFT, this->_character_head_pos);
         } else {
             this->_SDL_facade.draw_image(this->HUD_FACE_RIGHT, this->_character_head_pos);
@@ -83,7 +69,13 @@ namespace GameLogic {
         this->_draw_health_blocks();
 
         // draw time
-        this->_SDL_facade.draw_text(this->_time_to_string(this->_current_time), FontType::alterebro_pixel, this->_time_color, this->_time_pos);
+        this->_SDL_facade.draw_text(
+            StringUtil::time_to_string(
+                this->_get_current_time()
+            ),
+            FontType::alterebro_pixel, this->_time_color,
+            this->_time_pos
+        );
 
         // draw face
         this->_draw_face();
@@ -95,31 +87,10 @@ namespace GameLogic {
     void HUD::update(int delta_time)
     {
         UNUSED(delta_time)
-        this->_current_ticks = _SDL_facade.get_ticks() - this->_start_ticks;
-        this->_current_time = this->_calculate_time(this->_current_ticks);
     }
 
-    int HUD::_calculate_time(int ticks)
+    int HUD::_get_current_time()
     {
-        return (ticks / 1000);
-    }
-
-    string HUD::_time_to_string(int current_time)
-    {
-        std::stringstream health_min_ss;
-        std::stringstream health_sec_ss;
-
-        int seconds = current_time % 60;
-        int minutes = current_time / 60;
-        health_min_ss << std::setfill('0') << std::setw(2) << minutes; // 2 is size of total health (string size)
-        health_sec_ss << std::setfill('0') << std::setw(2) << seconds; // 2 is size of total health (string size)<
-
-        string min;
-        string sec;
-        string output;
-        health_min_ss >> min;
-        health_sec_ss >> sec;
-        output = min + " : " + sec;
-        return output;
+        return this->_player.get_level()->in_game_ticks / 1000;
     }
 }

@@ -40,6 +40,7 @@ namespace GameLogic {
 
         bool is_at(int x, int y);
         void set_level(SPTR_Level level);
+        SPTR_Level get_level();
         void handleInput(Input keys);
         virtual void update(int timeSinceLastUpdate);
 
@@ -75,6 +76,7 @@ namespace GameLogic {
         void _rot_left();
 
         bool _new_tile();
+        void _hurt_self();
 
         void _set_new_current_tile();
         void _try_trigger();

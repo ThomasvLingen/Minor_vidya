@@ -5,6 +5,7 @@
 #include "RunState.hpp"
 #include "PauseState.hpp"
 #include "LevelWinState.hpp"
+#include "GameOverState.hpp"
 #include "MenuState.hpp"
 
 namespace State {
@@ -19,13 +20,15 @@ namespace State {
         this->_collection.add_drawable(&_hud);
         this->_collection.add_updatable(&_hud);
         this->_collection.add_drawable(&context.get_level()->get_player());
-        this->_hud.set_start_tick(this->_context.SDL_facade.get_ticks() - this->_context.get_level()->in_game_ticks);
-        this->_hud.set_current_tick(this->_context.get_level()->in_game_ticks);
+        this->_context.get_level()->start_ticks = this->_context.SDL_facade.get_ticks() - this->_context.get_level()->in_game_ticks;
         context.SDL_facade.stop_music();
     }
 
     void RunState::update(int time_since_last_update) { //TODO: If called again, level has to reload
-        if (this->_context.get_level()->is_level_over()) {
+        if (this->_is_game_over()) {
+            this->_context.set_new_state(std::make_shared<GameOverState>(this->_context));
+        }
+        else if (this->_context.get_level()->is_level_over()) {
             this->_context.set_new_state(std::make_shared<LevelWinState>(this->_context));
         }
         this->_context.SDL_facade.handle_sdl_events();
@@ -35,7 +38,6 @@ namespace State {
         for (auto key : keys.keys_released) {
             switch (key) {
                 case Key::ESC:
-                    this->_context.get_level()->in_game_ticks = this->_hud.get_current_ticks();
                     this->_context.set_new_state(std::make_shared<PauseState>(this->_context));
                     break;
                 default:
@@ -60,5 +62,11 @@ namespace State {
         }
 
         this->_context.SDL_facade.render_buffer();
+    }
+
+    bool RunState::_is_game_over()
+    {
+        return
+            this->_context.get_level()->get_player().get_health() <= 0;
     }
 }

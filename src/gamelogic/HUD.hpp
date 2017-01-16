@@ -26,9 +26,6 @@ namespace GameLogic {
     public:
         HUD(SDLFacade& _SDL_facade, Player& player);
 
-        int get_current_ticks();
-        void set_start_tick(int ticks);
-        void set_current_tick(int ticks);
         virtual void draw() override;
 
         virtual void update(int delta_time) override;
@@ -40,12 +37,7 @@ namespace GameLogic {
         void _draw_face();
         int _calculate_health_blocks();
 
-        int _current_time; // in sec
-        int _current_ticks;
-        int _start_ticks;
-
-        int _calculate_time(int ticks); // mili seconds to seconds
-        string _time_to_string(int current_time); // nice output 01:32
+        int _get_current_time();
 
         //HUD health related
         Color _health_text_color = {255, 38, 70};
