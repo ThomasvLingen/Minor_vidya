@@ -31,11 +31,11 @@ namespace GameLogic {
 
     CoordinateDouble Enemy::_get_step( int delta_time )
     {
-        CoordinateDouble next_point( this->_original_position - _idle_route[_positionindex] );
+        CoordinateDouble next_point((_idle_route[_positionindex] + this->_original_position) - this->_position);
         double length = sqrt( pow( next_point.x, 2 ) + pow( next_point.y, 2 ) );
         CoordinateDouble next_distance = { (next_point.x / length) * this->_speed * delta_time, (next_point.y / length) * this->_speed * delta_time };
 
-        if ( next_point.x > next_distance.x && next_point.y > next_distance.y ) {
+        if ( next_point.x >= next_distance.x && next_point.y >= next_distance.y ) {
             return next_distance;
         }
         else {
@@ -46,7 +46,7 @@ namespace GameLogic {
 
     void Enemy::_apply_step( CoordinateDouble to_apply )
     {
-        this->_position = this->_position - to_apply;
+        this->_position = this->_position + to_apply;
     }
 
 }
