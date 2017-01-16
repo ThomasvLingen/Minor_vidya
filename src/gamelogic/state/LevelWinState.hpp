@@ -12,9 +12,11 @@
 
 namespace GameLogic {
     class Game;
+    class CampaignMap;
 }
 
 namespace State {
+    using std::string;
     using Engine::SDLFacade;
     using Engine::CoordinateDouble;
     using Engine::Color;
@@ -22,6 +24,7 @@ namespace State {
     using Engine::Keys;
     using Engine::Key;
     using GameLogic::Game;
+    using GameLogic::CampaignMap;
 
     class LevelWinState : public IGameState {
 
@@ -33,6 +36,10 @@ namespace State {
     private:
         Menu _menu;
         Color _color{255,255,255};
+
+        CampaignMap* _completed_map;
+        string _level_completed_text;
+        string _level_time_text;
     };
 }
 

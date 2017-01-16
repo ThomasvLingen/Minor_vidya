@@ -160,4 +160,18 @@ namespace GameLogic {
         }
         throw FileInvalidException();
     }
+
+    string RapidXMLAdapter::get_map_name()
+    {
+        xml_node<>* map_properties = this->_map_node->first_node("properties");
+
+        for (xml_node<>* prop_node = map_properties->first_node(); prop_node; prop_node = prop_node->next_sibling()) {
+            // Sniff out the name property
+            if (string(prop_node->first_attribute("name")->value()) == string("name")) {
+                return string(prop_node->first_attribute("value")->value());
+            }
+        }
+
+        return "";
+    }
 }

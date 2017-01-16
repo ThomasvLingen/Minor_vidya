@@ -11,10 +11,11 @@ namespace State {
         // TODO: This constructor exists for bad reasons
     }
 
-    MenuOption::MenuOption(CoordinateInt coordinates, std::string name, std::function<void(Game&)> callback)
+    MenuOption::MenuOption(CoordinateInt coordinates, std::string name, std::function<void(Game&)> callback, Color color)
     : coordinates(coordinates)
     , text(name)
     , callback(callback)
+    , color(color)
     {
 
     }

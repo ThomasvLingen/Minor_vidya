@@ -7,6 +7,7 @@
 #include "MenuState.hpp"
 #include "RunState.hpp"
 #include "LoadState.hpp"
+#include "../exceptions/MapExceptions.hpp"
 
 namespace State {
 
@@ -14,23 +15,35 @@ namespace State {
     : IGameState(context)
     , _menu(this->_context.SDL_facade, this->_context)
     {
-        MenuOption continue_game {
-            {250,100},
-            "Restart",
-            [] (GameLogic::Game& game) {
-                game.set_new_state(std::make_shared<LoadState>(game));
-            }
-        };
+        vector<MenuOption> menu_options;
+
+        try {
+            CampaignMap* failed_map = this->_context.get_current_map();
+
+            MenuOption continue_game {
+                {250,100},
+                "Restart",
+                [failed_map] (GameLogic::Game& game) {
+                    game.set_new_state(std::make_shared<LoadState>(game, *failed_map));
+                }
+            };
+
+            menu_options.push_back(continue_game);
+        } catch (Exceptions::MapIsNullptrException e) {
+            std::cout << e.what() << std::endl;
+        }
 
         MenuOption quit_game {
             {250,140},
             "Quit to menu",
             [] (GameLogic::Game& game) {
+                game.reset_map();
                 game.set_new_state(std::make_shared<MenuState>(game));
             }
         };
+        menu_options.push_back(quit_game);
 
-        this->_menu.add_options({continue_game, quit_game});
+        this->_menu.add_options(menu_options);
         this->_menu.set_escape_option(quit_game);
 
         this->_collection.add_drawable(&this->_menu);

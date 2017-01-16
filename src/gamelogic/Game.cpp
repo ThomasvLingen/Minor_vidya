@@ -15,6 +15,7 @@
 #include "weapons/Pistol.hpp"
 #include "weapons/MachineGun.hpp"
 #include "weapons/ChainGun.hpp"
+#include "exceptions/MapExceptions.hpp"
 
 namespace GameLogic {
     Game::Game()
@@ -24,6 +25,7 @@ namespace GameLogic {
     , control_mapper(ControlMapper())
     , raycasting_engine(this->SDL_facade)
     , running(true)
+    , _current_map(nullptr)
     {
         this->SDL_facade.init();
         this->_init_sound_effects();
@@ -124,6 +126,33 @@ namespace GameLogic {
         } else {
             throw Exceptions::LevelIsNullptrException();
         }
+    }
+
+    /// \brief Sets the map that is currently being played. This is typically done upon loading it.
+    ///        Setting a map when another is already being played overrides it.
+    /// \param new_map New map that is going to be played
+    void Game::set_current_map(CampaignMap* new_map)
+    {
+        this->_current_map = new_map;
+    }
+
+    /// \brief Gets the CampaignMap that's currently being played.
+    /// \throws When the map is not set before calling this function, it throws a MapIsNullPtr exception
+    /// \return The CampaignMap that's being played
+    CampaignMap* Game::get_current_map()
+    {
+        if (this->_current_map != nullptr) {
+            return this->_current_map;
+        } else {
+            throw Exceptions::MapIsNullptrException();
+        }
+    }
+
+    /// \brief resets the map that's being played, this is typically done upon exiting a level, either through
+    /// completion or quitting.
+    void Game::reset_map()
+    {
+        this->set_current_map(nullptr);
     }
 }
 
