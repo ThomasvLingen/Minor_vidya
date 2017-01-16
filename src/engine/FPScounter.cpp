@@ -9,17 +9,21 @@ namespace Engine {
     FPScounter::FPScounter(SDLFacade& _SDL_facade)
     : Drawable(_SDL_facade)
     , _current_FPS(0)
+    , _is_visible(true)
     {
+        _is_visible = true;
     }
 
     void FPScounter::draw()
     {
-        this->_SDL_facade.draw_text(
-            this->_get_FPS_string(),
-            this->_font,
-            this->_color,
-            CoordinateInt{this->_coord.x, this->_coord.y}
-        );
+        if (this->_is_visible) {
+            this->_SDL_facade.draw_text(
+                    this->_get_FPS_string(),
+                    this->_font,
+                    this->_color,
+                    CoordinateInt{this->_coord.x, this->_coord.y}
+            );
+        }
     }
 
     void FPScounter::update(int delta_time)
@@ -62,6 +66,15 @@ namespace Engine {
     string FPScounter::_get_FPS_string()
     {
         return std::to_string(this->_current_FPS);
+    }
+
+    void FPScounter::handle_input(Input &keys)
+    {
+        for (Key key : keys.keys_released) {
+            if (key == Key::TAB) {
+                this->_is_visible = !this->_is_visible;
+            }
+        }
     }
 
 }

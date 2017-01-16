@@ -15,6 +15,7 @@
 #include "../engine/KeyStrokes.hpp"
 #include "weapons/Weapon.hpp"
 #include "exceptions/WeaponIsNullptrException.hpp"
+#include "ControlMapper.hpp"
 
 namespace GameLogic {
 
@@ -32,7 +33,7 @@ namespace GameLogic {
     class Player : public PointOfView, public Drawable {
 
     public:
-        Player(CoordinateDouble position, SDLFacade& SDL_facade);
+        Player(CoordinateDouble position, SDLFacade& SDL_facade, ControlMapper& control_mapper);
         ~Player();
 
         int get_health();
@@ -51,6 +52,8 @@ namespace GameLogic {
 
     private:
         SPTR_Level _level;
+
+        ControlMapper& _control_mapper;
 
         const double _MOVE_SPEED = 0.003;
         const double _STRAFE_SPEED = 0.004;
@@ -76,12 +79,16 @@ namespace GameLogic {
         void _rot_left();
 
         bool _new_tile();
+        void _hurt_self();
 
         void _set_new_current_tile();
         void _try_trigger();
         void _do_action();
         Tile* _get_facing_tile();
         void _draw_tile_usage();
+        void _draw_punch_usage();
+        void _draw_crosshair_usage();
+        void _shoot();
         void _next_weapon();
         void _previous_weapon();
 
@@ -89,6 +96,10 @@ namespace GameLogic {
         int _current_weapon_index = 0;
 
         const string _action_hand_path {"res/hand.png"};
+        const string _action_punch_path {"res/punch.png"};
+        const string _crosshair_path {"res/crosshair.png"};
+
+        void _melee();
 
         /*
          * int health

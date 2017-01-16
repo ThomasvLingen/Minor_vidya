@@ -117,4 +117,40 @@ namespace GameLogic {
     {
         return this->_level_won;
     }
+
+    Entity* Level::get_entity(int x, int y)
+    {
+        for (Entity* entity : this->_entities) {
+            CoordinateDouble position = entity->get_position();
+            if ((int)position.x == x && (int)position.y == y) {
+                return entity;
+            }
+        }
+        return nullptr;
+    }
+
+    bool Level::has_entity(int x, int y)
+    {
+        for (Entity* entity : this->_entities) {
+            CoordinateDouble position = entity->get_position();
+            if ((int) position.x == x && (int) position.y == y) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    void Level::kill_entity(int x, int y)
+    {
+        for ( auto it = this->_entities.begin(); it != this->_entities.end(); ) {
+            CoordinateDouble position = (*it)->get_position();
+            if ((int)position.x == x && (int)position.y == y) {
+                delete * it;
+                it = this->_entities.erase(it);
+            } else {
+                ++it;
+            }
+        }
+    }
+
 }

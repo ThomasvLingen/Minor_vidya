@@ -5,6 +5,7 @@
 #include "RunState.hpp"
 #include "PauseState.hpp"
 #include "LevelWinState.hpp"
+#include "GameOverState.hpp"
 #include "MenuState.hpp"
 
 namespace State {
@@ -20,20 +21,27 @@ namespace State {
         this->_collection.add_updatable(&_hud);
         this->_collection.add_drawable(&context.get_level()->get_player());
         this->_context.get_level()->start_ticks = this->_context.SDL_facade.get_ticks() - this->_context.get_level()->in_game_ticks;
+        this->_collection.add_handleable(&_fps);
         context.SDL_facade.stop_music();
     }
 
     void RunState::update(int time_since_last_update) { //TODO: If called again, level has to reload
-        if (this->_context.get_level()->is_level_over()) {
+        if (this->_is_game_over()) {
+            this->_context.set_new_state(std::make_shared<GameOverState>(this->_context));
+        }
+        else if (this->_context.get_level()->is_level_over()) {
             this->_context.set_new_state(std::make_shared<LevelWinState>(this->_context));
         }
         this->_context.SDL_facade.handle_sdl_events();
         this->_context.raycasting_engine.handle_input();
 
         Input keys = this->_context.SDL_facade.get_input();
-        for (auto key : keys.keys_released) {
-            switch (key) {
-                case Key::ESC:
+        this->_collection.handle_input(keys);
+        this->_context.control_mapper.handle_input(keys);
+        InputActions input_actions = this->_context.control_mapper.get_input_actions();
+        for (auto action : input_actions.actions_off) {
+            switch (action) {
+                case Action::PAUSE_GAME:
                     this->_context.set_new_state(std::make_shared<PauseState>(this->_context));
                     break;
                 default:
@@ -58,5 +66,11 @@ namespace State {
         }
 
         this->_context.SDL_facade.render_buffer();
+    }
+
+    bool RunState::_is_game_over()
+    {
+        return
+            this->_context.get_level()->get_player().get_health() <= 0;
     }
 }

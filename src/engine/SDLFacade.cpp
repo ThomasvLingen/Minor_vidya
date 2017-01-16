@@ -7,6 +7,11 @@
 #include "PathUtil.hpp"
 #include <SDL2/SDL_image.h>
 
+#include "exceptions/InvalidImageException.hpp"
+#include "exceptions/InvalidSoundFileException.hpp"
+#include "exceptions/InvalidWavFileException.hpp"
+#include "exceptions/SoundeffectNotLoadedException.hpp"
+
 namespace Engine {
 
     /// \brief Constructor of the class
@@ -182,17 +187,20 @@ namespace Engine {
     }
 
     void SDLFacade::_add_image_in_map(string path) {
-        SDL_Surface* image = IMG_Load(this->_get_absolute_path(path).c_str());
-        if (image == NULL) {    // TODO: exception
-            cout << "FAILED TO FIND THE IMAGE" << endl;
-            cout << path << endl;
-        } else {
-            SDL_Texture* image_texture = SDL_CreateTextureFromSurface(this->_renderer, image);
-            this->_images.insert(std::make_pair(path, image_texture));
 
-            SDL_FreeSurface(image);
+        SDL_Surface* image;
+        try{
+             image = IMG_Load(this->_get_absolute_path(path).c_str());
+        }catch (const Exceptions::InvalidImageException& e){
+            cout << "IMG_Load: " << IMG_GetError() << endl;
+            cout << e.what() << endl;
         }
+        SDL_Texture* image_texture = SDL_CreateTextureFromSurface(this->_renderer, image);
+        this->_images.insert(std::make_pair(path, image_texture));
+
+        SDL_FreeSurface(image);
     }
+
 
 
     /// \brief Draws an image
@@ -206,8 +214,12 @@ namespace Engine {
         if (!this->_is_image_in_map(path)) {
             this->_add_image_in_map(path);
         }
-        int w, h;
-        SDL_QueryTexture(this->_images[path], NULL, NULL, &w, &h); // get width en height from texture
+
+        int w = 0, h = 0;
+
+        if(SDL_QueryTexture(this->_images[path], NULL, NULL, &w, &h) != 0){ // get width en height from texture
+            cout << "Draw_image: "  << SDL_GetError() << endl;
+        }
 
         SDL_Rect src_r = {0, 0, w, h};
         SDL_Rect dest_r = {(int)coordinates.x, (int)coordinates.y, w, h};
@@ -420,16 +432,15 @@ namespace Engine {
     /// Supported keys will be handled and, if not already present, added to the _keys_down vector.
     void SDLFacade::_handle_key_pressed_event(SDL_Keycode key)
     {
-        map<SDL_Keycode, Key>::iterator it;
-        it = this->_possible_keys.find(key);
+        for(auto it = this->_possible_keys.begin(); it != this->_possible_keys.end(); ++it){
+            if(it->second == key){
+                vector<Key>::iterator it_pressed = this->_input.keys_down.begin();
+                // it_pressed might need to be 0 first time
+                it_pressed = find(it_pressed, this->_input.keys_down.end(), it->first);
 
-        // Check if SDL_Keycode needs to be handled
-        if (it != this->_possible_keys.end()) {
-            vector<Key>::iterator it_pressed;
-            it_pressed = find(this->_input.keys_down.begin(), this->_input.keys_down.end(), it->second);
-
-            if (it_pressed == this->_input.keys_down.end()) {
-                this->_input.keys_down.push_back(it->second);
+                if(it_pressed == this->_input.keys_down.end()){
+                    this->_input.keys_down.push_back(it->first);
+                }
             }
         }
     }
@@ -439,29 +450,22 @@ namespace Engine {
     /// Supported keys will be handled and, if present, removed from the _keys_down vector.
     void SDLFacade::_handle_key_released_event(SDL_Keycode key)
     {
-        map<SDL_Keycode, Key>::iterator it_possible;
-        it_possible = this->_possible_keys.find(key);
-        bool key_is_in_possible_keys = it_possible != this->_possible_keys.end();
+        for(auto it = this->_possible_keys.begin(); it != this->_possible_keys.end(); ++it){
+            if(it->second == key){
+                vector<Key>::iterator it_down = this->_input.keys_down.begin();
+                // it_down might need to be 0 first time
+                it_down = find(it_down, this->_input.keys_down.end(), it->first);
 
-        // Remove key from keys_pressed
-        // Check if SDL_Keycode needs to be handled
-        if (key_is_in_possible_keys) {
-            vector<Key>::iterator it_down;
-            it_down = find(this->_input.keys_down.begin(), this->_input.keys_down.end(), it_possible->second);
+                if(it_down != this->_input.keys_down.end()){
+                    this->_input.keys_down.erase(it_down);
+                }
 
-            // Check if released key is in _keys_down
-            if (it_down != this->_input.keys_down.end()) {
-                this->_input.keys_down.erase(it_down);
+                this->_input.keys_released.push_back(it->first);
             }
         }
 
-        // Add key to keys_released
-        if (key_is_in_possible_keys) {
-            if (find(this->_input.keys_released.begin(), this->_input.keys_released.end(), it_possible->second) == this->_input.keys_released.end()) {
-                this->_input.keys_released.push_back(it_possible->second);
-            }
-        }
     }
+
 
     /// \brief Function that handles a SDL_WINDOWEVENT event
     ///
@@ -597,10 +601,13 @@ namespace Engine {
     void SDLFacade::play_music(const string path)
     {
         this->stop_music();
-        this->_music = Mix_LoadMUS(this->_get_absolute_path(path).c_str());
-        if(this->_music == NULL) { //TODO exception{
-            return;
+
+        try {
+            this->_music = Mix_LoadMUS(this->_get_absolute_path(path).c_str());
+        } catch (const Exceptions::InvalidSoundFileException& e){
+            cout << e.what() << endl;
         }
+
         Mix_FadeInMusic(this->_music, this->_loop_forever, this->_fade_in_time);
     }
 
@@ -614,10 +621,14 @@ namespace Engine {
         if (this->_sound_effects.find(name) != this->_sound_effects.end()) { //key already exists
             return;
         }
-        Mix_Chunk* sound_effect = Mix_LoadWAV(this->_get_absolute_path(path).c_str());
-        if (sound_effect == NULL) { //TODO exception{
-            return;
+
+        Mix_Chunk* sound_effect;
+        try{
+            sound_effect = Mix_LoadWAV(this->_get_absolute_path(path).c_str());
+        }catch (const Exceptions::InvalidWavFileException& e){
+            cout << e.what() << endl;
         }
+
         this->_sound_effects[name] = sound_effect;
     }
 
@@ -628,8 +639,11 @@ namespace Engine {
     /// \param name of the key that the sound_effect is linked to
     void SDLFacade::play_sound_effect(const string name)
     {
-        if (this->_sound_effects.find(name) == this->_sound_effects.end()) { //if sound_effect is not loaded
-            return; //TODO exception{
+        try {
+            if (this->_sound_effects.find(name) == this->_sound_effects.end()) { //if sound_effect is not loaded
+            }
+        } catch (const Exceptions::SoundeffectNotLoadedException& e){
+            cout << e.what() << endl;
         }
         Mix_PlayChannel(this->_next_available_channel, this->_sound_effects.at(name), this->_play_once);
     }
@@ -646,16 +660,18 @@ namespace Engine {
     /// \brief get image width of path
     int SDLFacade::get_image_width(const std::string path)
     {
-        SDL_Surface* image = IMG_Load(this->_get_absolute_path(path).c_str());
+        SDL_Surface* image;
         int size = 0;
 
-        if (image == NULL) { //TODO: exception
-            cout << "FAILED TO FIND THE IMAGE" << endl;
-            cout << path.c_str() << endl;
-        } else {
-            size = image->w;
-            SDL_FreeSurface(image);
+
+        try {
+            image = IMG_Load(this->_get_absolute_path(path).c_str());
+        } catch (const Exceptions::InvalidImageException& e){
+            cout << e.what() << endl;
         }
+
+        size = image->w;
+        SDL_FreeSurface(image);
 
         return size;
     }

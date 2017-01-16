@@ -7,6 +7,7 @@
 
 #include "interface/Drawable.hpp"
 #include "interface/Updatable.hpp"
+#include "interface/Handleable.hpp"
 #include <vector>
 #include <string>
 
@@ -14,13 +15,15 @@ namespace Engine {
     using std::vector;
     using std::string;
 
-    class FPScounter : public Drawable, public Updatable {
+    class FPScounter : public Drawable, public Updatable, public Handleable {
     public:
         FPScounter(SDLFacade& _SDL_facade);
 
         virtual void draw() override;
 
         virtual void update(int delta_time) override;
+
+        virtual void handle_input(Input& keys) override;
 
     private:
         vector<int> _FPS_values;
@@ -35,6 +38,7 @@ namespace Engine {
         int _calculate_FPS(int delta_time);
 
         string _get_FPS_string();
+        bool _is_visible;
     };
 }
 #endif //MINOR_VIDYA_FPSCOUNTER_HPP

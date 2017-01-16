@@ -16,8 +16,6 @@ namespace GameLogic {
 }
 
 namespace State {
-    using Engine::Keys;
-    using Engine::Key;
     using GameLogic::Game;
     using GameLogic::HUD;
 
@@ -28,6 +26,7 @@ namespace State {
         void update(int time_since_last_update) override;
 
     private:
+        bool _is_game_over();
         Engine::FPScounter _fps;
         HUD _hud;
     };

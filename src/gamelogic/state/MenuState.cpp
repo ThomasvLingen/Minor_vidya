@@ -5,6 +5,7 @@
 #include "MenuState.hpp"
 #include "StartUpState.hpp"
 #include "LoadState.hpp"
+#include "MappingState.hpp"
 #include "HelpState.hpp"
 #include "CreditState.hpp"
 #include "../../util/UnusedMacro.hpp"
@@ -31,8 +32,16 @@ namespace State {
             }
         };
 
+        MenuOption controls {
+                {150,180}, //coordinates
+                "Controls", //text
+                [] (Game& game) { //callback
+                    game.set_new_state(std::make_shared<MappingState>(game));
+                }
+        };
+
         MenuOption credits{
-            {150,180}, //coordinates
+            {150,220}, //coordinates
             "Credits", //text
             [] (Game& game) { //callback
                  game.set_new_state(std::make_shared<CreditState>(game));
@@ -40,7 +49,7 @@ namespace State {
         };
 
         MenuOption quit {
-            {150,220}, //coordinates
+            {150,260}, //coordinates
             "Quit Game", //text
             [] (Game& game) { //callback
                 game.running = false;
@@ -56,7 +65,7 @@ namespace State {
         };
 
         this->_menu.add_options( //add options to menu
-            {start_game, help, credits, quit}
+            {start_game, help, controls, credits, quit}
         );
 
         this->_menu.set_selected(0);

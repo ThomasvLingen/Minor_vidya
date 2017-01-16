@@ -7,11 +7,12 @@
 
 namespace GameLogic {
 
-    Player::Player(CoordinateDouble position, SDLFacade& SDL_facade)
+    Player::Player(CoordinateDouble position, SDLFacade& SDL_facade, ControlMapper& control_mapper)
     : PointOfView(position, Engine::RaycastingVector{-1, 0}, Engine::RaycastingVector{0, 0.66})
     , Drawable(SDL_facade)
     , _level(nullptr)
     , _health(_total_health)
+    , _control_mapper(control_mapper)
     {
 
     }
@@ -28,42 +29,43 @@ namespace GameLogic {
     /// \param keys is a vector of Key enumerables that were pressed
     void Player::handleInput(Input keys)
     {
-        for (auto key : keys.keys_released) {
-            switch (key) {
-                case Key::E :
-                    this->_action_released = true;
-                    break;
-                default:
-                    break;
+        this->_control_mapper.handle_input(keys);
+        InputActions input_actions = this->_control_mapper.get_input_actions();
+
+        for(auto action : input_actions.actions_off){
+            if(action == Action::ACTION_INTERACT){
+                this->_action_released = true;
             }
         }
 
-        for (auto key : keys.keys_down) {
-            switch (key) {
-                case Key::A :
+        for (auto action : input_actions.actions_on) {
+            switch (action) {
+                case Action::MOVE_LEFT :
                     this->_move_left();
                     break;
-                case Key::DOWN :
+                case Action::MOVE_BACKWARD :
                     this->_mov_backward();
                     break;
-                case Key::UP :
+                case Action::MOVE_FORWARD :
                     this->_mov_forward();
                     break;
-                case Key::D :
+                case Action::MOVE_RIGHT :
                     this->_move_right();
                     break;
-                case Key::LEFT :
+                case Action::ROTATE_LEFT :
                     this->_rot_left();
                     break;
-                case Key::RIGHT :
+                case Action::ROTATE_RIGHT :
                     this->_rot_right();
                     break;
-                case Key::E :
+                case Action::ACTION_INTERACT :
                     if (this->_action_released) {
                         this->_action_released = false;
                         this->_do_action();
                     }
                     break;
+                case Action::ACTION_HURT :
+                    this->_hurt_self();
                 default:
                     break;
             }
@@ -209,6 +211,15 @@ namespace GameLogic {
         }
     }
 
+    void Player::_shoot()
+    {
+        CoordinateDouble new_position{this->_position.x + this->_direction.x * (this->_next_tile + 1), this->_position.y + this->_direction.y * (this->_next_tile + 1)};
+        if (this->_level->has_entity((int)new_position.x , (int)new_position.y) && !this->_get_facing_tile()->is_wall()) {
+            this->_level->kill_entity((int) new_position.x, (int) new_position.y);
+        }
+        this->get_weapon()->shoot();
+    }
+
     Weapon* Player::get_weapon()
     {
         if (this->_weapons[this->_current_weapon_index] != nullptr) {
@@ -250,6 +261,8 @@ namespace GameLogic {
     void Player::draw()
     {
         this->_draw_tile_usage();
+        this->_draw_punch_usage();
+        this->_draw_crosshair_usage();
     }
 
     Tile* Player::_get_facing_tile()
@@ -267,6 +280,46 @@ namespace GameLogic {
                  this->_SDL_facade.get_height() / 2}
             );
         }
+    }
+
+    void Player::_draw_punch_usage()
+    {
+        CoordinateDouble new_position{this->_position.x + this->_direction.x * this->_next_tile, this->_position.y + this->_direction.y * this->_next_tile};
+        if (this->_level->has_entity((int)new_position.x , (int)new_position.y)) {
+            this->_SDL_facade.draw_image(
+                    this->_action_punch_path,
+                    {295,
+                      200}
+            );
+        }
+    }
+
+    void Player::_draw_crosshair_usage()
+    {
+        CoordinateDouble new_position{this->_position.x + this->_direction.x * (this->_next_tile + 1), this->_position.y + this->_direction.y * (this->_next_tile + 1)};
+        if (this->_level->has_entity((int)new_position.x , (int)new_position.y) && !this->_get_facing_tile()->is_wall()) {
+            this->_SDL_facade.draw_image(
+                    this->_crosshair_path,
+                    {295,
+                     200}
+            );
+        }
+    }
+
+    void Player::_melee() {
+        CoordinateDouble new_position{this->_position.x + this->_direction.x * this->_next_tile,
+                                      this->_position.y + this->_direction.y * this->_next_tile};
+        if (this->_level->has_entity((int) new_position.x, (int) new_position.y)) {
+            this->_level->kill_entity((int) new_position.x, (int) new_position.y);
+            this->_SDL_facade.play_sound_effect("punch");
+        } else {
+            this->_SDL_facade.play_sound_effect("air");
+        }
+    }
+
+    void Player::_hurt_self()
+    {
+        this->_health -= 2;
     }
 
 }
