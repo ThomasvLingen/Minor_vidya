@@ -37,19 +37,10 @@ namespace State {
     private:
         Color _color{255,255,255};
         FontType _font{FontType::alterebro_pixel};
-        int _start_pos_x {100};
+        int _action_start_pos_x {100};
+        int _key_start_pos_x {300};
         int _start_pos_y {80};
         int _step_size_y {30};
-        vector<string> _text {
-            "Movement Forward:",
-            "Movement Backward:",
-            "Rotate Left:",
-            "Rotate Right:",
-            "Strafe Left:",
-            "Strafe Right:",
-            "Select:",
-            "Back:"
-        };
     };
 }
 

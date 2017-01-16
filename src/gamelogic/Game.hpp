@@ -12,6 +12,7 @@
 #include "state/IGameState.hpp"
 #include "../engine/PathUtil.hpp"
 #include "Player.hpp"
+#include "ControlMapper.hpp"
 
 namespace GameLogic {
 
@@ -29,6 +30,7 @@ namespace GameLogic {
         void run();
 
         SDLFacade SDL_facade;
+        ControlMapper control_mapper;
         Raycasting raycasting_engine;
         bool running;
 
