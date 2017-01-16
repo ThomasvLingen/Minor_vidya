@@ -5,8 +5,8 @@ namespace GameLogic {
 
     Enemy::Enemy( AnimatedTexture* animated_texture, CoordinateDouble position, vector<CoordinateDouble> idle_route )
     :Entity( animated_texture, position )
-    , _idle_route(idle_route)
     , _original_position(position)
+    , _idle_route(idle_route)
     {
     }
 
