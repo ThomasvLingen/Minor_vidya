@@ -11,6 +11,7 @@ namespace Engine {
         double y;
 
         CoordinateDouble operator-(const CoordinateDouble& other);
+        CoordinateDouble operator+(const CoordinateDouble& other);
     };
 }
 

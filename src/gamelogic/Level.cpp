@@ -14,14 +14,14 @@ namespace GameLogic {
     , _field(field)
     , _spawnpoint(spawnpoint)
     , _player(player)
-    , entity_factory(*assets)
+    , enemy_factory(*assets)
     {
     }
 
     Level::Level(Player& player, Engine::SPTR_AssetsManager assets)
     : World(assets)
     , _player(player)
-    , entity_factory(*assets)
+    , enemy_factory(*assets)
     {
     }
 
@@ -30,7 +30,7 @@ namespace GameLogic {
     , _field(obj._field)
     , _spawnpoint(obj._spawnpoint)
     , _player(obj._player)
-    , entity_factory(obj.entity_factory) // This is a copy!
+    , enemy_factory(obj.enemy_factory) // This is a copy!
     {
     }
 
@@ -54,8 +54,8 @@ namespace GameLogic {
             }
         }
 
-        for (auto& entity : this->get_entities()) {
-            entity->update(delta_time);
+        for (auto& enemy : this->get_entities()) {
+            enemy->update(delta_time);
         }
 
         this->_player.update(delta_time);
