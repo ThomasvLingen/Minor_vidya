@@ -5,7 +5,7 @@
 #ifndef MINOR_VIDYA_SOLDIER_HPP
 #define MINOR_VIDYA_SOLDIER_HPP
 
-#include "enemy.hpp"
+#include "Enemy.hpp"
 #include "../../engine/AssetsManager.hpp"
 
 namespace GameLogic {
