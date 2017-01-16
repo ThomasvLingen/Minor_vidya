@@ -83,6 +83,7 @@ namespace State {
             };
         } else {
             return [] (GameLogic::Game& gaem) {
+                UNUSED(gaem);
                 // When the map is locked, we don't do anything when the option is selected.
             };
         }
