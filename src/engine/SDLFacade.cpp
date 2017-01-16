@@ -82,6 +82,10 @@ namespace Engine {
             return false;
         }
 
+        if (!this->_set_window_icon()) {
+            return false;
+        }
+
         //std::cout << "initializing renderer" << std::endl;
         if (!this->_init_renderer()) {
             return false;
@@ -729,6 +733,22 @@ namespace Engine {
         }
 
         return animation_textures;
+    }
+
+    bool SDLFacade::_set_window_icon()
+    {
+        SDL_Surface* icon_surface = IMG_Load(this->_icon_path.c_str());
+
+        if (icon_surface != NULL) {
+            SDL_SetWindowIcon(this->_window, icon_surface);
+            SDL_FreeSurface(icon_surface);
+
+            return true;
+        } else {
+            cout << "An error occurred while loading the window icon " << this->_icon_path << endl;
+
+            return false;
+        }
     }
 
 }
