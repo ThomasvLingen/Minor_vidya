@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="left-down" width="30" height="30" tilewidth="64" tileheight="64" nextobjectid="92">
+ <properties>
+  <property name="name" value="Bobe's hideout"/>
+ </properties>
+ <tileset firstgid="1" name="WolfBobe" tilewidth="64" tileheight="64" tilecount="108">
+  <image source="Wolfswapebobpepper.bmp" width="384" height="1152"/>
+ </tileset>
+ <layer name="Tile Layer 1" width="30" height="30">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,23,23,23,23,69,69,69,69,69,69,73,69,33,33,33,33,33,33,33,33,33,33,
+0,0,0,0,0,0,0,0,23,0,0,0,0,0,0,0,0,0,0,69,33,0,0,0,0,0,0,0,0,33,
+0,0,0,0,0,0,0,0,23,0,0,0,0,0,0,0,0,0,0,69,33,0,0,0,0,0,0,0,0,33,
+0,0,0,0,0,0,0,0,23,0,23,23,69,69,73,69,69,69,0,69,33,0,0,0,0,0,0,0,0,33,
+0,0,0,0,0,0,0,0,69,25,69,77,15,15,15,15,15,69,0,69,33,0,0,0,0,0,0,0,0,33,
+0,0,0,0,0,0,0,0,73,0,0,103,0,0,0,0,9,69,0,69,33,0,0,0,0,0,0,0,0,33,
+0,0,0,0,0,0,0,69,69,103,69,69,0,0,0,0,13,69,0,73,33,0,0,0,0,0,0,0,0,33,
+0,0,0,0,0,0,0,69,0,0,0,69,0,0,0,0,13,69,0,69,33,0,0,0,0,0,0,0,0,33,
+0,0,0,0,0,0,0,69,0,0,0,69,0,0,0,0,9,69,0,69,33,0,0,0,0,0,0,0,0,33,
+0,0,0,0,0,0,0,69,0,0,0,69,0,0,0,0,9,69,0,69,33,0,0,0,0,0,0,0,0,33,
+0,0,0,0,0,0,0,69,0,0,0,69,0,0,0,0,13,69,0,69,33,0,0,0,0,0,0,0,0,33,
+0,0,0,0,0,0,0,69,0,0,0,69,0,0,0,0,25,0,0,0,25,0,0,0,0,0,0,0,0,33,
+0,0,0,0,0,0,7,69,69,69,69,69,15,15,15,15,15,69,0,69,33,0,0,0,0,0,0,0,0,33,
+0,0,0,0,0,30,0,30,30,30,30,0,67,67,67,67,67,69,0,69,33,0,0,0,0,0,0,0,0,33,
+0,0,0,0,0,30,0,0,0,0,30,0,67,0,0,0,0,25,0,69,33,0,0,0,0,0,0,0,0,33,
+0,0,0,0,0,30,0,0,0,0,30,0,67,0,0,0,0,69,0,69,33,0,0,0,0,0,0,0,0,33,
+0,0,0,0,0,30,0,0,0,0,30,0,67,67,67,67,67,69,0,69,33,0,0,0,0,0,0,0,0,33,
+0,0,0,0,0,30,0,0,0,0,30,30,30,30,30,30,30,69,0,69,33,0,0,0,0,0,0,0,0,33,
+0,0,0,0,0,30,0,0,0,0,25,0,25,0,25,0,25,0,0,69,33,33,33,33,33,33,33,33,33,33,
+0,0,0,0,0,30,30,30,30,30,30,30,30,30,30,30,30,69,69,69,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <objectgroup name="Object Layer 1">
+  <object id="1" type="PlayerSpawn" x="576" y="640" width="64" height="64"/>
+  <object id="35" type="DoorTrigger" x="576" y="384" width="64" height="64"/>
+  <object id="36" type="DoorTrigger" x="704" y="320" width="64" height="64"/>
+  <object id="37" type="DoorTrigger" x="1024" y="704" width="64" height="64"/>
+  <object id="38" type="Entity" x="832" y="512" width="64" height="64">
+   <properties>
+    <property name="entity_name" value="soldier"/>
+   </properties>
+  </object>
+  <object id="39" type="Entity" x="896" y="512" width="64" height="64">
+   <properties>
+    <property name="entity_name" value="soldier"/>
+   </properties>
+  </object>
+  <object id="40" type="DoorTrigger" x="1088" y="896" width="64" height="64"/>
+  <object id="41" type="WinTrigger" x="384" y="832" width="64" height="64"/>
+  <object id="42" type="Entity" x="1408" y="128" width="64" height="64">
+   <properties>
+    <property name="entity_name" value="soldier"/>
+   </properties>
+  </object>
+  <object id="43" type="Entity" x="1536" y="128" width="64" height="64">
+   <properties>
+    <property name="entity_name" value="soldier"/>
+   </properties>
+  </object>
+  <object id="44" type="Entity" x="1664" y="128" width="64" height="64">
+   <properties>
+    <property name="entity_name" value="soldier"/>
+   </properties>
+  </object>
+  <object id="45" type="Entity" x="1792" y="128" width="64" height="64">
+   <properties>
+    <property name="entity_name" value="soldier"/>
+   </properties>
+  </object>
+  <object id="46" type="Entity" x="1664" y="256" width="64" height="64">
+   <properties>
+    <property name="entity_name" value="soldier"/>
+   </properties>
+  </object>
+  <object id="47" type="Entity" x="1408" y="256" width="64" height="64">
+   <properties>
+    <property name="entity_name" value="soldier"/>
+   </properties>
+  </object>
+  <object id="48" type="Entity" x="1792" y="256" width="64" height="64">
+   <properties>
+    <property name="entity_name" value="soldier"/>
+   </properties>
+  </object>
+  <object id="49" type="Entity" x="1536" y="256" width="64" height="64">
+   <properties>
+    <property name="entity_name" value="soldier"/>
+   </properties>
+  </object>
+  <object id="50" type="Entity" x="1664" y="384" width="64" height="64">
+   <properties>
+    <property name="entity_name" value="soldier"/>
+   </properties>
+  </object>
+  <object id="51" type="Entity" x="1408" y="384" width="64" height="64">
+   <properties>
+    <property name="entity_name" value="soldier"/>
+   </properties>
+  </object>
+  <object id="52" type="Entity" x="1792" y="384" width="64" height="64">
+   <properties>
+    <property name="entity_name" value="soldier"/>
+   </properties>
+  </object>
+  <object id="53" type="Entity" x="1536" y="384" width="64" height="64">
+   <properties>
+    <property name="entity_name" value="soldier"/>
+   </properties>
+  </object>
+  <object id="54" type="Entity" x="1664" y="512" width="64" height="64">
+   <properties>
+    <property name="entity_name" value="soldier"/>
+   </properties>
+  </object>
+  <object id="55" type="Entity" x="1408" y="512" width="64" height="64">
+   <properties>
+    <property name="entity_name" value="soldier"/>
+   </properties>
+  </object>
+  <object id="56" type="Entity" x="1792" y="512" width="64" height="64">
+   <properties>
+    <property name="entity_name" value="soldier"/>
+   </properties>
+  </object>
+  <object id="57" type="Entity" x="1536" y="512" width="64" height="64">
+   <properties>
+    <property name="entity_name" value="soldier"/>
+   </properties>
+  </object>
+  <object id="62" type="Entity" x="1664" y="640" width="64" height="64">
+   <properties>
+    <property name="entity_name" value="soldier"/>
+   </properties>
+  </object>
+  <object id="63" type="Entity" x="1408" y="640" width="64" height="64">
+   <properties>
+    <property name="entity_name" value="soldier"/>
+   </properties>
+  </object>
+  <object id="64" type="Entity" x="1792" y="640" width="64" height="64">
+   <properties>
+    <property name="entity_name" value="soldier"/>
+   </properties>
+  </object>
+  <object id="65" type="Entity" x="1536" y="640" width="64" height="64">
+   <properties>
+    <property name="entity_name" value="soldier"/>
+   </properties>
+  </object>
+  <object id="66" type="Entity" x="1664" y="768" width="64" height="64">
+   <properties>
+    <property name="entity_name" value="soldier"/>
+   </properties>
+  </object>
+  <object id="67" type="Entity" x="1408" y="768" width="64" height="64">
+   <properties>
+    <property name="entity_name" value="soldier"/>
+   </properties>
+  </object>
+  <object id="68" type="Entity" x="1792" y="768" width="64" height="64">
+   <properties>
+    <property name="entity_name" value="soldier"/>
+   </properties>
+  </object>
+  <object id="69" type="Entity" x="1536" y="768" width="64" height="64">
+   <properties>
+    <property name="entity_name" value="soldier"/>
+   </properties>
+  </object>
+  <object id="70" type="Entity" x="1664" y="896" width="64" height="64">
+   <properties>
+    <property name="entity_name" value="soldier"/>
+   </properties>
+  </object>
+  <object id="71" type="Entity" x="1408" y="896" width="64" height="64">
+   <properties>
+    <property name="entity_name" value="soldier"/>
+   </properties>
+  </object>
+  <object id="72" type="Entity" x="1792" y="896" width="64" height="64">
+   <properties>
+    <property name="entity_name" value="soldier"/>
+   </properties>
+  </object>
+  <object id="73" type="Entity" x="1536" y="896" width="64" height="64">
+   <properties>
+    <property name="entity_name" value="soldier"/>
+   </properties>
+  </object>
+  <object id="74" type="Entity" x="1792" y="896" width="64" height="64">
+   <properties>
+    <property name="entity_name" value="soldier"/>
+   </properties>
+  </object>
+  <object id="75" type="Entity" x="1536" y="896" width="64" height="64">
+   <properties>
+    <property name="entity_name" value="soldier"/>
+   </properties>
+  </object>
+  <object id="77" type="Entity" x="1664" y="896" width="64" height="64">
+   <properties>
+    <property name="entity_name" value="soldier"/>
+   </properties>
+  </object>
+  <object id="82" type="Entity" x="1664" y="1024" width="64" height="64">
+   <properties>
+    <property name="entity_name" value="soldier"/>
+   </properties>
+  </object>
+  <object id="83" type="Entity" x="1408" y="1024" width="64" height="64">
+   <properties>
+    <property name="entity_name" value="soldier"/>
+   </properties>
+  </object>
+  <object id="84" type="Entity" x="1792" y="1024" width="64" height="64">
+   <properties>
+    <property name="entity_name" value="soldier"/>
+   </properties>
+  </object>
+  <object id="85" type="Entity" x="1536" y="1024" width="64" height="64">
+   <properties>
+    <property name="entity_name" value="soldier"/>
+   </properties>
+  </object>
+  <object id="86" type="DoorTrigger" x="1280" y="704" width="64" height="64"/>
+  <object id="87" type="DoorTrigger" x="576" y="256" width="64" height="64"/>
+  <object id="88" type="DoorTrigger" x="1024" y="1152" width="64" height="64"/>
+  <object id="89" type="DoorTrigger" x="896" y="1152" width="64" height="64"/>
+  <object id="90" type="DoorTrigger" x="768" y="1152" width="64" height="64"/>
+  <object id="91" type="DoorTrigger" x="640" y="1152" width="64" height="64"/>
+ </objectgroup>
+</map>
