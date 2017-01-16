@@ -10,6 +10,7 @@
 #include "exceptions/LevelIsNullptrException.hpp"
 
 #include "state/StartUpState.hpp"
+#include "state/HighscoreState.hpp"
 #include "../config.hpp"
 #include "entities/Soldier.hpp"
 #include "weapons/Pistol.hpp"
@@ -102,7 +103,7 @@ namespace GameLogic {
 
     void Game::init_states()
     {
-        this->_new_state = std::make_shared<State::StartUpState>(*this);
+        this->_new_state = std::make_shared<State::HighscoreState>(*this);
     }
 
     void Game::_init_sound_effects() {
