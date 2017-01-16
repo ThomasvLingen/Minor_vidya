@@ -261,8 +261,17 @@ namespace Engine {
     {
         int w = this->_width;
         int h = this->_height;
-        wmemset((wchar_t*)this->_screen_buffer_pixels, top_color, w*(h/2));
-        wmemset((wchar_t*)&this->_screen_buffer_pixels[w*(h/2)], bottom_color, w*(h/2));
+        if (sizeof(wchar_t) == 4) { //use wmemset is wchar is 4 bytes long (32 bits)
+            wmemset((wchar_t*) this->_screen_buffer_pixels, top_color, w * (h / 2));
+            wmemset((wchar_t*) &this->_screen_buffer_pixels[w * (h / 2)], bottom_color, w * (h / 2));
+        } else { //otherwise use the slow method
+            for (int index = 0; index < w*(h/2); index++) {
+                this->_screen_buffer_pixels[index] = top_color;
+            }
+            for (int index = w*(h/2); index < w*h; index++) {
+                this->_screen_buffer_pixels[index] = bottom_color;
+            }
+        }
     }
 
     /// \brief Lock the screen buffer for pixel manipulating
