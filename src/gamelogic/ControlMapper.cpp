@@ -55,7 +55,11 @@ namespace GameLogic{
             {Action::ROTATE_LEFT, Key::ARROW_LEFT},
             {Action::ROTATE_RIGHT, Key::ARROW_RIGHT},
             {Action::PAUSE_GAME, Key::ESC},
-            {Action::ACTION_HURT, Key::K}
+            {Action::ACTION_HURT, Key::K},
+            {Action::ACTION_SHOOT, Key::SPACE},
+            {Action::ACTION_MELEE, Key::V},
+            {Action::ACTION_NEXTWEAPON, Key::W},
+            {Action::ACTION_PREVIOUSWEAPON, Key::S}
         };
 
         this->_editable_actions = {
@@ -67,7 +71,11 @@ namespace GameLogic{
             {Action::ROTATE_LEFT},
             {Action::ROTATE_RIGHT},
             {Action::PAUSE_GAME},
-            {Action::ACTION_HURT}
+            {Action::ACTION_HURT},
+            {Action::ACTION_SHOOT},
+            {Action::ACTION_MELEE},
+            {Action::ACTION_NEXTWEAPON},
+            {Action::ACTION_PREVIOUSWEAPON}
         };
     }
 
@@ -107,7 +115,12 @@ namespace GameLogic{
             {Action::MENU_SELECT, "Select menu option"},
             {Action::MENU_UP, "Go up in menu"},
             {Action::MENU_DOWN, "Go down in menu"},
-            {Action::ACTION_HURT, "Hurt yourself"}
+            {Action::ACTION_HURT, "Hurt yourself"},
+            {Action::ACTION_SHOOT, "Shoot"},
+            {Action::ACTION_MELEE, "Punch"},
+            {Action::ACTION_NEXTWEAPON, "Next weapon"},
+            {Action::ACTION_PREVIOUSWEAPON, "Previous weapon"}
+
         };
     }
 

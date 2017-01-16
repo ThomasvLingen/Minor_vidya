@@ -63,6 +63,9 @@ namespace GameLogic {
         double _rotation = 0;
         double _next_tile = 0.5;
         bool _action_released = true;
+        bool _action_shoot = true;
+        bool _action_melee = true;
+
 
         Tile* _current_tile;
 

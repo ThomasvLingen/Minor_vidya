@@ -32,9 +32,21 @@ namespace GameLogic {
         this->_control_mapper.handle_input(keys);
         InputActions input_actions = this->_control_mapper.get_input_actions();
 
-        for(auto action : input_actions.actions_off){
-            if(action == Action::ACTION_INTERACT){
+        for (auto action : input_actions.actions_off) {
+            if (action == Action::ACTION_INTERACT) {
                 this->_action_released = true;
+            }
+            if (action == Action::ACTION_SHOOT) {
+                this->_action_shoot = true;
+            }
+            if (action == Action::ACTION_MELEE) {
+                this->_action_melee = true;
+            }
+            if (action == Action::ACTION_NEXTWEAPON) {
+                this->_next_weapon();
+            }
+            if (action == Action::ACTION_PREVIOUSWEAPON) {
+                this->_previous_weapon();
             }
         }
 
@@ -62,6 +74,18 @@ namespace GameLogic {
                     if (this->_action_released) {
                         this->_action_released = false;
                         this->_do_action();
+                    }
+                    break;
+                case Action::ACTION_SHOOT :
+                    if (this->_action_shoot) {
+                        this->_action_shoot = false;
+                        this->_shoot();
+                    }
+                    break;
+                case Action::ACTION_MELEE :
+                    if (this->_action_melee) {
+                        this->_action_melee = false;
+                        this->_melee();
                     }
                     break;
                 case Action::ACTION_HURT :

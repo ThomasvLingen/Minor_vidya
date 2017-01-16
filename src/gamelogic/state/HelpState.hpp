@@ -36,11 +36,11 @@ namespace State {
 
     private:
         Color _color{255,255,255};
-        FontType _font{FontType::alterebro_pixel};
+        FontType _font{FontType::alterebro_pixel_small};
         int _action_start_pos_x {100};
         int _key_start_pos_x {300};
         int _start_pos_y {80};
-        int _step_size_y {30};
+        int _step_size_y {15};
     };
 }
 
