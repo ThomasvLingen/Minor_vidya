@@ -76,6 +76,7 @@ namespace GameLogic {
         void _rot_left();
 
         bool _new_tile();
+        void _hurt_self();
 
         void _set_new_current_tile();
         void _try_trigger();

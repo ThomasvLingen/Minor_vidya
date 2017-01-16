@@ -64,6 +64,8 @@ namespace GameLogic {
                         this->_do_action();
                     }
                     break;
+                case Key::K :
+                    this->_hurt_self();
                 default:
                     break;
             }
@@ -267,6 +269,11 @@ namespace GameLogic {
                  this->_SDL_facade.get_height() / 2}
             );
         }
+    }
+
+    void Player::_hurt_self()
+    {
+        this->_health -= 2;
     }
 
 }
