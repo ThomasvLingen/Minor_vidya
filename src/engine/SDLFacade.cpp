@@ -187,6 +187,7 @@ namespace Engine {
     }
 
     void SDLFacade::_add_image_in_map(string path) {
+
         SDL_Surface* image;
         try{
              image = IMG_Load(this->_get_absolute_path(path).c_str());
@@ -213,6 +214,7 @@ namespace Engine {
         if (!this->_is_image_in_map(path)) {
             this->_add_image_in_map(path);
         }
+
         int w = 0, h = 0;
 
         if(SDL_QueryTexture(this->_images[path], NULL, NULL, &w, &h) != 0){ // get width en height from texture
@@ -607,6 +609,7 @@ namespace Engine {
     void SDLFacade::play_music(const string path)
     {
         this->stop_music();
+
         try {
             this->_music = Mix_LoadMUS(this->_get_absolute_path(path).c_str());
         } catch (const Exceptions::InvalidSoundFileException& e){
@@ -626,6 +629,7 @@ namespace Engine {
         if (this->_sound_effects.find(name) != this->_sound_effects.end()) { //key already exists
             return;
         }
+
         Mix_Chunk* sound_effect;
         try{
             sound_effect = Mix_LoadWAV(this->_get_absolute_path(path).c_str());
@@ -666,6 +670,7 @@ namespace Engine {
     {
         SDL_Surface* image;
         int size = 0;
+
 
         try {
             image = IMG_Load(this->_get_absolute_path(path).c_str());
