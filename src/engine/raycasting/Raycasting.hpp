@@ -37,6 +37,8 @@ namespace Engine {
     private:
         SDLFacade& _SDL_facade;
         WorldPTR _world;
+        Uint32 _top_background_color = 0x33;
+        Uint32 _bottom_background_color = 0x66;
 
         void _draw_walls(CoordinateDouble& ray_position, vector<double>& distance_buffer);
         void _draw_entities(CoordinateDouble& ray_position, vector<double>& distance_buffer);
