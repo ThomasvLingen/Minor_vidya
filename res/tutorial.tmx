@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="30" height="30" tilewidth="64" tileheight="64" nextobjectid="29">
+ <properties>
+  <property name="name" value="Tutorial"/>
+ </properties>
+ <tileset firstgid="1" name="tutorial_sheet" tilewidth="64" tileheight="64" tilecount="24">
+  <image source="tutorial_sheet.bmp" width="384" height="256"/>
+ </tileset>
+ <layer name="Tutorial" width="30" height="30">
+  <data encoding="csv">
+0,0,21,1,4,3,5,2,6,21,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,21,0,0,0,0,0,0,0,0,21,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,21,0,0,0,0,0,0,0,0,21,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,21,0,0,0,0,0,0,0,0,21,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,21,21,21,21,0,21,21,21,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,23,7,0,21,23,23,0,0,0,0,23,23,23,23,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,23,23,21,0,21,23,23,23,23,23,23,0,0,0,0,23,0,0,0,0,0,0,0,0,0,0,0,
+0,0,23,0,0,0,0,0,0,0,0,0,0,0,0,23,23,0,23,0,0,0,0,0,0,0,0,0,0,0,
+0,0,23,0,23,23,23,23,23,23,0,23,23,23,23,0,0,0,23,0,0,0,0,0,0,0,0,0,0,0,
+0,23,0,0,0,0,0,0,0,23,0,0,0,0,23,23,23,23,0,0,0,21,21,21,0,0,0,0,0,0,
+0,23,0,23,23,0,0,23,23,23,0,23,23,23,0,0,0,0,0,0,21,0,0,0,21,0,0,0,0,0,
+0,23,0,0,0,23,0,23,0,0,0,23,23,23,23,23,23,23,23,0,21,0,0,0,21,0,0,0,0,0,
+0,0,23,23,23,23,0,23,23,23,23,23,0,0,0,23,0,0,20,8,21,0,0,0,9,0,0,0,0,0,
+0,0,0,0,0,23,0,23,23,23,0,0,0,23,0,0,0,0,0,0,0,0,0,0,10,0,0,0,0,0,
+0,0,0,0,0,23,0,0,0,0,0,23,23,23,23,0,0,0,20,21,21,0,0,0,21,21,21,0,0,0,
+0,0,0,0,0,23,0,23,23,23,23,0,0,0,23,23,23,23,23,0,21,0,0,0,24,0,0,11,0,0,
+0,0,0,0,0,23,0,0,0,23,23,23,23,0,23,23,23,23,0,0,21,0,0,0,21,21,0,13,0,0,
+0,0,0,0,0,23,0,23,23,23,23,23,23,0,23,0,0,23,0,0,0,21,21,21,21,21,0,12,0,0,
+0,0,0,0,0,23,0,0,0,0,0,0,0,0,0,0,23,0,21,21,21,21,21,21,21,21,0,14,0,0,
+0,23,23,23,23,23,23,23,23,23,23,23,23,23,23,23,0,0,21,0,0,0,0,0,0,0,0,15,0,0,
+23,0,0,0,0,0,23,0,0,0,0,0,0,21,17,21,16,20,0,0,0,0,0,0,0,0,0,21,0,0,
+23,0,0,0,0,0,24,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,21,0,0,
+23,0,0,0,0,0,23,0,0,0,0,0,0,0,21,21,21,20,0,0,0,0,0,0,0,0,0,21,0,0,
+23,0,0,0,0,0,23,23,23,24,23,23,24,23,0,0,0,0,21,21,21,21,21,21,21,21,21,0,0,0,
+23,0,0,23,23,24,23,0,0,0,0,23,0,23,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+23,0,0,23,0,0,23,0,0,0,0,23,23,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+23,0,0,23,0,0,23,0,0,0,0,23,23,23,23,23,23,23,0,0,0,0,0,0,0,0,0,0,0,0,
+23,0,0,23,23,23,23,23,23,23,23,23,0,0,0,0,0,0,19,19,21,18,21,21,21,21,0,0,0,0,
+23,0,0,0,0,0,0,0,0,0,0,24,0,0,0,0,0,0,0,0,0,0,0,0,0,22,0,0,0,0,
+0,23,23,23,23,23,23,23,23,23,23,23,23,23,23,23,23,23,19,19,21,21,21,21,21,21,0,0,0,0
+</data>
+ </layer>
+ <objectgroup name="objects">
+  <object id="2" type="DoorTrigger" x="1536" y="960" width="64" height="64"/>
+  <object id="6" type="Entity" x="1408" y="1344">
+   <properties>
+    <property name="entity_name" value="soldier"/>
+   </properties>
+   <polyline points="0,0 192,0"/>
+  </object>
+  <object id="7" type="Entity" x="128" y="1344">
+   <properties>
+    <property name="entity_name" value="soldier"/>
+   </properties>
+   <polyline points="0,0 0,128 192,128 192,0 0,0"/>
+  </object>
+  <object id="10" type="Entity" x="128" y="1664">
+   <properties>
+    <property name="entity_name" value="soldier"/>
+   </properties>
+   <polyline points="0,0 0,128"/>
+  </object>
+  <object id="13" type="Entity" x="64" y="1664">
+   <properties>
+    <property name="entity_name" value="soldier"/>
+   </properties>
+   <polyline points="0,0 0,64"/>
+  </object>
+  <object id="14" type="Entity" x="512" y="1600">
+   <properties>
+    <property name="entity_name" value="soldier"/>
+   </properties>
+   <polyline points="0,0 0,64 64,64 64,0 128,0 128,64 128,128"/>
+  </object>
+  <object id="15" type="Entity" x="832" y="1792">
+   <properties>
+    <property name="entity_name" value="soldier"/>
+   </properties>
+   <polyline points="0,0 64,-64 128,64 192,-64 256,128 320,-64"/>
+  </object>
+  <object id="16" type="DoorTrigger" x="384" y="1344" width="64" height="64"/>
+  <object id="17" type="DoorTrigger" x="576" y="1472" width="64" height="64"/>
+  <object id="18" type="DoorTrigger" x="768" y="1472" width="64" height="64"/>
+  <object id="21" type="PlayerSpawn" x="320" y="192" width="64" height="64"/>
+  <object id="22" type="DoorTrigger" x="704" y="1792" width="64" height="64"/>
+  <object id="23" type="DoorTrigger" x="320" y="1536" width="64" height="64"/>
+  <object id="24" type="WinTrigger" x="1536" y="1792" width="64" height="64"/>
+  <object id="25" type="Entity" x="1280" y="1280">
+   <properties>
+    <property name="entity_name" value="soldier"/>
+   </properties>
+   <polyline points="0,0 64,64"/>
+  </object>
+  <object id="26" type="Entity" x="1408" y="1408">
+   <properties>
+    <property name="entity_name" value="soldier"/>
+   </properties>
+   <polyline points="0,0 320,0 256,64"/>
+  </object>
+ </objectgroup>
+</map>
