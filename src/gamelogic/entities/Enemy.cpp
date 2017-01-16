@@ -17,7 +17,7 @@ namespace GameLogic {
     void Enemy::update( int delta_time )
     {
         Entity::update(delta_time);
-        if ( _positionindex == _idle_route.size() ) {
+        if ( (size_t)_positionindex == _idle_route.size() ) {
             _positionindex = 0;
         }
         this->_step_towards(delta_time);
