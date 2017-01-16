@@ -191,14 +191,14 @@ namespace Engine {
         SDL_Surface* image;
         try{
              image = IMG_Load(this->_get_absolute_path(path).c_str());
+             SDL_Texture* image_texture = SDL_CreateTextureFromSurface( this->_renderer, image );
+             this->_images.insert( std::make_pair( path, image_texture ) );
+
+             SDL_FreeSurface( image );
         }catch (const Exceptions::InvalidImageException& e){
             cout << "IMG_Load: " << IMG_GetError() << endl;
             cout << e.what() << endl;
         }
-        SDL_Texture* image_texture = SDL_CreateTextureFromSurface(this->_renderer, image);
-        this->_images.insert(std::make_pair(path, image_texture));
-
-        SDL_FreeSurface(image);
     }
 
 
@@ -634,11 +634,12 @@ namespace Engine {
         Mix_Chunk* sound_effect;
         try{
             sound_effect = Mix_LoadWAV(this->_get_absolute_path(path).c_str());
+
+            this->_sound_effects[name] = sound_effect;
         }catch (const Exceptions::InvalidWavFileException& e){
             cout << e.what() << endl;
         }
 
-        this->_sound_effects[name] = sound_effect;
     }
 
     /// \brief Plays a sound effect
@@ -675,14 +676,14 @@ namespace Engine {
 
         try {
             image = IMG_Load(this->_get_absolute_path(path).c_str());
+            size = image->w;
+            SDL_FreeSurface( image );
+
+            return size;
         } catch (const Exceptions::InvalidImageException& e){
             cout << e.what() << endl;
         }
 
-        size = image->w;
-        SDL_FreeSurface(image);
-
-        return size;
     }
 
     string SDLFacade::_get_absolute_path(const string path)
