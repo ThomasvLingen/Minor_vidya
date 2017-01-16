@@ -15,6 +15,7 @@ namespace GameLogic {
 
     void Campaign::_init_maps()
     {
+        this->_levels.push_back(CampaignMap("res/tutorial.tmx"));
         this->_levels.push_back(CampaignMap("res/TestMap.tmx"));
         this->_levels.push_back(CampaignMap("res/Fields.tmx"));
         this->_levels.push_back(CampaignMap("res/Bunker.tmx"));
