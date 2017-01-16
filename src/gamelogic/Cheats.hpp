@@ -18,7 +18,10 @@ namespace GameLogic {
     private:
         Game& _context;
 
+        int _health_substraction = 2;
+
         void _insta_win();
+        void _substract_health();
     };
 }
 
