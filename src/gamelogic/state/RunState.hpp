@@ -28,6 +28,7 @@ namespace State {
         void update(int time_since_last_update) override;
 
     private:
+        bool _is_game_over();
         Engine::FPScounter _fps;
         HUD _hud;
     };
