@@ -66,6 +66,7 @@ namespace State {
 
         if (this->_current_index >= (int)this->_text_image.size()) {
             if ( this->_context.load_Level(this->map_to_load.tmx_source_path) ) {
+                this->_context.set_current_map(&this->map_to_load);
                 this->_context.set_new_state( std::make_shared<RunState>( this->_context ) );
             }
             else {
