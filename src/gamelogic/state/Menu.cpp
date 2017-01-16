@@ -70,16 +70,18 @@ namespace State {
             this->_SDL_facade.draw_text(
                 menu_option.text,
                 this->_font,
-                this->_color,
+                menu_option.color,
                 menu_option.coordinates
             );
         }
 
+        MenuOption* selected = this->get_selected();
+
         this->_context.SDL_facade.draw_rect(
-            {this->get_selected()->coordinates.x - this->_selected_rect_diff_width, this->get_selected()->coordinates.y + this->_selected_rect_diff_height},
+            {selected->coordinates.x - this->_selected_rect_diff_width, selected->coordinates.y + this->_selected_rect_diff_height},
             15,
             15,
-            this->_color
+            selected->color
         );
     }
 

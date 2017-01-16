@@ -50,13 +50,12 @@ namespace State {
         int y = 70;
         const int row_height = 30;
 
-        for (GameLogic::CampaignMap& map : this->_context.campaign.get_levels()) {
+        for (CampaignMap& map : this->_context.campaign.get_levels()) {
             MenuOption map_option = {
                 {x, y},
                 map.name,
-                [&map] (GameLogic::Game& gaem) {
-                    gaem.set_new_state(std::make_shared<LoadState>(gaem, map));
-                }
+                this->_get_map_option_callback(map),
+                this->_get_map_option_color(map)
             };
 
             this->_menu.add_option(map_option);
@@ -65,5 +64,27 @@ namespace State {
 
         this->_menu.add_option(back_to_menu);
         this->_menu.set_escape_option(back_to_menu);
+    }
+
+    Color LevelSelectState::_get_map_option_color(GameLogic::CampaignMap& map)
+    {
+        if (map.unlocked) {
+            return this->_unlocked_color;
+        } else {
+            return this->_locked_color;
+        }
+    }
+
+    std::function<void(GameLogic::Game&)> LevelSelectState::_get_map_option_callback(CampaignMap& map)
+    {
+        if (map.unlocked) {
+            return [&map] (GameLogic::Game& gaem) {
+                gaem.set_new_state(std::make_shared<LoadState>(gaem, map));
+            };
+        } else {
+            return [] (GameLogic::Game& gaem) {
+                // When the map is locked, we don't do anything when the option is selected.
+            };
+        }
     }
 }
