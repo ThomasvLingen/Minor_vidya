@@ -8,6 +8,7 @@
 #include "../../util/UnusedMacro.hpp"
 #include "../../util/StringUtil.hpp"
 #include "../exceptions/MapExceptions.hpp"
+#include "LoadState.hpp"
 
 namespace State {
 
@@ -15,35 +16,38 @@ namespace State {
     : IGameState(context)
     , _menu(this->_context.SDL_facade, this->_context)
     {
+        this->_level_completed_text = "Completed ";
+        this->_level_time_text = "Time taken: " + StringUtil::time_to_string(this->_context.get_level()->in_game_ticks / 1000);
+        vector<MenuOption> menu_options;
+
         try {
             this->_completed_map = this->_context.get_current_map();
-            this->_could_get_map = true;
+            this->_level_completed_text += this->_completed_map->name;
+
+            try {
+                CampaignMap& next_map = this->_context.campaign.get_next_level(*this->_completed_map);
+
+                next_map.unlocked = true;
+
+                menu_options.push_back(
+                    MenuOption {
+                        {250,100},
+                        "Continue to next level",
+                        [&next_map] (GameLogic::Game& game) {
+                            game.set_new_state(std::make_shared<LoadState>(game, next_map));
+                        }
+                    }
+                );
+            } catch (Exceptions::NoNextMapExcepion e) {
+                // We do nothing here, we don't unlock the next level or add the menu option for loading the next level.
+                std::cout << e.what() << std::endl;
+            }
         } catch (Exceptions::MapIsNullptrException e) {
             std::cout << e.what() << std::endl;
-        }
-        this->_context.reset_map();
-
-        this->_level_completed_text = "Completed ";
-        if (this->_could_get_map) {
-            this->_level_completed_text += this->_completed_map->name;
-        } else {
             this->_level_completed_text += "[error]";
         }
-        this->_level_time_text = "Time taken: " + StringUtil::time_to_string(this->_context.get_level()->in_game_ticks / 1000);
 
-        // TODO: unlock next map
-        vector<MenuOption> menu_options;
-        if (this->_could_get_map) {
-            menu_options.push_back(
-                MenuOption {
-                    {250,100},
-                    "Continue to next level",
-                    [] (GameLogic::Game& game) {
-                        //TODO: load next level
-                    }
-                }
-            );
-        }
+        this->_context.reset_map();
 
         MenuOption quit_game {
                 {250,140},
