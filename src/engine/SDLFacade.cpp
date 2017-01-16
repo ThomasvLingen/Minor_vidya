@@ -403,6 +403,7 @@ namespace Engine {
         success &= _load_font("res/alterebro_pixel.ttf", FontType::alterebro_pixel, 30);
         success &= _load_font("res/alterebro_pixel.ttf", FontType::alterebro_pixel_plus, 60);
         success &= _load_font("res/alterebro_pixel.ttf", FontType::alterebro_pixel_medium, 45);
+        success &= _load_font("res/alterebro_pixel.ttf", FontType::alterebro_pixel_small, 20);
 
         return success;
     }

@@ -26,7 +26,7 @@ namespace State {
 
         this->_context.SDL_facade.draw_rect({0,0}, this->_context.SDL_facade.get_width(), this->_context.SDL_facade.get_height(),{0,0,0});
 
-        this->_context.SDL_facade.draw_text("Mapping of controls", FontType::alterebro_pixel_plus, this->_color, {50, 15});
+        this->_context.SDL_facade.draw_text("Mapping of controls", FontType::alterebro_pixel, this->_color, {50, 5});
 
         this->_context.SDL_facade.handle_sdl_events();
 
@@ -68,7 +68,7 @@ namespace State {
         };
 
         int x = 150;
-        int y = 70;
+        int y = 35;
         const int row_height = 30;
         for (auto action : this->_context.control_mapper.get_editable_actions()) {
             MenuOption action_option = MenuOption(
