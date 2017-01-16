@@ -74,7 +74,7 @@ namespace GameLogic {
         WorldParser parser;
         Engine::SPTR_AssetsManager assets = std::make_shared<AssetsManager>( this->SDL_facade );
 
-        this->_player = std::make_shared<Player>(CoordinateDouble{0,0}, control_mapper);
+        this->_player = std::make_shared<Player>(CoordinateDouble{0,0}, this->SDL_facade, control_mapper);
         this->_level = { std::make_shared<Level>(*this->_player, assets) };
 
         try {
