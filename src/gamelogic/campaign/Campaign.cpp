@@ -17,6 +17,7 @@ namespace GameLogic {
     {
         this->_levels.push_back(CampaignMap("res/TestMap.tmx"));
         this->_levels.push_back(CampaignMap("res/Fields.tmx"));
+        this->_levels.push_back(CampaignMap("res/Bunker.tmx"));
 
         // Unlock the first level
         this->_levels[0].unlocked = true;
