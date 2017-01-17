@@ -29,7 +29,7 @@ namespace GameLogic {
                 int highest_number = time;
                 int index = 20;
 
-                for(int i = 0; i < this->_scores.find(level_name)->second.size(); i++){
+                for(int i = 0; i < (int)this->_scores.find(level_name)->second.size(); i++){
                     if (this->_scores.find(level_name)->second[i].score > highest_number) {
                         highest_number = this->_scores.find(level_name)->second[i].score;
                         index = i;
@@ -56,7 +56,7 @@ namespace GameLogic {
                 line.erase(remove(line.begin(),line.end(), '\n'), line.end());
                 temp.push_back(line);
             }
-            for(int i = 0; i < temp.size(); i = i + 2){
+            for(int i = 0; i < (int)temp.size(); i = i + 2){
                 if(this->_scores.find(temp[i]) != this->_scores.end()){
                     this->_scores.find(temp[i])->second.push_back({stoi(temp[i+1]), "xxxx"});
                 } else {
@@ -78,13 +78,13 @@ namespace GameLogic {
         ofstream file;
         file.open("highscore.txt");
         for(map<string, vector<highscore>>::iterator it = this->_scores.begin(); it != this->_scores.end(); it++){
-            for(int i = 0; i < it->second.size(); i++){
+            for(int i = 0; i < (int)it->second.size(); i++){
                 file << it->first << "-" << it->second[i].score;
-                if(i < it->second.size() - 1){
+                if(i < (int)it->second.size() - 1){
                     file << '-';
                 }
             }
-            if(counter < this->_scores.size()){
+            if(counter < (int)this->_scores.size()){
                 file << '-';
             }
             counter++;
@@ -94,8 +94,8 @@ namespace GameLogic {
 
     void HighscoreObject::_sort_list() {
         for (map<string, vector<highscore>>::iterator it = this->_scores.begin(); it != this->_scores.end(); it++) {
-            for (int i = 0; i < it->second.size(); i++) {
-                for (int j = i + 1; j < it->second.size(); j++) {
+            for (int i = 0; i < (int)it->second.size(); i++) {
+                for (int j = i + 1; j < (int)it->second.size(); j++) {
                     if (it->second[i].score > it->second[j].score) {
 
                         int temp_score = it->second[i].score;
