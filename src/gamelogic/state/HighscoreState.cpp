@@ -4,6 +4,7 @@
 
 #include "HighscoreState.hpp"
 #include "../../util/StringUtil.hpp"
+#include "../../util/UnusedMacro.hpp"
 
 namespace State {
     HighscoreState::HighscoreState(Game &context)
@@ -13,6 +14,8 @@ namespace State {
     }
 
     void HighscoreState::update(int time_since_last_update) {
+        UNUSED(time_since_last_update);
+
         this->_context.SDL_facade.handle_sdl_events();
 
         Input keys = this->_context.SDL_facade.get_input();
@@ -43,7 +46,7 @@ namespace State {
             this->_context.SDL_facade.draw_text(string_highscore_pair.first, this->_font, this->_color,
                                                 {level_name_x, highscore_y - 30});
 
-            for(int i = 0; i < string_highscore_pair.second.size(); i++){
+            for(int i = 0; i < (int)string_highscore_pair.second.size(); i++){
                //for each time per level
                 this->_context.SDL_facade.draw_text(to_string(i + 1) + ". ", this->_font, this->_color,
                                                     {level_name_x, highscore_y});
